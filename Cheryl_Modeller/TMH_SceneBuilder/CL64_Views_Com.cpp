@@ -48,6 +48,8 @@ THE SOFTWARE.
 #define IDM_Grid_Wheel_Speed3 19
 #define IDM_CENTRE_SCENE 20
 #define IDM_ZOOM_MODEL 21
+#define IDM_Grid_Wheel_Speed_VS 22
+#define IDM_Grid_Wheel_Speed_S 23
 
 #define IDM_3D_WIRED 120
 #define IDM_3D_TEXTURED 121
@@ -140,6 +142,8 @@ CL64_Views_Com::CL64_Views_Com()
 	
 	Background_Colour = { 60,60,60 };
 
+	Mouse_Wheel_Selected_Speed = 1;
+
 	hcSizeEW = LoadCursor(NULL, IDC_SIZEWE);
 	hcSizeNS = LoadCursor(NULL, IDC_SIZENS);
 	hcBoth = LoadCursor(NULL, IDC_SIZEALL);
@@ -215,8 +219,12 @@ void CL64_Views_Com::Reset_Views_All()
 
 	Cam_BL->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
 
-	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+	
+	App->CL_View_Top_Left->Zoom_To_Model();
+	App->CL_View_Top_Right->Zoom_To_Model();
+	App->CL_View_Bottom_Left->Zoom_To_Model();
 
+	//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
 }
 
@@ -1124,12 +1132,30 @@ void CL64_Views_Com::Context_Grids_Menu(HWND hDlg)
 
 	hMenu = CreatePopupMenu();
 
-	HMENU hDisplayMenu = CreatePopupMenu();
+
+
+	HMENU hMouseWheelMenu = CreatePopupMenu();
+
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hMouseWheelMenu, "Mouse Wheel Zoom");
+
+	// Array of speed options
+	const char* speedOptions[] = { "Very Slow", "Slow", "Medium", "Fast" };
+	const int speedIDs[] = { IDM_Grid_Wheel_Speed_VS, IDM_Grid_Wheel_Speed2, IDM_Grid_Wheel_Speed3, IDM_Grid_Wheel_Speed_S };
+
+	// Loop through speed options to append menu items
+	for (int i = 0; i < 4; ++i)
+	{
+		UINT flags = (Mouse_Wheel_Selected_Speed == i) ? MF_STRING | MF_CHECKED : MF_STRING | MF_UNCHECKED;
+		AppendMenu(hMouseWheelMenu, flags, speedIDs[i], speedOptions[i]);
+	}
+
+
+	/*HMENU hDisplayMenu = CreatePopupMenu();
 
 	AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hDisplayMenu, "Mouse Wheel Zoom");
 	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed1, "Speed 1");
 	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed2, "Speed 2");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed3, "Speed 3");
+	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed3, "Speed 3");*/
 
 	AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
 
@@ -1174,22 +1200,43 @@ bool CL64_Views_Com::Context_Grids_Command(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
-	case IDM_Grid_Wheel_Speed1:
+	case IDM_Grid_Wheel_Speed_VS:
+		App->CL_View_Top_Left->m_Zoom_Amount = 0.01;
+		App->CL_View_Top_Right->m_Zoom_Amount = 0.01;
+		App->CL_View_Bottom_Left->m_Zoom_Amount = 0.01;
+
+		Mouse_Wheel_Selected_Speed = 0;
+		return TRUE;
+		
+	/*case IDM_Grid_Wheel_Speed1:
 		App->CL_View_Top_Left->m_Zoom_Amount = 0.1;
 		App->CL_View_Top_Right->m_Zoom_Amount = 0.1;
 		App->CL_View_Bottom_Left->m_Zoom_Amount = 0.1;
-		return TRUE;
+
+		Mouse_Wheel_Selected_Speed = 1;
+		return TRUE;*/
 
 	case IDM_Grid_Wheel_Speed2:
 		App->CL_View_Top_Left->m_Zoom_Amount = 0.5;
 		App->CL_View_Top_Right->m_Zoom_Amount = 0.5;
 		App->CL_View_Bottom_Left->m_Zoom_Amount = 0.5;
+
+		Mouse_Wheel_Selected_Speed = 1;
 		return TRUE;
 
 	case IDM_Grid_Wheel_Speed3:
 		App->CL_View_Top_Left->m_Zoom_Amount = 1;
 		App->CL_View_Top_Right->m_Zoom_Amount = 1;
 		App->CL_View_Bottom_Left->m_Zoom_Amount = 1;
+
+		Mouse_Wheel_Selected_Speed = 2;
+		return TRUE;
+	case IDM_Grid_Wheel_Speed_S:
+		App->CL_View_Top_Left->m_Zoom_Amount = 5;
+		App->CL_View_Top_Right->m_Zoom_Amount = 5;
+		App->CL_View_Bottom_Left->m_Zoom_Amount = 5;
+
+		Mouse_Wheel_Selected_Speed = 3;
 		return TRUE;
 		
 	case IDM_GRID_SNAP:

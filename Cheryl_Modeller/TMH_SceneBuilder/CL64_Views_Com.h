@@ -84,7 +84,7 @@ public:
 	int nleftWnd_Depth;
 	int Copy_Spliter_Depth;
 	int Copy_Spliter_Width;
-
+	int Mouse_Wheel_Selected_Speed;
 	int Selected_Window;
 	ViewVars* Current_View;
 

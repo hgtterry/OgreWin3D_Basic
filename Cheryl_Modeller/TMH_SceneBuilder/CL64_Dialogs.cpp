@@ -1285,6 +1285,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 			App->CL_Views_Com->GridSnapSize = 1;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 1;
 			App->CL_View_Top_Left->m_GridSnapSize = 1;
+			App->CL_View_Top_Right->m_GridSnapSize = 1;
+			App->CL_View_Bottom_Left->m_GridSnapSize = 1;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
@@ -1295,6 +1297,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 			App->CL_Views_Com->GridSnapSize = 2;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 2;
 			App->CL_View_Top_Left->m_GridSnapSize = 2;
+			App->CL_View_Top_Right->m_GridSnapSize = 2;
+			App->CL_View_Bottom_Left->m_GridSnapSize = 2;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
@@ -1305,6 +1309,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 			App->CL_Views_Com->GridSnapSize = 4;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 4;
 			App->CL_View_Top_Left->m_GridSnapSize = 4;
+			App->CL_View_Top_Right->m_GridSnapSize = 4;
+			App->CL_View_Bottom_Left->m_GridSnapSize = 4;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
@@ -1315,6 +1321,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 			App->CL_Views_Com->GridSnapSize = 8;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 8;
 			App->CL_View_Top_Left->m_GridSnapSize = 8;
+			App->CL_View_Top_Right->m_GridSnapSize = 8;
+			App->CL_View_Bottom_Left->m_GridSnapSize = 8;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
@@ -1325,6 +1333,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 			App->CL_Views_Com->GridSnapSize = 16;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 16;
 			App->CL_View_Top_Left->m_GridSnapSize = 16;
+			App->CL_View_Top_Right->m_GridSnapSize = 16;
+			App->CL_View_Bottom_Left->m_GridSnapSize = 16;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
@@ -1335,6 +1345,8 @@ LRESULT CALLBACK CL64_Dialogs::Proc_SnapOptions(HWND hDlg, UINT message, WPARAM 
 			App->CL_Views_Com->GridSnapSize = 32;
 			App->CL_Doc->Current_Level->GridSettings.TexelSnapSize = 32;
 			App->CL_View_Top_Left->m_GridSnapSize = 32;
+			App->CL_View_Top_Right->m_GridSnapSize = 32;
+			App->CL_View_Bottom_Left->m_GridSnapSize = 32;
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 			return TRUE;
