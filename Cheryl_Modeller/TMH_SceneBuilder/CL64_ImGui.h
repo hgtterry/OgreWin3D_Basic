@@ -45,6 +45,7 @@ public:
 	void Show_Ogre_Model_Data_GUI(void);
 	void Show_Assimp_Model_Data_GUI(void);
 	void Set_Materials_Index_Imgui(int Index);
+	void Show_Views_Data_GUI();
 
 	bool flag_Imgui_Initialized;
 	bool flag_Show_Paths;
@@ -54,6 +55,7 @@ public:
 	bool flag_PlayerData_Start_Pos;
 	bool flag_Show_Listbox;
 	bool flag_Show_Model_Data;
+	bool flag_Show_Views_Data;
 
 	bool listSubMeshItems[50] = { 0 };
 	int PreviouseSubMesh;

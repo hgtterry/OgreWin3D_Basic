@@ -46,23 +46,25 @@ THE SOFTWARE.
 #define IDM_Grid_Wheel_Speed1 17
 #define IDM_Grid_Wheel_Speed2 18
 #define IDM_Grid_Wheel_Speed3 19
+#define IDM_CENTRE_SCENE 20
+#define IDM_ZOOM_MODEL 21
 
 
-#define IDM_3D_WIRED 20
-#define IDM_3D_TEXTURED 21
-#define IDM_3D_PREVIEW 22
-#define IDM_3D_SCENE_EDITOR 23
-#define IDM_3D_ENVIRONMENT 24
-#define IDM_3D_RESET_CAMERA 25
-#define IDM_3D_HELP 26
-#define IDM_3D_BOUNDING_BOX 27
-#define IDM_3D_NORMALS 28
-#define IDM_3D_CAMERASPEED 29
-#define IDM_3D_POINTS 30
-#define IDM_3D_BONES 31
-#define IDM_3D_Wheel_Speed1 32
-#define IDM_3D_Wheel_Speed2 33
-#define IDM_3D_Wheel_Speed3 34
+#define IDM_3D_WIRED 120
+#define IDM_3D_TEXTURED 121
+#define IDM_3D_PREVIEW 122
+#define IDM_3D_SCENE_EDITOR 123
+#define IDM_3D_ENVIRONMENT 124
+#define IDM_3D_RESET_CAMERA 125
+#define IDM_3D_HELP 126
+#define IDM_3D_BOUNDING_BOX 127
+#define IDM_3D_NORMALS 128
+#define IDM_3D_CAMERASPEED 129
+#define IDM_3D_POINTS 130
+#define IDM_3D_BONES 131
+#define IDM_3D_Wheel_Speed1 132
+#define IDM_3D_Wheel_Speed2 133
+#define IDM_3D_Wheel_Speed3 134
 
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
@@ -1117,36 +1119,7 @@ void CL64_Views_Com::Context_Grids_Menu(HWND hDlg)
 	//	AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
 	//}
 
-	//// Move Scale Rotate
-	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
-	//{
-	//	// Enabled
-	//	AppendMenuW(hMenu, MF_STRING , IDM_MOVE, L"&Move");
-	//	AppendMenuW(hMenu, MF_STRING , IDM_SCALE, L"&Scale");
-	//	AppendMenuW(hMenu, MF_STRING , IDM_ROTATE, L"&Rotate");
-	//	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Deselect");
-
-	//	// Copy Functions
-	//	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//	AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DUPLICATE, L"&Duplicate");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
-	//}
-	//else
-	//{
-	//	// Greyed
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_MOVE, L"&Move");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCALE, L"&Scale");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_ROTATE, L"&Rotate");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DESELECT, L"&Deselect");
-
-	//	// Copy Functions
-	//	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DUPLICATE, L"&Duplicate");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-	//	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
-	//}
+	
 
 	// Panel View
 	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
@@ -1156,12 +1129,10 @@ void CL64_Views_Com::Context_Grids_Menu(HWND hDlg)
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	//AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
 	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_SCENE, L"&Centre Of Scene");
+	AppendMenuW(hMenu, MF_STRING, IDM_ZOOM_MODEL, L"&Zoom Model");
 
-	//
-	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	//AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Zoom Ctrl and Mouse Wheel");
-	//AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Ctrl+Left Mouse Button");
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	//AppendMenuW(hMenu, MF_STRING, IDM_SCENE_HELP, L"&Help");
@@ -1294,27 +1265,86 @@ bool CL64_Views_Com::Context_Grids_Command(WPARAM wParam)
 			Temp_VCam->CamPos.y = Pos.y;
 			Temp_VCam->CamPos.z = Pos.z;
 
-			// Redraw the appropriate window based on the selected view
-			switch (Views_Com->Selected_Window)
-			{
-			case Enums::Selected_Map_View_TL:
-				App->CL_View_Top_Left->Redraw_Window_TL();
-				break;
-			case Enums::Selected_Map_View_TR:
-				App->CL_View_Top_Right->Redraw_Window_TR();
-				break;
-			case Enums::Selected_Map_View_BL:
-				App->CL_View_Bottom_Left->Redraw_Window_BL();
-				break;
-			default:
-				break;
-			}
+			Update_Selected_View();
+
 		}
 		
+		return TRUE;
+	}
+
+	case IDM_CENTRE_SCENE:
+	{
+		auto& Views_Com = App->CL_Views_Com;
+		ViewVars* Temp_VCam = nullptr;
+		RECT		Rect;
+
+		// Determine the selected view and assign the corresponding camera
+		switch (Views_Com->Selected_Window)
+		{
+		case Enums::Selected_Map_View_TL:
+			Temp_VCam = App->CL_View_Top_Left->VCam_TL;
+			break;
+		case Enums::Selected_Map_View_TR:
+			Temp_VCam = App->CL_View_Top_Right->VCam_TR;
+			break;
+		case Enums::Selected_Map_View_BL:
+			Temp_VCam = App->CL_View_Bottom_Left->VCam_BL;
+			break;
+		default:
+			break;
+		}
+
+		if (Temp_VCam)
+		{
+			GetClientRect(Temp_VCam->hDlg, &Rect);
+
+			Temp_VCam->XCenter = static_cast<float>(Rect.right) / 2;
+			Temp_VCam->YCenter = static_cast<float>(Rect.bottom) / 2;
+
+			Ogre::Vector3 Pos;
+
+			Pos = Ogre::Vector3(0, 0, 0);
+			
+			Temp_VCam->CamPos.x = Pos.x;
+			Temp_VCam->CamPos.y = Pos.y;
+			Temp_VCam->CamPos.z = Pos.z;
+
+			Update_Selected_View();
+		}
 
 		return TRUE;
 	}
 
+	case IDM_ZOOM_MODEL:
+	{
+		// Determine the selected view and Zoom corresponding view to Model
+		switch (Selected_Window)
+		{
+		case Enums::Selected_Map_View_TL:
+		{
+			App->CL_View_Top_Left->Zoom_To_Model();
+			return TRUE;
+		}
+
+		case Enums::Selected_Map_View_TR:
+		{
+			App->CL_View_Top_Right->Zoom_To_Model();
+			return TRUE;
+		}
+
+		case Enums::Selected_Map_View_BL:
+		{
+			App->CL_View_Bottom_Left->Zoom_To_Model();
+			return TRUE;
+		}
+
+		default:
+			break;
+		}
+
+		return TRUE;
+	}
+	
 	//case IDM_PREVIEW:
 	//	//App->CL_Editor_Control->Start_Preview_Mode();
 	//	return TRUE;
@@ -1363,7 +1393,27 @@ bool CL64_Views_Com::Context_Grids_Command(WPARAM wParam)
 	}
 }
 
-
+// *************************************************************************
+// *	  		Update_Selected_View:- Terry Mo and Hazel 2026			   *
+// *************************************************************************
+void CL64_Views_Com::Update_Selected_View()
+{
+	// Redraw the appropriate window based on the selection
+	switch (Selected_Window)
+	{
+	case Enums::Selected_Map_View_TL:
+		App->CL_View_Top_Left->Redraw_Window_TL();
+		break;
+	case Enums::Selected_Map_View_TR:
+		App->CL_View_Top_Right->Redraw_Window_TR();
+		break;
+	case Enums::Selected_Map_View_BL:
+		App->CL_View_Bottom_Left->Redraw_Window_BL();
+		break;
+	default:
+		break;
+	}
+}
 
 // *************************************************************************
 // *	  			On_Mouse_Move:- Terry Mo and Hazel 2025				   *

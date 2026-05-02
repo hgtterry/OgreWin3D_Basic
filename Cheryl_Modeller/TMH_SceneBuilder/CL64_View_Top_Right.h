@@ -47,6 +47,8 @@ public:
 	static int Draw_Brush(Brush* pBrush, void* lParam);
 	void Set_VCam_TR_Defaults();
 
+	void Zoom_To_Model();
+
 	HWND Top_Right_Window_Hwnd;
 	HWND Top_Right_Banner_Hwnd;
 
@@ -75,4 +77,5 @@ private:
 	void Draw_Screen_TR(HWND hwnd);
 	void Draw_Faces_TR(Brush* SB);
 };
+
 

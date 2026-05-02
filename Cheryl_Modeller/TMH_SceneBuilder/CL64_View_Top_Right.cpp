@@ -567,5 +567,30 @@ void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 
 }
 
+// *************************************************************************
+// *	  	Zoom_To_Model:- Terry and Hazel Flanigan 2026				   *
+// *************************************************************************
+void CL64_View_Top_Right::Zoom_To_Model()
+{
+	if (App->CL_Model->flag_Model_Loaded == true)
+	{
+		RECT		Rect;
 
+		float Sc_Size = VCam_TR->Height - 140;
+		float zoomValue = Sc_Size / App->CL_Model->S_BoundingBox[0]->Size->z;
+
+		VCam_TR->ZoomFactor = zoomValue;
+
+		GetClientRect(VCam_TR->hDlg, &Rect);
+
+		VCam_TR->XCenter = static_cast<float>(Rect.right) / 2;
+		VCam_TR->YCenter = static_cast<float>(Rect.bottom) / 2;
+
+		VCam_TR->CamPos.x = 0;
+		VCam_TR->CamPos.y = 0;
+		VCam_TR->CamPos.z = 0;
+
+		Redraw_Window_TR();
+	}
+}
 

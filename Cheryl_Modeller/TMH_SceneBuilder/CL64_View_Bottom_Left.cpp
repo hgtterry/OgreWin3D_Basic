@@ -564,3 +564,30 @@ void CL64_View_Bottom_Left::Draw_Screen_BL(HWND hwnd)
 	ReleaseDC(hwnd, RealhDC);
 
 }
+
+// *************************************************************************
+// *	  	Zoom_To_Model:- Terry and Hazel Flanigan 2026				   *
+// *************************************************************************
+void CL64_View_Bottom_Left::Zoom_To_Model()
+{
+	if (App->CL_Model->flag_Model_Loaded == true)
+	{
+		RECT		Rect;
+
+		float Sc_Size = VCam_BL->Height - 140;
+		float zoomValue = Sc_Size / App->CL_Model->S_BoundingBox[0]->Size->z;
+
+		VCam_BL->ZoomFactor = zoomValue;
+
+		GetClientRect(VCam_BL->hDlg, &Rect);
+
+		VCam_BL->XCenter = static_cast<float>(Rect.right) / 2;
+		VCam_BL->YCenter = static_cast<float>(Rect.bottom) / 2;
+
+		VCam_BL->CamPos.x = 0;
+		VCam_BL->CamPos.y = 0;
+		VCam_BL->CamPos.z = 0;
+
+		Redraw_Window_BL();
+	}
+}

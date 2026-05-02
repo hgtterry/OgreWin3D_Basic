@@ -44,6 +44,7 @@ public:
 	void Create_Top_Left_Window();
 	void Redraw_Window_TL();
 	void Set_VCam_TL_Defaults();
+	void Zoom_To_Model();
 
 	HWND Top_Left_Window_Hwnd;
 	HWND Top_Left_Banner_Hwnd;

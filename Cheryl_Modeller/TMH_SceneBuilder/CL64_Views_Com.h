@@ -69,6 +69,7 @@ public:
 
 	void Set_3D_FullView();
 	void Set_Selected_View(int Selected_View);
+	void Update_Selected_View();
 
 	void On_Mouse_Move(POINT CursorPosition, HWND hDlg);
 	void On_Left_Button_Up(POINT CursorPosition);

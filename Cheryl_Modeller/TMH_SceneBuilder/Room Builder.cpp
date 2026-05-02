@@ -196,35 +196,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
 
+
             // ----------------------------- Debug
 			case ID_DEBUG_GENERAL:
 			{ 
-               // App->CL_Editor_Control->Set_Map_Editor_Select_Dlg();
-
-                //App->Say_Win(App->CL_X_Preference->GetVersion());
-
-                /*if (App->CL_ImGui_Editor->flag_Show_Visuals == true)
-                {
-                    App->CL_ImGui_Editor->flag_Show_Visuals = false;
-                }
-                else
-                {
-                    App->CL_ImGui_Editor->flag_Show_Visuals = true;
-                }*/
-
-               // App->CL_File_IO->Colour_Picker();
-
-                /*if (App->CL_Interface->flag_Grids_Are_Visible == true)
-                {
-                    App->CL_Interface->Show_Grids(false);
-                }
-                else
-                {
-                    App->CL_Interface->Show_Grids(true);
-                }*/
-
-                //App->CL_3D_TR_View->Start_Ogre_Window();
                
+                float Sc_Size = App->CL_View_Top_Left->VCam_TL->Height;
+                float zoomValue = Sc_Size / App->CL_Model->S_BoundingBox[0]->Size->z;
+
+                App->CL_View_Top_Left->VCam_TL->ZoomFactor = zoomValue;
+               // App->CL_Views_Com->Current_View->ZoomFactor = zoomValue;
+
+                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 				return 1;
 			}
 
@@ -232,16 +215,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 auto& Views_Com = App->CL_Views_Com;
 
-                if (App->CL_ImGui->flag_Show_Listbox == true)
+                if (App->CL_ImGui->flag_Show_Views_Data == true)
                 {
-                    App->CL_ImGui->flag_Show_Listbox = false;
+                    App->CL_ImGui->flag_Show_Views_Data = false;
                 }
                 else
                 {
-                    Views_Com->Init_Views(Enums::Selected_Map_View_3D);
-                    Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
-
-                    App->CL_ImGui->flag_Show_Listbox = true;
+                    App->CL_ImGui->flag_Show_Views_Data = true;
                 }
 
                 return 1;

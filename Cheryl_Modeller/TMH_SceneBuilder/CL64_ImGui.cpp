@@ -34,7 +34,7 @@ CL64_ImGui::CL64_ImGui()
 	font3 = NULL;
 	fontDroid = NULL;
 
-	CB_Index = 3;
+	CB_Index = 0;
 
 	flag_Imgui_Initialized = false;
 
@@ -54,6 +54,7 @@ CL64_ImGui::CL64_ImGui()
 	flag_Show_App_Stats = false;
 	flag_Show_Listbox = false;
 	flag_Show_Model_Data = true;
+	flag_Show_Views_Data = false;
 
 	PreviouseSubMesh = -1;
 
@@ -316,6 +317,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		App->CL_Dimensions->ImGui_Dimensions();
 	}
+
+	if (flag_Show_Views_Data == true)
+	{
+		Show_Views_Data_GUI();
+	}
 	
 	App->CL_ImGui_Editor->ImGui_Render_Editor_Loop();
 	
@@ -378,6 +384,60 @@ void CL64_ImGui::Model_Data_GUI(void)
 			ImGui::SetWindowFocus(nullptr);
 		}
 
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *		Show_Views_Data_GUI:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui::Show_Views_Data_GUI(void)
+{
+	ImVec4* colors = ImGui::GetStyle().Colors;
+	colors[ImGuiCol_Header] = ImVec4(0, 1, 0.4, 0.7);
+
+	if (!ImGui::Begin("ListBox1", &flag_Show_Views_Data, ImGuiWindowFlags_NoSavedSettings
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+		if (ImGui::TreeNode("Current View"))
+		{
+			ImGui::Text("Current View = %s", App->CL_Views_Com->Current_View->Name);
+			ImGui::Text("Selected Window = %i", App->CL_Views_Com->Selected_Window);
+			ImGui::Text("Zoom = %f", App->CL_Views_Com->Current_View->ZoomFactor);
+
+			float ModSize = App->CL_Model->S_BoundingBox[0]->Size->z;
+			float ScSize = 473;
+
+			ImGui::Text("Test Zoom = %f %f %f", ScSize, ModSize, ScSize / ModSize);
+			
+			ImGui::Text("Width = %d", App->CL_Views_Com->Current_View->Width);
+			ImGui::Text("Height = %d", App->CL_Views_Com->Current_View->Height);
+			ImGui::Text("Cam Pos = %f %f %f", App->CL_Views_Com->Current_View->CamPos.x, App->CL_Views_Com->Current_View->CamPos.y, App->CL_Views_Com->Current_View->CamPos.z);
+			ImGui::Text("XScreenScale = %f", App->CL_Views_Com->Current_View->XScreenScale);
+			ImGui::Text("YScreenScale = %f", App->CL_Views_Com->Current_View->YScreenScale);
+			ImGui::Text("XCenter = %f", App->CL_Views_Com->Current_View->XCenter);
+			ImGui::Text("YCenter = %f", App->CL_Views_Com->Current_View->YCenter);
+			ImGui::Text("Inv = %f", App->CL_Views_Com->Current_View->MaxScreenScaleInv);
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Top Left View"))
+		{
+			ImGui::Text("Selected Window %i", App->CL_Views_Com->Selected_Window);
+			ImGui::Text("Zoom %f", App->CL_View_Top_Left->VCam_TL->ZoomFactor);
+			ImGui::Text("Width2 %d", App->CL_View_Top_Left->VCam_TL->Width);
+			ImGui::Text("Height %d", App->CL_View_Top_Left->VCam_TL->Height);
+			ImGui::Text("Cam Pos %f %f %f", App->CL_Views_Com->Current_View->CamPos.x, App->CL_Views_Com->Current_View->CamPos.y, App->CL_Views_Com->Current_View->CamPos.z);
+
+			ImGui::TreePop();
+		}
+
+		colors[ImGuiCol_Header] = ImVec4(0.26f, 0.59f, 0.98f, 0.31f);
 		ImGui::End();
 	}
 }
@@ -1064,7 +1124,7 @@ void CL64_ImGui::Paths_GUI(void)
 // *************************************************************************
 void CL64_ImGui::Debug_Lists_ImGui(void)
 {
-	ImGui::SetNextWindowSize(ImVec2(910, 360));
+	ImGui::SetNextWindowSize(ImVec2(910, 360), ImGuiCond_FirstUseEver);
 	//ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
 	if (!ImGui::Begin("ListBox1", &flag_Show_Listbox, ImGuiWindowFlags_NoSavedSettings
@@ -1084,9 +1144,18 @@ void CL64_ImGui::Debug_Lists_ImGui(void)
 				ImGui::Text("Current View %s", App->CL_Views_Com->Current_View->Name);
 				ImGui::Text("Selected Window %i", App->CL_Views_Com->Selected_Window);
 				ImGui::Text("Zoom %f", App->CL_Views_Com->Current_View->ZoomFactor);
-				ImGui::Text("Width %f", App->CL_Views_Com->Current_View->Width);
-				ImGui::Text("Height %f", App->CL_Views_Com->Current_View->Height);
+				ImGui::Text("Width %d", App->CL_Views_Com->Current_View->Width);
+				ImGui::Text("Height %d", App->CL_Views_Com->Current_View->Height);
 				ImGui::Text("Cam Pos %f %f %f", App->CL_Views_Com->Current_View->CamPos.x, App->CL_Views_Com->Current_View->CamPos.y, App->CL_Views_Com->Current_View->CamPos.z);
+			
+		
+				ImGui::Text("Current View %s", App->CL_Views_Com->Current_View->Name);
+				ImGui::Text("Selected Window %i", App->CL_Views_Com->Selected_Window);
+				ImGui::Text("Zoom %f", App->CL_View_Top_Left->VCam_TL->ZoomFactor);
+				ImGui::Text("Width2 %d", App->CL_View_Top_Left->VCam_TL->Width);
+				ImGui::Text("Height %d", App->CL_Views_Com->Current_View->Height);
+				ImGui::Text("Cam Pos %f %f %f", App->CL_Views_Com->Current_View->CamPos.x, App->CL_Views_Com->Current_View->CamPos.y, App->CL_Views_Com->Current_View->CamPos.z);
+
 			}
 
 			if (CB_Index == 1) // Ogre Data
