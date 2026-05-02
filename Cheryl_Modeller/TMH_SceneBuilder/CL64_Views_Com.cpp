@@ -49,7 +49,6 @@ THE SOFTWARE.
 #define IDM_CENTRE_SCENE 20
 #define IDM_ZOOM_MODEL 21
 
-
 #define IDM_3D_WIRED 120
 #define IDM_3D_TEXTURED 121
 #define IDM_3D_PREVIEW 122
@@ -62,9 +61,10 @@ THE SOFTWARE.
 #define IDM_3D_CAMERASPEED 129
 #define IDM_3D_POINTS 130
 #define IDM_3D_BONES 131
-#define IDM_3D_Wheel_Speed1 132
+#define IDM_3D_Wheel_Speed_S 132
 #define IDM_3D_Wheel_Speed2 133
 #define IDM_3D_Wheel_Speed3 134
+#define IDM_3D_Wheel_Speed_VS 135
 
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
@@ -803,14 +803,26 @@ void CL64_Views_Com::Context_3D_Menu(HWND hDlg)
 
 	HMENU hMenu = CreatePopupMenu();
 
-	HMENU hDisplayMenu = CreatePopupMenu();
 
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hDisplayMenu, "Mouse Wheel Zoom");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed1, "Speed 1");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed2, "Speed 2");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_3D_Wheel_Speed3, "Speed 3");
+	// --------------------------------------------------- Mouse Wheel Speed Options
+	HMENU hMouseWheelMenu = CreatePopupMenu();
+
+	AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hMouseWheelMenu, "Mouse Wheel Zoom");
+
+	// Array of speed options
+	const char* speedOptions[] = { "Very Slow", "Slow", "Medium", "Fast" };
+	const int speedIDs[] = { IDM_3D_Wheel_Speed_VS, IDM_3D_Wheel_Speed_S, IDM_3D_Wheel_Speed2, IDM_3D_Wheel_Speed3 };
+
+	// Loop through speed options to append menu items
+	for (int i = 0; i < 4; ++i) 
+	{
+		UINT flags = (App->CL_Keyboard->Mouse_Wheel_Selected_Speed == i) ? MF_STRING | MF_CHECKED : MF_STRING | MF_UNCHECKED;
+		AppendMenu(hMouseWheelMenu, flags, speedIDs[i], speedOptions[i]);
+	}
 
 	AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
+
+
 
 	// Render Textured
 	/*if (App->CL_Ogre->OGL_Listener->flag_Render_Ogre == 0)
@@ -933,21 +945,32 @@ bool CL64_Views_Com::Context_3D_Command(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
-	case IDM_3D_Wheel_Speed1:
+
+	case IDM_3D_Wheel_Speed_VS:
+	{
+		App->CL_Keyboard->Mouse_Wheel_Zoom = 0.5;
+		App->CL_Keyboard->Mouse_Wheel_Selected_Speed = 0;
+		return TRUE;
+	}
+
+	case IDM_3D_Wheel_Speed_S:
 	{
 		App->CL_Keyboard->Mouse_Wheel_Zoom = 2;
+		App->CL_Keyboard->Mouse_Wheel_Selected_Speed = 1;
 		return TRUE;
 	}
 
 	case IDM_3D_Wheel_Speed2:
 	{
 		App->CL_Keyboard->Mouse_Wheel_Zoom = 10;
+		App->CL_Keyboard->Mouse_Wheel_Selected_Speed = 2;
 		return TRUE;
 	}
 
 	case IDM_3D_Wheel_Speed3:
 	{
 		App->CL_Keyboard->Mouse_Wheel_Zoom = 50;
+		App->CL_Keyboard->Mouse_Wheel_Selected_Speed = 3;
 		return TRUE;
 	}
 

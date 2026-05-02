@@ -583,9 +583,9 @@ void CL64_View_Top_Left::Zoom_To_Model()
 		VCam_TL->XCenter = static_cast<float>(Rect.right) / 2;
 		VCam_TL->YCenter = static_cast<float>(Rect.bottom) / 2;
 
-		VCam_TL->CamPos.x = 0;
-		VCam_TL->CamPos.y = 0;
-		VCam_TL->CamPos.z = 0;
+		VCam_TL->CamPos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
+		VCam_TL->CamPos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
+		VCam_TL->CamPos.z = App->CL_Model->S_BoundingBox[0]->Centre->z;
 
 		Redraw_Window_TL();
 	}

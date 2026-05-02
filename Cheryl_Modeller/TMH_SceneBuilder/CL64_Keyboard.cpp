@@ -34,6 +34,7 @@ CL64_Keyboard::CL64_Keyboard(void)
 	flag_Update_Views = false;
 	Mouse_point = { 0,0 };
 	Mouse_Wheel_Zoom = 2;
+	Mouse_Wheel_Selected_Speed = 1;
 }
 
 CL64_Keyboard::~CL64_Keyboard(void)

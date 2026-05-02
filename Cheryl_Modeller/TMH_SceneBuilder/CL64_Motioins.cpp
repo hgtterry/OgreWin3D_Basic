@@ -121,8 +121,6 @@ void CL64_Motioins::Update_Motion(float deltaTime)
 		}
 	}
 
-	App->CL_Ogre->OGL_Listener->flag_Show_Bone_Crosshair = true;
-
 	if (App->CL_Ogre->OGL_Listener->flag_Show_Bone_Crosshair == true)
 	{
 		App->CL_Gizmos->Move_BoneCrosshair();

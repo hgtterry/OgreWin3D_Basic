@@ -41,5 +41,6 @@ public:
 	bool flag_Update_Views;
 
 	float Mouse_Wheel_Zoom;
+	int Mouse_Wheel_Selected_Speed;
 };
 

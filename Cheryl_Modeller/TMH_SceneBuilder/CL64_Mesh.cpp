@@ -705,17 +705,18 @@ void CL64_Mesh::Show_Mesh_Points()
 	{
 		HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BTSHOWPOINTS);
 
-		auto& m_Show_Points = App->CL_Ogre->OGL_Listener->flag_ShowPoints;
+		auto& showPointsFlag = App->CL_Ogre->OGL_Listener->flag_ShowPoints;
 
-		if (m_Show_Points == true)
+		// Toggle Points visibility
+		if (showPointsFlag == true)
 		{
-			m_Show_Points = false;
+			showPointsFlag = false;
 
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
 		}
 		else
 		{
-			m_Show_Points = true;
+			showPointsFlag = true;
 
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOn_Bmp);
 		}
@@ -729,22 +730,23 @@ void CL64_Mesh::Show_Mesh_BoundBox()
 {
 	if (App->CL_Model->flag_Model_Loaded == true)
 	{
-		HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_TBBOUNDBOX);
-		HWND Temp2 = GetDlgItem(App->CL_Properties_Motions->Motions_Dlg_Hwnd, IDC_BT_MOT_BBOX);
+		HWND tempButton = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_TBBOUNDBOX);
+		HWND tempButton2 = GetDlgItem(App->CL_Properties_Motions->Motions_Dlg_Hwnd, IDC_BT_MOT_BBOX);
 
-		auto& m_Show_BBox = App->CL_Ogre->OGL_Listener->flag_ShowBoundingBox;
+		auto& showBoundingBoxFlag = App->CL_Ogre->OGL_Listener->flag_ShowBoundingBox;
 
-		if (m_Show_BBox == true)
+		// Toggle the bounding box visibility
+		if (showBoundingBoxFlag == true)
 		{
-			m_Show_BBox = false;
-			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
-			SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+			showBoundingBoxFlag = false;
+			SendMessage(tempButton, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+			SendMessage(tempButton2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 		}
 		else
 		{
-			m_Show_BBox = true;
-			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
-			SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
+			showBoundingBoxFlag = true;
+			SendMessage(tempButton, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
+			SendMessage(tempButton2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
 		}
 	}
 }
@@ -759,18 +761,20 @@ void CL64_Mesh::Show_Mesh_Bones()
 		HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BTSHOWBONES);
 		HWND Temp2 = GetDlgItem(App->CL_Properties_Motions->Motions_Dlg_Hwnd, IDC_BT_MOT_BONES);
 
-		auto& m_Show_Bones = App->CL_Ogre->OGL_Listener->flag_ShowBones;
+		auto& m_OGL_Listener = App->CL_Ogre->OGL_Listener;
 
-		if (m_Show_Bones == true)
+		if (m_OGL_Listener->flag_ShowBones == true)
 		{
-			m_Show_Bones = false;
+			m_OGL_Listener->flag_ShowBones = false;
+			m_OGL_Listener->flag_Show_Bone_Crosshair = false;
 
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
 			SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
 		}
 		else
 		{
-			m_Show_Bones = true;
+			m_OGL_Listener->flag_ShowBones = true;
+			m_OGL_Listener->flag_Show_Bone_Crosshair = true;
 
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
 			SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
