@@ -210,5 +210,7 @@ void CL64_Model::Clear_Model()
 	{
 		App->CL_Editor_Control->Set_3DEditor_View();
 	}
+
+	App->CL_Editor_Control->flag_Just_Loaded = false;
 }
 

@@ -46,6 +46,7 @@ public:
 	bool flag_Mode_3DEditor_View;
 	bool flag_Mode_Map_View;
 	bool flag_Start_3D_View;
+	bool flag_Just_Loaded;
 
 	HWND Parent_hWnd;				// Handle to the parent window for the editor
 

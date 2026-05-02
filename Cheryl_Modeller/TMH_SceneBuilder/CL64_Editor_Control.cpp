@@ -39,6 +39,8 @@ CL64_Editor_Control::CL64_Editor_Control(void)
 	flag_Mode_Map_View = false;
 
 	flag_Start_3D_View = true;
+
+	flag_Just_Loaded = false;
 }
 
 CL64_Editor_Control::~CL64_Editor_Control(void)
@@ -187,6 +189,19 @@ void CL64_Editor_Control::Set_Map_View()
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 	App->CL_Interface->Show_Grids(true);
+
+	if (flag_Just_Loaded == false)
+	{
+		App->CL_View_Top_Left->Redraw_Window_TL();
+		App->CL_View_Top_Left->Zoom_To_Model();
+
+		App->CL_View_Top_Right->Redraw_Window_TR();
+		App->CL_View_Top_Right->Zoom_To_Model();
+
+		App->CL_View_Bottom_Left->Redraw_Window_BL();
+		App->CL_View_Bottom_Left->Zoom_To_Model();
+		flag_Just_Loaded = true;
+	}
 }
 
 // *************************************************************************

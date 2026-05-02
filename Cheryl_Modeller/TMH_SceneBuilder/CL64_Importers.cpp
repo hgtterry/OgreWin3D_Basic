@@ -101,6 +101,15 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 
 	Create_Brush();
 
+	if (App->CL_Editor_Control->flag_Mode_3DEditor_View == true)
+	{
+		App->CL_Editor_Control->Set_3DEditor_View();
+	}
+	else
+	{
+		App->CL_Editor_Control->Set_Map_View();
+	}
+
 	return true;
 }
 
@@ -241,11 +250,14 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	Create_Brush();
 
-	//App->Enable_Export_Options(true);
-
-	//App->Say("Mesh Imported", (LPSTR)App->CL_Scene->FileName);
-
-	////Get_Textures();
+	if (App->CL_Editor_Control->flag_Mode_3DEditor_View == true)
+	{
+		App->CL_Editor_Control->Set_3DEditor_View();
+	}
+	else
+	{
+		App->CL_Editor_Control->Set_Map_View();
+	}
 
 	return 1;
 }
