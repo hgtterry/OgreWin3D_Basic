@@ -500,6 +500,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            case ID_TESTMODELS_COLLADA:
+            {
+                strcpy(App->CL_Model->Loaded_FileName, "duck.dae");
+
+                strcpy(App->CL_Model->Loaded_PathFileName, App->App_Directory_FullPath);
+                strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Collada_Models\\duck.dae");
+
+                App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate |
+                    aiProcess_FlipUVs |
+                    aiProcess_GenSmoothNormals |
+                    aiProcess_PreTransformVertices;
+
+                App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
+
+                bool test = App->CL_Importers->Assimp_Loader(false);
+
+                return 1;
+            }
+
             case ID_OPENEXAMPLES_TESTSCENE:
             {
                 strcpy(App->CL_File->PathFileName_3dt, App->App_Directory_FullPath);

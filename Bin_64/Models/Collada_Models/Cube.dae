@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Assimp</author>
+      <authoring_tool>Assimp Exporter</authoring_tool>
+    </contributor>
+    <created>2016-04-30T18:22:57</created>
+    <modified>2016-04-30T18:22:57</modified>
+    <unit name="meter" meter="1" />
+    <up_axis>Y_UP</up_axis>
+  </asset>
+  <library_images>
+    <image id="m0Material01-diffuse-image">
+      <init_from>Mat01.bmp</init_from>
+    </image>
+    <image id="m1Material02-diffuse-image">
+      <init_from>Mat02.bmp</init_from>
+    </image>
+    <image id="m2Material03-diffuse-image">
+      <init_from>Mat03.bmp</init_from>
+    </image>
+    <image id="m3Material04-diffuse-image">
+      <init_from>Mat04.bmp</init_from>
+    </image>
+    <image id="m4Material05-diffuse-image">
+      <init_from>Mat05.bmp</init_from>
+    </image>
+    <image id="m5Material06-diffuse-image">
+      <init_from>Mat06.bmp</init_from>
+    </image>
+  </library_images>
+  <library_effects>
+    <effect id="m0Material01-fx" name="m0Material01">
+      <profile_COMMON>
+        <newparam sid="m0Material01-diffuse-surface">
+          <surface type="2D">
+            <init_from>m0Material01-diffuse-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="m0Material01-diffuse-sampler">
+          <sampler2D>
+            <source>m0Material01-diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0   0   0   1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.2   0.2   0.2   1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="m0Material01-diffuse-sampler" texcoord="CHANNEL0" />
+            </diffuse>
+            <specular>
+              <color sid="specular">0   0   0   1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">0</float>
+            </shininess>
+            <transparency>
+              <float sid="transparency">0</float>
+            </transparency>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m1Material02-fx" name="m1Material02">
+      <profile_COMMON>
+        <newparam sid="m1Material02-diffuse-surface">
+          <surface type="2D">
+            <init_from>m1Material02-diffuse-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="m1Material02-diffuse-sampler">
+          <sampler2D>
+            <source>m1Material02-diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0   0   0   1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.2   0.2   0.2   1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="m1Material02-diffuse-sampler" texcoord="CHANNEL0" />
+            </diffuse>
+            <specular>
+              <color sid="specular">0   0   0   1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">0</float>
+            </shininess>
+            <transparency>
+              <float sid="transparency">0</float>
+            </transparency>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m2Material03-fx" name="m2Material03">
+      <profile_COMMON>
+        <newparam sid="m2Material03-diffuse-surface">
+          <surface type="2D">
+            <init_from>m2Material03-diffuse-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="m2Material03-diffuse-sampler">
+          <sampler2D>
+            <source>m2Material03-diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0   0   0   1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.2   0.2   0.2   1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="m2Material03-diffuse-sampler" texcoord="CHANNEL0" />
+            </diffuse>
+            <specular>
+              <color sid="specular">0   0   0   1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">0</float>
+            </shininess>
+            <transparency>
+              <float sid="transparency">0</float>
+            </transparency>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m3Material04-fx" name="m3Material04">
+      <profile_COMMON>
+        <newparam sid="m3Material04-diffuse-surface">
+          <surface type="2D">
+            <init_from>m3Material04-diffuse-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="m3Material04-diffuse-sampler">
+          <sampler2D>
+            <source>m3Material04-diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0   0   0   1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.2   0.2   0.2   1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="m3Material04-diffuse-sampler" texcoord="CHANNEL0" />
+            </diffuse>
+            <specular>
+              <color sid="specular">0   0   0   1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">0</float>
+            </shininess>
+            <transparency>
+              <float sid="transparency">0</float>
+            </transparency>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m4Material05-fx" name="m4Material05">
+      <profile_COMMON>
+        <newparam sid="m4Material05-diffuse-surface">
+          <surface type="2D">
+            <init_from>m4Material05-diffuse-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="m4Material05-diffuse-sampler">
+          <sampler2D>
+            <source>m4Material05-diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0   0   0   1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.2   0.2   0.2   1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="m4Material05-diffuse-sampler" texcoord="CHANNEL0" />
+            </diffuse>
+            <specular>
+              <color sid="specular">0   0   0   1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">0</float>
+            </shininess>
+            <transparency>
+              <float sid="transparency">0</float>
+            </transparency>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="m5Material06-fx" name="m5Material06">
+      <profile_COMMON>
+        <newparam sid="m5Material06-diffuse-surface">
+          <surface type="2D">
+            <init_from>m5Material06-diffuse-image</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="m5Material06-diffuse-sampler">
+          <sampler2D>
+            <source>m5Material06-diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0   0   0   1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.2   0.2   0.2   1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="m5Material06-diffuse-sampler" texcoord="CHANNEL0" />
+            </diffuse>
+            <specular>
+              <color sid="specular">0   0   0   1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">0</float>
+            </shininess>
+            <transparency>
+              <float sid="transparency">0</float>
+            </transparency>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="m0Material01" name="m0Material01">
+      <instance_effect url="#m0Material01-fx"/>
+    </material>
+    <material id="m1Material02" name="m1Material02">
+      <instance_effect url="#m1Material02-fx"/>
+    </material>
+    <material id="m2Material03" name="m2Material03">
+      <instance_effect url="#m2Material03-fx"/>
+    </material>
+    <material id="m3Material04" name="m3Material04">
+      <instance_effect url="#m3Material04-fx"/>
+    </material>
+    <material id="m4Material05" name="m4Material05">
+      <instance_effect url="#m4Material05-fx"/>
+    </material>
+    <material id="m5Material06" name="m5Material06">
+      <instance_effect url="#m5Material06-fx"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="meshId0" name="meshId0_name" >
+      <mesh>
+        <source id="meshId0-positions" name="meshId0-positions">
+          <float_array id="meshId0-positions-array" count="12"> -10 20 10 -10 0 -10 -10 20 -10 -10 0 10 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId0-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId0-normals" name="meshId0-normals">
+          <float_array id="meshId0-normals-array" count="12"> -1 0 -0 -1 0 -0 -1 0 -0 -1 0 -0 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId0-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId0-tex0" name="meshId0-tex0">
+          <float_array id="meshId0-tex0-array" count="8"> 1 1 0 0 0 1 1 0 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId0-tex0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="meshId0-vertices">
+          <input semantic="POSITION" source="#meshId0-positions" />
+          <input semantic="NORMAL" source="#meshId0-normals" />
+          <input semantic="TEXCOORD" source="#meshId0-tex0"  />
+        </vertices>
+        <polylist count="2" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#meshId0-vertices" />
+          <vcount>3 3 </vcount>
+          <p>2 1 0 1 3 0 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="meshId1" name="meshId1_name" >
+      <mesh>
+        <source id="meshId1-positions" name="meshId1-positions">
+          <float_array id="meshId1-positions-array" count="12"> -10 20 -10 10 0 -10 10 20 -10 -10 0 -10 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId1-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId1-normals" name="meshId1-normals">
+          <float_array id="meshId1-normals-array" count="12"> 0 0 -1 0 0 -1 0 0 -1 0 0 -1 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId1-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId1-tex0" name="meshId1-tex0">
+          <float_array id="meshId1-tex0-array" count="8"> 1 1 0 0 0 1 1 0 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId1-tex0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="meshId1-vertices">
+          <input semantic="POSITION" source="#meshId1-positions" />
+          <input semantic="NORMAL" source="#meshId1-normals" />
+          <input semantic="TEXCOORD" source="#meshId1-tex0"  />
+        </vertices>
+        <polylist count="2" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#meshId1-vertices" />
+          <vcount>3 3 </vcount>
+          <p>2 1 0 1 3 0 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="meshId2" name="meshId2_name" >
+      <mesh>
+        <source id="meshId2-positions" name="meshId2-positions">
+          <float_array id="meshId2-positions-array" count="12"> 10 20 -10 10 0 10 10 20 10 10 0 -10 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId2-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId2-normals" name="meshId2-normals">
+          <float_array id="meshId2-normals-array" count="12"> 1 0 -0 1 0 -0 1 0 -0 1 0 -0 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId2-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId2-tex0" name="meshId2-tex0">
+          <float_array id="meshId2-tex0-array" count="8"> 1 1 0 0 0 1 1 0 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId2-tex0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="meshId2-vertices">
+          <input semantic="POSITION" source="#meshId2-positions" />
+          <input semantic="NORMAL" source="#meshId2-normals" />
+          <input semantic="TEXCOORD" source="#meshId2-tex0"  />
+        </vertices>
+        <polylist count="2" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#meshId2-vertices" />
+          <vcount>3 3 </vcount>
+          <p>2 1 0 1 3 0 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="meshId3" name="meshId3_name" >
+      <mesh>
+        <source id="meshId3-positions" name="meshId3-positions">
+          <float_array id="meshId3-positions-array" count="12"> 10 20 10 -10 0 10 -10 20 10 10 0 10 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId3-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId3-normals" name="meshId3-normals">
+          <float_array id="meshId3-normals-array" count="12"> 0 0 1 0 0 1 0 0 1 0 0 1 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId3-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId3-tex0" name="meshId3-tex0">
+          <float_array id="meshId3-tex0-array" count="8"> 1 1 0 0 0 1 1 0 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId3-tex0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="meshId3-vertices">
+          <input semantic="POSITION" source="#meshId3-positions" />
+          <input semantic="NORMAL" source="#meshId3-normals" />
+          <input semantic="TEXCOORD" source="#meshId3-tex0"  />
+        </vertices>
+        <polylist count="2" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#meshId3-vertices" />
+          <vcount>3 3 </vcount>
+          <p>2 1 0 1 3 0 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="meshId4" name="meshId4_name" >
+      <mesh>
+        <source id="meshId4-positions" name="meshId4-positions">
+          <float_array id="meshId4-positions-array" count="12"> 10 20 -10 -10 20 10 -10 20 -10 10 20 10 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId4-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId4-normals" name="meshId4-normals">
+          <float_array id="meshId4-normals-array" count="12"> 0 1 -0 0 1 -0 0 1 -0 0 1 -0 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId4-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId4-tex0" name="meshId4-tex0">
+          <float_array id="meshId4-tex0-array" count="8"> 1 1 0 0 0 1 1 0 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId4-tex0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="meshId4-vertices">
+          <input semantic="POSITION" source="#meshId4-positions" />
+          <input semantic="NORMAL" source="#meshId4-normals" />
+          <input semantic="TEXCOORD" source="#meshId4-tex0"  />
+        </vertices>
+        <polylist count="2" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#meshId4-vertices" />
+          <vcount>3 3 </vcount>
+          <p>2 1 0 1 3 0 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="meshId5" name="meshId5_name" >
+      <mesh>
+        <source id="meshId5-positions" name="meshId5-positions">
+          <float_array id="meshId5-positions-array" count="12"> 10 0 10 -10 0 -10 -10 0 10 10 0 -10 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId5-positions-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId5-normals" name="meshId5-normals">
+          <float_array id="meshId5-normals-array" count="12"> 0 -1 -0 0 -1 -0 0 -1 -0 0 -1 -0 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId5-normals-array" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="meshId5-tex0" name="meshId5-tex0">
+          <float_array id="meshId5-tex0-array" count="8"> 1 1 0 0 0 1 1 0 </float_array>
+          <technique_common>
+            <accessor count="4" offset="0" source="#meshId5-tex0-array" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="meshId5-vertices">
+          <input semantic="POSITION" source="#meshId5-positions" />
+          <input semantic="NORMAL" source="#meshId5-normals" />
+          <input semantic="TEXCOORD" source="#meshId5-tex0"  />
+        </vertices>
+        <polylist count="2" material="defaultMaterial">
+          <input offset="0" semantic="VERTEX" source="#meshId5-vertices" />
+          <vcount>3 3 </vcount>
+          <p>2 1 0 1 3 0 </p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Cube.obj" name="Cube.obj">
+      <node id="g Regroup01" name="g Regroup01">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#meshId0">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#m0Material01" />
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="g Regroup02" name="g Regroup02">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#meshId1">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#m1Material02" />
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="g Regroup03" name="g Regroup03">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#meshId2">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#m2Material03" />
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="g Regroup04" name="g Regroup04">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#meshId3">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#m3Material04" />
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="g Regroup05" name="g Regroup05">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#meshId4">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#m4Material05" />
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="g Regroup06" name="g Regroup06">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#meshId5">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="defaultMaterial" target="#m5Material06" />
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Cube.obj" />
+  </scene>
+</COLLADA>

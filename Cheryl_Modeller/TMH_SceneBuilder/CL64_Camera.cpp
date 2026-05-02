@@ -323,24 +323,33 @@ void CL64_Camera::Reset_View(void)
 void CL64_Camera::Reset_View_and_Zoom(void)
 {
 	Reset_View();
+	Ogre::Vector3 cameraPosition;
 
-	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	// Check the model type and set camera position accordingly
+	switch (App->CL_Model->Model_Type)
 	{
+	case Enums::Model_Type_Ogre3D:
 		if (App->CL_Model->Imported_Ogre_Ent)
 		{
-			Ogre::Vector3 vCenter = Ogre::Vector3(0.0f, (App->CL_Model->Imported_Ogre_Ent->getBoundingBox().getMaximum().y +
-				App->CL_Model->Imported_Ogre_Ent->getBoundingBox().getMinimum().y) * 0.5f,
-				0.0f);
-
-			App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
-			App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Model->Imported_Ogre_Ent->getBoundingRadius() * 2.8f));
+			// Calculate the center of the bounding box
+			const auto& boundingBox = App->CL_Model->Imported_Ogre_Ent->getBoundingBox();
+			float centerY = (boundingBox.getMaximum().y + boundingBox.getMinimum().y) * 0.5f;
+			cameraPosition = Ogre::Vector3(0.0f, centerY, 0.0f);
+			App->CL_Ogre->camNode->setPosition(cameraPosition + Ogre::Vector3(0, 0, App->CL_Model->Imported_Ogre_Ent->getBoundingRadius() * 2.8f));
 		}
+		break;
+
+	case Enums::Model_Type_Assimp:
+		cameraPosition = Ogre::Vector3(0, App->CL_Model->S_BoundingBox[0]->Size[0].y / 2, App->CL_Model->S_BoundingBox[0]->Size[0].z * 2.8f);
+		App->CL_Ogre->camNode->setPosition(cameraPosition);
+		break;
+
+	default:
+		// Handle unsupported model types if necessary
+		break;
 	}
 
-	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
-	{
-		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
-		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, App->CL_Model->S_BoundingBox[0]->Size[0].y/2, App->CL_Model->S_BoundingBox[0]->Size[0].z * 2.8f));
-	}
+	// Reset camera orientation
+	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
 }
 
