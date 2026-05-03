@@ -72,7 +72,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\Bin_Release\</OutDir>
+    <OutDir>..\..\Bin_64\</OutDir>
     <TargetName>Cheryl_3D_Modeller</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>

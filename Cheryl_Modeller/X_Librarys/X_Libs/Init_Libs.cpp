@@ -34,7 +34,7 @@ void Init_Libs::Start_Libraries()
 // *************************************************************************
 char* Init_Libs::GetVersion()
 {
-	return (LPSTR)" Init_Libs [ 02-05-26 ] Build T ";
+	return (LPSTR)" Init_Libs [ 03-05-26 ] Build T ";
 }
 
 // *************************************************************************
