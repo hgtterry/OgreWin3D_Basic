@@ -13,6 +13,7 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
+#pragma warning(disable : 5033) // C++ 17 Stuff
 
 #ifndef BT_OBJECT_ARRAY__
 #define BT_OBJECT_ARRAY__

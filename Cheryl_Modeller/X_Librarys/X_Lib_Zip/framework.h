@@ -5,6 +5,7 @@
 #endif
 
 #pragma warning( disable : 4305 4311 4302)
+#pragma warning(disable : 5033) // C++ 17 Stuff
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
