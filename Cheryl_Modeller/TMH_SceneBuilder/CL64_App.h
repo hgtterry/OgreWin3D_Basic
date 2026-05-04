@@ -238,6 +238,8 @@ public:
 	void BeepBeep();
 	void Open_HTML(char* HelpTitle);
 
+	void* Ram_Allocate(size_t size, const char* Description);
+
 	HINSTANCE hInst;
 	HWND MainHwnd;
 	HBRUSH AppBackground;
@@ -321,6 +323,7 @@ public:
 	bool flag_Release;
 	bool flag_3D_Started;
 	bool flag_Block_Mouse_Buttons;
+	bool flag_App_Initialized;
 
 	bool Development;
 	bool flag_Start_3DEditor_Mode;

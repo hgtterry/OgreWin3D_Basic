@@ -46,58 +46,6 @@ char* CL64_Lib_Maths::GetVersion()
 }
 
 // *************************************************************************
-// *			Ram_Allocate										 	   *
-// *************************************************************************
-void* CL64_Lib_Maths::Ram_Allocate(Ogre::int32 size)
-{
-	void* p;
-
-	//do
-	//{
-	p = malloc(size);
-	//} while ((p == NULL) && (geRam_DoCriticalCallback()));
-
-	return p;
-}
-
-//static char* ram_verify_block
-//(
-//	void* ptr
-//)
-//{
-//	char* p = ptr;
-//	uint32 size;
-//
-//	if (p == NULL)
-//	{
-//		assert(0 && "freeing NULL");
-//		return NULL;
-//	}
-//
-//	// make p point to the beginning of the block
-//	p -= HEADER_SIZE;
-//
-//	// get size from block
-//	size = *((uint32*)p);
-//
-//	// check stamp at front
-//	if (memcmp(p + SizeSize, MemStamp, MemStampSize) != 0)
-//	{
-//		assert(0 && "ram_verify_block:  Memory block corrupted at front");
-//		return NULL;
-//	}
-//
-//	// and at back
-//	if (memcmp(p + HEADER_SIZE + size, MemStamp, MemStampSize) != 0)
-//	{
-//		assert(0 && "ram_verify_block:  Memory block corrupted at tail");
-//		return NULL;
-//	}
-//
-//	return p;
-//}
-
-// *************************************************************************
 // *				Ram_Free										 	   *
 // *************************************************************************
 void CL64_Lib_Maths::Ram_Free(void* ptr)

@@ -80,9 +80,6 @@ typedef struct
 		void Quaternion_From_Matrix(const Matrix3d* M, Ogre::Quaternion* Q);
 
 		void XForm3d_Rotate(const Matrix3d* M, const T_Vec3* V, T_Vec3* Result);
-
-
-		void* Ram_Allocate(Ogre::int32 size);
 		void Ram_Free(void* ptr);
 	};
 

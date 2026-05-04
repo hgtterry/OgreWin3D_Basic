@@ -68,7 +68,7 @@ signed int CL64_WadFile::Setup()
 
 		if (nFiles > 0)
 		{
-			mBitmaps = (WadFileEntry*)App->CL_X_Maths->Ram_Allocate(nFiles * sizeof(WadFileEntry));
+			mBitmaps = (WadFileEntry*)App->Ram_Allocate(nFiles * sizeof(WadFileEntry),"Bitmaps");
 
 			while (Count < nFiles)
 			{

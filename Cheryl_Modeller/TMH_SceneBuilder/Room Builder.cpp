@@ -23,6 +23,37 @@ void StartOgre();
 void Close_App();
 bool Recent_Files(int wmId);
 
+bool Initialized = false;
+
+#pragma warning( disable : 28196)
+#pragma warning( disable : 28251)
+#pragma warning( disable : 6387)
+
+//void* operator new(size_t size)
+//{
+//   void* p = malloc(size);
+//  
+//   if (p)
+//   {
+//       if (Initialized == true)
+//       {
+//           char buff[MAX_PATH];
+//           _itoa(size, buff, 10);
+//
+//           App->CL_Ogre->Log_Message_To_File((LPSTR)buff);
+//       }
+//
+//       return p;
+//   }
+//   else
+//   {
+//       return nullptr;
+//   }
+//
+//   return nullptr;
+//}
+
+
 int Block_Call = 0;
 
 CL64_App* App = NULL;
@@ -1441,6 +1472,8 @@ void StartOgre()
 
     App->flag_3D_Started = true;
 
+    Initialized = true;
+   
     App->CL_Ogre->RenderFrame(5);
    
     if (App->CL_Libs->CL_Preference->flag_OpenLastFile)

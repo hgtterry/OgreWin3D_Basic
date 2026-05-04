@@ -110,6 +110,7 @@ CL64_App::CL64_App(void)
 	
 	CL_Sandbox =				nullptr;
 	CL_Importers =				nullptr;
+	CL_Model =					nullptr;
 	CL_Mesh =					nullptr;
 
 	CL_Properties_Textures_Com =	nullptr;
@@ -204,6 +205,7 @@ CL64_App::CL64_App(void)
 	flag_3D_Started = false;
 	flag_Block_Mouse_Buttons = false;
 	flag_Release = false;
+	flag_App_Initialized = false;
 
 	Development = true; // Allow New Code to Run for Testing
 	flag_Start_3DEditor_Mode = true;
@@ -211,6 +213,7 @@ CL64_App::CL64_App(void)
 	ViewPLeaseWait = nullptr;
 
 	App_Directory_FullPath[0] = 0;
+	App_Title[0] = 0;
 }
 
 CL64_App::~CL64_App(void)
@@ -345,6 +348,8 @@ void CL64_App::InitApp(void)
 	}
 
 	LoadString(hInst, IDS_APP_TITLE, App_Title, MAX_PATH);
+
+	flag_App_Initialized = true;
 }
 
 // *************************************************************************
@@ -819,5 +824,31 @@ void CL64_App::Open_HTML(char* HelpTitle)
 	strcat(Path, HelpTitle);
 
 	ShellExecute(0, "open", Path, 0, 0, SW_SHOW);
+}
+
+// *************************************************************************
+// *				Ram_Allocate:- Terry Mo and Hazel 2026				   *
+// *************************************************************************
+void* CL64_App::Ram_Allocate(size_t size, const char* Description)
+{
+	// Allocate memory of the specified size
+	void* p = malloc(size);
+
+	// Check if memory allocation was successful
+	if (p != nullptr)
+	{
+		//if (flag_3D_Started == true)
+		//{
+		//	char buff[MAX_PATH];
+		//	sprintf(buff, "Allocated %zu bytes   %s", size, Description);
+		//	// Log the size of the allocated memory
+		//	App->CL_Ogre->Log_Message_To_File((LPSTR)buff);
+		//}
+
+		return p; // Return the allocated memory pointer
+	}
+	
+	// Return nullptr if allocation failed
+	return nullptr;
 }
 

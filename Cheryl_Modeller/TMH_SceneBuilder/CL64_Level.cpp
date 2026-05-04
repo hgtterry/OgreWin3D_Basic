@@ -255,7 +255,7 @@ signed int CL64_Level::Level_Create_TXL_Class()
 
 	if (CL_Wad_Class->Setup())
 	{
-		m_pLevel->WadSizeInfos = (SizeInfo*)App->CL_X_Maths->Ram_Allocate(sizeof(SizeInfo) * CL_Wad_Class->mBitmapCount);
+		m_pLevel->WadSizeInfos = (SizeInfo*)App->Ram_Allocate(sizeof(SizeInfo) * CL_Wad_Class->mBitmapCount,"Was Class Size of Bitmaps");
 
 		if (m_pLevel->WadSizeInfos != NULL)
 		{

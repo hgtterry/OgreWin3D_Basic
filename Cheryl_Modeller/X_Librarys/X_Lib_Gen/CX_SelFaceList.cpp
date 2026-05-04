@@ -50,7 +50,7 @@ SelFaceList* CX_SelFaceList::SelFaceList_Create(void)
 {
 	SelFaceList* pList;
 
-	pList = (SelFaceList*)App->CL_X_Maths->Ram_Allocate(sizeof(SelFaceList));
+	pList = (SelFaceList*)App->Ram_Allocate(sizeof(SelFaceList),"SelFaceList_Create");
 	if (pList != NULL)
 	{
 		pList->pItems = App->CL_X_Array->Array_Create(10, sizeof(Face*));

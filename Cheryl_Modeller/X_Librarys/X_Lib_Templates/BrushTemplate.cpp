@@ -299,8 +299,8 @@ Brush* BrushTemplate::BrushTemplate_CreateCylinder(const BrushTemplate_Cylinder*
 	}
 
 
-	Verts = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumVerticalBands * 2);
-	TopPoints = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumVerticalBands);
+	Verts = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * NumVerticalBands * 2, "CreateCylinder NumVerticalBands");
+	TopPoints = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * NumVerticalBands, "CreateCylinder TopPoints");
 	fl = App->CL_X_FaceList->FaceList_Create(NumVerticalBands + 2);
 
 	if (!Verts || !TopPoints || !fl)
@@ -494,7 +494,7 @@ Brush* BrushTemplate::BrushTemplate_CreateCone(const BrushTemplate_Cone* pTempla
 	App->CL_X_Maths->Vector3_Set(&StartPoint, (float)(pTemplate->Width / 2), (float)-(pTemplate->Height / 2), 0);
 
 	CurPoint = OldPoint = StartPoint;
-	BottomVerts = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * pTemplate->VerticalStrips);
+	BottomVerts = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * pTemplate->VerticalStrips, "CreateCone BottomVerts");
 	BottomVerts[0] = CurPoint;
 
 	CurAngle = BottomCount = 0;
@@ -804,9 +804,9 @@ Brush* BrushTemplate::BrushTemplate_CreateArch(const BrushTemplate_Arch* pTempla
 		App->CL_X_Maths->Vector3_Set(&StartPoint, -(float)Radius2, 0.0, 0.0);
 
 		CurPoint = StartPoint;
-		CrossVerts = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
-		OldVerts = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
-		StartVerts = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumSides);
+		CrossVerts = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * NumSides,"CreateArch CrossVerts");
+		OldVerts = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * NumSides, "CreateArch OldVerts");
+		StartVerts = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * NumSides, "CreateArch StartVerts");
 		StartVerts[0] = CurPoint;
 		StartVerts[0].x += InnerRadius + Radius2;
 		//		if(CW)

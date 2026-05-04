@@ -61,13 +61,13 @@ FaceList* CX_FaceList::FaceList_Create(int NumFaces)
 	FaceList* pList;
 
 	// allocate the structure
-	pList = (FaceList*)App->CL_X_Maths->Ram_Allocate(sizeof(FaceList));
+	pList = (FaceList*)App->Ram_Allocate(sizeof(FaceList), "FaceList_Create");
 	if (pList != NULL)
 	{
 		pList->NumFaces = 0;
 		pList->Limit = NumFaces;
 		// allocate space for NumFaces pointers
-		pList->Faces = (struct FaceTag**)App->CL_X_Maths->Ram_Allocate(NumFaces * sizeof(Face*));
+		pList->Faces = (struct FaceTag**)App->Ram_Allocate(NumFaces * sizeof(Face*), "Create Faces");
 		if (pList->Faces != NULL)
 		{
 			int i;

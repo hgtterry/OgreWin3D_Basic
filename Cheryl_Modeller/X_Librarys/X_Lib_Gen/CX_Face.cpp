@@ -63,7 +63,7 @@ Face* CX_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 {
 	Face* f;
 
-	f = (Face*)App->CL_X_Maths->Ram_Allocate(sizeof(Face));
+	f = (Face*)App->Ram_Allocate(sizeof(Face),"Face_Create");
 	if (f)
 	{
 		memset(f, 0, sizeof(Face));
@@ -81,7 +81,7 @@ Face* CX_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 		strcpy(f->Brush_Name, "No_Brush");
 		Face_SetVisible(f, true);
 
-		f->Points = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumPnts);
+		f->Points = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * NumPnts, "Face_Points");
 		if (f->Points)
 		{
 			memcpy(f->Points, pnts, sizeof(Ogre::Vector3) * NumPnts);
@@ -473,7 +473,7 @@ void CX_Face::Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* sid
 	}
 	App->CL_X_Maths->Ram_Free(f->Points);
 	f->NumPoints = nbp;
-	f->Points = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * nbp);
+	f->Points = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * nbp, "Face_Clip");
 	memcpy(f->Points, spb, sizeof(T_Vec3) * nbp);
 }
 

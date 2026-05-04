@@ -103,7 +103,8 @@ bool CLP_3D_Setup::Init_3D_CreateRoot(void)
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
 
-	if (App->flag_Debug_App == 1)
+
+	if (App->flag_Debug_App == 0)
 	{
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "GD64_Ogre.log");
 		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
@@ -117,10 +118,12 @@ bool CLP_3D_Setup::Init_3D_CreateRoot(void)
 	else
 	{
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
+		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
+		Ogre::LogManager::getSingleton().setMinLogLevel(Ogre::LogMessageLevel::LML_NORMAL);
 	}
 
-	App->CL_Ogre->Log_Message_To_File((LPSTR)" // -------------------------  Init Ogre");
-	App->CL_Ogre->Log_Message_To_File((LPSTR)"Ogre Root Created");
+	/*Log_Message_To_File((LPSTR)" // -------------------------  Init Ogre");
+	Log_Message_To_File((LPSTR)"Ogre Root Created");*/
 
 	return 1;
 }
@@ -168,7 +171,7 @@ bool CLP_3D_Setup::Init_Resources(void)
 {
 	// Initialize, parse scripts etc
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-	App->CL_Ogre->Log_Message_To_File((LPSTR)"Initialise_Resources");
+	//App->CL_Ogre->Log_Message_To_File((LPSTR)"Initialise_Resources");
 
 	return 1;
 }
@@ -215,7 +218,7 @@ bool CLP_3D_Setup::Init_Configure(void)
 	//App->CL_Panels->Width = mWindow->getWidth();
 	//App->CL_Panels->Height = mWindow->getHeight();
 
-	App->CL_Ogre->Log_Message_To_File((LPSTR)"Configure");
+	//App->CL_Ogre->Log_Message_To_File((LPSTR)"Configure");
 
 	return true;
 }
@@ -342,7 +345,7 @@ bool CLP_3D_Setup::Init_CreateFrameListener(void)
 // *************************************************************************
 void CLP_3D_Setup::Log_Message_To_File(char* Message)
 {
-	if (App->flag_Debug_App == 1)
+	//if (App->flag_Debug_App == 1)
 	{
 		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("App.log"));
 		Ogre::LogManager::getSingleton().logMessage(Message);

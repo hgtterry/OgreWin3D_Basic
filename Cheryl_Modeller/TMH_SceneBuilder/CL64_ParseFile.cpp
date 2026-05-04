@@ -262,7 +262,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 	if (!Get_Float("Reflectivity", &Reflectivity)) { return NULL; }
 	
 
-	tmpPnts = (T_Vec3*)App->CL_X_Maths->Ram_Allocate(sizeof(T_Vec3) * NumPnts);
+	tmpPnts = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * NumPnts, "Create Points");
 	if (tmpPnts)
 	{
 		float LightXScale = 1.0f;

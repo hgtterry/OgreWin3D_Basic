@@ -50,7 +50,7 @@ SelBrushList* CX_SelBrushList::SelBrushList_Create(void)
 {
 	SelBrushList* pList;
 
-	pList = (SelBrushList*)App->CL_X_Maths->Ram_Allocate(sizeof(SelBrushList));
+	pList = (SelBrushList*)App->Ram_Allocate(sizeof(SelBrushList), "SelBrushList_Create");
 	if (pList != NULL)
 	{
 		pList->pItems = App->CL_X_Array->Array_Create(10, sizeof(Brush*));

@@ -91,7 +91,7 @@ BrushList* CX_Brush::BrushList_Create(void)
 {
 	BrushList* pList;
 
-	pList = (BrushList*)App->CL_X_Maths->Ram_Allocate(sizeof(BrushList));
+	pList = (BrushList*)App->Ram_Allocate(sizeof(BrushList),"BrushList_Create");
 	if (pList != NULL)
 	{
 		pList->First = NULL;
@@ -107,7 +107,7 @@ Brush* CX_Brush::Brush_Create(int Type, const FaceList* fl, const BrushList* BLi
 {
 	Brush* pBrush;
 
-	pBrush = (Brush*)App->CL_X_Maths->Ram_Allocate(sizeof(Brush));
+	pBrush = (Brush*)App->Ram_Allocate(sizeof(Brush),"Brush_Create");
 	if (pBrush != NULL)
 	{
 		pBrush->Prev = NULL;
@@ -1349,7 +1349,7 @@ static Brush* Brush_CreateFromParent(const Brush* ParentBrush, const FaceList* f
 	assert(fl != NULL);
 	assert(ParentBrush->Type != BRUSH_MULTI);
 
-	pBrush = (Brush*)App->CL_X_Maths->Ram_Allocate(sizeof(Brush));
+	pBrush = (Brush*)App->Ram_Allocate(sizeof(Brush), "Brush_CreateFromParent");
 	if (pBrush != NULL)
 	{
 		pBrush->Prev = NULL;
