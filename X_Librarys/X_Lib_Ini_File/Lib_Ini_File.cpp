@@ -44,11 +44,11 @@ Lib_Ini_File::~Lib_Ini_File(void)
 }
 
 // *************************************************************************
-// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *			GetVersion:- Terry and Hazel Flanigan 2026			 	   *
 // *************************************************************************
 char* Lib_Ini_File::GetVersion()
 {
-	return (LPSTR)" Lib_Ini_File [ 03-05-26 ] Build T ";
+	return (LPSTR)" Lib_Ini_File [ 04-05-26 ] Build T ";
 }
 
 // *************************************************************************

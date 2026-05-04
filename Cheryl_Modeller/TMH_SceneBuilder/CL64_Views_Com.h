@@ -49,7 +49,6 @@ public:
 	void Init_Views(int View);
 	void ResizeOgreWindow(void);
 
-	void Render_RenderBrushFacesOrtho(const ViewVars* Cam, Brush* b, HDC ViewDC);
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
 	
 	void Context_3D_Menu(HWND hDlg);

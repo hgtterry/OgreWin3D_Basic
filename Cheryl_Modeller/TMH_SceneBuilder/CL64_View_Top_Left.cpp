@@ -531,7 +531,8 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 					}
 					else
 					{
-						Views_Com->Render_RenderBrushFacesOrtho(VCam_TL, App->CL_Doc->CurBrush, m_MemoryhDC_TL);
+						Draw_Faces_TL(pBrush);
+						//Views_Com->Render_RenderBrushFacesOrtho(VCam_TL, App->CL_Doc->CurBrush, m_MemoryhDC_TL);
 					}
 				}
 			}

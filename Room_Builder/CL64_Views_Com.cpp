@@ -752,9 +752,9 @@ void CL64_Views_Com::Set_View()
 }
 
 // *************************************************************************
-// *			Context_Menu:- Terry and Hazel Flanigan 2024		 	   *
+// *			Context_Menu:- Terry and Hazel Flanigan 2026		 	   *
 // *************************************************************************
-void CL64_Views_Com::Context_Menu(HWND hDlg)
+void CL64_Views_Com::Context_Grids_Menu(HWND hDlg)
 {
 	RECT rcTree;
 	TVHITTESTINFO htInfo = { 0 };
@@ -844,9 +844,9 @@ void CL64_Views_Com::Context_Menu(HWND hDlg)
 }
 
 // *************************************************************************
-// *			Context_Menu_Ogre:- Terry and Hazel Flanigan 2024	 	   *
+// *			Context_3D_Menu:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
+void CL64_Views_Com::Context_3D_Menu(HWND hDlg)
 {
 	RECT rcTree;
 	POINT pt;
@@ -911,9 +911,9 @@ void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
 }
 
 // *************************************************************************
-// *		Context_Command_Ogre:- Terry and Hazel Flanigan 2024		   *
+// *			Context_3D_Command:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-bool CL64_Views_Com::Context_Command_Ogre(WPARAM wParam)
+bool CL64_Views_Com::Context_3D_Command(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
@@ -963,9 +963,9 @@ bool CL64_Views_Com::Context_Command_Ogre(WPARAM wParam)
 }
 
 // *************************************************************************
-// *			 Context_Command:- Terry and Hazel Flanigan 2024		   *
+// *		Context_Grids_Command:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-bool CL64_Views_Com::Context_Command(WPARAM wParam)
+bool CL64_Views_Com::Context_Grids_Command(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
