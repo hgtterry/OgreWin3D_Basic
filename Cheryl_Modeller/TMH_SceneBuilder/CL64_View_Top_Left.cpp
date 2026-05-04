@@ -511,31 +511,31 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 			}
 		}
 
-		//bool Draw_Sel = 0;
-		//if (Draw_Sel == 0)
-		//{
-		//	// Draw selected brushes
-		//	SelectObject(m_MemoryhDC_TL, Views_Com->PenSelected);
-		//	int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+		bool Draw_Sel = 0;
+		if (Draw_Sel == 0)
+		{
+			// Draw selected brushes
+			SelectObject(m_MemoryhDC_TL, Views_Com->PenSelected);
+			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
-		//	int i = 0;
-		//	for (i = 0; i < NumSelBrushes; i++)
-		//	{
-		//		Brush* pBrush;
+			int i = 0;
+			for (i = 0; i < NumSelBrushes; i++)
+			{
+				Brush* pBrush;
 
-		//		pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-		//		{
-		//			if (App->CL_X_Brush->Brush_IsMulti(pBrush))
-		//			{
-		//				App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &m_brushDrawData_TL, Draw_Brush_2D);
-		//			}
-		//			else
-		//			{
-		//				Views_Com->Render_RenderBrushFacesOrtho(VCam_TL, App->CL_Doc->CurBrush, m_MemoryhDC_TL);
-		//			}
-		//		}
-		//	}
-		//}
+				pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+				{
+					if (App->CL_X_Brush->Brush_IsMulti(pBrush))
+					{
+						App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(pBrush), &m_brushDrawData_TL, Draw_Brush_2D);
+					}
+					else
+					{
+						Views_Com->Render_RenderBrushFacesOrtho(VCam_TL, App->CL_Doc->CurBrush, m_MemoryhDC_TL);
+					}
+				}
+			}
+		}
 
 		//// Draw selected faces
 		//BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();

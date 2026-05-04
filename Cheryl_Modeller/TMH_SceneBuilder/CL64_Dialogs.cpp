@@ -738,7 +738,6 @@ void CL64_Dialogs::Fill_Brush_Combo(HWND hDlg)
 // *************************************************************************
 void CL64_Dialogs::List_BrushData(HWND hDlg)
 {
-
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 	Face_Index = 0;
 	
@@ -753,13 +752,13 @@ void CL64_Dialogs::List_BrushData(HWND hDlg)
 		}
 		else
 		{
-			sprintf(buf, "%s", "No Brush Selected");
+			snprintf(buf, sizeof(buf), "%s", "No Brush Selected");
 			SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 		}
 	}
 	else
 	{
-		sprintf(buf, "%s", "The World has No Brushes");
+		snprintf(buf, sizeof(buf),"%s", "The World has No Brushes");
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 }
@@ -769,7 +768,7 @@ void CL64_Dialogs::List_BrushData(HWND hDlg)
 // *************************************************************************
 bool CL64_Dialogs::Show_Brush_Info(const Brush* b, HWND hDlg)
 {
-	char buf[255];
+	char buf[MAX_PATH];
 
 	sprintf(buf, "%s%s", "Brush Name ", b->Name);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
@@ -810,54 +809,50 @@ bool CL64_Dialogs::Show_Brush_Info(const Brush* b, HWND hDlg)
 	}
 
 	// ----------------------------------- Data
-	sprintf(buf, "%s%d", "Model ID ", b->ModelId);
+	snprintf(buf, sizeof(buf), "Model ID: %d", b->ModelId);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s%d", "Group ID ", b->GroupId);
+	snprintf(buf, sizeof(buf), "Group ID: %d", b->GroupId);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s%f", "Hull Size ", b->HullSize);
+	snprintf(buf, sizeof(buf), "Hull Size: %f", b->HullSize);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s%i", "Has Been Cut ", b->Has_Been_Cut);
+	snprintf(buf, sizeof(buf), "Has Been Cut: %i", b->Has_Been_Cut);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s %f %f %f", "Last Rotation ", b->Last_Rotation.x, b->Last_Rotation.y, b->Last_Rotation.z);
+	snprintf(buf, sizeof(buf), "Last Rotation: %f %f %f", b->Last_Rotation.x, b->Last_Rotation.y, b->Last_Rotation.z);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	// ----------------------------------- Type
-	if (b->Type == BRUSH_MULTI)
+	const char* typeDescription = "Unknown";
+
+	switch (b->Type) 
 	{
-		sprintf(buf, "%s%i%s", "Type ", b->Type, "  - BRUSH_MULTI");
-		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-	}
-	else if (b->Type == BRUSH_LEAF)
-	{
-		sprintf(buf, "%s%i%s", "Type ", b->Type, "  - BRUSH_LEAF");
-		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-	}
-	else if (b->Type == BRUSH_CSG)
-	{
-		sprintf(buf, "%s%i%s", "Type ", b->Type, "  - BRUSH_CSG");
-		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-	}
-	else
-	{
-		sprintf(buf, "%s%i%s", "Type ", b->Type, "Unknown");
-		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	case BRUSH_MULTI:
+		typeDescription = "BRUSH_MULTI";
+		break;
+	case BRUSH_LEAF:
+		typeDescription = "BRUSH_LEAF";
+		break;
+	case BRUSH_CSG:
+		typeDescription = "BRUSH_CSG";
+		break;
 	}
 
-	if (b->Type == BRUSH_MULTI)
+	snprintf(buf, sizeof(buf), "Type: %i  %s", b->Type, typeDescription);
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	// Show additional information based on brush type
+	switch (b->Type) 
 	{
+	case BRUSH_MULTI:
 		return Show_Brush_ListInfo(b->BList, hDlg);
-	}
-	if (b->Type == BRUSH_LEAF)
-	{
+	case BRUSH_LEAF:
 		return Show_Brush_Faces_Info(b->Faces, hDlg);
-	}
-	if (b->Type == BRUSH_CSG)
-	{
+	case BRUSH_CSG:
 		App->Say("BRUSH_CSG");
+		break;
 	}
 
 	return 1;
@@ -933,9 +928,7 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	char buf[MAX_PATH];
 
 	int  i = 0;
-	//int		i, xShift, yShift, Rotate;
-	//geFloat xScale, yScale, rot;
-
+	
 	sprintf(buf, "%s %i", " --------------------- Face ", f->Real_Brush_Face_Index);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 

@@ -570,6 +570,8 @@
 #define IDC_ST_MOUSESPEED               1400
 #define IDC_ST_RENDERTEST               1401
 #define IDC_ST_DATETIME                 1402
+#define IDC_BUTTON4                     1403
+#define IDC_BT_TB_SHAPES                1403
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -712,7 +714,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        225
 #define _APS_NEXT_COMMAND_VALUE         32903
-#define _APS_NEXT_CONTROL_VALUE         1403
+#define _APS_NEXT_CONTROL_VALUE         1404
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
