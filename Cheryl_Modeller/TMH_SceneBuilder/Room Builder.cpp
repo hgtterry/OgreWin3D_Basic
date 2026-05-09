@@ -1053,6 +1053,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 if (App->CL_Interface->flag_Properties_Dlg_Active == true)
                 {
                     App->CL_Interface->Show_Properties_Panel(false);
+                   
                     CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
                 }
                 else
@@ -1078,20 +1079,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return TRUE;
             }
 
-            case ID_WINDOW_TEXTURES:
-            {
-                if (App->CL_Interface->Textures_Dlg_Assimp_Active == true)
-                {
-                    App->CL_Interface->Show_Textures_Com_Dlg(false);
-                }
-                else
-                {
-                    App->CL_Interface->Show_Textures_Com_Dlg(true);
-                }
-
-                return TRUE;
-            }
-            
             case ID_INFO_PHYSICSOBJECTSDEBUG:
             {
                /* if (App->CL_Editor_Scene->flag_Show_Physics_Objects == 1)

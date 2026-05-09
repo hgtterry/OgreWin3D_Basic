@@ -98,8 +98,18 @@ void CL64_Interface::Deselect_All_Brushes_Update_Dlgs(void)
 // *************************************************************************
 void CL64_Interface::Show_Properties_Panel(bool Show)
 {
-	ShowWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, Show);
-	flag_Properties_Dlg_Active = Show;
+	if (Show == true)
+	{
+		ShowWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, true);
+		flag_Properties_Dlg_Active = true;
+		CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
+	}
+	else
+	{
+		ShowWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, false);
+		flag_Properties_Dlg_Active = false;
+		CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+	}
 }
 
 // *************************************************************************
@@ -222,25 +232,6 @@ bool CL64_Interface::Resize_FileView(void)
 }
 
 // *************************************************************************
-// *		Show_Textures_Assimp_Dlg:- Terry and Hazel Flanigan 2026	   *
-// *************************************************************************
-void CL64_Interface::Show_Textures_Com_Dlg(bool show)
-{
-	if (show == true)
-	{
-		ShowWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, true);
-		Textures_Dlg_Assimp_Active = true;
-		CheckMenuItem(App->Menu_Map, ID_WINDOW_TEXTURES, MF_BYCOMMAND | MF_CHECKED);
-	}
-	else
-	{
-		ShowWindow(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, false);
-		Textures_Dlg_Assimp_Active = false;
-		CheckMenuItem(App->Menu_Map, ID_WINDOW_TEXTURES, MF_BYCOMMAND | MF_UNCHECKED);
-	}
-}
-
-// *************************************************************************
 // *			Show_Motions_Dlg:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Interface::Show_Motions_Dlg(bool show)
@@ -256,21 +247,6 @@ void CL64_Interface::Show_Motions_Dlg(bool show)
 		App->CL_Properties_Motions->Show_Motions_Dialog(false);
 		Motions_Dlg_Active = false;
 		CheckMenuItem(App->Menu_Map, ID_WINDOW_MOTIONS, MF_BYCOMMAND | MF_UNCHECKED);
-	}
-}
-
-// *************************************************************************
-// *		Menu_Enable_Textures:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Interface::Menu_Enable_Textures(bool option)
-{
-	if (option == true)
-	{
-		EnableMenuItem(App->Menu_Map, ID_WINDOW_TEXTURES, MF_BYCOMMAND | MF_ENABLED);
-	}
-	else
-	{
-		EnableMenuItem(App->Menu_Map, ID_WINDOW_TEXTURES, MF_BYCOMMAND | MF_GRAYED);
 	}
 }
 

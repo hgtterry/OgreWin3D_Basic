@@ -17,7 +17,8 @@ CL64_Importers::~CL64_Importers(void)
 // *************************************************************************
 void CL64_Importers::Set_Editor()
 {
-	App->CL_Interface->Show_Textures_Com_Dlg(true);
+	App->CL_Interface->Show_Properties_Panel(true);
+	App->CL_Properties_Textures_Com->Show_Materials_Dialog(true);
 
 	App->CL_Top_Tabs->Set_Texture_Bmp_On();
 
@@ -25,7 +26,6 @@ void CL64_Importers::Set_Editor()
 	{
 		App->CL_Interface->Enable_Change_Textures_Button(false);
 		
-		App->CL_Interface->Menu_Enable_Textures(true);
 		App->CL_Interface->Menu_Enable_OgreExport(false);
 		App->CL_Interface->Show_file_view(true);
 	}
@@ -34,7 +34,6 @@ void CL64_Importers::Set_Editor()
 	{
 		App->CL_Interface->Enable_Change_Textures_Button(true);
 
-		App->CL_Interface->Menu_Enable_Textures(true);
 		App->CL_Ogre->OGL_Listener->flag_ShowTextured = true;
 		App->CL_Interface->Menu_Enable_OgreExport(true);
 	}

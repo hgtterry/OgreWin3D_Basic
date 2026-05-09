@@ -40,12 +40,8 @@ public:
 
 	void Position_Motions_Dlg(void);
 
-	void Show_Textures_Com_Dlg(bool show);
-
 	bool Resize_FileView(void);
 	void Deselect_All_Brushes_Update_Dlgs(void);
-
-	void Menu_Enable_Textures(bool option);
 
 	void Enable_Debug_Menu(bool option);
 	void Menu_Enable_OgreExport(bool option);

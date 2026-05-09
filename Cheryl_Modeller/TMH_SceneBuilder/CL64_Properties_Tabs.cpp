@@ -94,6 +94,8 @@ void CL64_Properties_Tabs::Init_Bmps_Globals(void)
 void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 {
 	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TABS, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
+	App->CL_Interface->Show_Properties_Panel(false);
+
 	Init_Bmps_Globals();
 
 	// Brushes
@@ -106,7 +108,8 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 
 	// Materials
 	App->CL_Properties_Textures_Com->Start_Props_Materials_Dlg();
-	
+	App->CL_Properties_Textures_Com->Show_Materials_Dialog(true);
+
 	App->CL_Interface->Position_Properties_Dlg();
 	App->CL_Props_Dialogs->Start_Props_Dialogs();
 
@@ -114,17 +117,10 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 	App->CL_Properties_Templates->Start_TemplatesDialog();
 	App->CL_Properties_Templates->Show_TemplatesDialog(false);
 
-	App->CL_Interface->Show_Textures_Com_Dlg(true);
-	App->CL_Interface->Menu_Enable_Textures(false);
-
 	App->CL_Properties_Motions->Start_Motions_Dialog();
 
 	App->CL_Interface->Position_Tabs_Dlg();
 	App->CL_Interface->Position_Motions_Dlg();
-
-	ShowWindow(Tabs_Control_Hwnd, true);
-
-	//CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
 }
 
 // *************************************************************************
