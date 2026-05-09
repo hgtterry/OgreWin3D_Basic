@@ -35,7 +35,7 @@ public:
 	void Show_Materials_Dialog(bool Show);
 	bool Start_Texture_Editor_Dialog();
 
-	bool Start_Props_Textures_Dialog();
+	bool Start_Props_Materials_Dlg();
 
 	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
 

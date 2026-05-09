@@ -1050,16 +1050,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_WINDOW_PROPERTIES:
             {
-                if (App->CL_Properties_Tabs->flag_Tabs_Dlg_Active == 1)
+                if (App->CL_Interface->flag_Properties_Dlg_Active == true)
                 {
-                    App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
-                    App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
+                    App->CL_Interface->Show_Properties_Panel(false);
                     CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
                 }
                 else
                 {
-                    App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(true);
-                    App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
+                    App->CL_Interface->Show_Properties_Panel(true);               
                     CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
                 }
 

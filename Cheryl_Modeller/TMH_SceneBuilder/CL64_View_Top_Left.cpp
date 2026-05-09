@@ -492,8 +492,27 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 	if (test == 0)
 	{
 		// ------------------------------------------ Draw Brushes
-		SelectObject(m_MemoryhDC_TL, PenBrushes);
+		// Draw Template Brush
+		bool Draw_Template = true;
+		if (Draw_Template == true)
+		{
+			if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+			{
+				SelectObject(m_MemoryhDC_TL, Views_Com->PenTemplate);
 
+				if (App->CL_X_Brush->Brush_IsMulti(App->CL_Doc->CurBrush))
+				{
+
+					App->CL_X_Brush->BrushList_EnumLeafBrushes(App->CL_X_Brush->Brush_GetBrushList(App->CL_Doc->CurBrush), &m_brushDrawData_TL, Draw_Brush_2D);
+				}
+				else
+				{
+					Draw_Faces_TL(App->CL_Doc->CurBrush);
+				}
+			}
+		}
+
+		SelectObject(m_MemoryhDC_TL, PenBrushes);
 		// Iterate through all brushes
 		int brushCount = App->CL_X_Brush->Get_Brush_Count();
 
@@ -511,8 +530,8 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 			}
 		}
 
-		bool Draw_Sel = 0;
-		if (Draw_Sel == 0)
+		bool Draw_Sel = true;
+		if (Draw_Sel == true)
 		{
 			// Draw selected brushes
 			SelectObject(m_MemoryhDC_TL, Views_Com->PenSelected);

@@ -100,9 +100,8 @@ void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
 	App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
 	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
-	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;
-    
 	
+ 
 	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)
 	{
 		App->CL_Ogre->OGL_Listener->Show_Visuals(true);
@@ -137,8 +136,8 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	// Hide visuals and tabs
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 	topTabs->Show_TopTabs(false);
-	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
-	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = false;
+	App->CL_Interface->Show_Properties_Panel(false);
+	
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 	
 	// Show headers and file view

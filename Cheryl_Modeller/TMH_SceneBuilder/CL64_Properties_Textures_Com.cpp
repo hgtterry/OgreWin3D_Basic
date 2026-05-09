@@ -81,14 +81,14 @@ void CL64_Properties_Textures_Com::Show_Materials_Dialog(bool Show)
 }
 
 // *************************************************************************
-// *	 Start_Props_Textures_Dialog:- Terry and Hazel Flanigan 2026	   *
+// *		 Start_Props_Materials_Dlg:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
-bool CL64_Properties_Textures_Com::Start_Props_Textures_Dialog()
+bool CL64_Properties_Textures_Com::Start_Props_Materials_Dlg()
 {
-	Textures_Dlg_Hwnd_Assimp = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES_TEXTURES_ASSIMP, App->MainHwnd, (DLGPROC)Proc_Textures_Dialog);
+	Textures_Dlg_Hwnd_Assimp = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES_TEXTURES_ASSIMP, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Textures_Dialog);
 
 	//App->CL_Props_Textures->Enable_Export_Button(false);
-	App->CL_Interface->Show_Textures_Com_Dlg(false);
+	App->CL_Interface->Show_Textures_Com_Dlg(true);
 
 	return 1;
 }

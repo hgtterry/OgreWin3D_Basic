@@ -60,13 +60,13 @@ void CL64_Properties_Tabs::Show_Tabs_Control_Dlg(bool Show)
 }
 
 // *************************************************************************
-// *	  	Start_Tabs_Control_Dlg:- Terry and Hazel Flanigan 2025		   *
+// *	  	Start_Tabs_Control_Dlg:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 {
 	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSDIALOG, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
 
-	flag_Tabs_Dlg_Active = 1;
+	flag_Tabs_Dlg_Active = true;
 	
 	App->CL_Properties_Brushes->Start_Brush_Tabs_Dialog();
 	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
@@ -84,11 +84,10 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 }
 
 // *************************************************************************
-// *        Tabs_Control_Proc:- Terry and Hazel Flanigan 2025			   *
+// *        Tabs_Control_Proc:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
 	switch (message)
 	{
 	case WM_INITDIALOG:

@@ -34,6 +34,7 @@ CL64_Interface::CL64_Interface()
 	Textures_Dlg_Assimp_Active = false;
 
 	flag_Grids_Are_Visible = false;
+	flag_Properties_Dlg_Active = false;
 }
 
 CL64_Interface::~CL64_Interface()
@@ -90,6 +91,15 @@ void CL64_Interface::Deselect_All_Brushes_Update_Dlgs(void)
 
 	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
+}
+
+// *************************************************************************
+// *	  Show_Properties_Panel:- Terry Mo and Hazel 2026				   *
+// *************************************************************************
+void CL64_Interface::Show_Properties_Panel(bool Show)
+{
+	ShowWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, Show);
+	flag_Properties_Dlg_Active = Show;
 }
 
 // *************************************************************************
@@ -155,29 +165,6 @@ void CL64_Interface::Position_Tabs_Dlg(void)
 		position.x + widthX - 290, position.y + 25,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
-}
-
-// *************************************************************************
-// *		Position_Textures_Dlg:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Interface::Position_Textures_Dlg(void)
-{
-	POINT position = { 0 };
-
-	// Map the window points to get the current position
-	int offset = MapWindowPoints(App->CL_Views_Com->Main_View_Dlg_Hwnd, NULL, &position, 1);
-
-	RECT mainDialogRect;
-	GetWindowRect(App->CL_Views_Com->Main_View_Dlg_Hwnd, &mainDialogRect);
-
-	// Calculate the width and height of the main dialog
-	int dialogWidth = mainDialogRect.right - mainDialogRect.left;
-	int dialogHeight = mainDialogRect.bottom - mainDialogRect.top;
-
-	// Set the position of the Textures dialog
-	SetWindowPos(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, NULL,
-		position.x + dialogWidth - 300, position.y + 25,
-		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
 
 // *************************************************************************

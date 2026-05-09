@@ -33,10 +33,11 @@ public:
 
 	void Move_FileView_Window(void);
 
+	void Show_Properties_Panel(bool Show);
+
 	bool Position_Properties_Dlg(void);
 	void Position_Tabs_Dlg(void);
 
-	void Position_Textures_Dlg(void);
 	void Position_Motions_Dlg(void);
 
 	void Show_Textures_Com_Dlg(bool show);
@@ -60,6 +61,7 @@ public:
 
 	void Show_Grids(bool Show);
 
+	bool flag_Properties_Dlg_Active;
 	bool Materials_Dlg_Active;
 	bool Motions_Dlg_Active;
 	bool Textures_Dlg_Assimp_Active;

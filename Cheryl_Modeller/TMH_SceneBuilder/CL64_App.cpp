@@ -353,21 +353,21 @@ void CL64_App::InitApp(void)
 }
 
 // *************************************************************************
-// *				Init_Dialogs:- Terry Mo and Hazel 2025				   *
+// *			Init_Dialogs:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 void CL64_App::Init_Dialogs(void)
 {
 	App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
 
-	App->CL_Properties_Textures_Com->Start_Props_Textures_Dialog();
+	/*App->CL_Properties_Textures_Com->Start_Props_Materials_Dlg();
 	CL_Interface->Position_Textures_Dlg();
 
 	CL_Interface->Position_Properties_Dlg();
-	CL_Props_Dialogs->Start_Props_Dialogs();
+	CL_Props_Dialogs->Start_Props_Dialogs();*/
 }
 
 // *************************************************************************
-// *				Set_Brushes_Fonts:- Terry Mo and Hazel 2025			   *
+// *		Set_Brushes_Fonts:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 void CL64_App::Set_Brushes_Fonts(void)
 {

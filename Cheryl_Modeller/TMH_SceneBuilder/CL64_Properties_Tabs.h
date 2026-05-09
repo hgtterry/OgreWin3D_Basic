@@ -31,7 +31,6 @@ public:
 
 	void Reset_Class();
 
-	void Show_Tabs_Control_Dlg(bool Show);
 	void Start_Tabs_Control_Dlg();
 
 	void Select_Brushes_Tab();
@@ -47,7 +46,6 @@ public:
 	bool flag_Tab_Texture;
 	bool flag_Tab_Group;
 	bool flag_Tab_3DSettings;
-	bool flag_Tabs_Dlg_Active;
 private:
 	static LRESULT CALLBACK Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 

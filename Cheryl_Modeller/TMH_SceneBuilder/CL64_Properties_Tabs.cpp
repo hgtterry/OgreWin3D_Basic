@@ -31,11 +31,10 @@ CL64_Properties_Tabs::CL64_Properties_Tabs()
 {
 	Tabs_Control_Hwnd = nullptr;
 
-	flag_Tab_Templates = 1;
-	flag_Tab_Texture = 0;
-	flag_Tab_Group = 0;
-	flag_Tab_3DSettings = 0;
-	flag_Tabs_Dlg_Active = 0;
+	flag_Tab_Templates = false;
+	flag_Tab_Texture = true;
+	flag_Tab_Group = false;
+	flag_Tab_3DSettings = false;
 }
 
 CL64_Properties_Tabs::~CL64_Properties_Tabs()
@@ -90,14 +89,6 @@ void CL64_Properties_Tabs::Init_Bmps_Globals(void)
 }
 
 // *************************************************************************
-// *	  Show_Tabs_Control_Dlg:- Terry Mo and Hazel 2025				   *
-// *************************************************************************
-void CL64_Properties_Tabs::Show_Tabs_Control_Dlg(bool Show)
-{
-	ShowWindow(Tabs_Control_Hwnd, Show);
-}
-
-// *************************************************************************
 // *	  	Start_Tabs_Control_Dlg:- Terry Mo and Hazel 2025			   *
 // *************************************************************************
 void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
@@ -105,19 +96,25 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TABS, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
 	Init_Bmps_Globals();
 
-	flag_Tabs_Dlg_Active = true;
-	
+	// Brushes
 	App->CL_Properties_Brushes->Start_Brush_Tabs_Dialog();
 	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
 
-	App->CL_Properties_Textures->Start_TextureDialog();
-	App->CL_Properties_Textures->Show_Textures_Dialog(false);
+	// Textures
+	/*App->CL_Properties_Textures->Start_TextureDialog();
+	App->CL_Properties_Textures->Show_Textures_Dialog(false);*/
 
+	// Materials
+	App->CL_Properties_Textures_Com->Start_Props_Materials_Dlg();
+	
+	App->CL_Interface->Position_Properties_Dlg();
+	App->CL_Props_Dialogs->Start_Props_Dialogs();
+
+	// Templates/Shapes
 	App->CL_Properties_Templates->Start_TemplatesDialog();
-	App->CL_Properties_Templates->Show_TemplatesDialog(true);
+	App->CL_Properties_Templates->Show_TemplatesDialog(false);
 
-	App->CL_Interface->Show_Textures_Com_Dlg(false);
-	App->CL_Interface->Position_Textures_Dlg();
+	App->CL_Interface->Show_Textures_Com_Dlg(true);
 	App->CL_Interface->Menu_Enable_Textures(false);
 
 	App->CL_Properties_Motions->Start_Motions_Dialog();
@@ -125,7 +122,7 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 	App->CL_Interface->Position_Tabs_Dlg();
 	App->CL_Interface->Position_Motions_Dlg();
 
-	ShowWindow(Tabs_Control_Hwnd, false);
+	ShowWindow(Tabs_Control_Hwnd, true);
 
 	//CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
 }
@@ -187,7 +184,16 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		if (some_item->idFrom == IDC_TBTEMPLATES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Templates);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_TBTEMPLATES));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Templates);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -247,8 +253,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
-			App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
+			App->CL_Interface->Show_Properties_Panel(false);
 			CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
 			//EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -256,8 +261,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 0;
-			App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
+			App->CL_Interface->Show_Properties_Panel(false);
 			CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
 			//EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -295,7 +299,7 @@ void CL64_Properties_Tabs::Hide_Dialogs()
 void CL64_Properties_Tabs::Select_Brushes_Tab()
 {
 	// Check is valid
-	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == true)
+	if (Tabs_Control_Hwnd && App->CL_Interface->flag_Properties_Dlg_Active == true)
 	{
 		// Hide any open dialogs
 		Hide_Dialogs();
@@ -314,7 +318,7 @@ void CL64_Properties_Tabs::Select_Brushes_Tab()
 // *************************************************************************
 void CL64_Properties_Tabs::Select_Textures_Tab()
 {
-	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
+	if (Tabs_Control_Hwnd && App->CL_Interface->flag_Properties_Dlg_Active == true)
 	{
 		if (flag_Tab_Texture == false)
 		{
@@ -336,7 +340,7 @@ void CL64_Properties_Tabs::Select_Textures_Tab()
 // *************************************************************************
 void CL64_Properties_Tabs::Select_Templates_Tab()
 {
-	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
+	if (Tabs_Control_Hwnd && App->CL_Interface->flag_Properties_Dlg_Active == true)
 	{
 		Hide_Dialogs();
 		App->CL_Properties_Templates->Show_TemplatesDialog(true);
