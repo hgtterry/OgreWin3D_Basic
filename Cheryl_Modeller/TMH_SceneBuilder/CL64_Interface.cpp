@@ -172,7 +172,7 @@ void CL64_Interface::Position_Tabs_Dlg(void)
 	int heightY = rect.bottom - rect.top;
 
 	SetWindowPos(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, 
-		position.x + widthX - 290, position.y + 25,
+		position.x + widthX - 300, position.y + 25,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
 }

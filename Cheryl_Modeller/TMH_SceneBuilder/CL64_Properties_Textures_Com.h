@@ -80,6 +80,8 @@ private:
 	static LRESULT CALLBACK Proc_Textures_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Texture_Editor(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Init_Bmps(void);
+
 };
 
 

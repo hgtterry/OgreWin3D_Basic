@@ -81,14 +81,35 @@ void CL64_Properties_Textures_Com::Show_Materials_Dialog(bool Show)
 }
 
 // *************************************************************************
+// *					Init_Bmps:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CL64_Properties_Textures_Com::Init_Bmps(void)
+{
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
+
+	SendMessage(hTooltip_TB_2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+	HWND Temp = GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_BT_AT_MATERIAL_FACES);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = (LPSTR)"Show Selected Texture Group Faces";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	SendMessage(hTooltip_TB_2, TTM_SETTITLE, (WPARAM)TTI_INFO, (LPARAM)"");
+}
+
+// *************************************************************************
 // *		 Start_Props_Materials_Dlg:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
 bool CL64_Properties_Textures_Com::Start_Props_Materials_Dlg()
 {
 	Textures_Dlg_Hwnd_Assimp = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES_TEXTURES_ASSIMP, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Textures_Dialog);
+	Init_Bmps();
 
-	//App->CL_Props_Textures->Enable_Export_Button(false);
-	
 	return 1;
 }
 
@@ -117,6 +138,8 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_AT_BASETEXTURE), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 
 		EnableWindow(GetDlgItem(hDlg, IDC_BT_MATFACESCOLOUR), false);
+
+		return TRUE;
 	}
 
 	case WM_CTLCOLORSTATIC:

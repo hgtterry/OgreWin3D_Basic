@@ -38,6 +38,7 @@ void CL64_Importers::Set_Editor()
 		App->CL_Interface->Menu_Enable_OgreExport(true);
 	}
 
+	App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = true;
 
 	if (App->CL_Model->MotionCount > 0)
 	{

@@ -493,7 +493,7 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 	{
 		// ------------------------------------------ Draw Brushes
 		// Draw Template Brush
-		bool Draw_Template = true;
+		bool Draw_Template = false;
 		if (Draw_Template == true)
 		{
 			if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
