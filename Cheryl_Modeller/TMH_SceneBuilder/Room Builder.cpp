@@ -96,7 +96,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Load menus
     App->Menu_Map = GetMenu(App->MainHwnd);
-   
+
+   /* MENUINFO mi = { 0 };
+    mi.cbSize = sizeof(mi);
+    mi.fMask = MIM_BACKGROUND;
+    mi.hbrBack = App->BlackBrush;
+
+    SetMenuInfo(App->Menu_Map, &mi);*/
+
     // Load program resources
     App->LoadProgramResource();
 

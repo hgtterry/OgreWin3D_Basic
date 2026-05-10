@@ -220,6 +220,8 @@ CL64_App::~CL64_App(void)
 {
 }
 
+//#include <dwmapi.h>
+//#pragma comment (lib, "Dwmapi")
 // *************************************************************************
 // *				InitApp:- Terry Mo and Hazel 2025					   *
 // *************************************************************************
@@ -347,9 +349,12 @@ void CL64_App::InitApp(void)
 		App->Say("Can not access user folder");
 	}
 
+
+
 	LoadString(hInst, IDS_APP_TITLE, App_Title, MAX_PATH);
 
 	flag_App_Initialized = true;
+
 }
 
 // *************************************************************************
@@ -463,6 +468,11 @@ void CL64_App::LoadProgramResource(void)
 	CheckMenuItem(App->Menu_Map, ID_SPEED_NORMAL, MF_BYCOMMAND | MF_CHECKED);
 
 	EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
+
+	/*BOOL USE_DARK_MODE = true;
+	BOOL SET_IMMERSIVE_DARK_MODE_SUCCESS = SUCCEEDED(DwmSetWindowAttribute(
+		App->MainHwnd, DWMWINDOWATTRIBUTE::DWMWA_USE_IMMERSIVE_DARK_MODE,
+		&USE_DARK_MODE, sizeof(USE_DARK_MODE)));*/
 }
 
 // *************************************************************************
