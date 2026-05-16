@@ -19,5 +19,10 @@ public:
 	bool Flag_Reload_Ogre_Model;
 
 	Brush* Model_Brush;
+
+private:
+
+	void ConfigureForOgre3D();
+	void ConfigureForAssimp();
 };
 

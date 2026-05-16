@@ -574,6 +574,7 @@
 #define IDC_BT_TB_SHAPES                1403
 #define IDC_BT_MOT_TEXTURES             1403
 #define IDC_CB_MOTIONS_JOINTS           1404
+#define IDC_ST_MOT_JOINTS               1405
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -716,7 +717,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        225
 #define _APS_NEXT_COMMAND_VALUE         32903
-#define _APS_NEXT_CONTROL_VALUE         1405
+#define _APS_NEXT_CONTROL_VALUE         1406
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

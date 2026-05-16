@@ -17,37 +17,54 @@ CL64_Importers::~CL64_Importers(void)
 // *************************************************************************
 void CL64_Importers::Set_Editor()
 {
+	// Show the properties panel and materials dialog
 	App->CL_Interface->Show_Properties_Panel(true);
 	App->CL_Properties_Textures_Com->Show_Materials_Dialog(true);
 
+	// Set the texture bitmap on the top tabs
 	App->CL_Top_Tabs->Set_Texture_Bmp_On();
 
-	if(App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	// Handle model type specific settings
+	switch (App->CL_Model->Model_Type)
 	{
-		App->CL_Interface->Enable_Change_Textures_Button(false);
-		
-		App->CL_Interface->Menu_Enable_OgreExport(false);
-		App->CL_Interface->Show_file_view(true);
+	case Enums::Model_Type_Ogre3D:
+		ConfigureForOgre3D();
+		break;
+
+	case Enums::Model_Type_Assimp:
+		ConfigureForAssimp();
+		break;
+
+	default:
+		// Handle unsupported model types if necessary
+		break;
 	}
 
-	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
-	{
-		App->CL_Interface->Enable_Change_Textures_Button(true);
-
-		App->CL_Ogre->OGL_Listener->flag_ShowTextured = true;
-		App->CL_Interface->Menu_Enable_OgreExport(true);
-	}
-
+	// Hide material faces by default
 	App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = false;
 
-	if (App->CL_Model->MotionCount > 0)
-	{
-		App->CL_Interface->Show_Motions_Dlg(true);
-	}
-	else
-	{
-		App->CL_Interface->Show_Motions_Dlg(false);
-	}
+	// Show or hide motions dialog based on motion count
+	App->CL_Interface->Show_Motions_Dlg(App->CL_Model->MotionCount > 0);
+}
+
+// *************************************************************************
+// *			ConfigureForOgre3D:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Importers::ConfigureForOgre3D()
+{
+	App->CL_Interface->Enable_Change_Textures_Button(false);
+	App->CL_Interface->Menu_Enable_OgreExport(false);
+	App->CL_Interface->Show_file_view(true);
+}
+
+// *************************************************************************
+// *			ConfigureForAssimp:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Importers::ConfigureForAssimp()
+{
+	App->CL_Interface->Enable_Change_Textures_Button(true);
+	App->CL_Ogre->OGL_Listener->flag_ShowTextured = true;
+	App->CL_Interface->Menu_Enable_OgreExport(true);
 }
 
 // *************************************************************************

@@ -52,6 +52,7 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_MOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_SPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_ST_MOT_JOINTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_MOT_MOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_MOT_SPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -61,6 +62,13 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 	}
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_ST_MOT_JOINTS) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		if (GetDlgItem(hDlg, IDC_ST_MOT_MOTIONS) == (HWND)lParam)
 		{
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -162,6 +170,7 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 
 		if (LOWORD(wParam) == IDC_BT_MOT_STOP)
 		{
+			
 			App->CL_Motions->Stop_SelectedMotion();
 			App->CL_Gizmos->Move_BoneCrosshair();
 			return TRUE;
