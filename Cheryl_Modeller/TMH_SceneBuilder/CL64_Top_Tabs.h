@@ -50,7 +50,7 @@ public:
 	void Show_TopTabs(bool Enable);
 	
 	void Reset_Bmps(void);
-	void Set_Texture_Bmp_On(void);
+	void Set_Texture_Bmp_On(void) const;
 
 	bool flag_Brush_Select;
 	bool flag_Brush_Move;

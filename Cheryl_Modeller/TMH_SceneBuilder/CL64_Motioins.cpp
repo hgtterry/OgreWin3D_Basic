@@ -112,20 +112,26 @@ void CL64_Motioins::Update_Motion(float deltaTime)
 {
 	if (App->CL_Model->Imported_Ogre_Ent)
 	{
-		if (Animate_State)
-		{
-			Animate_State->addTime(deltaTime * AnimationScale);
-
-			App->CL_Model->Imported_Ogre_Ent->_updateAnimation();
-			Update_MeshData();
-		}
+		UpdateAnimation(deltaTime);
 	}
 
-	if (App->CL_Ogre->OGL_Listener->flag_Show_Bone_Crosshair == true)
+	if (App->CL_Ogre->OGL_Listener->flag_Show_Bone_Crosshair)
 	{
 		App->CL_Gizmos->Move_BoneCrosshair();
 	}
+}
 
+// *************************************************************************
+// *			UpdateAnimation:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Motioins::UpdateAnimation(float deltaTime)
+{
+	if (Animate_State)
+	{
+		Animate_State->addTime(deltaTime * AnimationScale);
+		App->CL_Model->Imported_Ogre_Ent->_updateAnimation();
+		Update_MeshData();
+	}
 }
 
 // *************************************************************************
@@ -164,23 +170,26 @@ void CL64_Motioins::Pause_SelectedMotion(void)
 // *************************************************************************
 void CL64_Motioins::Play_SelectedMotion(void)
 {
+	// Initialize the animation state to nullptr
 	Animate_State = nullptr;
 
-	if (App->CL_Model->MotionCount > 0)
+	// Check if there are any motions available
+	if (App->CL_Model->MotionCount > 0 && App->CL_Model->Imported_Ogre_Ent)
 	{
-		if (App->CL_Model->Imported_Ogre_Ent)
+		// Retrieve the animation state for the selected motion
+		Animate_State = App->CL_Model->Imported_Ogre_Ent->getAnimationState(Selected_Motion_Name);
+
+		// If the animation state is valid, enable it and update flags
+		if (Animate_State)
 		{
-			Animate_State = App->CL_Model->Imported_Ogre_Ent->getAnimationState(Selected_Motion_Name);
+			Animate_State->setEnabled(true);
+			App->CL_Ogre->Listener_3D->flag_Animate_Ogre = true;
 
-			if (Animate_State)
-			{
-				Animate_State->setEnabled(true);
-				App->CL_Ogre->Listener_3D->flag_Animate_Ogre = true;
+			// Update motion flags
+			flag_Motion_Paused = false;
+			flag_Motion_Playing = true;
 
-				flag_Motion_Paused = false;
-				flag_Motion_Playing = true;
-			}
-
+			// Redraw the window to reflect changes
 			RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
 	}
@@ -191,38 +200,37 @@ void CL64_Motioins::Play_SelectedMotion(void)
 // *************************************************************************
 void CL64_Motioins::Stop_SelectedMotion(void)
 {
-	if (App->CL_Model->MotionCount > 0)
+	// Check if there are any motions to stop
+	if (App->CL_Model->MotionCount > 0 && App->CL_Model->Imported_Ogre_Ent)
 	{
-		if (App->CL_Model->Imported_Ogre_Ent)
+		// Stop the animation if it is currently playing
+		if (flag_Motion_Playing)
 		{
-			if (flag_Motion_Playing == 1)
-			{
-				App->CL_Ogre->Listener_3D->flag_Animate_Ogre = 0;
-				Animate_State->setEnabled(false);
-				Animate_State->setTimePosition(0);
-				Motion_Set_Pose();
-			}
-
-			flag_Motion_Paused = false;
-			flag_Motion_Playing = false;
-			RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Ogre->Listener_3D->flag_Animate_Ogre = false; // Disable animation
+			Animate_State->setEnabled(false); // Disable animation state
+			Animate_State->setTimePosition(0); // Reset animation time
+			Motion_Set_Pose(); // Set the default motion pose
 		}
+
+		// Update motion flags and redraw the window
+		flag_Motion_Paused = false;
+		flag_Motion_Playing = false;
+		RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 }
 
 // *************************************************************************
 // *			Motion_Set_Pose:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
-void CL64_Motioins::Motion_Set_Pose(void)
+void CL64_Motioins::Motion_Set_Pose()
 {
-	if (App->CL_Model->MotionCount > 0)
+	// Check if there are any motions available
+	if (App->CL_Model->MotionCount > 0 && App->CL_Model->Imported_Ogre_Ent)
 	{
-		if (App->CL_Model->Imported_Ogre_Ent)
-		{
-			UpdateBones_Orge(true);
-			AnimationExtract_Mesh(true);
-			App->CL_Model->Set_BondingBox_Model(false);
-		}
+		// Update bones and extract mesh
+		UpdateBones_Orge(true);
+		AnimationExtract_Mesh(true);
+		App->CL_Model->Set_BondingBox_Model(false);
 	}
 }
 
@@ -291,6 +299,7 @@ void CL64_Motioins::AnimationExtract_Mesh(bool DefaultPose)
 
 	return;
 }
+
 // *************************************************************************
 // *					Get_AnimationInstance Terry Bernie				   *
 // *************************************************************************
@@ -335,6 +344,7 @@ void CL64_Motioins::Get_AnimationInstance(Ogre::MeshPtr mesh,
 		vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
 	}
 
+	// Process vertex data
 	if ((!submesh->useSharedVertices) || (submesh->useSharedVertices && !added_shared))
 	{
 		if (submesh->useSharedVertices)

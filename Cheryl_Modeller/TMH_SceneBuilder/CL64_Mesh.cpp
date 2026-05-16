@@ -608,6 +608,9 @@ void CL64_Mesh::Show_Mesh_Textures()
 	if (App->CL_Model->flag_Model_Loaded == true)
 	{
 		HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BTSHOWTEXTURES);
+		HWND Temp2 = GetDlgItem(App->CL_Properties_Motions->Motions_Dlg_Hwnd, IDC_BT_MOT_TEXTURES);
+
+		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 
 		if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 		{
@@ -617,11 +620,13 @@ void CL64_Mesh::Show_Mesh_Textures()
 			{
 				m_Node->setVisible(false);
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+				SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 			}
 			else
 			{
 				m_Node->setVisible(true);
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+				SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 			}
 		}
 
@@ -633,11 +638,13 @@ void CL64_Mesh::Show_Mesh_Textures()
 			{
 				m_Show_Texture = false;
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+				SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 			}
 			else
 			{
 				m_Show_Texture = true;
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+				SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 			}
 		}
 

@@ -61,5 +61,10 @@ public:
 	bool flag_IsAnimated;
 
 	float AnimationScale;
+
+private:
+
+	void UpdateAnimation(float deltaTime);
+
 };
 

@@ -103,12 +103,15 @@ void CL64_Top_Tabs::Reset_Bmps(void)
 }
 
 // *************************************************************************
-// *				Set_Texture_Bmp_On:- Terry Mo and Hazel 2026		   *
+// *			Set_Texture_Bmp_On:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Top_Tabs::Set_Texture_Bmp_On(void)
+void CL64_Top_Tabs::Set_Texture_Bmp_On(void) const
 {
 	HWND Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_BTSHOWTEXTURES);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+
+	HWND Temp2 = GetDlgItem(App->CL_Properties_Motions->Motions_Dlg_Hwnd, IDC_BT_MOT_TEXTURES);
+	SendMessage(Temp2, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 }
 
 

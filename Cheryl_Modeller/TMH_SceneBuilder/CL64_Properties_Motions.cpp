@@ -316,7 +316,9 @@ void CL64_Properties_Motions::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_BBOX);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 
-	
+	Temp = GetDlgItem(Motions_Dlg_Hwnd, IDC_BT_MOT_TEXTURES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+
 	// ----------------------------------
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
@@ -350,6 +352,15 @@ void CL64_Properties_Motions::Init_Bmps_Globals(void)
 	ti3.lpszText = (LPSTR)"Show Bounding Box.";
 	ti3.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
+
+	Temp = GetDlgItem(Mot_Dlg, IDC_BT_MOT_TEXTURES);
+	TOOLINFO ti4 = { 0 };
+	ti4.cbSize = sizeof(ti4);
+	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti4.uId = (UINT_PTR)Temp;
+	ti4.lpszText = (LPSTR)"Show Hide Textures.";
+	ti4.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);
 
 	SendMessage(hTooltip_TB_2, TTM_SETTITLE, (WPARAM)TTI_INFO, (LPARAM)"");
 }
