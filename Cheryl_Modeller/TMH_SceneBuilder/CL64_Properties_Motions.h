@@ -9,6 +9,7 @@ public:
 	void Start_Motions_Dialog();
 	void Init_Bmps_Globals(void);
 
+	void Update_Joints_Combo(void);
 	void Update_Motions_Combo(void);
 	void Update_Motions_By_Name(const char* Name, bool Play_Motion);
 

@@ -29,6 +29,8 @@ void CL64_Properties_Motions::Start_Motions_Dialog()
 	Init_Bmps_Globals();
 
 	Show_Motions_Dialog(false);
+
+	Update_Joints_Combo();
 	Update_Motions_Combo();
 	Update_Speed_Combo();
 }
@@ -46,6 +48,7 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 		SendDlgItemMessage(hDlg, IDC_BT_MOT_PLAY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MOT_STOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_JOINTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_MOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_MOTIONS_SPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -163,6 +166,40 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_CB_MOTIONS_JOINTS)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CB_MOTIONS_JOINTS);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+
+				App->CL_Model->Selected_BoneIndex = Index;
+				App->CL_Gizmos->Move_BoneCrosshair();
+				//strcpy(App->CL_Motions->Selected_Motion_Name, buff);
+
+				//// Select in Imgui Model Data
+				//App->CL_ImGui->listMotionItems_Ogre[App->CL_ImGui->PreviouseMotion_Ogre] = false;
+				//App->CL_ImGui->listMotionItems_Ogre[Index] = true;
+				//App->CL_ImGui->PreviouseMotion_Ogre = Index;
+
+
+				//App->CL_Motions->Stop_SelectedMotion();
+				//App->CL_Motions->Play_SelectedMotion();
+
+				RedrawWindow(App->CL_Properties_Motions->Motions_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+			}
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_CB_MOTIONS_MOTIONS)
 		{
 			switch (HIWORD(wParam)) // Find out what message it was
@@ -216,6 +253,12 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_MOT_TEXTURES)
+		{
+			App->CL_Mesh->Show_Mesh_Textures();
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_MOT_MESH)
 		{
 			App->CL_Mesh->Show_Mesh_Faces();
@@ -299,6 +342,36 @@ void CL64_Properties_Motions::Init_Bmps_Globals(void)
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 
 	SendMessage(hTooltip_TB_2, TTM_SETTITLE, (WPARAM)TTI_INFO, (LPARAM)"");
+}
+
+// *************************************************************************
+// *			Update_Joints_Combo:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Motions::Update_Joints_Combo(void)
+{
+	auto& Dlg_Hwnd = Motions_Dlg_Hwnd;
+
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_JOINTS, CB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	if (App->CL_Model->BoneCount > 0)
+	{
+		int Count = 0;
+		int Size = App->CL_Model->BoneCount;
+
+		while (Count < Size)
+		{
+			SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_JOINTS, CB_ADDSTRING, (WPARAM)0, (LPARAM)App->CL_Mesh->S_Bones[Count]->BoneName);
+			Count++;
+		}
+
+		//strcpy(App->CL_Motions->Selected_Motion_Name, App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names[0].c_str());
+	}
+	else
+	{
+		SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_JOINTS, CB_ADDSTRING, (WPARAM)0, (LPARAM)"None");
+	}
+
+	SendDlgItemMessage(Dlg_Hwnd, IDC_CB_MOTIONS_JOINTS, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 }
 
 // *************************************************************************

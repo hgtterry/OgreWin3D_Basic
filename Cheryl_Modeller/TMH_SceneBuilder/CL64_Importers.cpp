@@ -224,7 +224,8 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 	App->CL_Ogre->OGL_Listener->flag_ShowFaces = false;
 
 	App->CL_Motions->Get_Motions(App->CL_Model->Imported_Ogre_Ent);
-	
+	App->CL_Properties_Motions->Update_Joints_Combo();
+
 	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
 	
 	App->CL_Model->Model_Type = Enums::Model_Type_Ogre3D;
