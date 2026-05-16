@@ -163,6 +163,7 @@ LRESULT CALLBACK CL64_Properties_Motions::Proc_Motions_Dialog(HWND hDlg, UINT me
 		if (LOWORD(wParam) == IDC_BT_MOT_STOP)
 		{
 			App->CL_Motions->Stop_SelectedMotion();
+			App->CL_Gizmos->Move_BoneCrosshair();
 			return TRUE;
 		}
 

@@ -85,12 +85,15 @@ void CL64_Properties_Textures_Com::Show_Materials_Dialog(bool Show)
 // *************************************************************************
 void CL64_Properties_Textures_Com::Init_Bmps(void)
 {
+	HWND Temp = GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_BT_AT_MATERIAL_FACES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
 
 	SendMessage(hTooltip_TB_2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-	HWND Temp = GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_BT_AT_MATERIAL_FACES);
+	Temp = GetDlgItem(Textures_Dlg_Hwnd_Assimp, IDC_BT_AT_MATERIAL_FACES);
 	TOOLINFO ti1 = { 0 };
 	ti1.cbSize = sizeof(ti1);
 	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -238,6 +241,14 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 			}
 		}
 		
+		if (some_item->idFrom == IDC_BT_AT_MATERIAL_FACES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Globals(item);
+
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -289,11 +300,17 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 			{
 				if (App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces == true)
 				{
+					HWND Temp = GetDlgItem(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, IDC_BT_AT_MATERIAL_FACES);
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+
 					App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = false;
 					EnableWindow(GetDlgItem(hDlg, IDC_BT_MATFACESCOLOUR), false);
 				}
 				else
 				{
+					HWND Temp = GetDlgItem(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, IDC_BT_AT_MATERIAL_FACES);
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+
 					App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = true;
 					EnableWindow(GetDlgItem(hDlg, IDC_BT_MATFACESCOLOUR), true);
 				}
