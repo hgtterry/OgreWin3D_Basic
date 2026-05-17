@@ -611,6 +611,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                
                 return TRUE;
             }
+
             case ID_IMPORT_AUTODESK3DS:
             {
                 App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
@@ -628,8 +629,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 return TRUE;
             }
-           // ID_IMPORT_AUTODESK3DS
 
+            case ID_IMPORT_AUTODESKFBX:
+            {
+                App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+                App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
+
+                LPCWSTR fileType = L"Autodesk .fbx file";
+                LPCWSTR fileExtensions = L"*.fbx";
+
+                bool test = App->CL_Importers->Assimp_Loader(true, fileType, fileExtensions);
+
+                if (test == 1)
+                {
+                    App->Say("Imported");
+                }
+
+                return TRUE;
+            }
+
+           // ID_IMPORT_AUTODESK3DS
             case ID_IMPORT_MILKSHAPEMS3D:
             {
 

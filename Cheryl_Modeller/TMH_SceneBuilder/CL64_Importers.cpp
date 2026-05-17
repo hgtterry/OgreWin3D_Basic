@@ -74,9 +74,6 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 {
 	if (UseDialog)
 	{
-		LPCWSTR fileType = L"Wavefront .obj file";
-		LPCWSTR fileExtensions = L"*.obj";
-
 		if (!App->CL_File_IO->Open_File(Filetype, Extension))
 		{
 			return false;
@@ -86,6 +83,10 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 		strcpy(App->CL_Model->Loaded_FileName, App->CL_File_IO->s_Just_FileName.c_str());
 	}
 
+	App->CL_PB->Start_ProgressBar();
+	App->CL_PB->Set_Progress((LPSTR)"Loading Model", 3);
+
+	App->CL_PB->Nudge((LPSTR)"Clear Model");
 	App->CL_Model->Clear_Model();
 
 	// Temporary resource management commented out for review
@@ -94,8 +95,10 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 
 	App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 
+	App->CL_PB->Nudge((LPSTR)"Set_Paths");
 	App->CL_Model->Set_Paths();
 
+	App->CL_PB->Nudge((LPSTR)"Load File");
 	if (!App->CL_Assimp->LoadFile(App->CL_Model->Loaded_PathFileName))
 	{
 		App->Say("Failed To Load");
@@ -127,6 +130,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 		App->CL_Editor_Control->Set_Map_View();
 	}
 
+	App->CL_PB->Stop_Progress_Bar((LPSTR)"Test");
 	return true;
 }
 

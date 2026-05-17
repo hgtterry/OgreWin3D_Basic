@@ -91,6 +91,16 @@ bool CL64_Assimp::LoadFile(const char* pFile)
 
 	}
 
+	aiString texture_file;
+	if (auto texture = scene->GetEmbeddedTexture(texture_file.C_Str()))
+	{
+		App->Say(texture->mFilename.C_Str());
+	}
+	else
+	{
+
+	}
+
 	aiReleaseImport(scene);
 
 	return 1;
@@ -179,11 +189,13 @@ void CL64_Assimp::Create_MeshGroups(const aiScene* pScene)
 
 		if (AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
 		{
+	//		App->Say(texPath.C_Str());
 			strcpy(App->CL_Mesh->Group[Count]->Assimp_Text_FileName, texPath.C_Str());
 			strcpy(App->CL_Mesh->Group[Count]->Equity_Text_FileName, texPath.C_Str());
 		}
 		else
 		{
+	//		App->Say(texPath.C_Str());
 			strcpy(App->CL_Mesh->Group[Count]->Assimp_Text_FileName, "No_Texture");
 			App->CL_Mesh->Group[Count]->MaterialIndex = -1;
 		}

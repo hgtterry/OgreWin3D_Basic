@@ -119,6 +119,8 @@ LRESULT CALLBACK CL64_PB::Proc_ProgressBar(HWND hDlg, UINT message, WPARAM wPara
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		return FALSE;
 	}
 
 	case WM_CTLCOLORDLG:
@@ -210,7 +212,7 @@ bool CL64_PB::Stop_Progress_Bar(char* ProcessText)
 	SetDlgItemText(ProgBarHwnd, IDC_PBBANNER, (LPCTSTR)"Finished");
 	SetDlgItemText(ProgBarHwnd, IDC_ST_PB_STATUS, (LPCTSTR)ProcessText);
 
-	InvalidateRect(ProgBarHwnd, NULL, FALSE);
+	RedrawWindow(ProgBarHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	MSG msg;
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -219,7 +221,7 @@ bool CL64_PB::Stop_Progress_Bar(char* ProcessText)
 		DispatchMessage(&msg);
 	}
 
-	InvalidateRect(ProgBarHwnd, NULL, FALSE);
+	RedrawWindow(ProgBarHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	return 1;
 }
@@ -230,7 +232,7 @@ bool CL64_PB::Stop_Progress_Bar(char* ProcessText)
 bool CL64_PB::Set_Progress(char* ProcessText, float TotalSteps)
 {
 	MSG msg;
-	char buff[1024];
+	char buff[MAX_PATH];
 	strcpy(buff, "Processing :- ");
 	strcat(buff, ProcessText);
 
@@ -241,7 +243,7 @@ bool CL64_PB::Set_Progress(char* ProcessText, float TotalSteps)
 
 	App->CL_PB->flag_ClearBarDlg = 1;
 
-	InvalidateRect(ProgBarHwnd, NULL, FALSE);
+	RedrawWindow(ProgBarHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
@@ -249,7 +251,7 @@ bool CL64_PB::Set_Progress(char* ProcessText, float TotalSteps)
 		DispatchMessage(&msg);
 	}
 
-	InvalidateRect(ProgBarHwnd, NULL, FALSE);
+	RedrawWindow(ProgBarHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	return 1;
 }
 
@@ -259,21 +261,23 @@ bool CL64_PB::Set_Progress(char* ProcessText, float TotalSteps)
 bool CL64_PB::Set_Progress_Text(char* ProcessText)
 {
 	MSG msg;
-	char buff[1024];
+	char buff[MAX_PATH];
 	strcpy(buff, "Processing :- ");
 	strcat(buff, ProcessText);
 
 	SetDlgItemText(ProgBarHwnd, IDC_PBACTION, (LPCTSTR)buff);
 	SetDlgItemText(ProgBarHwnd, IDC_ST_PB_STATUS, (LPCTSTR)ProcessText);
 
-	InvalidateRect(ProgBarHwnd, NULL, FALSE);
+	RedrawWindow(ProgBarHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
 
-	InvalidateRect(ProgBarHwnd, NULL, FALSE);
+	RedrawWindow(ProgBarHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	
 	return 1;
 }
 
@@ -284,9 +288,12 @@ bool CL64_PB::Nudge(char* Message)
 {
 	Set_Progress_Text(Message);
 
+	Sleep(100);
+
 	MSG msg;
 	g_pos++;
-	InvalidateRect(ProgBarHwnd, NULL, FALSE);
+
+	RedrawWindow(ProgBarHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
@@ -294,8 +301,8 @@ bool CL64_PB::Nudge(char* Message)
 		DispatchMessage(&msg);
 	}
 
-	Sleep(100);
-
+	RedrawWindow(ProgBarHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	
 	return 1;
 }
 
