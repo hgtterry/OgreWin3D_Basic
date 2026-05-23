@@ -77,12 +77,9 @@ LRESULT CALLBACK CL64_PB::Proc_ProgressBar(HWND hDlg, UINT message, WPARAM wPara
 	{
 	case WM_INITDIALOG:
 	{
-
 		SendDlgItemMessage(hDlg, IDC_PBBANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_PBACTION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_PB_STATUS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-
-		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_PB->g_pos = 0;
 		App->CL_PB->Bar = GetDlgItem(hDlg, IDC_STBAR);
@@ -163,42 +160,22 @@ LRESULT CALLBACK CL64_PB::Proc_ProgressBar(HWND hDlg, UINT message, WPARAM wPara
 		break;
 	}
 
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
+	//case WM_COMMAND:
+	//	if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+	//	{
+	//		/*App->CL_Panels->Disable_Panels(false);
+	//		App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
+	//		App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;*/
 
-		if (some_item->idFrom == IDOK)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDOK));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Normal(item);
-			}
+	//		EndDialog(hDlg, LOWORD(wParam));
+	//		return TRUE;
+	//	}
+	//	break;
+	//}
 
-			return CDRF_DODEFAULT;
-		}
-		return CDRF_DODEFAULT;
 	}
 
-	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-		{
-			/*App->CL_Panels->Disable_Panels(false);
-			App->CL_ImGui_Dialogs->flag_Disable_Physics_Console = 0;
-			App->CL_Ogre->Ogre3D_Listener->flag_Block_Mouse = 0;*/
-
-
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-		break;
-	}
 	return FALSE;
 }
 
@@ -207,12 +184,7 @@ LRESULT CALLBACK CL64_PB::Proc_ProgressBar(HWND hDlg, UINT message, WPARAM wPara
 // *************************************************************************
 bool CL64_PB::Stop_Progress_Bar(char* ProcessText)
 {
-	EnableWindow(GetDlgItem(ProgBarHwnd, IDOK), 1);
-
-	SetDlgItemText(ProgBarHwnd, IDC_PBBANNER, (LPCTSTR)"Finished");
-	SetDlgItemText(ProgBarHwnd, IDC_ST_PB_STATUS, (LPCTSTR)ProcessText);
-
-	RedrawWindow(ProgBarHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	EnableWindow(ProgBarHwnd, false);
 
 	MSG msg;
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -221,8 +193,20 @@ bool CL64_PB::Stop_Progress_Bar(char* ProcessText)
 		DispatchMessage(&msg);
 	}
 
-	RedrawWindow(ProgBarHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	App->CL_Ogre->RenderFrame();
 
+	App->Say(App->CL_Model->Loaded_FileName, "Loaded");
+
+	SetDlgItemText(ProgBarHwnd, IDC_PBBANNER, (LPCTSTR)"Finished");
+	
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	Close();
+	
 	return 1;
 }
 

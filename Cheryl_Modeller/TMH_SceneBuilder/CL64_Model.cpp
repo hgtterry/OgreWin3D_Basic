@@ -191,7 +191,9 @@ void CL64_Model::Clear_Model()
 	// Reset editor, camera, and panels
 	App->CL_Editor_Control->Reset_Editor();
 	App->CL_Camera->Reset_View();
+	
 	App->CL_Interface->Reset_All_Dialogs();
+	
 	App->CL_Interface->Set_Title(true);
 	
 	if (App->CL_Importers->Model_Brush)
@@ -202,12 +204,18 @@ void CL64_Model::Clear_Model()
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 	}
 
-
-	App->CL_Views_Com->Reset_Views_All();
+	//Debug
+	//	App->CL_Views_Com->Init_Views(Enums::Selected_Map_View_None);
+	////App->CL_Views_Com->Reset_Views_All();
+	//Debug
 
 	if (App->CL_Editor_Control->flag_Mode_3DEditor_View == true)
 	{
-		App->CL_Editor_Control->Set_3DEditor_View();
+		//App->CL_Editor_Control->Set_3DEditor_View();
+	}
+	else
+	{
+		App->CL_Views_Com->Reset_Views_All();
 	}
 
 	App->CL_Editor_Control->flag_Just_Loaded = false;

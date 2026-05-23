@@ -68,7 +68,7 @@ void CL64_Importers::ConfigureForAssimp()
 }
 
 // *************************************************************************
-// *			Assimp_Loader:- Terry and Hazel Flanigan 2024			   *
+// *			Assimp_Loader:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const LPCWSTR Extension)
 {
@@ -83,12 +83,13 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 		strcpy(App->CL_Model->Loaded_FileName, App->CL_File_IO->s_Just_FileName.c_str());
 	}
 
+	
 	App->CL_PB->Start_ProgressBar();
 	App->CL_PB->Set_Progress((LPSTR)"Loading Model", 3);
-
+	
 	App->CL_PB->Nudge((LPSTR)"Clear Model");
 	App->CL_Model->Clear_Model();
-
+	
 	// Temporary resource management commented out for review
 	// App->CL_Resources->Destroy_Resources_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
 	// App->CL_Resources->Ogre_ExternalResourceLoaded = 0;
@@ -99,7 +100,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 	App->CL_Model->Set_Paths();
 
 	App->CL_PB->Nudge((LPSTR)"Load File");
-	if (!App->CL_Assimp->LoadFile(App->CL_Model->Loaded_PathFileName))
+	if (App->CL_Assimp->LoadFile(App->CL_Model->Loaded_PathFileName) == false)
 	{
 		App->Say("Failed To Load");
 		return false;
