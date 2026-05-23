@@ -304,35 +304,25 @@ void CL64_Interface::Show_file_view(bool show)
 }
 
 // **************************************************************************
-// *	  		 Enable_Debug_Menu:- Terry and Hazel Flanigan 2026			*
-// **************************************************************************
-void CL64_Interface::Enable_Debug_Menu(bool option)
-{
-	if (option == true)
-	{
-		EnableMenuItem(App->Menu_Map, 7, MF_BYPOSITION | MF_ENABLED);
-	}
-	else
-	{
-		EnableMenuItem(App->Menu_Map, 7, MF_BYPOSITION | MF_DISABLED | MF_GRAYED);
-	}
-}
-
-// **************************************************************************
 // *	  		 Set_Editor_Startup:- Terry and Hazel Flanigan 2026			*
 // **************************************************************************
 void CL64_Interface::Set_Editor_Startup()
 {
 	Show_file_view(true);
 
+	HMENU Men = GetMenu(App->MainHwnd);
+
 	if (App->flag_Release == true)
 	{
-		Enable_Debug_Menu(false);
+		EnableMenuItem(Men, 9, MF_BYPOSITION | MF_DISABLED | MF_GRAYED);
+		EnableMenuItem(Men, ID_IMPORT_AUTODESKFBX, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 	}
 	else
 	{
-		Enable_Debug_Menu(true);
+		EnableMenuItem(App->Menu_Map, 9, MF_BYPOSITION | MF_ENABLED);
+		EnableMenuItem(Men, ID_IMPORT_AUTODESKFBX, MF_BYCOMMAND | MF_ENABLED);
 	}
+
 }
 
 // *************************************************************************

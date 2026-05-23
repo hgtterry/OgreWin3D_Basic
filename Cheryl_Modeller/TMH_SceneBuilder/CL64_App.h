@@ -239,6 +239,7 @@ public:
 	void Open_HTML(char* HelpTitle);
 
 	void* Ram_Allocate(size_t size, const char* Description);
+	void Win_Translate_Message();
 
 	HINSTANCE hInst;
 	HWND MainHwnd;

@@ -168,6 +168,10 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	}
 	
+	App->CL_PB->Start_ProgressBar();
+	App->CL_PB->Set_Progress((LPSTR)"Loading Model", 3);
+
+	App->CL_PB->Nudge((LPSTR)"Clear Model");
 	App->CL_Model->Clear_Model();
 	
 	//if (Check_Resource_File == false)
@@ -175,7 +179,10 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 		//App->CL_Resources->Unload_OgreCFG_Resources();
 	}
 
+	App->CL_PB->Nudge((LPSTR)"Set_Paths");
 	App->CL_Model->Set_Paths();
+
+	App->CL_PB->Nudge((LPSTR)"Load File");
 
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Resources->Ogre_Loader_Resource_Group) == NULL)
 	{
@@ -281,6 +288,8 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 	{
 		App->CL_Editor_Control->Set_Map_View();
 	}
+
+	App->CL_PB->Stop_Progress_Bar((LPSTR)"Test");
 
 	return 1;
 }

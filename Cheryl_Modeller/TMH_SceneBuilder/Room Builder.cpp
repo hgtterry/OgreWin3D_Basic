@@ -157,6 +157,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // App->CL_3D_TR_View->Set_OgreWindow();
     // Set timer for the main window
+
     SetTimer(App->MainHwnd, 1, 100, NULL);
 
     // Start main window/proc loop
@@ -603,11 +604,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 bool test = App->CL_Importers->Assimp_Loader(true, fileType, fileExtensions);
 
-                if (test == true)
+                /*if (test == true)
                 {
                     App->Say("Imported",App->CL_Model->Loaded_FileName);
                    
-                }
+                }*/
                
                 return TRUE;
             }
@@ -622,10 +623,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 bool test = App->CL_Importers->Assimp_Loader(true, fileType, fileExtensions);
 
-                if (test == 1)
+               /* if (test == 1)
                 {
                     App->Say("Imported");
-                }
+                }*/
 
                 return TRUE;
             }
@@ -660,10 +661,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 bool test = App->CL_Importers->Assimp_Loader(true, fileType, fileExtensions);
 
-                if (test == true)
+               /* if (test == true)
                 {
                     App->Say("Imported", App->CL_Model->Loaded_FileName);
-                }
+                }*/
 
                 return TRUE;
             }

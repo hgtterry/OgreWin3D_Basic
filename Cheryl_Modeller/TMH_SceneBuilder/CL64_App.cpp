@@ -862,3 +862,17 @@ void* CL64_App::Ram_Allocate(size_t size, const char* Description)
 	return nullptr;
 }
 
+// *************************************************************************
+// *			Win_Translate_Message:- Terry Mo and Hazel 2026			   *
+// *************************************************************************
+void CL64_App::Win_Translate_Message()
+{
+	MSG msg;
+
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+}
+

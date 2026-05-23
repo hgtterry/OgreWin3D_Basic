@@ -43,7 +43,6 @@ public:
 	bool Resize_FileView(void);
 	void Deselect_All_Brushes_Update_Dlgs(void);
 
-	void Enable_Debug_Menu(bool option);
 	void Menu_Enable_OgreExport(bool option);
 
 	void Show_file_view(bool show);

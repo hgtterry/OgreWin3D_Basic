@@ -186,24 +186,15 @@ bool CL64_PB::Stop_Progress_Bar(char* ProcessText)
 {
 	EnableWindow(ProgBarHwnd, false);
 
-	MSG msg;
-	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-
+	App->Win_Translate_Message();
+	
 	App->CL_Ogre->RenderFrame();
 
 	App->Say(App->CL_Model->Loaded_FileName, "Loaded");
 
 	SetDlgItemText(ProgBarHwnd, IDC_PBBANNER, (LPCTSTR)"Finished");
 	
-	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
+	App->Win_Translate_Message();
 
 	Close();
 	
