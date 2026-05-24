@@ -516,6 +516,12 @@ void CL64_Importers::Create_Brush()
 	if (Model_Brush)
 	{
 		App->CL_Level->Level_AppendBrush(Model_Brush);
+
+		App->CL_X_Brush->Brush_SetName(Model_Brush, App->CL_Model->Model_Just_Name);
+
+		App->CL_Doc->CurBrush = Model_Brush;
+		App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
+
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 		//App->Say("Brush Created");
 	}
