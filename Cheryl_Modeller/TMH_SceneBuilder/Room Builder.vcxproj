@@ -147,7 +147,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <OutputFile>$(OutDir)Cheryl_3D_Modeller.exe</OutputFile>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>X_Libs.lib;X_Lib_Preferences.lib;X_Lib_Zip.lib;X_Lib_Maths.lib;X_Lib_Ini_File.lib;Templates_Lib.lib;X_Lib_Gen.lib;X_Lib_Face_Editor.lib;comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;opengl32.lib;glu32.lib;DevIL.lib;ILU.lib;ILUT.lib;irrKlang.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>X_Libs.lib;X_Lib_Preferences.lib;X_Lib_Zip.lib;Lib_Maths.lib;X_Lib_Ini_File.lib;Templates_Lib.lib;X_Lib_Gen.lib;X_Lib_Face_Editor.lib;comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreRTShaderSystem.lib;OgreBites.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;opengl32.lib;glu32.lib;DevIL.lib;ILU.lib;ILUT.lib;irrKlang.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\Common_64\OW3D;..\Common_64\Ogre3D\libs;..\Common_64\Bullet\lib;..\Common_64\Devil\lib\x64\Release;..\Common_64\irrKlang\Libs;..\Common_64\Assimp\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>

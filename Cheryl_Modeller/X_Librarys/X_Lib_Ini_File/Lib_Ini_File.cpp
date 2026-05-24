@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-TMH_SceneBuilder
+Cheryl 3D Modeller
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ Lib_Ini_File::~Lib_Ini_File(void)
 // *************************************************************************
 char* Lib_Ini_File::GetVersion()
 {
-	return (LPSTR)" Lib_Ini_File [ 23-05-26 ] Build T ";
+	return (LPSTR)" Lib_Ini_File [ 24-05-26 ] Build T ";
 }
 
 // *************************************************************************
