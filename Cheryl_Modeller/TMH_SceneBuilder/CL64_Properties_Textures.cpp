@@ -59,18 +59,6 @@ void CL64_Properties_Textures::Reset_Class()
 	App->CL_Properties_Textures->Enable_FaceProps_Button(false);
 }
 
-
-// *************************************************************************
-// *	  	Show_Textures_Dialog:- Terry and Hazel Flanigan 2025		   *
-// *************************************************************************
-void CL64_Properties_Textures::Show_Textures_Dialog(bool Show)
-{
-	ShowWindow(Textures_Dlg_Hwnd, Show);
-	Dialog_Textures_Visible = Show;
-
-	Get_Selected_Face();
-}
-
 // *************************************************************************
 // *			Init_Bmps_Globals:- Terry Mo and Hazel 2025				   *
 // *************************************************************************

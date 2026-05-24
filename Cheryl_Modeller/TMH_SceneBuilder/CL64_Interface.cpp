@@ -257,11 +257,11 @@ void CL64_Interface::Enable_Change_Textures_Button(bool option)
 {
 	if (option == true)
 	{
-		EnableWindow(GetDlgItem(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, IDC_BT_AT_CHANGETEXTURE), true);
+		EnableWindow(GetDlgItem(App->CL_Properties_Textures_Com->Materials_Dlg_Hwnd, IDC_BT_AT_CHANGETEXTURE), true);
 	}
 	else
 	{
-		EnableWindow(GetDlgItem(App->CL_Properties_Textures_Com->Textures_Dlg_Hwnd_Assimp, IDC_BT_AT_CHANGETEXTURE), false);
+		EnableWindow(GetDlgItem(App->CL_Properties_Textures_Com->Materials_Dlg_Hwnd, IDC_BT_AT_CHANGETEXTURE), false);
 	}
 }
 

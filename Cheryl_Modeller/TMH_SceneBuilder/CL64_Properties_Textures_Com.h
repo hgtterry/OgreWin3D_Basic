@@ -69,7 +69,7 @@ public:
 
 	HBITMAP	Sel_BaseBitmap;
 
-	HWND Textures_Dlg_Hwnd_Assimp;
+	HWND Materials_Dlg_Hwnd;
 	HWND Texture_Editor_Dlg_Hwnd;
 	
 

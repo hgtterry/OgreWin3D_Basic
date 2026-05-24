@@ -218,7 +218,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		{
 			App->CL_Properties_Tabs->Hide_Dialogs();
 			App->CL_Properties_Tabs->flag_Tab_Texture = 1;
-			App->CL_Properties_Textures->Show_Textures_Dialog(true);
+			App->CL_Properties_Textures_Com->Show_Materials_Dialog(true);
 
 			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -237,7 +237,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		if (LOWORD(wParam) == IDC_TBGROUPS)
 		{
 			App->CL_Properties_Tabs->Hide_Dialogs();
-			App->CL_Properties_Tabs->flag_Tab_Group = 1;
+			App->CL_Properties_Tabs->flag_Tab_Group = true;
 			App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
 
 			//App->CL_Properties_Brushes->Fill_ListBox();
@@ -275,13 +275,13 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 void CL64_Properties_Tabs::Hide_Dialogs()
 {
 	// Reset all tab flags to indicate they are hidden
-	flag_Tab_Texture = 0;
-	flag_Tab_Group = 0;
-	flag_Tab_Templates = 0;
-	flag_Tab_3DSettings = 0;
+	flag_Tab_Texture = false;
+	flag_Tab_Group = false;
+	flag_Tab_Templates = false;
+	flag_Tab_3DSettings = false;
 
 	// Hide the respective dialogs for textures, brushes, and templates
-	App->CL_Properties_Textures->Show_Textures_Dialog(false);
+	App->CL_Properties_Textures_Com->Show_Materials_Dialog(false);
 	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
 	App->CL_Properties_Templates->Show_TemplatesDialog(false);
 
@@ -319,7 +319,7 @@ void CL64_Properties_Tabs::Select_Textures_Tab()
 		if (flag_Tab_Texture == false)
 		{
 			Hide_Dialogs();
-			App->CL_Properties_Textures->Show_Textures_Dialog(true);
+			App->CL_Properties_Textures_Com->Show_Materials_Dialog(true);
 			flag_Tab_Texture = 1;
 
 			RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
