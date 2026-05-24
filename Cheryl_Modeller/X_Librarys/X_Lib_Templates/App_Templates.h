@@ -17,10 +17,5 @@ public:
 	void Enable_Shape_Dialog(bool Enable);
 
 	HWND Shape_Dlg_hWnd;
-
-	//CreateBoxDialog*	CL_CreateBox;
-	//CreateCylDialog*	CL_CreateCylinder;
-	//CreateArchDialog*	CL_CreateArch;
-	//CreateConeDialog*	CL_CreateCone;
 };
 
