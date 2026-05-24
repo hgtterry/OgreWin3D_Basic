@@ -136,6 +136,8 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 		SendDlgItemMessage(hDlg, IDC_BT_AT_MATERIAL_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_AT_GROUPDETAILS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_AT_CHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_GROUP_ONLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 
 		SendDlgItemMessage(hDlg, IDC_ST_AT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_AT_NUMTEXTUNITS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
@@ -320,6 +322,18 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 				}
 			}
 
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_GROUP_ONLY)
+		{
+			App->CL_Ogre->OGL_Listener->flag_ShowOnlySubMesh = true;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_ALL_GROUPS)
+		{
+			App->CL_Ogre->OGL_Listener->flag_ShowOnlySubMesh = false;
 			return TRUE;
 		}
 
@@ -945,11 +959,12 @@ void CL64_Properties_Materials::Texture_To_HBITMP(char* TextureFileName)
 // *************************************************************************
 void CL64_Properties_Materials::Fill_Textures_ListBox()
 {
+	auto& m_Textures_Dlg_hWnd = Materials_Dlg_Hwnd;
+
 	// --------------------------------------------------------------------- Assimp
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		auto& m_Textures_Dlg_hWnd = Materials_Dlg_Hwnd;
-
+		
 		SendDlgItemMessage(m_Textures_Dlg_hWnd, IDC_LIST_AT_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 		if (App->CL_Model->GroupCount > 0)
@@ -967,8 +982,6 @@ void CL64_Properties_Materials::Fill_Textures_ListBox()
 	// --------------------------------------------------------------------- Ogre
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
-		auto& m_Textures_Dlg_hWnd = Materials_Dlg_Hwnd;
-
 		SendDlgItemMessage(m_Textures_Dlg_hWnd, IDC_LIST_AT_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 		if (App->CL_Model->GroupCount > 0)
@@ -994,11 +1007,11 @@ void CL64_Properties_Materials::Fill_Textures_ListBox()
 // *************************************************************************
 void CL64_Properties_Materials::Fill_Materials_ListBox()
 {
+	auto& m_Textures_Dlg_hWnd = Materials_Dlg_Hwnd;
+
 	// --------------------------------------------------------------------- Assimp
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		auto& m_Textures_Dlg_hWnd = Materials_Dlg_Hwnd;
-
 		SendDlgItemMessage(m_Textures_Dlg_hWnd, IDC_LIST_AT_MATERIALS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 		if (App->CL_Model->GroupCount > 0)
@@ -1023,9 +1036,7 @@ void CL64_Properties_Materials::Fill_Materials_ListBox()
 	// --------------------------------------------------------------------- Ogre
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
-		//auto& m_Textures_Dlg_hWnd = Textures_Dlg_Hwnd_Ogre;
-		auto& m_Textures_Dlg_hWnd = Materials_Dlg_Hwnd;
-
+		
 		SendDlgItemMessage(m_Textures_Dlg_hWnd, IDC_LIST_AT_MATERIALS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 		if (App->CL_Model->GroupCount > 0)

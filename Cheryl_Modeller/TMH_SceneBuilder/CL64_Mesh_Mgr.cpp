@@ -150,25 +150,27 @@ void CL64_Mesh_Mgr::Delete_Group_Brushes()
 // *************************************************************************
 bool CL64_Mesh_Mgr::Update_World(int selected)
 {
+	return true;
+
 	v_Face_Data_Count = 0;
 
 	int brushCount = App->CL_X_Brush->Get_Brush_Count();
 	if (brushCount > 0)
 	{
-		Brush_Build_List(selected);
-		WE_Convert_All_Texture_Groups();
+		//Brush_Build_List(selected);
+		//WE_Convert_All_Texture_Groups();
 
-		if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == 0)
+		if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == false)
 		{
-			App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visible
+			//App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visible
 		}
 	}
 	else
 	{
-		if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+		/*if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
 		{
 			App->CL_Mesh_Mgr->World_Node->setVisible(false);
-		}
+		}*/
 	}
 
 	return true;

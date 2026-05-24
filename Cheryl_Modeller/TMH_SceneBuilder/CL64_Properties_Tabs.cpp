@@ -161,7 +161,10 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_TBTEXTURES)
+		// Check which button was notified and handle accordingly
+		switch (some_item->idFrom)
+		{
+		case IDC_TBTEXTURES:
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_TBTEXTURES));
@@ -174,10 +177,10 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Texture);
 			}
 
-			return CDRF_DODEFAULT;
+			break;
 		}
-
-		if (some_item->idFrom == IDC_TBTEMPLATES)
+		
+		case IDC_TBTEMPLATES:
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_TBTEMPLATES));
@@ -190,10 +193,10 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Templates);
 			}
 
-			return CDRF_DODEFAULT;
+			break;
 		}
 
-		if (some_item->idFrom == IDC_TBGROUPS)
+		case IDC_TBGROUPS:
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_TBGROUPS));
@@ -205,7 +208,12 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			{
 				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Group);
 			}
-			
+
+			break;
+		}
+
+		default:
+
 			return CDRF_DODEFAULT;
 		}
 

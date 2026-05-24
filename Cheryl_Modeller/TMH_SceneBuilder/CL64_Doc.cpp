@@ -367,8 +367,9 @@ void CL64_Doc::UpdateAllViews(int Update_Mode)
         int BC = App->CL_X_Brush->Get_Brush_Count();
         if (BC > 0)
         {
+           
             App->CL_Doc->RebuildTrees();
-            App->CL_Mesh_Mgr->Update_World(0); // Will Set Node Visable
+            App->CL_Mesh_Mgr->Update_World(0); // Will Set Node Visible
         }
         else
         {
@@ -763,9 +764,8 @@ void CL64_Doc::RebuildTrees(void)
     //SetModifiedFlag();
 
     App->CL_X_Brush->BrushList_ClearAllCSG(BList);
-
+    
     App->CL_X_Brush->BrushList_DoCSG(BList, CurId, ::fdocBrushCSGCallback, this);
-
 }
 
 // *************************************************************************

@@ -114,6 +114,7 @@
 #define IDD_MODEL_TEXTURES_EDITOR       224
 #define IDD_MAP_RENDER_WINDOW1          225
 #define IDD_MAP_RENDER_WIN_TR           225
+#define IDD_MESSAGE1                    226
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -556,6 +557,7 @@
 #define IDC_BT_MOT_BBOX                 1382
 #define IDC_BT_TT_OPTIONS               1382
 #define IDC_BT_TEST_POSITIVE            1382
+#define IDC_BT_GROUP_ONLY               1382
 #define IDC_AT_BASETEXTURE              1383
 #define IDC_LIST_AT_MATERIALS           1384
 #define IDC_LIST_AT_TEXTURES            1385
@@ -573,6 +575,7 @@
 #define IDC_BUTTON4                     1403
 #define IDC_BT_TB_SHAPES                1403
 #define IDC_BT_MOT_TEXTURES             1403
+#define IDC_BT_ALL_GROUPS               1403
 #define IDC_CB_MOTIONS_JOINTS           1404
 #define IDC_ST_MOT_JOINTS               1405
 #define ID_DEBUG_GENERAL                32771

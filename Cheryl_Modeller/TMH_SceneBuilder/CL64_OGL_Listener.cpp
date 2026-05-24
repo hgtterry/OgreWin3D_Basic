@@ -119,6 +119,7 @@ void CL64_OGL_Listener::Reset_Class(void)
 	flag_ShowNormals = false;
 	flag_ShowBoundingBox = false;
 	flag_ShowBones = false;
+	flag_ShowOnlySubMesh = false;
 
 	Render_Mode = Enums::Render_Nothing;
 
@@ -382,6 +383,14 @@ bool CL64_OGL_Listener::MeshData_Render_Textures(void)
 	glColor3f(1, 1, 1);
 
 	int GroupCount = App->CL_Model->GroupCount;
+
+	if (flag_ShowOnlySubMesh == true) // Show Only Selected SubMesh
+	{
+		//MeshData_Textured_Groups(App->CL_Right_Groups->SelectedGroup);
+		MeshData_Textured_Groups(App->CL_Properties_Materials->Selected_Group);
+		glDisable(GL_TEXTURE_2D);
+		return 1;
+	}
 
 	Count = 0;
 	while (Count < GroupCount)

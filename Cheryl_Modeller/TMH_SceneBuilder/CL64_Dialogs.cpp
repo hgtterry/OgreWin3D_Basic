@@ -543,6 +543,112 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Message(HWND hDlg, UINT message, WPARAM wPar
 }
 
 // *************************************************************************
+// *	  			Loaded_DLG:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+void CL64_Dialogs::Loaded_DLG(char* pString, char* pString2)
+{
+	Message_Text_Header[0] = 0;
+	Message_Text_Message[0] = 0;
+
+	strcpy(Message_Text_Header, " ");
+	strcat(Message_Text_Header, pString);
+	strcat(Message_Text_Header, " ");
+
+	strcpy(Message_Text_Message, " ");
+	strcat(Message_Text_Message, pString2);
+	strcat(Message_Text_Message, " ");
+
+	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
+	DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE1, App->CL_PB->ProgBarHwnd, (DLGPROC)Proc_Loaded_DLG);
+}
+
+// *************************************************************************
+// *        	Proc_Loaded_DLG:- Terry and Hazel Flanigan 2024			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_Dialogs::Proc_Loaded_DLG(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STMESSAGE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text_Header);
+		SetDlgItemText(hDlg, IDC_STMESSAGE, App->CL_Dialogs->Message_Text_Message);
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		if (GetDlgItem(hDlg, IDC_STTEXT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STMESSAGE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
 // *	  			PleaseWait:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Dialogs::PleaseWait()

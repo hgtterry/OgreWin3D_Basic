@@ -517,6 +517,9 @@ void CL64_Importers::Create_Brush()
 	{
 		App->CL_Level->Level_AppendBrush(Model_Brush);
 
+		App->CL_Doc->SetDefaultBrushTexInfo(Model_Brush);
+		App->CL_X_Brush->Brush_Bound(Model_Brush);
+
 		App->CL_X_Brush->Brush_SetName(Model_Brush, App->CL_Model->Model_Just_Name);
 
 		App->CL_Doc->CurBrush = Model_Brush;

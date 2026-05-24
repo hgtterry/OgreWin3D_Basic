@@ -944,7 +944,7 @@ signed int	CX_Brush::Brush_TestBoundsIntersect(const Brush* b, const Box3d* pBox
 	return App->CL_X_Box->Box3d_Intersection(&b->BoundingBox, pBox, NULL);
 }
 
-static	Brush* bstack[8192];	//8192 levels of recursion
+static	Brush* bstack[73314096];	//8192 levels of recursion
 static	Brush** bsp;
 
 // *************************************************************************
@@ -1572,7 +1572,9 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 					cb = cb->Next;
 					continue;
 				}
+
 				cb2 = cb->Next;
+
 				for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 				{
 					f = App->CL_X_FaceList->FaceList_GetFace(b->Faces, i);
@@ -1591,7 +1593,9 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 						fb->Flags &= ~(BRUSH_HOLLOW | BRUSH_HOLLOWCUT);
 						App->CL_X_Brush->BrushList_Prepend(b2->BList, fb);
 					}
+				 
 					App->CL_X_Face->Face_Destroy(&sf);
+				 
 					if (!i)
 					{
 						App->CL_X_Brush->BrushList_Remove(b2->BList, cb);
@@ -1603,10 +1607,13 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 					if (!cb)
 						break;
 				}
+
 				if (bb)
 				{
 					App->CL_X_Brush->Brush_Destroy(&bb);
+
 				}
+
 				cb = cb2;
 			}
 		}
@@ -1627,13 +1634,15 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 				fb = bb = NULL;
 
 				//split b by sf, adding the front brush to the brushlist
-				App->CL_X_Brush->Brush_SplitByFace(cb, sf, &fb, &bb);
+				//App->CL_X_Brush->Brush_SplitByFace(cb, sf, &fb, &bb);
 				if (fb)
 				{	//clear hollow for csg
-					fb->Flags &= ~(BRUSH_HOLLOW | BRUSH_HOLLOWCUT);
-					App->CL_X_Brush->BrushList_Append(b2->BList, fb);
+					/*fb->Flags &= ~(BRUSH_HOLLOW | BRUSH_HOLLOWCUT);
+					App->CL_X_Brush->BrushList_Append(b2->BList, fb);*/
 				}
+
 				App->CL_X_Face->Face_Destroy(&sf);
+
 				if (i)
 				{
 					App->CL_X_Brush->Brush_Destroy(&cb);
@@ -1642,8 +1651,9 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 				//make the back side brush current
 				cb = bb;
 				if (!cb)
-					break;
+				break;
 			}
+
 			if (bb)
 			{
 				App->CL_X_Brush->Brush_Destroy(&bb);
@@ -1792,6 +1802,7 @@ static void	BrushList_DoCuts(BrushList* pList, int mid, Brush_CSGCallback Callba
 							break;
 						}
 					}
+
 					//true subtract flags are always passed on now
 					assert(cb->Flags & BRUSH_SUBTRACT);
 
@@ -1822,6 +1833,7 @@ static void	BrushList_DoCuts(BrushList* pList, int mid, Brush_CSGCallback Callba
 							b2->Has_Been_Cut = 0;
 						}
 					}
+
 					cb = cb->Next;
 				}
 			}
@@ -1848,6 +1860,8 @@ static void	BrushList_DoCuts(BrushList* pList, int mid, Brush_CSGCallback Callba
 			}
 		}
 	}
+
+	App->Say("Here");
 }
 
 // *************************************************************************

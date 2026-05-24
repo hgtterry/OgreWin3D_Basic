@@ -32,7 +32,10 @@ public:
 
 	void YesNoCancel(char* Text, char* Text2);
 	void YesNo(const char* Text, const char* Text2);
+
 	void Message(char* pString, char* pString2);
+	void Loaded_DLG(char* pString, char* pString2);
+
 	void PleaseWait();
 	void Start_Brush_Properties_Dlg();
 	void Dialog_Text(int What_Check);
@@ -71,7 +74,10 @@ public:
 private:
 
 	static LRESULT CALLBACK Proc_YesNoCancel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 	static LRESULT CALLBACK Proc_Message(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Loaded_DLG(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 	static LRESULT CALLBACK Proc_PleaseWait(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Brush_Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dialog_Text(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
