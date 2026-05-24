@@ -204,6 +204,9 @@
     <ClInclude Include="CL64_Views_Com.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Cheryl_3D_Modeller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
