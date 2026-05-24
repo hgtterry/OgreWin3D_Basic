@@ -23,12 +23,12 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_Properties_Textures_Com
+class CL64_Properties_Materials
 {
 public:
 
-	CL64_Properties_Textures_Com(void);
-	~CL64_Properties_Textures_Com(void);
+	CL64_Properties_Materials(void);
+	~CL64_Properties_Materials(void);
 
 	void Reset_Class(void);
 

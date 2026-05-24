@@ -115,7 +115,7 @@ public:
 	CL64_Model*					CL_Model;
 	CL64_Mesh*					CL_Mesh;
 
-	CL64_Properties_Textures_Com*		CL_Properties_Textures_Com;
+	CL64_Properties_Materials*	CL_Properties_Materials;
 
 	CL64_View_Top_Left*			CL_View_Top_Left;
 	CL64_View_Top_Right*		CL_View_Top_Right;

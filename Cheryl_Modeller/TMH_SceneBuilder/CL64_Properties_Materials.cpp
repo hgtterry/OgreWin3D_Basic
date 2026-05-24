@@ -25,9 +25,9 @@ THE SOFTWARE.
 #include "pch.h"
 #include "CL64_App.h"
 #include "resource.h"
-#include "CL64_Properties_Textures_Com.h"
+#include "CL64_Properties_Materials.h"
 
-CL64_Properties_Textures_Com::CL64_Properties_Textures_Com(void)
+CL64_Properties_Materials::CL64_Properties_Materials(void)
 {
 	Materials_Dlg_Hwnd =	nullptr;
 	Texture_Editor_Dlg_Hwnd =	nullptr;
@@ -50,14 +50,14 @@ CL64_Properties_Textures_Com::CL64_Properties_Textures_Com(void)
 
 }
 
-CL64_Properties_Textures_Com::~CL64_Properties_Textures_Com(void)
+CL64_Properties_Materials::~CL64_Properties_Materials(void)
 {
 }
 
 // *************************************************************************
 // *			Reset_Class:- Terry and Hazel Flanigan 2026				   *
 // *************************************************************************
-void CL64_Properties_Textures_Com::Reset_Class(void)
+void CL64_Properties_Materials::Reset_Class(void)
 {
 	Selected_Group = 0;
 
@@ -75,7 +75,7 @@ void CL64_Properties_Textures_Com::Reset_Class(void)
 // *************************************************************************
 // *	  	Show_Materials_Dialog:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Properties_Textures_Com::Show_Materials_Dialog(bool Show)
+void CL64_Properties_Materials::Show_Materials_Dialog(bool Show)
 {
 	ShowWindow(Materials_Dlg_Hwnd, Show);
 
@@ -87,7 +87,7 @@ void CL64_Properties_Textures_Com::Show_Materials_Dialog(bool Show)
 // *************************************************************************
 // *					Init_Bmps:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
-void CL64_Properties_Textures_Com::Init_Bmps(void)
+void CL64_Properties_Materials::Init_Bmps(void)
 {
 	HWND Temp = GetDlgItem(Materials_Dlg_Hwnd, IDC_BT_AT_MATERIAL_FACES);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
@@ -112,7 +112,7 @@ void CL64_Properties_Textures_Com::Init_Bmps(void)
 // *************************************************************************
 // *		 Start_Props_Materials_Dlg:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
-bool CL64_Properties_Textures_Com::Start_Props_Materials_Dlg()
+bool CL64_Properties_Materials::Start_Props_Materials_Dlg()
 {
 	Materials_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES_TEXTURES_ASSIMP, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Textures_Dialog);
 	Init_Bmps();
@@ -123,7 +123,7 @@ bool CL64_Properties_Textures_Com::Start_Props_Materials_Dlg()
 // *************************************************************************
 // *		Proc_Textures_Dialog:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -275,7 +275,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 					return TRUE;
 				}
 
-				App->CL_Properties_Textures_Com->List_Material_Changed(Index);
+				App->CL_Properties_Materials->List_Material_Changed(Index);
 
 			}
 
@@ -293,7 +293,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 					return TRUE;
 				}
 
-				App->CL_Properties_Textures_Com->List_Texture_Changed(Index);
+				App->CL_Properties_Materials->List_Texture_Changed(Index);
 			}
 			return TRUE;
 		}
@@ -304,7 +304,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 			{
 				if (App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces == true)
 				{
-					HWND Temp = GetDlgItem(App->CL_Properties_Textures_Com->Materials_Dlg_Hwnd, IDC_BT_AT_MATERIAL_FACES);
+					HWND Temp = GetDlgItem(App->CL_Properties_Materials->Materials_Dlg_Hwnd, IDC_BT_AT_MATERIAL_FACES);
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 
 					App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = false;
@@ -312,7 +312,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 				}
 				else
 				{
-					HWND Temp = GetDlgItem(App->CL_Properties_Textures_Com->Materials_Dlg_Hwnd, IDC_BT_AT_MATERIAL_FACES);
+					HWND Temp = GetDlgItem(App->CL_Properties_Materials->Materials_Dlg_Hwnd, IDC_BT_AT_MATERIAL_FACES);
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 
 					App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = true;
@@ -361,7 +361,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 				}
 				else
 				{
-					App->CL_Resources->View_File(App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->Ogre_Material_File, App->MainHwnd);
+					App->CL_Resources->View_File(App->CL_Mesh->Group[App->CL_Properties_Materials->Selected_Group]->Ogre_Material_File, App->MainHwnd);
 				}
 			}
 
@@ -386,7 +386,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 
 		if (LOWORD(wParam) == IDC_BT_AT_CHANGETEXTURE)
 		{
-			App->CL_Properties_Textures_Com->Change_Texture();
+			App->CL_Properties_Materials->Change_Texture();
 			//App->CL_Properties_Textures_Com->Start_Texture_Editor_Dialog();
 
 			return TRUE;
@@ -405,7 +405,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Textures_Dialog(HWND hDlg, U
 // *************************************************************************
 // *			ViewerBasePic:- Terry and Hazel Flanigan 2026	  		   *
 // *************************************************************************
-bool CALLBACK CL64_Properties_Textures_Com::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+bool CALLBACK CL64_Properties_Materials::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_PAINT)
 	{
@@ -419,7 +419,7 @@ bool CALLBACK CL64_Properties_Textures_Com::ViewerBasePic(HWND hwnd, UINT msg, W
 		Rect.bottom--;
 		FillRect(hDC, &Rect, (HBRUSH)(RGB(0, 255, 0)));
 
-		if (App->CL_Properties_Textures_Com->Sel_BaseBitmap != NULL)
+		if (App->CL_Properties_Materials->Sel_BaseBitmap != NULL)
 		{
 			RECT	Source;
 			RECT	Dest;
@@ -427,15 +427,15 @@ bool CALLBACK CL64_Properties_Textures_Com::ViewerBasePic(HWND hwnd, UINT msg, W
 
 			Source.left = 0;
 			Source.top = 0;
-			Source.bottom = App->CL_Properties_Textures_Com->BasePicHeight;
-			Source.right = App->CL_Properties_Textures_Com->BasePicWidth;
+			Source.bottom = App->CL_Properties_Materials->BasePicHeight;
+			Source.right = App->CL_Properties_Materials->BasePicWidth;
 
 			Dest = Rect;
 
 			hDC = GetDC(hwnd);
 			SetStretchBltMode(hDC, HALFTONE);
 
-			App->CL_Properties_Textures_Com->RenderTexture_Blit(hDC, App->CL_Properties_Textures_Com->Sel_BaseBitmap, &Source, &Dest);
+			App->CL_Properties_Materials->RenderTexture_Blit(hDC, App->CL_Properties_Materials->Sel_BaseBitmap, &Source, &Dest);
 			ReleaseDC(hwnd, hDC);
 		}
 
@@ -448,7 +448,7 @@ bool CALLBACK CL64_Properties_Textures_Com::ViewerBasePic(HWND hwnd, UINT msg, W
 // *************************************************************************
 // *		RenderTexture_Blit:- Terry and Hazel Flanigan 2026		  	   *
 // *************************************************************************
-bool CL64_Properties_Textures_Com::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
+bool CL64_Properties_Materials::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
 {
 	HDC		MemDC;
 	int		SourceWidth;
@@ -490,7 +490,7 @@ bool CL64_Properties_Textures_Com::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, cons
 // *************************************************************************
 // *	 Start_Texture_Editor_Dialog:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
-bool CL64_Properties_Textures_Com::Start_Texture_Editor_Dialog()
+bool CL64_Properties_Materials::Start_Texture_Editor_Dialog()
 {
 	if (Textures_Editor_Dlg_Active == true)
 	{
@@ -507,9 +507,9 @@ bool CL64_Properties_Textures_Com::Start_Texture_Editor_Dialog()
 // *************************************************************************
 // *		Proc_Texture_Editor:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Properties_Materials::Proc_Texture_Editor(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	auto& m_FaceEditor = App->CL_Properties_Textures_Com; // App->CL_X_Face_Editor
+	auto& m_FaceEditor = App->CL_Properties_Materials; // App->CL_X_Face_Editor
 
 	HWND Slider_Scale_X_hWnd = NULL;
 
@@ -526,8 +526,8 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UI
 		SendMessageW(Slider_Scale_X_hWnd, TBM_SETTICFREQ, 1, 0);
 		SendMessageW(Slider_Scale_X_hWnd, TBM_SETPOS, true, 250);
 
-		App->CL_Properties_Textures_Com->Slider_Index = 500;
-		App->CL_Properties_Textures_Com->Slider_Index_Copy = 500;
+		App->CL_Properties_Materials->Slider_Index = 500;
+		App->CL_Properties_Materials->Slider_Index_Copy = 500;
 	}
 
 	case WM_CTLCOLORSTATIC:
@@ -587,7 +587,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UI
 	
 	case WM_HSCROLL:
 	{
-		auto& m_Textures = App->CL_Properties_Textures_Com;
+		auto& m_Textures = App->CL_Properties_Materials;
 
 		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SLDR_MT_POS_X))
 		{
@@ -640,14 +640,14 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UI
 	{
 		if (LOWORD(wParam) == IDC_BT_MTE_CHANGETEXTURE)
 		{
-			App->CL_Properties_Textures_Com->Change_Texture();
+			App->CL_Properties_Materials->Change_Texture();
 
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_MT_FLIPVERTICAL)
 		{
-			int Index = App->CL_Properties_Textures_Com->Selected_Group;
+			int Index = App->CL_Properties_Materials->Selected_Group;
 
 			int A = 0;
 			int B = 0;
@@ -698,7 +698,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UI
 		{
 			//App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Mesh_Chords);
 
-			int Index = App->CL_Properties_Textures_Com->Selected_Group;
+			int Index = App->CL_Properties_Materials->Selected_Group;
 
 			int A = 0;
 			int B = 0;
@@ -747,7 +747,7 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UI
 
 		if (LOWORD(wParam) == IDC_BT_TEST_MINUS)
 		{
-			int Index = App->CL_Properties_Textures_Com->Selected_Group;
+			int Index = App->CL_Properties_Materials->Selected_Group;
 
 			int A = 0;
 			int B = 0;
@@ -786,14 +786,14 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UI
 		
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_Properties_Textures_Com->Textures_Editor_Dlg_Active = false;
+			App->CL_Properties_Materials->Textures_Editor_Dlg_Active = false;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CL_Properties_Textures_Com->Textures_Editor_Dlg_Active = false;
+			App->CL_Properties_Materials->Textures_Editor_Dlg_Active = false;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -806,13 +806,13 @@ LRESULT CALLBACK CL64_Properties_Textures_Com::Proc_Texture_Editor(HWND hDlg, UI
 // *************************************************************************
 // *			Get_First_Texture:- Terry and Hazel Flanigan 2026	 	   *
 // *************************************************************************
-void CL64_Properties_Textures_Com::Get_First_Texture()
+void CL64_Properties_Materials::Get_First_Texture()
 {
 	// --------------------------------------------------------------------- Assimp
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		App->CL_Properties_Textures_Com->Selected_Group = 0;
-		App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
+		Selected_Group = 0;
+		Fill_Textures_ListBox();
 	}
 
 	// --------------------------------------------------------------------- Ogre3D
@@ -825,23 +825,23 @@ void CL64_Properties_Textures_Com::Get_First_Texture()
 			{
 				if (App->CL_Model->GroupCount > 0)
 				{
-					strcpy(App->CL_Properties_Textures_Com->m_Current_TextureName, App->CL_Mesh->Group[0]->v_Texture_Names[0].c_str());
+					strcpy(m_Current_TextureName, App->CL_Mesh->Group[0]->v_Texture_Names[0].c_str());
 					strcpy(m_Current_MaterialName, App->CL_Mesh->Group[0]->Ogre_Material);
 					//strcpy(App->CL_Resources->mSelected_File, m_CurrentTexture);
 				}
 
-				App->CL_Properties_Textures_Com->Selected_Group = 0;
+				Selected_Group = 0;
 				App->CL_Ogre->OGL_Listener->Selected_Face_Group = 0;
 
 				App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 
-				View_Texture(App->CL_Properties_Textures_Com->m_Current_TextureName, m_Current_MaterialName);
-				App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
-				App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
+				View_Texture(m_Current_TextureName, m_Current_MaterialName);
+				Fill_Textures_ListBox();
+				Update_Dlg_Bmp_Texture();
 			}
 			else
 			{
-				strcpy(App->CL_Properties_Textures_Com->m_Current_TextureName, App->CL_Mesh->Group[0]->v_Texture_Names[0].c_str());
+				strcpy(m_Current_TextureName, App->CL_Mesh->Group[0]->v_Texture_Names[0].c_str());
 				strcpy(m_Current_MaterialName, App->CL_Mesh->Group[0]->Ogre_Material);
 
 				bool test = strcmp(m_Current_MaterialName, "No_Material_Loaded");
@@ -852,15 +852,15 @@ void CL64_Properties_Textures_Com::Get_First_Texture()
 
 				if (App->CL_Mesh->Group[0]->Ogre_Texture_IsValid == 1)
 				{
-					View_Texture(App->CL_Properties_Textures_Com->m_Current_TextureName, m_Current_MaterialName);
-					App->CL_Properties_Textures_Com->Fill_Textures_ListBox();
-					App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
+					View_Texture(m_Current_TextureName, m_Current_MaterialName);
+					Fill_Textures_ListBox();
+					Update_Dlg_Bmp_Texture();
 				}
 				else
 				{
 					App->CL_Mesh->Group[0]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_NO_TEXTURE));
-					App->CL_Properties_Textures_Com->Sel_BaseBitmap = App->CL_Mesh->Group[0]->Base_Bitmap;
-					App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
+					Sel_BaseBitmap = App->CL_Mesh->Group[0]->Base_Bitmap;
+					Update_Dlg_Bmp_Texture();
 				}
 
 			}
@@ -871,9 +871,9 @@ void CL64_Properties_Textures_Com::Get_First_Texture()
 // *************************************************************************
 // *				View_Texture:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-bool CL64_Properties_Textures_Com::View_Texture(char* TextureName, char* MaterialName)
+bool CL64_Properties_Materials::View_Texture(char* TextureName, char* MaterialName)
 {
-	strcpy(App->CL_Properties_Textures_Com->m_Current_TextureName, TextureName);
+	strcpy(m_Current_TextureName, TextureName);
 	strcpy(m_Current_MaterialName, MaterialName);
 
 	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Resources->mSelected_Resource_Group, false);
@@ -904,7 +904,7 @@ bool CL64_Properties_Textures_Com::View_Texture(char* TextureName, char* Materia
 
 			Texture_To_HBITMP(mFileName);
 
-			App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
+			Update_Dlg_Bmp_Texture();
 
 			remove(mFileName);
 
@@ -918,7 +918,7 @@ bool CL64_Properties_Textures_Com::View_Texture(char* TextureName, char* Materia
 // *************************************************************************
 // *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2026	 	   *
 // *************************************************************************
-void CL64_Properties_Textures_Com::Texture_To_HBITMP(char* TextureFileName)
+void CL64_Properties_Materials::Texture_To_HBITMP(char* TextureFileName)
 {
 	// Retrieve the handle for the preview window
 	HWND previewWnd = GetDlgItem(Materials_Dlg_Hwnd, IDC_AT_BASETEXTURE);
@@ -927,11 +927,11 @@ void CL64_Properties_Textures_Com::Texture_To_HBITMP(char* TextureFileName)
 	HDC hdc = GetDC(previewWnd);
 
 	// Load the bitmap texture using the application texture manager
-	App->CL_Properties_Textures_Com->Sel_BaseBitmap = App->CL_Textures->Get_HBITMP(TextureFileName, hdc);
+	Sel_BaseBitmap = App->CL_Textures->Get_HBITMP(TextureFileName, hdc);
 
 	// Store the dimensions of the base picture
-	App->CL_Properties_Textures_Com->BasePicWidth = App->CL_Textures->BasePicWidth;
-	App->CL_Properties_Textures_Com->BasePicHeight = App->CL_Textures->BasePicHeight;
+	BasePicWidth = App->CL_Textures->BasePicWidth;
+	BasePicHeight = App->CL_Textures->BasePicHeight;
 
 	// Release the device context
 	ReleaseDC(previewWnd, hdc);
@@ -943,7 +943,7 @@ void CL64_Properties_Textures_Com::Texture_To_HBITMP(char* TextureFileName)
 // *************************************************************************
 // *		Fill_Textures_ListBox:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Properties_Textures_Com::Fill_Textures_ListBox()
+void CL64_Properties_Materials::Fill_Textures_ListBox()
 {
 	// --------------------------------------------------------------------- Assimp
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
@@ -992,7 +992,7 @@ void CL64_Properties_Textures_Com::Fill_Textures_ListBox()
 // *************************************************************************
 // *		Fill_Materials_ListBox:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Properties_Textures_Com::Fill_Materials_ListBox()
+void CL64_Properties_Materials::Fill_Materials_ListBox()
 {
 	// --------------------------------------------------------------------- Assimp
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
@@ -1051,7 +1051,7 @@ void CL64_Properties_Textures_Com::Fill_Materials_ListBox()
 // *************************************************************************
 // *		Update_Dlg_Bmp_Texture:- Terry and Hazel Flanigan 2026	      *
 // *************************************************************************
-void CL64_Properties_Textures_Com::Update_Dlg_Bmp_Texture()
+void CL64_Properties_Materials::Update_Dlg_Bmp_Texture()
 {
 	// --------------------------------------------------------------------- Assimp
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
@@ -1109,7 +1109,7 @@ void CL64_Properties_Textures_Com::Update_Dlg_Bmp_Texture()
 // *************************************************************************
 // *	  	List_Material_Changed:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Properties_Textures_Com::List_Material_Changed(int index)
+void CL64_Properties_Materials::List_Material_Changed(int index)
 {
 	// Check if the model is loaded and is of type Assimp
 	if (App->CL_Model->flag_Model_Loaded && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
@@ -1128,7 +1128,7 @@ void CL64_Properties_Textures_Com::List_Material_Changed(int index)
 		// If the file viewer is active, search for the new material
 		if (App->CL_Dialogs->flag_FileViewer_Active)
 		{
-			std::string materialText = "newmtl " + std::string(App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->MaterialName);
+			std::string materialText = "newmtl " + std::string(App->CL_Mesh->Group[Selected_Group]->MaterialName);
 			App->CL_Dialogs->Material_Search(materialText.c_str());
 		}
 
@@ -1178,7 +1178,7 @@ void CL64_Properties_Textures_Com::List_Material_Changed(int index)
 
 		if (App->CL_Dialogs->flag_FileViewer_Active == true)
 		{
-			std::string materialText = "material " + std::string(App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->Ogre_Material);
+			std::string materialText = "material " + std::string(App->CL_Mesh->Group[Selected_Group]->Ogre_Material);
 			App->CL_Dialogs->Material_Search(materialText.c_str());
 		}
 
@@ -1196,7 +1196,7 @@ void CL64_Properties_Textures_Com::List_Material_Changed(int index)
 // *************************************************************************
 // *	  	List_Texture_Changed:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Properties_Textures_Com::List_Texture_Changed(int Index)
+void CL64_Properties_Materials::List_Texture_Changed(int Index)
 {
 	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
@@ -1212,7 +1212,7 @@ void CL64_Properties_Textures_Com::List_Texture_Changed(int Index)
 // *************************************************************************
 // *			Change_Texture:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-bool CL64_Properties_Textures_Com::Change_Texture(void)
+bool CL64_Properties_Materials::Change_Texture(void)
 {
 	int test = 0;
 	// -------------------- OBJ

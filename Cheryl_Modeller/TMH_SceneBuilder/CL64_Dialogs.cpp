@@ -1629,7 +1629,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 			char Text[MAX_PATH];
 			strcpy(Text, "material ");
 
-			strcat(Text, App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->Ogre_Material);
+			strcat(Text, App->CL_Mesh->Group[App->CL_Properties_Materials->Selected_Group]->Ogre_Material);
 			App->CL_Dialogs->Material_Search((LPSTR)Text);
 		}
 
@@ -1638,7 +1638,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 			char Text[MAX_PATH];
 			strcpy(Text, "newmtl ");
 
-			strcat(Text, App->CL_Mesh->Group[App->CL_Properties_Textures_Com->Selected_Group]->MaterialName);
+			strcat(Text, App->CL_Mesh->Group[App->CL_Properties_Materials->Selected_Group]->MaterialName);
 			App->CL_Dialogs->Material_Search((LPSTR)Text);
 		}
 
@@ -1703,7 +1703,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 			
 			if (App->CL_Model->flag_Model_Loaded == true)
 			{
-				RedrawWindow(App->CL_Properties_Textures_Com->Materials_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CL_Properties_Materials->Materials_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -1719,7 +1719,7 @@ LRESULT CALLBACK CL64_Dialogs::Proc_FileViewer(HWND hDlg, UINT message, WPARAM w
 			
 			if (App->CL_Model->flag_Model_Loaded == true)
 			{
-				RedrawWindow(App->CL_Properties_Textures_Com->Materials_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CL_Properties_Materials->Materials_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -1896,12 +1896,12 @@ LRESULT CALLBACK CL64_Dialogs::Proc_General_ListBox(HWND hDlg, UINT message, WPA
 
 			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 			{
-				RedrawWindow(App->CL_Properties_Textures_Com->Materials_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CL_Properties_Materials->Materials_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 			{
-				RedrawWindow(App->CL_Properties_Textures_Com->Materials_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				RedrawWindow(App->CL_Properties_Materials->Materials_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -2076,12 +2076,12 @@ void CL64_Dialogs::List_Mesh_Data(HWND List)
 
 	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
-		Index = App->CL_Properties_Textures_Com->Selected_Group;
+		Index = App->CL_Properties_Materials->Selected_Group;
 	}
 
 	if (App->CL_Model->flag_Model_Loaded == true && App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		Index = App->CL_Properties_Textures_Com->Selected_Group;
+		Index = App->CL_Properties_Materials->Selected_Group;
 	}
 
 	if (Index > -1)
@@ -2128,7 +2128,7 @@ void CL64_Dialogs::List_Mesh_Chords(HWND List)
 {
 	char buf[MAX_PATH];
 
-	int Index = App->CL_Properties_Textures_Com->Selected_Group;
+	int Index = App->CL_Properties_Materials->Selected_Group;
 
 	int A = 0;
 	int B = 0;

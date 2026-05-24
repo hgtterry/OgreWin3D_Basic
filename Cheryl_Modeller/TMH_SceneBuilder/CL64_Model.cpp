@@ -183,7 +183,7 @@ void CL64_Model::Clear_Model()
 
 	App->CL_Ogre->OGL_Listener->Reset_Class();
 	
-	App->CL_Properties_Textures_Com->Reset_Class();
+	App->CL_Properties_Materials->Reset_Class();
 	
 	App->CL_Interface->Show_Properties_Panel(false);
 	App->CL_Interface->Show_Motions_Dlg(false);

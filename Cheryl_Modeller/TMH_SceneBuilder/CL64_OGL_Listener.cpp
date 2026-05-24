@@ -459,12 +459,12 @@ void CL64_OGL_Listener::MeshData_Render_Material_Faces(void)
 
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
 	{
-		MeshData_Face_Groups(App->CL_Properties_Textures_Com->Selected_Group);
+		MeshData_Face_Groups(App->CL_Properties_Materials->Selected_Group);
 	}
 
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
-		MeshData_Face_Groups(App->CL_Properties_Textures_Com->Selected_Group);
+		MeshData_Face_Groups(App->CL_Properties_Materials->Selected_Group);
 	}
 	
 }
@@ -490,7 +490,7 @@ void CL64_OGL_Listener::MeshData_Render_Faces(void)
 
 	while (Count < GroupCount)
 	{
-		if (flag_Show_Material_Faces == true && Count == App->CL_Properties_Textures_Com->Selected_Group)
+		if (flag_Show_Material_Faces == true && Count == App->CL_Properties_Materials->Selected_Group)
 		{
 
 		}

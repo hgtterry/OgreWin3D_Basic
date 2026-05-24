@@ -497,7 +497,7 @@ void CL64_ImGui::Show_Ogre_Model_Data_GUI(void)
 							App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
 						}*/
 
-						App->CL_Properties_Textures_Com->List_Material_Changed(Count);
+						App->CL_Properties_Materials->List_Material_Changed(Count);
 
 						listMaterialItems_Ogre[PreviouseMaterial_Ogre] = 0;
 						listMaterialItems_Ogre[Count] = 1;
@@ -690,7 +690,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 				if (ImGui::Selectable(App->CL_Mesh->Group[Count]->MaterialName, listMaterialItems_Assimp[Count]))
 				{
 					App->CL_Ogre->OGL_Listener->Selected_Face_Group = Count;
-					App->CL_Properties_Textures_Com->List_Material_Changed(Count);
+					App->CL_Properties_Materials->List_Material_Changed(Count);
 
 					listMaterialItems_Assimp[PreviouseMaterial_Assimp] = false;
 					listMaterialItems_Assimp[Count] = true;

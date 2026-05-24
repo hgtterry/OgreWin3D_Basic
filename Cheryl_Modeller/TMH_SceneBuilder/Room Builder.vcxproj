@@ -189,11 +189,11 @@
     <ClInclude Include="CL64_PB.h" />
     <ClInclude Include="CL64_Picking.h" />
     <ClInclude Include="CL64_Properties_Brushes.h" />
+    <ClInclude Include="CL64_Properties_Materials.h" />
     <ClInclude Include="CL64_Properties_Motions.h" />
     <ClInclude Include="CL64_Properties_Tabs.h" />
     <ClInclude Include="CL64_Properties_Templates.h" />
     <ClInclude Include="CL64_Properties_Textures.h" />
-    <ClInclude Include="CL64_Properties_Textures_Com.h" />
     <ClInclude Include="CL64_Props_Dialogs.h" />
     <ClInclude Include="CL64_Render_Map.h" />
     <ClInclude Include="CL64_Resources.h" />
@@ -254,11 +254,11 @@
     <ClCompile Include="CL64_PB.cpp" />
     <ClCompile Include="CL64_Picking.cpp" />
     <ClCompile Include="CL64_Properties_Brushes.cpp" />
+    <ClCompile Include="CL64_Properties_Materials.cpp" />
     <ClCompile Include="CL64_Properties_Motions.cpp" />
     <ClCompile Include="CL64_Properties_Tabs.cpp" />
     <ClCompile Include="CL64_Properties_Templates.cpp" />
     <ClCompile Include="CL64_Properties_Textures.cpp" />
-    <ClCompile Include="CL64_Properties_Textures_Com.cpp" />
     <ClCompile Include="CL64_Props_Dialogs.cpp" />
     <ClCompile Include="CL64_Render_Map.cpp" />
     <ClCompile Include="CL64_Resources.cpp" />

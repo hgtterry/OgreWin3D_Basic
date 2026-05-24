@@ -19,7 +19,7 @@ void CL64_Importers::Set_Editor()
 {
 	// Show the properties panel and materials dialog
 	App->CL_Interface->Show_Properties_Panel(true);
-	App->CL_Properties_Textures_Com->Show_Materials_Dialog(true);
+	App->CL_Properties_Materials->Show_Materials_Dialog(true);
 
 	// Set the texture bitmap on the top tabs
 	App->CL_Top_Tabs->Set_Texture_Bmp_On();
@@ -108,7 +108,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 
 	App->CL_Model->Model_Type = Enums::Model_Type_Assimp;
 	App->CL_Model->flag_Model_Loaded = true;
-	App->CL_Properties_Textures_Com->Fill_Materials_ListBox();
+	App->CL_Properties_Materials->Fill_Materials_ListBox();
 
 	App->CL_Camera->Reset_View_and_Zoom();
 	App->CL_Interface->Set_Title(false);
@@ -116,9 +116,9 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 	Set_Editor();
 	App->CL_File_IO->RecentFileHistory_Update();
 
-	App->CL_Properties_Textures_Com->Selected_Group = 0;
-	App->CL_Properties_Textures_Com->Update_Dlg_Bmp_Texture();
-	App->CL_Properties_Textures_Com->Get_First_Texture();
+	App->CL_Properties_Materials->Selected_Group = 0;
+	App->CL_Properties_Materials->Update_Dlg_Bmp_Texture();
+	App->CL_Properties_Materials->Get_First_Texture();
 
 	Create_Brush();
 
@@ -258,8 +258,8 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 	App->CL_Resources->mSelected_Resource_Group = App->CL_Resources->Ogre_Loader_Resource_Group;
 	
 	App->CL_Model->Model_Type = Enums::Model_Type_Ogre3D;
-	App->CL_Properties_Textures_Com->Fill_Materials_ListBox();
-	App->CL_Properties_Textures_Com->Get_First_Texture();
+	App->CL_Properties_Materials->Fill_Materials_ListBox();
+	App->CL_Properties_Materials->Get_First_Texture();
 
 	Set_Editor();
 	
@@ -344,8 +344,8 @@ void CL64_Importers::Reload_Ogre_Model(Ogre::Quaternion Rotation)
 		App->CL_Ogre->camNode->setPosition(Ogre::Vector3(0, 0, App->CL_Model->Imported_Ogre_Ent->getBoundingRadius() * 2.8f));
 	}*/
 
-	App->CL_Properties_Textures_Com->Get_First_Texture();
-	App->CL_Properties_Textures_Com->Fill_Materials_ListBox();
+	App->CL_Properties_Materials->Get_First_Texture();
+	App->CL_Properties_Materials->Fill_Materials_ListBox();
 }
 
 // *************************************************************************

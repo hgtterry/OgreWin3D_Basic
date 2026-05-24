@@ -110,7 +110,7 @@ THE SOFTWARE.
 #include "CL64_Mesh.h"
 #include "Init_Libs.h"
 
-#include "CL64_Properties_Textures_Com.h"
+#include "CL64_Properties_Materials.h"
 
 #include "CL64_View_Top_Left.h"
 #include "CL64_View_Top_Right.h"
