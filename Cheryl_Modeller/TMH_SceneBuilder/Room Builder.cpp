@@ -1509,7 +1509,7 @@ void StartOgre()
         App->CL_File->Start_Load(false);
     }*/
 
-    bool loadtestfile = true;
+    bool loadtestfile = false;
     if (loadtestfile == true)
     {
         strcpy(App->CL_Model->Loaded_FileName, "chapel-10-C.ms3d");

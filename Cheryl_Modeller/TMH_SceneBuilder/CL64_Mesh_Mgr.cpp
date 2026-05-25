@@ -150,7 +150,7 @@ void CL64_Mesh_Mgr::Delete_Group_Brushes()
 // *************************************************************************
 bool CL64_Mesh_Mgr::Update_World(int selected)
 {
-	return true;
+	//return true;
 
 	v_Face_Data_Count = 0;
 

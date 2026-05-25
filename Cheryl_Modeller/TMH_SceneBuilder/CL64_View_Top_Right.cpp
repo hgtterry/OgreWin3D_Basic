@@ -234,6 +234,10 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
+		POINT		RealCursorPosition;
+		GetCursorPos(&RealCursorPosition);
+		ScreenToClient(hDlg, &RealCursorPosition);
+
 		auto& Views_Com = App->CL_Views_Com;
 
 		Views_Com->Current_View = App->CL_View_Top_Right->VCam_TR;
@@ -242,6 +246,11 @@ LRESULT CALLBACK CL64_View_Top_Right::Proc_Top_Right_Window(HWND hDlg, UINT mess
 		{
 			Views_Com->Set_Selected_View(Enums::Selected_Map_View_TR);
 		}
+
+		Views_Com->flag_Right_Button_Down = false;
+		Views_Com->flag_Left_Button_Down = true;
+
+		Views_Com->On_Left_Button_Down(RealCursorPosition, hDlg);
 
 		return 1;
 	}

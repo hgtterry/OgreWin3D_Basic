@@ -1532,7 +1532,23 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 			{
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Doc->MoveSelectedBrushes(&dv);
-				//Draw_Screen(hDlg);
+				
+				auto& Views_Com = App->CL_Views_Com;
+
+				switch (Views_Com->Selected_Window)
+				{
+				case Enums::Selected_Map_View_TL:
+					App->CL_View_Top_Left->Redraw_Window_TL();
+					break;
+				case Enums::Selected_Map_View_TR:
+					App->CL_View_Top_Right->Redraw_Window_TR();
+					break;
+				case Enums::Selected_Map_View_BL:
+					App->CL_View_Bottom_Left->Redraw_Window_BL();
+					break;
+				default:
+					break;
+				}
 			}
 
 			if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)

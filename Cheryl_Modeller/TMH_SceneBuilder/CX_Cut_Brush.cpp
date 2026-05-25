@@ -6,6 +6,10 @@
 static	Brush* bstack[73314096];	//8192 levels of recursion
 static	Brush** bsp;
 
+static	float			dists[16384];
+static	Ogre::uint8		sides[16384];
+static	Ogre::uint8		fsides[16384];
+
 #define BOGUS_RANGE					32000.0f
 
 CX_Cut_Brush::CX_Cut_Brush(void)
@@ -14,6 +18,217 @@ CX_Cut_Brush::CX_Cut_Brush(void)
 
 CX_Cut_Brush::~CX_Cut_Brush(void)
 {
+}
+
+// *************************************************************************
+// *	( Static )				Brush_MostlyOnSide_T					   *
+// *************************************************************************
+static int	Brush_MostlyOnSide_T(const Brush* b, const GPlane* p)
+{
+	int		i, side;
+	float	max;
+
+	max = 0;
+	side = SIDE_FRONT;
+	for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces); i++)
+	{
+		App->CL_X_Face->Face_MostlyOnSide(App->CL_X_FaceList->FaceList_GetFace(b->Faces, i), p, &max, &side);
+	}
+	return	side;
+}
+
+// *************************************************************************
+// *	( Static )			Brush_CreateFromParent_T					   *
+// *************************************************************************
+static Brush* Brush_CreateFromParent_T(const Brush* ParentBrush, const FaceList* fl)
+{
+	Brush* pBrush;
+
+	assert(ParentBrush);
+	assert(fl != NULL);
+	assert(ParentBrush->Type != BRUSH_MULTI);
+
+	pBrush = (Brush*)App->Ram_Allocate(sizeof(Brush), "Brush_CreateFromParent");
+	if (pBrush != NULL)
+	{
+		pBrush->Prev = NULL;
+		pBrush->Next = NULL;
+		pBrush->Faces = (FaceList*)fl;
+		pBrush->BList = NULL;
+		pBrush->Flags = ParentBrush->Flags;
+		pBrush->ModelId = ParentBrush->ModelId;
+		pBrush->GroupId = ParentBrush->GroupId;
+		pBrush->HullSize = ParentBrush->HullSize;
+		pBrush->Color = ParentBrush->Color;
+		strcpy(pBrush->Name, ParentBrush->Name);
+		pBrush->Type = BRUSH_CSG;
+		App->CL_X_FaceList->FaceList_GetBounds(fl, &pBrush->BoundingBox);
+	}
+	return pBrush;
+}
+
+// *************************************************************************
+// *						Brush_SplitByFace							   *
+// *************************************************************************
+void CX_Cut_Brush::Brush_SplitByFace_T(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
+{
+	const GPlane* p;
+	int			i;
+	Ogre::uint64	cnt[3], fcnt[4];
+	FaceList* fl, * bl;
+	const Face* f;
+	Face* cpf, * ff, * bf, * midf;
+	signed int	WasSplit = false;
+
+	assert(ogb);
+	assert(sf);
+	assert(fb);
+	assert(bb);
+	assert(*fb == NULL);
+	assert(*bb == NULL);
+
+	p = App->CL_X_Face->Face_GetPlane(sf);
+
+	fcnt[0] = fcnt[1] = fcnt[2] = fcnt[3] = 0;
+
+	for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(ogb->Faces); i++)
+	{
+		f = App->CL_X_FaceList->FaceList_GetFace(ogb->Faces, i);
+		App->CL_X_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
+
+		if (!cnt[SIDE_FRONT] && !cnt[SIDE_BACK])	//coplanar
+		{
+			fsides[i] = SIDE_ON;
+		}
+		else if (!cnt[SIDE_FRONT])	//back
+		{
+			fsides[i] = SIDE_BACK;
+		}
+		else if (!cnt[SIDE_BACK])	//front
+		{
+			fsides[i] = SIDE_FRONT;
+		}
+		else	//split
+		{
+			fsides[i] = SIDE_SPLIT;
+		}
+
+		fcnt[fsides[i]]++;
+	}
+
+	fsides[i] = fsides[0];
+
+	if (fcnt[SIDE_SPLIT])	//at least one face split
+	{
+		//clip the split face
+		midf = App->CL_X_Face->Face_Clone(sf);
+		App->CL_X_FaceList->FaceList_ClipFaceToList(ogb->Faces, &midf);
+		if (!midf)
+		{
+			if (Brush_MostlyOnSide_T(ogb, App->CL_X_Face->Face_GetPlane(sf)) == SIDE_FRONT)
+			{
+				*fb = App->CL_X_Brush->Brush_Clone(ogb);
+			}
+			else
+			{
+				*bb = App->CL_X_Brush->Brush_Clone(ogb);
+			}
+			return;
+		}
+		//alloc face lists for front and back
+		fl = App->CL_X_FaceList->FaceList_Create(fcnt[SIDE_FRONT] + fcnt[SIDE_SPLIT] + 1);
+		bl = App->CL_X_FaceList->FaceList_Create(fcnt[SIDE_BACK] + fcnt[SIDE_SPLIT] + 1);
+
+		WasSplit = false;
+		for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(ogb->Faces); i++)
+		{
+			f = App->CL_X_FaceList->FaceList_GetFace(ogb->Faces, i);
+
+			switch (fsides[i])
+			{
+			case	SIDE_FRONT:
+				cpf = App->CL_X_Face->Face_Clone(f);
+				if (cpf)
+				{
+					App->CL_X_FaceList->FaceList_AddFace(fl, cpf);
+				}
+				break;
+			case	SIDE_BACK:
+				cpf = App->CL_X_Face->Face_Clone(f);
+				if (cpf)
+				{
+					App->CL_X_FaceList->FaceList_AddFace(bl, cpf);
+				}
+				break;
+			case	SIDE_SPLIT:	//this info should be reused from above!!!
+				ff = bf = NULL;
+				App->CL_X_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
+				if (!cnt[SIDE_FRONT] && !cnt[SIDE_BACK])	//coplanar
+				{
+					assert(0);	//shouldn't happen
+				}
+				else if (!cnt[SIDE_FRONT])	//back
+				{
+					assert(0);	//shouldn't happen
+					//					bf	=Face_Clone(f);
+				}
+				else if (!cnt[SIDE_BACK])	//front
+				{
+					assert(0);	//shouldn't happen
+					//					ff	=Face_Clone(f);
+				}
+				else	//split
+				{
+					WasSplit = true;
+					App->CL_X_Face->Face_Split(f, p, &ff, &bf, dists, sides);
+				}
+
+				if (ff)
+				{
+					App->CL_X_FaceList->FaceList_AddFace(fl, ff);
+				}
+				if (bf)
+				{
+					App->CL_X_FaceList->FaceList_AddFace(bl, bf);
+				}
+			}
+		}
+		if (WasSplit)
+		{
+			//add and clip the split face
+			//FaceList_ClipFaceToList(bl, &cpf);
+			App->CL_X_FaceList->FaceList_AddFace(bl, midf);
+
+			//flip for front side brush
+			cpf = App->CL_X_Face->Face_CloneReverse(midf);
+			App->CL_X_FaceList->FaceList_AddFace(fl, cpf);
+		}
+
+		*fb = Brush_CreateFromParent_T(ogb, fl);
+		*bb = Brush_CreateFromParent_T(ogb, bl);
+
+		Brush_SealFaces_T(fb);
+		Brush_SealFaces_T(bb);
+	}
+	else if (fcnt[SIDE_FRONT] && fcnt[SIDE_BACK])
+	{
+		if (fcnt[SIDE_FRONT] > fcnt[SIDE_BACK])	//mostly in front
+		{
+			*fb = App->CL_X_Brush->Brush_Clone(ogb);
+		}
+		else									//mostly behind
+		{
+			*bb = App->CL_X_Brush->Brush_Clone(ogb);
+		}
+	}
+	else if (!fcnt[SIDE_FRONT])		//all faces behind
+	{
+		*bb = App->CL_X_Brush->Brush_Clone(ogb);
+	}
+	else if (!fcnt[SIDE_BACK])		//all faces front
+	{
+		*fb = App->CL_X_Brush->Brush_Clone(ogb);
+	}
 }
 
 // *************************************************************************
@@ -108,7 +323,7 @@ static void	Brush_CutBrush_T(Brush* b, Brush* b2)
 				fb = bb = NULL;
 
 				//split b by sf, adding the front brush to the brushlist
-				App->CL_X_Brush->Brush_SplitByFace(cb, sf, &fb, &bb);
+				App->CL_Cut_Brush->Brush_SplitByFace_T(cb, sf, &fb, &bb);
 				if (fb)
 				{	//clear hollow for csg
 					fb->Flags &= ~(BRUSH_HOLLOW | BRUSH_HOLLOWCUT);
@@ -239,6 +454,9 @@ static void	BrushList_DoHollowCuts_T(BrushList* pList, int mid, Brush_CSGCallbac
 	}
 }
 
+// *************************************************************************
+// *	( Static )			BrushList_DoCuts_T							   *
+// *************************************************************************
 static void	BrushList_DoCuts_T(BrushList* pList, int mid, Brush_CSGCallback Callback, void* lParam)
 {
 	Brush* b, * b2, * cb;
@@ -348,4 +566,92 @@ void CX_Cut_Brush::BrushList_DoCSG(BrushList* inList, int mid, Brush_CSGCallback
 	bsp = bstack;	//reset this just incase...
 
 	BrushList_DoCuts_T(inList, mid, Callback, lParam);
+}
+
+// *************************************************************************
+// *						Brush_SealFaces								   *
+// *************************************************************************
+void CX_Cut_Brush::Brush_SealFaces_T(Brush** b)
+{
+	const GPlane* p;
+	Face* f2;
+	Face* f;
+	FaceList* fl;
+	int			i, j;
+	Ogre::uint64		cnt[3];
+
+	assert(b != NULL);
+	assert(*b != NULL);
+	assert((*b)->Type != BRUSH_MULTI);
+
+	if (App->CL_X_FaceList->FaceList_GetNumFaces((*b)->Faces) < 4)
+	{
+		App->CL_X_Brush->Brush_Destroy(b);
+		return;
+	}
+	fl = App->CL_X_FaceList->FaceList_Create(App->CL_X_FaceList->FaceList_GetNumFaces((*b)->Faces));
+
+	//expand all faces out to seal cracks
+	for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces((*b)->Faces); i++)
+	{
+		f = (Face*)App->CL_X_FaceList->FaceList_GetFace((*b)->Faces, i);
+		p = App->CL_X_Face->Face_GetPlane(f);
+		f2 = App->CL_X_Face->Face_CreateFromPlane(p, BOGUS_RANGE, 0);
+		App->CL_X_Face->Face_CopyFaceInfo(f, f2);
+		App->CL_X_FaceList->FaceList_AddFace(fl, f2);
+	}
+	for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(fl); i++)
+	{
+		//const override here
+		f = (Face*)App->CL_X_FaceList->FaceList_GetFace(fl, i);
+
+		for (j = 0; j < App->CL_X_FaceList->FaceList_GetNumFaces(fl); j++)
+		{
+			if (j == i)
+			{
+				continue;
+			}
+			f2 = App->CL_X_FaceList->FaceList_GetFace(fl, j);
+			p = App->CL_X_Face->Face_GetPlane(f2);
+
+			App->CL_X_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
+
+			if (!cnt[SIDE_FRONT] && !cnt[SIDE_BACK])	//coplanar
+			{
+				App->CL_X_FaceList->FaceList_RemoveFace(fl, i);
+				j--;	//to ensure we restart if this is the last face
+				break;
+			}
+			else if (!cnt[SIDE_FRONT])	//back
+			{
+				continue;
+			}
+			else if (!cnt[SIDE_BACK])	//front
+			{
+				App->CL_X_FaceList->FaceList_RemoveFace(fl, i);
+				j--;	//to ensure we restart if this is the last face
+				break;
+			}
+			else	//split
+			{
+				App->CL_X_Face->Face_Clip(f, p, dists, sides);
+			}
+		}
+		if (j < App->CL_X_FaceList->FaceList_GetNumFaces(fl))
+		{
+			i = -1;	//restart!
+		}
+	}
+	if (App->CL_X_FaceList->FaceList_GetNumFaces(fl) < 4)
+	{
+		//		ConPrintf("Overconstrained brush clipped away...\n");
+		App->CL_X_Brush->Brush_Destroy(b);
+		App->CL_X_FaceList->FaceList_Destroy(&fl);
+	}
+	else
+	{
+		App->CL_X_FaceList->FaceList_Destroy(&(*b)->Faces);
+		(*b)->Faces = fl;
+		App->CL_X_Brush->Brush_Bound((*b));
+	}
 }
