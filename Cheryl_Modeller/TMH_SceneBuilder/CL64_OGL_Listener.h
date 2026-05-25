@@ -76,6 +76,8 @@ public:
 	bool flag_ShowBones;
 	bool flag_Show_Bone_Crosshair;
 	bool flag_ShowOnlySubMesh;
+	bool flag_Show_HideGroup;
+
 	// Brushes
 	bool flag_Render_Just_Brush;
 	int Selected_Brush_Index;

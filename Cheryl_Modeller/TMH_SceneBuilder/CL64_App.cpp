@@ -120,6 +120,8 @@ CL64_App::CL64_App(void)
 	CL_View_Bottom_Left =	nullptr;
 	CL_View_3D =			nullptr;
 
+	CL_Cut_Brush =			nullptr;
+
 	CUR = 0;
 	Menu_Map = 0;
 	
@@ -322,6 +324,8 @@ void CL64_App::InitApp(void)
 	CL_View_Bottom_Left =		new CL64_View_Bottom_Left();
 	CL_View_3D =				new CL64_View_3D();
 	
+	CL_Cut_Brush =				new CX_Cut_Brush();
+
 	Set_Brushes_Fonts();
 
 	char path[MAX_PATH];

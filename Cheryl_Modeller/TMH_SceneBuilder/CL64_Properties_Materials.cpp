@@ -337,6 +337,31 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 			return TRUE;
 		}
 
+		// ------------------------------------------------- Hide Group
+		/*if (LOWORD(wParam) == IDC_CKHIDEGROUP)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CKHIDEGROUP);
+			HWND temp1 = GetDlgItem(hDlg, IDC_CKSHOWONLYGROUPS);
+
+			if (App->CL_Right_Groups->CK_HideGroup == 1)
+			{
+				App->CL_Right_Groups->CK_HideGroup = 0;
+				App->Cl_Ogre->RenderListener->Show_HideGroup = 0;
+				SendMessage(temp, BM_SETCHECK, 0, 0);
+			}
+			else
+			{
+				App->CL_Right_Groups->CK_HideGroup = 1;
+				App->Cl_Ogre->RenderListener->Show_HideGroup = 1;
+				SendMessage(temp, BM_SETCHECK, 1, 0);
+
+				App->CL_Right_Groups->CK_ShowGroupOnly = 0;
+				App->Cl_Ogre->RenderListener->ShowOnlySubMesh = 0;
+				SendMessage(temp1, BM_SETCHECK, 0, 0);
+			}
+			return TRUE;
+		}*/
+
 		if (LOWORD(wParam) == IDC_BT_AT_VIEWMAT)
 		{
 			if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)

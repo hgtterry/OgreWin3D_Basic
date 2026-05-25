@@ -210,6 +210,7 @@
     <ClInclude Include="CL64_WadFile.h" />
     <ClInclude Include="CLP_3D_Listener.h" />
     <ClInclude Include="CLP_3D_Setup.h" />
+    <ClInclude Include="CX_Cut_Brush.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Ogre_Win_Render_Listener.h" />
     <ClInclude Include="pch.h" />
@@ -275,6 +276,7 @@
     <ClCompile Include="CL64_WadFile.cpp" />
     <ClCompile Include="CLP_3D_Listener.cpp" />
     <ClCompile Include="CLP_3D_Setup.cpp" />
+    <ClCompile Include="CX_Cut_Brush.cpp" />
     <ClCompile Include="Ogre_Win_Render_Listener.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

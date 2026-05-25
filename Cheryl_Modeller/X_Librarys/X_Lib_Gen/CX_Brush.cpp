@@ -1864,8 +1864,6 @@ static void	BrushList_DoCuts(BrushList* pList, int mid, Brush_CSGCallback Callba
 			}
 		}
 	}
-
-	App->Say("Here");
 }
 
 // *************************************************************************

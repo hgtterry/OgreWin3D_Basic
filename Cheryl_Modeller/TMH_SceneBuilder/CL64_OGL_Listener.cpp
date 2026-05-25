@@ -72,6 +72,7 @@ CL64_OGL_Listener::CL64_OGL_Listener(void)
 	flag_ShowBoundingBox = false;
 	flag_ShowBones = false;
 	flag_Show_Bone_Crosshair = false;
+	flag_Show_HideGroup = false;
 
 	Render_Mode = Enums::Render_Nothing;
 
@@ -386,8 +387,25 @@ bool CL64_OGL_Listener::MeshData_Render_Textures(void)
 
 	if (flag_ShowOnlySubMesh == true) // Show Only Selected SubMesh
 	{
-		//MeshData_Textured_Groups(App->CL_Right_Groups->SelectedGroup);
 		MeshData_Textured_Groups(App->CL_Properties_Materials->Selected_Group);
+		glDisable(GL_TEXTURE_2D);
+		return 1;
+	}
+
+	if (flag_Show_HideGroup == true) // Hide Selected SubMesh
+	{
+		while (Count < GroupCount)
+		{
+			if (App->CL_Properties_Materials->Selected_Group == Count)
+			{
+			}
+			else
+			{
+				MeshData_Textured_Groups(Count);
+			}
+			Count++;
+		}
+
 		glDisable(GL_TEXTURE_2D);
 		return 1;
 	}

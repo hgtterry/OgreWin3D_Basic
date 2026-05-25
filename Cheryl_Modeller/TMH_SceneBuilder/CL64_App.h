@@ -25,6 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 #include "Cheryl_3D_Modeller.h"
+#include "CX_Cut_Brush.h"
 
 class CL64_App
 {
@@ -121,6 +122,8 @@ public:
 	CL64_View_Top_Right*		CL_View_Top_Right;
 	CL64_View_Bottom_Left*		CL_View_Bottom_Left;
 	CL64_View_3D*				CL_View_3D;
+
+	CX_Cut_Brush*				CL_Cut_Brush;
 
 	void InitApp(void);
 	void Init_Dialogs(void);
