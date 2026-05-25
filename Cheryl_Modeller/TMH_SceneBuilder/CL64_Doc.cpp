@@ -764,8 +764,9 @@ void CL64_Doc::RebuildTrees(void)
     //SetModifiedFlag();
 
     App->CL_X_Brush->BrushList_ClearAllCSG(BList);
-    
-    App->CL_X_Brush->BrushList_DoCSG(BList, CurId, ::fdocBrushCSGCallback, this);
+    App->CL_Cut_Brush->BrushList_DoCSG(BList, CurId, ::fdocBrushCSGCallback, this);
+
+   //App->CL_X_Brush->BrushList_DoCSG(BList, CurId, ::fdocBrushCSGCallback, this);
 }
 
 // *************************************************************************
