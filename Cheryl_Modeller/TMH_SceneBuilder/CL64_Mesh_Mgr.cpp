@@ -157,20 +157,20 @@ bool CL64_Mesh_Mgr::Update_World(int selected)
 	int brushCount = App->CL_X_Brush->Get_Brush_Count();
 	if (brushCount > 0)
 	{
-		//Brush_Build_List(selected);
-		//WE_Convert_All_Texture_Groups();
+		Brush_Build_List(selected);
+		WE_Convert_All_Texture_Groups();
 
 		if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == false)
 		{
-			//App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visible
+			App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visible
 		}
 	}
 	else
 	{
-		/*if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+		if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
 		{
 			App->CL_Mesh_Mgr->World_Node->setVisible(false);
-		}*/
+		}
 	}
 
 	return true;
