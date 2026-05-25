@@ -1509,6 +1509,24 @@ void StartOgre()
         App->CL_File->Start_Load(false);
     }*/
 
+    bool loadtestfile = true;
+    if (loadtestfile == true)
+    {
+        strcpy(App->CL_Model->Loaded_FileName, "chapel-10-C.ms3d");
+
+        strcpy(App->CL_Model->Loaded_PathFileName, App->App_Directory_FullPath);
+        strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Milkshape_Models\\Chaple\\chapel-10-C.ms3d");
+
+        App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate |
+            aiProcess_FlipUVs |
+            aiProcess_GenSmoothNormals |
+            aiProcess_PreTransformVertices;
+
+        App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
+
+        bool test = App->CL_Importers->Assimp_Loader(false);
+    }
+
 
 	if (App->CL_Libs->CL_Preference->flag_SceneEditor == true)
 	{

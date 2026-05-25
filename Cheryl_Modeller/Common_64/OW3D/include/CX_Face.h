@@ -65,7 +65,7 @@ public:
 	Face* Face_CreateFromPlane(const GPlane* p, float Radius, int DibId);
 	void Face_CopyFaceInfo(const Face* src, Face* dst);
 	void Face_Destroy(Face** f);
-	void Face_GetSplitInfo(const Face* f, const GPlane* p, float* dists, Ogre::uint8* sides, Ogre::uint8* cnt);
+	void Face_GetSplitInfo(const Face* f, const GPlane* p, float* dists, Ogre::uint8* sides, Ogre::uint64* cnt);
 	void Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* sides);
 	const T_Vec3* Face_GetPoints(const Face* f);
 	int	Face_GetNumPoints(const Face* f);

@@ -383,7 +383,7 @@ void CX_Face::Face_CopyFaceInfo(const Face* src, Face* dst)
 // *************************************************************************
 // *						Face_GetSplitInfo							   *
 // *************************************************************************
-void CX_Face::Face_GetSplitInfo(const Face* f, const GPlane* p, float* dists, Ogre::uint8* sides, Ogre::uint8* cnt)
+void CX_Face::Face_GetSplitInfo(const Face* f, const GPlane* p, float* dists, Ogre::uint8* sides, Ogre::uint64* cnt)
 {
 	int	i;
 

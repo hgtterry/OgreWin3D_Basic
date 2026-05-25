@@ -265,7 +265,7 @@ void CX_FaceList::FaceList_ClipFaceToList(const FaceList* fl, Face** f)
 {
 	int			i;
 	const GPlane* p;
-	Ogre::uint8		cnt[3];
+	Ogre::uint64		cnt[3];
 
 	for (i = 0; i < fl->NumFaces; i++)
 	{

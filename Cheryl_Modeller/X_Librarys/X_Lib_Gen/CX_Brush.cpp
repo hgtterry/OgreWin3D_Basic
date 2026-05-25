@@ -32,9 +32,9 @@ THE SOFTWARE.
 #define	VectorToSUB(a, b)			(*((((float *)(&a))) + (b)))
 static const int		axidx[3][2] = { 2, 1, 0, 2, 0, 1 };
 
-static	float			dists[256];
-static	Ogre::uint8		sides[256];
-static	Ogre::uint8		fsides[256];
+static	float			dists[16384];
+static	Ogre::uint8		sides[16384];
+static	Ogre::uint8		fsides[16384];
 
 #define BOGUS_RANGE					32000.0f
 
@@ -374,7 +374,7 @@ void CX_Brush::Brush_SealFaces(Brush** b)
 	Face* f;
 	FaceList* fl;
 	int			i, j;
-	Ogre::uint8		cnt[3];
+	Ogre::uint64		cnt[3];
 
 	assert(b != NULL);
 	assert(*b != NULL);
@@ -1389,7 +1389,7 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 {
 	const GPlane* p;
 	int			i;
-	Ogre::uint8		cnt[3], fcnt[4];
+	Ogre::uint64	cnt[3], fcnt[4];
 	FaceList* fl, * bl;
 	const Face* f;
 	Face* cpf, * ff, * bf, * midf;
@@ -1410,6 +1410,7 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 	{
 		f = App->CL_X_FaceList->FaceList_GetFace(ogb->Faces, i);
 		App->CL_X_Face->Face_GetSplitInfo(f, p, dists, sides, cnt);
+
 		if (!cnt[SIDE_FRONT] && !cnt[SIDE_BACK])	//coplanar
 		{
 			fsides[i] = SIDE_ON;
@@ -1426,8 +1427,10 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 		{
 			fsides[i] = SIDE_SPLIT;
 		}
+
 		fcnt[fsides[i]]++;
 	}
+
 	fsides[i] = fsides[0];
 
 	if (fcnt[SIDE_SPLIT])	//at least one face split
@@ -1508,13 +1511,14 @@ void CX_Brush::Brush_SplitByFace(Brush* ogb, Face* sf, Brush** fb, Brush** bb)
 		if (WasSplit)
 		{
 			//add and clip the split face
-//			FaceList_ClipFaceToList(bl, &cpf);
+			//FaceList_ClipFaceToList(bl, &cpf);
 			App->CL_X_FaceList->FaceList_AddFace(bl, midf);
 
 			//flip for front side brush
 			cpf = App->CL_X_Face->Face_CloneReverse(midf);
 			App->CL_X_FaceList->FaceList_AddFace(fl, cpf);
 		}
+
 		*fb = Brush_CreateFromParent(ogb, fl);
 		*bb = Brush_CreateFromParent(ogb, bl);
 
@@ -1634,11 +1638,11 @@ static void	Brush_CutBrush(Brush* b, Brush* b2)
 				fb = bb = NULL;
 
 				//split b by sf, adding the front brush to the brushlist
-				//App->CL_X_Brush->Brush_SplitByFace(cb, sf, &fb, &bb);
+				App->CL_X_Brush->Brush_SplitByFace(cb, sf, &fb, &bb);
 				if (fb)
 				{	//clear hollow for csg
-					/*fb->Flags &= ~(BRUSH_HOLLOW | BRUSH_HOLLOWCUT);
-					App->CL_X_Brush->BrushList_Append(b2->BList, fb);*/
+					fb->Flags &= ~(BRUSH_HOLLOW | BRUSH_HOLLOWCUT);
+					App->CL_X_Brush->BrushList_Append(b2->BList, fb);
 				}
 
 				App->CL_X_Face->Face_Destroy(&sf);
