@@ -37,6 +37,7 @@ public:
 	void Start_Ogre_Window();
 	void Set_OgreWindow();
 	void Close_OgreWindow(void);
+	void Test();
 
 	int Selected_Item;
 

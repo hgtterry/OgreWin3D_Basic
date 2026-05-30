@@ -680,5 +680,14 @@ void Sandbox::Close_OgreWindow(void)
 	RenderListener = nullptr;
 }
 
+// *************************************************************************
+// *					Test:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void Sandbox::Test()
+{
+	Timer2 ttt;
+	Sleep(1000);
+}
+
 
 

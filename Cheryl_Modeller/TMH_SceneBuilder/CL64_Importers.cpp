@@ -83,7 +83,6 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 		strcpy(App->CL_Model->Loaded_FileName, App->CL_File_IO->s_Just_FileName.c_str());
 	}
 
-	
 	App->CL_PB->Start_ProgressBar();
 	App->CL_PB->Set_Progress((LPSTR)"Loading Model", 3);
 	

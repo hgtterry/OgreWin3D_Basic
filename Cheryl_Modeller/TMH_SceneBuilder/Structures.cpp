@@ -9,6 +9,28 @@
 #define CENTIMETERS_TO_ENGINE(c) Units_CentimetersToEngine(c)
 #define ENGINE_TO_CENTIMETERS(e) Units_EngineToCentimeters(e)
 
+struct Timer2
+{
+	std::chrono::time_point<std::chrono::steady_clock> start, end;
+	std::chrono::duration<float> duration;
+	
+	Timer2()
+	{
+		start = std::chrono::high_resolution_clock::now();
+	}
+
+	~Timer2()
+	{
+		end = std::chrono::high_resolution_clock::now();
+		duration = end - start;
+
+		float ms = duration.count() * 1000.0f;
+
+		App->Say_Float((float)ms);
+	}
+};
+
+
 enum BrushFlags
 {
 	BRUSH_SOLID = 0x0001,

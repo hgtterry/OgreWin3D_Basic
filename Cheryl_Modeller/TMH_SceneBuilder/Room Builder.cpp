@@ -239,14 +239,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
 			case ID_DEBUG_GENERAL:
 			{ 
-               
-                float Sc_Size = App->CL_View_Top_Left->VCam_TL->Height;
-                float zoomValue = Sc_Size / App->CL_Model->S_BoundingBox[0]->Size->z;
+                App->CL_Sandbox->Test();
 
-                App->CL_View_Top_Left->VCam_TL->ZoomFactor = zoomValue;
-               // App->CL_Views_Com->Current_View->ZoomFactor = zoomValue;
+               // float Sc_Size = App->CL_View_Top_Left->VCam_TL->Height;
+               // float zoomValue = Sc_Size / App->CL_Model->S_BoundingBox[0]->Size->z;
 
-                App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+               // App->CL_View_Top_Left->VCam_TL->ZoomFactor = zoomValue;
+               //// App->CL_Views_Com->Current_View->ZoomFactor = zoomValue;
+
+               // App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 				return 1;
 			}
 
