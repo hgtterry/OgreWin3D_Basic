@@ -202,6 +202,13 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 			App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces);
 		}
 
+		if (some_item->idFrom == IDC_BT_GROUP_ONLY)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->flag_ShowOnlySubMesh);
+		}
+
 		if (some_item->idFrom == IDC_BT_AT_GROUPDETAILS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -327,13 +334,15 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 
 		if (LOWORD(wParam) == IDC_BT_GROUP_ONLY)
 		{
-			App->CL_Ogre->OGL_Listener->flag_ShowOnlySubMesh = true;
-			return TRUE;
-		}
+			if (App->CL_Ogre->OGL_Listener->flag_ShowOnlySubMesh == true)
+			{
+				App->CL_Ogre->OGL_Listener->flag_ShowOnlySubMesh = false;
+			}
+			else
+			{
+				App->CL_Ogre->OGL_Listener->flag_ShowOnlySubMesh = true;
+			}
 
-		if (LOWORD(wParam) == IDC_BT_ALL_GROUPS)
-		{
-			App->CL_Ogre->OGL_Listener->flag_ShowOnlySubMesh = false;
 			return TRUE;
 		}
 

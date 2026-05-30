@@ -27,7 +27,6 @@ static int	Brush_MostlyOnSide_T(const Brush* b, const GPlane* p)
 {
 	int		i, side;
 	float	max;
-
 	max = 0;
 	side = SIDE_FRONT;
 	for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces); i++)

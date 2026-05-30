@@ -232,6 +232,8 @@ void CL64_OGL_Listener::PostRender()
 // *************************************************************************
 void CL64_OGL_Listener::Render_Loop()
 {
+	//HGLRC  test = wglGetCurrentContext();
+	//wglDeleteContext(test);
 
 	GLboolean depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
 	glDisable(GL_DEPTH_TEST);
