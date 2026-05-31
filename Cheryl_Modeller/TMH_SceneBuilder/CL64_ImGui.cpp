@@ -306,6 +306,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		App->CL_ImGui_Dialogs->Debug_Data();
 	}
+
+	if (App->CL_ImGui_Dialogs->flag_Show_Debug_Timer == true)
+	{
+		App->CL_ImGui_Dialogs->Debug_Timer_ImGui();
+	}
 	
 	if (App->CL_ImGui_Dialogs->flag_Show_Dialog_list == 1)
 	{

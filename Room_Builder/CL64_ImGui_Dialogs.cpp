@@ -89,6 +89,8 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	Physics_PosY = 500;
 	flag_Physics_Console_StartPos = 0;
 
+	flag_Show_Debug_Timer = false;
+
 }
 
 CL64_ImGui_Dialogs::~CL64_ImGui_Dialogs(void)
@@ -1018,6 +1020,31 @@ void CL64_ImGui_Dialogs::Dialog_Float_Vec3(void)
 			ImGui::PopStyleColor();
 			ImGui::End();
 		}
+	}
+}
+
+// *************************************************************************
+// *		Debug_Timer_ImGui:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui_Dialogs::Debug_Timer_ImGui(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(200, 200), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Debug_Float", &flag_Show_Debug_Timer, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Spacing();
+		ImGui::Text("Timer ms %f", Debug_Float);
+		ImGui::Text("Timer sec %f", Debug_Float / 1000);
+
+		ImGui::PopStyleColor();
+		ImGui::End();
 	}
 }
 

@@ -210,6 +210,9 @@
     <ClInclude Include="CX_Cut_Brush.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Timer_Debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -396,6 +399,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CX_Cut_Brush.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer_Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

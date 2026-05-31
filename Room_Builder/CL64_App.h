@@ -124,6 +124,8 @@ THE SOFTWARE.
 #include "CL64_View_Bottom_Left.h"
 #include "CL64_View_3D.h"
 
+#include "Timer_Debug.h"
+
 class CL64_App
 {
 public:

@@ -49,6 +49,7 @@ public:
 	void Dialog_List_Gui(void);
 
 	void Physics_Console_Gui(void);
+	void Debug_Timer_ImGui(void);
 
 	bool flag_Disable_Panels;
 	// List Dialog
@@ -120,6 +121,9 @@ public:
 	float Physics_PosX;
 	float Physics_PosY;
 	bool flag_Physics_Console_StartPos;
+
+	bool flag_Show_Debug_Timer;
+	float Debug_Float;
 
 private:
 

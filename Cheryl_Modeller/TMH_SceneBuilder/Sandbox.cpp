@@ -685,7 +685,8 @@ void Sandbox::Close_OgreWindow(void)
 // *************************************************************************
 void Sandbox::Test()
 {
-	Timer2 ttt;
+	Timer_Debug ttt;
+
 	Sleep(1000);
 }
 

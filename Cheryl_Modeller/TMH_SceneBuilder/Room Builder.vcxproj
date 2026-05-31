@@ -218,6 +218,7 @@
     <ClInclude Include="Room Builder.h" />
     <ClInclude Include="Sandbox.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Timer_Debug.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base_Brush.cpp" />
@@ -287,6 +288,7 @@
     <ClCompile Include="Room Builder.cpp" />
     <ClCompile Include="Sandbox.cpp" />
     <ClCompile Include="Structures.cpp" />
+    <ClCompile Include="Timer_Debug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Room Builder.rc" />

@@ -349,61 +349,65 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
 }
 
 // *************************************************************************
-// *         UpdateAllViews:- Terry and Hazel Flanigan 2025                *
+// *         UpdateAllViews:- Terry and Hazel Flanigan 2026                *
 // *************************************************************************
 void CL64_Doc::UpdateAllViews(int Update_Mode)
 {
+   
     ViewVars* Save_View = App->CL_Views_Com->Current_View;
 
-    if (Update_Mode == Enums::UpdateViews_Grids)
+    // Redraw windows based on the update mode
+    switch (Update_Mode)
     {
-        RedrawWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-        RedrawWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-    }
+    case Enums::UpdateViews_Grids:
+        Redraw_Grid_Views();
+        break;
 
-    if (Update_Mode == Enums::UpdateViews_3D)
-    {
-        int BC = App->CL_X_Brush->Get_Brush_Count();
-        if (BC > 0)
-        {
-           
-            App->CL_Doc->RebuildTrees();
-            App->CL_Mesh_Mgr->Update_World(0); // Will Set Node Visible
-        }
-        else
-        {
-            if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
-            {
-                App->CL_Mesh_Mgr->World_Node->setVisible(false);
-            }
-        }
-    }
+    case Enums::UpdateViews_3D:
+        Update3DView();
+        break;
 
-    if (Update_Mode == Enums::UpdateViews_All)
-    {
-        App->CL_View_Top_Left->Redraw_Window_TL();
-        App->CL_View_Top_Right->Redraw_Window_TR();
-        App->CL_View_Bottom_Left->Redraw_Window_BL();
+    case Enums::UpdateViews_All:
+        Redraw_Grid_Views();
+        Update3DView();
+        break;
 
-        int BC = App->CL_X_Brush->Get_Brush_Count();
-        if (BC > 0)
-        {
-            App->CL_Doc->RebuildTrees();
-            App->CL_Mesh_Mgr->Update_World(0); // Will Set Node Visable
-        }
-        else
-        {
-            if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
-            {
-                App->CL_Mesh_Mgr->World_Node->setVisible(false);
-            }
-        }
+    default:
+        // Handle unexpected update modes if necessary
+        break;
     }
 
     App->CL_Views_Com->Current_View = Save_View;
+}
 
+// *************************************************************************
+// *         Redraw_Grid_Views:- Terry and Hazel Flanigan 2026             *
+// *************************************************************************
+void CL64_Doc::Redraw_Grid_Views()
+{
+    RedrawWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+    RedrawWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+    RedrawWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
 
+// *************************************************************************
+// *             Update3DView:- Terry and Hazel Flanigan 2026              *
+// *************************************************************************
+void CL64_Doc::Update3DView()
+{
+    int brushCount = App->CL_X_Brush->Get_Brush_Count();
+    if (brushCount > 0)
+    {
+        App->CL_Doc->RebuildTrees();
+        App->CL_Mesh_Mgr->Update_World(0); // Will Set Node Visible
+    }
+    else
+    {
+        if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+        {
+            App->CL_Mesh_Mgr->World_Node->setVisible(false);
+        }
+    }
 }
 
 // *************************************************************************

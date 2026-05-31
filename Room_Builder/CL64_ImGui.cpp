@@ -235,6 +235,11 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 		App->CL_ImGui_Dialogs->Dialog_List_Gui();
 	}
 
+	if (App->CL_ImGui_Dialogs->flag_Show_Debug_Timer == true)
+	{
+		App->CL_ImGui_Dialogs->Debug_Timer_ImGui();
+	}
+
 	App->CL_ImGui_Editor->ImGui_Render_Editor_Loop();
 	
 	// Iterate through the mapping and call the functions where the flag is true

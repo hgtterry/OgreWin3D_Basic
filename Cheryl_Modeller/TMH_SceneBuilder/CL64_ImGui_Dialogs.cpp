@@ -90,6 +90,8 @@ CL64_ImGui_Dialogs::CL64_ImGui_Dialogs(void)
 	flag_Physics_Console_StartPos = false;
 
 	flag_Show_Debug_Data = false;
+	flag_Show_Debug_Timer = false;
+
 	Debug_Float = 0;
 	Debug_Vec3 = Ogre::Vector3::ZERO;
 }
@@ -1054,6 +1056,31 @@ void CL64_ImGui_Dialogs::Debug_Data(void)
 		PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() / 2) - (Size.x / 2);
 		PosY = 10;*/
 
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *		Debug_Timer_ImGui:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui_Dialogs::Debug_Timer_ImGui(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(200, 200), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Debug_Float", &flag_Show_Debug_Timer, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Spacing();
+		ImGui::Text("Timer ms %f", Debug_Float);
+		ImGui::Text("Timer sec %f", Debug_Float / 1000);
+		
 		ImGui::PopStyleColor();
 		ImGui::End();
 	}

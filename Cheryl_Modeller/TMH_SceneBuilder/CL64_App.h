@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "Cheryl_3D_Modeller.h"
 #include "CX_Cut_Brush.h"
+#include "Timer_Debug.h"
 
 class CL64_App
 {
