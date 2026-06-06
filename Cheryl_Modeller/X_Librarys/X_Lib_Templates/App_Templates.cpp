@@ -12,14 +12,6 @@ App_Templates::~App_Templates(void)
 }
 
 // *************************************************************************
-// *			Init_Templates:- Terry Mo and Hazel 2026				   *
-// *************************************************************************
-void App_Templates::Init_Templates(void)
-{
-	
-}
-
-// *************************************************************************
 // *	Enable_Map_Editor_Dialogs:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void App_Templates::Enable_Map_Editor_Dialogs(bool Enable)

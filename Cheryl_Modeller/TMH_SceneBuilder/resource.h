@@ -115,6 +115,7 @@
 #define IDD_MAP_RENDER_WINDOW1          225
 #define IDD_MAP_RENDER_WIN_TR           225
 #define IDD_MESSAGE1                    226
+#define IDD_TOP_TABS_BRUSHES            227
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -499,14 +500,19 @@
 #define IDC_CK_BACKGROUND               1332
 #define IDC_CK_LOCKTEXTURES             1332
 #define IDC_BT_AT_GROUPDETAILS          1332
+#define IDC_BT_TT_BRUSH_ROTATE          1332
 #define IDC_BUT_AT_WORLDPOS             1333
 #define IDC_CK_SCENEEDITOR              1333
 #define IDC_BT_AT_VIEWMAT               1333
+#define IDC_BT_TT_BRUSH_MOVE            1333
 #define IDC_ST_STARTMODE                1334
 #define IDC_BT_AT_CHANGETEXTURE         1334
+#define IDC_BUTTON7                     1334
+#define IDC_BT_TT_BRUSH_SHEAR           1334
 #define IDC_COMBO1                      1335
 #define IDC_CB_BRUSH_CAT                1335
 #define IDC_CB_MOTIONS_SPEED            1335
+#define IDC_BT_TT_BRUSH_SCALE           1335
 #define IDC_ED_ZOOMDEFAULT              1336
 #define IDC_ST_ZOOM_TEXT                1337
 #define IDC_OPTIONS_TREE                1340
@@ -578,6 +584,7 @@
 #define IDC_BT_ALL_GROUPS               1403
 #define IDC_CB_MOTIONS_JOINTS           1404
 #define IDC_ST_MOT_JOINTS               1405
+#define IDC_BT_TT_BRUSH_SELECT          1406
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -719,9 +726,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        225
+#define _APS_NEXT_RESOURCE_VALUE        228
 #define _APS_NEXT_COMMAND_VALUE         32904
-#define _APS_NEXT_CONTROL_VALUE         1406
+#define _APS_NEXT_CONTROL_VALUE         1407
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

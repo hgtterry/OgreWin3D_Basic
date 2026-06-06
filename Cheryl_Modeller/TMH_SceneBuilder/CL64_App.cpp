@@ -301,10 +301,8 @@ void CL64_App::InitApp(void)
 	CL_Editor_Control =			new CL64_Editor_Control();
 	
 	// Templates Dialogs Libraries
-	CL_App_Templates =				new App_Templates();
-	CL_App_Templates->Init_Templates();
-
-	CL_X_Shapes_3D =				new Shapes_3D();
+	CL_App_Templates =			new App_Templates();
+	CL_X_Shapes_3D =			new Shapes_3D();
 
 	// Project
 	CL_Gizmos =					new CL64_Gizmos();
