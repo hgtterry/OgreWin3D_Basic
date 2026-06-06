@@ -7,6 +7,7 @@ Init_Libs::Init_Libs(void)
 	CL_CreateBox =		nullptr;
 	CL_CreateCylinder = nullptr;
 	CL_CreateCone =		nullptr;
+	CL_CreateArch =		nullptr;
 }
 
 Init_Libs::~Init_Libs(void)
@@ -21,8 +22,7 @@ void Init_Libs::Start_Libraries()
 	CL_CreateBox =		new CreateBoxDialog();
 	CL_CreateCylinder = new CreateCylDialog();
 	CL_CreateCone =		new CreateConeDialog();
-
-	//*CL_CreateArch =		new CreateArchDialog();
+	CL_CreateArch =		new CreateArchDialog();
 }
 
 // *************************************************************************

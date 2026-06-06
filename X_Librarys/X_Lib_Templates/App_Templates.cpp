@@ -4,7 +4,6 @@
 
 App_Templates::App_Templates(void)
 {
-	CL_CreateArch =			nullptr;
 	CL_CreateStaircase =	nullptr;
 
 	Shape_Dlg_hWnd =		nullptr;
@@ -27,7 +26,6 @@ char* App_Templates::GetVersion()
 // *************************************************************************
 void App_Templates::Init_Templates(void)
 {
-	CL_CreateArch =			new CreateArchDialog();
 	CL_CreateStaircase =	new CreateStaircaseDialog();
 }
 

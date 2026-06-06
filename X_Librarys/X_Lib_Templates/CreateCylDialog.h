@@ -29,6 +29,7 @@ public:
 	CreateCylDialog(void);
 	~CreateCylDialog(void);
 
+	char* GetVersion();
 	void Start_CreateCyl_Dlg();
 
 	BrushTemplate_Cylinder* pCylinderTemplate;

@@ -207,12 +207,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
-            case ID_DEBUG_LIBRARIES:
-            {
-                App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Libraries, App->MainHwnd);
-                return 1;
-            }
-            
             case ID_DEBUG_DEBUGIMGUI:
             {
                 if (App->CL_ImGui->flag_Show_Listbox == true)
@@ -1107,6 +1101,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         SendDlgItemMessage(hDlg, IDC_LIST_ABOUT_VERSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
         SendDlgItemMessage(hDlg, IDC_ST_DATETIME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+        SendDlgItemMessage(hDlg, IDC_BT_LIBRARIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
         SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
        
         char buf[MAX_PATH];
@@ -1196,6 +1191,13 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     {
         LPNMHDR some_item = (LPNMHDR)lParam;
 
+        if (some_item->idFrom == IDC_BT_LIBRARIES)
+        {
+            LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+            App->Custom_Button_Normal(item);
+            return CDRF_DODEFAULT;
+        }
+
         if (some_item->idFrom == IDOK)
         {
             LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -1206,6 +1208,13 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
 
     case WM_COMMAND:
+
+        if (LOWORD(wParam) == IDC_BT_LIBRARIES)
+        {
+            App->CL_Dialogs->Start_General_ListBox(Enums::ListBox_Libraries, App->MainHwnd);
+            return (INT_PTR)TRUE;
+        }
+
         if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
         {
             App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);

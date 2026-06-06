@@ -67,6 +67,14 @@ CreateArchDialog::~CreateArchDialog(void)
 }
 
 // *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2026			 	   *
+// *************************************************************************
+char* CreateArchDialog::GetVersion()
+{
+	return (LPSTR)"Create Arch [ 06-06-26 ] Build 1 ";
+}
+
+// *************************************************************************
 // *			Init_Bmps_Globals:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
 void CreateArchDialog::Init_Bmps_Globals(HWND hDlg)
@@ -98,7 +106,7 @@ LRESULT CALLBACK CreateArchDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wP
 
 		case VK_RETURN:
 		{
-			App->CL_App_Templates->CL_CreateArch->Update();
+			App->CL_Libs->CL_CreateArch->Update();
 			return 0;
 		}
 
@@ -166,7 +174,7 @@ void CreateArchDialog::Start_CreateArch_Dlg()
 // *************************************************************************
 LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	auto& m_Arch = App->CL_App_Templates->CL_CreateArch; // App->CL_App_Templates->CL_CreateArch
+	auto& m_Arch = App->CL_Libs->CL_CreateArch; // App->CL_App_Templates->CL_CreateArch
 	
 	switch (message)
 	{
@@ -965,13 +973,13 @@ void CreateArchDialog::Set_Defaults(HWND hDlg)
 
 	Set_DLG_Members(hDlg);
 
-	App->CL_App_Templates->CL_CreateArch->Zero_Dlg_Flags(hDlg);
-	App->CL_App_Templates->CL_CreateArch->m_Style = 0;
-	App->CL_App_Templates->CL_CreateArch->flag_Solid_Flag = 1;
+	Zero_Dlg_Flags(hDlg);
+	m_Style = 0;
+	flag_Solid_Flag = 1;
 
-	App->CL_App_Templates->CL_CreateArch->m_Shape = 0;
-	App->CL_App_Templates->CL_CreateArch->flag_Rectangle_Flag = 1;
-	App->CL_App_Templates->CL_CreateArch->flag_Round_Flag = 0;
+	m_Shape = 0;
+	flag_Rectangle_Flag = 1;
+	flag_Round_Flag = 0;
 
 	App->CL_X_Shapes_3D->Set_Camera(500);
 

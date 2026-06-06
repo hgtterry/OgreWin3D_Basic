@@ -30,6 +30,7 @@ public:
 	CreateArchDialog(void);
 	~CreateArchDialog(void);
 
+	char* GetVersion();
 	void Start_CreateArch_Dlg();
 
 	BrushTemplate_Arch* pArchTemplate;

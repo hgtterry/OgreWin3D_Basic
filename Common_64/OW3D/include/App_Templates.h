@@ -21,7 +21,6 @@ public:
 
 	HWND Shape_Dlg_hWnd;
 
-	CreateArchDialog*		CL_CreateArch;
 	CreateStaircaseDialog*	CL_CreateStaircase;
 };
 

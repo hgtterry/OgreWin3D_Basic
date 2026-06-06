@@ -52,11 +52,19 @@ CreateConeDialog::~CreateConeDialog(void)
 }
 
 // *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2026			 	   *
+// *************************************************************************
+char* CreateCylDialog::GetVersion()
+{
+	return (LPSTR)"Create Cylinder [ 06-06-26 ] Build 1 ";
+}
+
+// *************************************************************************
 // *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
 // *************************************************************************
 char* CreateConeDialog::GetVersion()
 {
-	return (LPSTR)" TMH_Scene_Builder :-- Create Cone [ 07-10-25 ] Build 1 ";
+	return (LPSTR)" TMH_Scene_Builder :-- Create Cone [ 06-06-26 ] Build 1 ";
 }
 
 // *************************************************************************

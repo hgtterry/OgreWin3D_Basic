@@ -1750,23 +1750,37 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 void CL64_Dialogs::List_Libraries(HWND List)
 {
 	SendMessage(List, LB_RESETCONTENT, 0, 0);
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------------------- Libraries ------------------- ");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------------------- Cheryl_Software Libraries ------------------- ");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
+
+	//SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->Get_Time_Stamp());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
+
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------ Read init style file  ");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Ini_File->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Maths->GetVersion());
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Preference->GetVersion());
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Ini_File->GetVersion());
+	//SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->CL_Preference->GetVersion());
+
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------ Gen  ");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------ Gen_X  ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Box->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Array->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_SelBrushList->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Brush->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_FaceList->GetVersion());
+	//SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_X_Face->GetVersion());
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_App_Templates->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------ Create Shapes  ");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->CL_CreateBox->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->CL_CreateCylinder->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->CL_CreateCone->GetVersion());
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->CL_CreateArch->GetVersion());
 }
 
 // *************************************************************************

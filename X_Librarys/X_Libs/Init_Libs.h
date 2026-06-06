@@ -12,8 +12,7 @@ public:
 	CreateBoxDialog*	CL_CreateBox;
 	CreateCylDialog*	CL_CreateCylinder;
 	CreateConeDialog*	CL_CreateCone;
-
-	//CreateArchDialog* CL_CreateArch;
+	CreateArchDialog*	CL_CreateArch;
 	
 };
 
