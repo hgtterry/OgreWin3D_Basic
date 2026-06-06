@@ -4,8 +4,9 @@
 
 Init_Libs::Init_Libs(void)
 {
-	CL_CreateBox = nullptr;
+	CL_CreateBox =		nullptr;
 	CL_CreateCylinder = nullptr;
+	CL_CreateCone =		nullptr;
 }
 
 Init_Libs::~Init_Libs(void)
@@ -17,11 +18,11 @@ Init_Libs::~Init_Libs(void)
 // *************************************************************************
 void Init_Libs::Start_Libraries()
 {
-	CL_CreateBox = new CreateBoxDialog();
+	CL_CreateBox =		new CreateBoxDialog();
 	CL_CreateCylinder = new CreateCylDialog();
+	CL_CreateCone =		new CreateConeDialog();
 
-	/*CL_CreateArch =		new CreateArchDialog();
-	CL_CreateCone =		new CreateConeDialog();*/
+	//*CL_CreateArch =		new CreateArchDialog();
 }
 
 // *************************************************************************
@@ -29,6 +30,6 @@ void Init_Libs::Start_Libraries()
 // *************************************************************************
 char* Init_Libs::GetVersion()
 {
-	return (LPSTR)" Init_Libs [ 30-05-26 ] Build T ";
+	return (LPSTR)" Init_Libs [ 06-06-26 ] Build T ";
 }
 

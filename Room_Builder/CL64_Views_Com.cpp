@@ -452,7 +452,7 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 
 	case WM_MOUSEWHEEL:
 	{
-		if (App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == 0)
+		if (App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown == false)
 		{
 			int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
@@ -467,6 +467,8 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 
 			return 1;
 		}
+
+		return 1;
 	}
 
 	case WM_LBUTTONDOWN:

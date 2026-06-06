@@ -91,7 +91,7 @@ LRESULT CALLBACK CreateConeDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wP
 
 		case VK_RETURN:
 		{
-			App->CL_App_Templates->CL_CreateCone->Update();
+			App->CL_Libs->CL_CreateCone->Update();
 			return 0;
 		}
 
@@ -165,7 +165,7 @@ void CreateConeDialog::Start_CreateCone_Dlg()
 // *************************************************************************
 LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	auto& m_Cone = App->CL_App_Templates->CL_CreateCone; // App->CL_App_Templates->CL_CreateCone
+	auto& m_Cone = App->CL_Libs->CL_CreateCone; // App->CL_App_Templates->CL_CreateCone
 
 	switch (message)
 	{
