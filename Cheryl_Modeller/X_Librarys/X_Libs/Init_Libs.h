@@ -35,10 +35,11 @@ public:
 	char* GetVersion();
 	char* Get_Time_Stamp();
 
-	CreateBoxDialog*	CL_CreateBox;
-	CreateCylDialog*	CL_CreateCylinder;
-	CreateConeDialog*	CL_CreateCone;
-	CreateArchDialog*	CL_CreateArch;
+	CreateBoxDialog*		CL_CreateBox;
+	CreateCylDialog*		CL_CreateCylinder;
+	CreateConeDialog*		CL_CreateCone;
+	CreateArchDialog*		CL_CreateArch;
+	CreateStaircaseDialog*	CL_CreateStaircase;
 
 	Lib_Preference*		CL_Preference;
 

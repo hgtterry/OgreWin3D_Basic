@@ -28,10 +28,11 @@ THE SOFTWARE.
 
 Init_Libs::Init_Libs(void)
 {
-	CL_CreateBox =		nullptr;
-	CL_CreateCylinder = nullptr;
-	CL_CreateCone =		nullptr;
-	CL_CreateArch =		nullptr;
+	CL_CreateBox =			nullptr;
+	CL_CreateCylinder =		nullptr;
+	CL_CreateCone =			nullptr;
+	CL_CreateArch =			nullptr;
+	CL_CreateStaircase =	nullptr;
 
 	CL_Preference =		nullptr;
 }
@@ -41,14 +42,15 @@ Init_Libs::~Init_Libs(void)
 }
 
 // *************************************************************************
-// *			Start_Libraries:- Terry and Hazel Flanigan 2025		 	   *
+// *			Start_Libraries:- Terry and Hazel Flanigan 2026		 	   *
 // *************************************************************************
 void Init_Libs::Start_Libraries()
 {
-	CL_CreateBox =		new CreateBoxDialog();
-	CL_CreateCylinder = new CreateCylDialog();
-	CL_CreateCone =		new CreateConeDialog();
-	CL_CreateArch =		new CreateArchDialog();
+	CL_CreateBox =			new CreateBoxDialog();
+	CL_CreateCylinder =		new CreateCylDialog();
+	CL_CreateCone =			new CreateConeDialog();
+	CL_CreateArch =			new CreateArchDialog();
+	CL_CreateStaircase =	new CreateStaircaseDialog();
 
 	//CL_Preference =		new Lib_Preference();
 }

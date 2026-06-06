@@ -29,6 +29,7 @@ public:
 	CreateStaircaseDialog(void);
 	~CreateStaircaseDialog(void);
 
+	char* GetVersion();
 	void Start_CreateStaircase_Dlg();
 
 	BrushTemplate_Staircase* pStaircaseTemplate;

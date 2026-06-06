@@ -49,6 +49,14 @@ CreateStaircaseDialog::~CreateStaircaseDialog(void)
 {
 }
 
+// *************************************************************************
+// *			GetVersion:- Terry and Hazel Flanigan 2026			 	   *
+// *************************************************************************
+char* CreateStaircaseDialog::GetVersion()
+{
+	return (LPSTR)"Create Staircase [ 06-06-26 ] Build 1 ";
+}
+
 LRESULT CALLBACK CreateStaircaseDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
 {
 	switch (uMsg)
@@ -60,7 +68,7 @@ LRESULT CALLBACK CreateStaircaseDialog::OwnerEditProc(HWND hWnd, UINT uMsg, WPAR
 
 		case VK_RETURN:
 		{
-			App->CL_X_CreateStaircaseDialog->Update();
+			App->CL_Libs->CL_CreateStaircase->Update();
 			return 0;
 		}
 
@@ -145,9 +153,9 @@ void CreateStaircaseDialog::Start_CreateStaircase_Dlg()
 		App->CL_App_Templates->Enable_Map_Editor_Dialogs(false);
 	}
 
-	App->CL_X_CreateStaircaseDialog->Get_DLG_Members(App->CL_App_Templates->Shape_Dlg_hWnd);
-	App->CL_X_CreateStaircaseDialog->Set_StaircaseTemplate();
-	App->CL_X_CreateStaircaseDialog->CreateStaircase();
+	Get_DLG_Members(App->CL_App_Templates->Shape_Dlg_hWnd);
+	Set_StaircaseTemplate();
+	CreateStaircase();
 
 	App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 }
@@ -157,12 +165,13 @@ void CreateStaircaseDialog::Start_CreateStaircase_Dlg()
 // *************************************************************************
 LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	auto& m_Staircase = App->CL_Libs->CL_CreateStaircase; // App->CL_Libs->CL_CreateStaircase
 
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
-		App->CL_X_CreateStaircaseDialog->Capture_Edit_Boxes(hDlg);
+		m_Staircase->Capture_Edit_Boxes(hDlg);
 
 		SendDlgItemMessage(hDlg, IDC_ST_STAIRS_GENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -194,7 +203,7 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		App->CL_X_CreateStaircaseDialog->Init_Bmps_Globals(hDlg);
+		m_Staircase->Init_Bmps_Globals(hDlg);
 
 		App->CL_App_Templates->Shape_Dlg_hWnd = hDlg;
 
@@ -203,8 +212,8 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 
 		// Initialize dialog members
 
-		App->CL_X_CreateStaircaseDialog->Set_Members();
-		App->CL_X_CreateStaircaseDialog->Set_DLG_Members(hDlg);
+		m_Staircase->Set_Members();
+		m_Staircase->Set_DLG_Members(hDlg);
 		//App->CL_X_CreateStaircaseDialog->Set_Defaults(hDlg);
 
 
@@ -214,25 +223,25 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 		_itoa(Count+1, Num, 10);
 		strcpy(Name, "Staircase_");
 		strcat(Name, Num);
-		strcpy(App->CL_X_CreateStaircaseDialog->StaircaseName, Name);
+		strcpy(m_Staircase->StaircaseName, Name);
 		SetDlgItemText(hDlg, IDC_STAIRS_EDITNAME, (LPCTSTR)Name);
 
-		if (App->CL_X_CreateStaircaseDialog->m_MakeRamp == 1)
+		if (m_Staircase->m_MakeRamp == 1)
 		{
-			App->CL_X_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 1;
-			App->CL_X_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 0;
+			m_Staircase->flag_Ramp_Flag_Dlg = 1;
+			m_Staircase->flag_Stairs_Flag_Dlg = 0;
 			return 1;
 		}
 		else
 		{
-			App->CL_X_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 0;
-			App->CL_X_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 1;
+			m_Staircase->flag_Ramp_Flag_Dlg = 0;
+			m_Staircase->flag_Stairs_Flag_Dlg = 1;
 			return 1;
 		}
 
 		HWND temp = GetDlgItem(hDlg, IDC_CK_STAIRS_WORLDCENTRE);
 		SendMessage(temp, BM_SETCHECK, 1, 0);
-		App->CL_X_CreateStaircaseDialog->m_UseCamPos = 0;
+		m_Staircase->m_UseCamPos = 0;
 
 		return TRUE;
 	}
@@ -335,21 +344,21 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 		if (some_item->idFrom == IDC_BT_STAIRS_RAMP)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_X_CreateStaircaseDialog->flag_Ramp_Flag_Dlg);
+			App->Custom_Button_Toggle(item, m_Staircase->flag_Ramp_Flag_Dlg);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_STAIRS_STAIRS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_X_CreateStaircaseDialog->flag_Stairs_Flag_Dlg);
+			App->Custom_Button_Toggle(item, m_Staircase->flag_Stairs_Flag_Dlg);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_STAIRS_CUT)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_X_CreateStaircaseDialog->m_TCut);
+			App->Custom_Button_Toggle(item, m_Staircase->m_TCut);
 			return CDRF_DODEFAULT;
 		}
 
@@ -404,7 +413,7 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 	{
 		if (LOWORD(wParam) == IDC_BT_UPDATE)
 		{
-			App->CL_X_CreateStaircaseDialog->Update();
+			m_Staircase->Update();
 			return TRUE;
 		}
 
@@ -416,7 +425,7 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 			temp = GetDlgItem(hDlg, IDC_CK_STAIRS_CAMPOSITION);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->CL_X_CreateStaircaseDialog->m_UseCamPos = 0;
+			m_Staircase->m_UseCamPos = 0;
 			return TRUE;
 		}
 
@@ -428,20 +437,20 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 			temp = GetDlgItem(hDlg, IDC_CK_STAIRS_WORLDCENTRE);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 
-			App->CL_X_CreateStaircaseDialog->m_UseCamPos = 1;
+			m_Staircase->m_UseCamPos = 1;
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_STAIRS_CUT)
 		{
-			if (App->CL_X_CreateStaircaseDialog->m_TCut == 1)
+			if (m_Staircase->m_TCut == 1)
 			{
-				App->CL_X_CreateStaircaseDialog->m_TCut = 0;
+				m_Staircase->m_TCut = 0;
 				return 1;
 			}
 			else
 			{
-				App->CL_X_CreateStaircaseDialog->m_TCut = 1;
+				m_Staircase->m_TCut = 1;
 				return 1;
 			}
 
@@ -453,12 +462,12 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 			HWND Temp = GetDlgItem(hDlg, IDC_ST_PIC);
 			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Stairs_Bmp);
 
-			App->CL_X_CreateStaircaseDialog->m_MakeRamp = 0;
+			m_Staircase->m_MakeRamp = 0;
 
-			App->CL_X_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 1;
-			App->CL_X_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 0;
+			m_Staircase->flag_Stairs_Flag_Dlg = 1;
+			m_Staircase->flag_Ramp_Flag_Dlg = 0;
 
-			App->CL_X_CreateStaircaseDialog->Update();
+			m_Staircase->Update();
 
 			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_ED_STAIRS_STEPS);
 			EnableWindow(temp, true);
@@ -473,12 +482,12 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 			HWND Temp = GetDlgItem(hDlg, IDC_ST_PIC);
 			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Ramp_Bmp);
 
-			App->CL_X_CreateStaircaseDialog->m_MakeRamp = 1;
+			m_Staircase->m_MakeRamp = 1;
 
-			App->CL_X_CreateStaircaseDialog->flag_Stairs_Flag_Dlg = 0;
-			App->CL_X_CreateStaircaseDialog->flag_Ramp_Flag_Dlg = 1;
+			m_Staircase->flag_Stairs_Flag_Dlg = 0;
+			m_Staircase->flag_Ramp_Flag_Dlg = 1;
 
-			App->CL_X_CreateStaircaseDialog->Update();
+			m_Staircase->Update();
 
 			HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_ED_STAIRS_STEPS);
 			EnableWindow(temp, false);
@@ -495,9 +504,9 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 			App->CL_Dialogs->YesNo("Reset to Defaults", "All Dimensions will be reset");
 			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 			{
-				App->CL_X_CreateStaircaseDialog->Set_Defaults(hDlg);
+				m_Staircase->Set_Defaults(hDlg);
 
-				App->CL_X_CreateStaircaseDialog->Update();
+				m_Staircase->Update();
 				HWND temp = GetDlgItem(App->CL_App_Templates->Shape_Dlg_hWnd, IDC_ED_STAIRS_STEPS);
 				EnableWindow(temp, true);
 			}
@@ -517,18 +526,18 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_X_CreateStaircaseDialog->Get_DLG_Members(hDlg);
-			App->CL_X_CreateStaircaseDialog->Set_StaircaseTemplate();
-			App->CL_X_CreateStaircaseDialog->CreateStaircase();
+			m_Staircase->Get_DLG_Members(hDlg);
+			m_Staircase->Set_StaircaseTemplate();
+			m_Staircase->CreateStaircase();
 
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 
-			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, App->CL_X_CreateStaircaseDialog->StaircaseName);
+			strcpy(App->CL_Properties_Templates->LastCreated_ShapeName, m_Staircase->StaircaseName);
 			App->CL_Properties_Templates->Insert_Template();
 
 			App->CL_X_Shapes_3D->Close_OgreWindow();
 
-			App->CL_X_CreateStaircaseDialog->Remove_Edit_Boxes(hDlg);
+			m_Staircase->Remove_Edit_Boxes(hDlg);
 
 			App->CL_App_Templates->Enable_Map_Editor_Dialogs(true);
 
@@ -541,7 +550,7 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 			App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
 			App->CL_X_Shapes_3D->Close_OgreWindow();
 
-			App->CL_X_CreateStaircaseDialog->Remove_Edit_Boxes(hDlg);
+			m_Staircase->Remove_Edit_Boxes(hDlg);
 
 			App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
@@ -564,9 +573,9 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 // *************************************************************************
 void CreateStaircaseDialog::Update(void)
 {
-	App->CL_X_CreateStaircaseDialog->Get_DLG_Members(App->CL_App_Templates->Shape_Dlg_hWnd);
-	App->CL_X_CreateStaircaseDialog->Set_StaircaseTemplate();
-	App->CL_X_CreateStaircaseDialog->CreateStaircase();
+	Get_DLG_Members(App->CL_App_Templates->Shape_Dlg_hWnd);
+	Set_StaircaseTemplate();
+	CreateStaircase();
 }
 
 // *************************************************************************

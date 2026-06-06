@@ -4,6 +4,7 @@
 #include "CreateCylDialog.h"
 #include "CreateArchDialog.h"
 #include "CreateConeDialog.h"
+#include "CreateStaircaseDialog.h"
 
 class App_Templates
 {

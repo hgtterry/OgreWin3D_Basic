@@ -97,7 +97,6 @@ THE SOFTWARE.
 
 // Templates Dialogs
 #include "App_Templates.h"
-#include "CreateStaircaseDialog.h"
 
 // Project
 #include "CL64_Gizmos.h"

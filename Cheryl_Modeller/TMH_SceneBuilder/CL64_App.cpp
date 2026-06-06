@@ -102,7 +102,6 @@ CL64_App::CL64_App(void)
 
 	// Templates Dialogs Libraries
 	CL_App_Templates =				nullptr;
-	CL_X_CreateStaircaseDialog =	nullptr;
 	CL_X_Shapes_3D =				nullptr; // Needs Routing to just Shapes stuff
 
 	// Project
@@ -305,7 +304,6 @@ void CL64_App::InitApp(void)
 	CL_App_Templates =				new App_Templates();
 	CL_App_Templates->Init_Templates();
 
-	CL_X_CreateStaircaseDialog =	new CreateStaircaseDialog();
 	CL_X_Shapes_3D =				new Shapes_3D();
 
 	// Project

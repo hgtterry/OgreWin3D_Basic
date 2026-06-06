@@ -101,8 +101,6 @@ public:
 
 	// Templates Dialogs Libraries
 	App_Templates*				CL_App_Templates;
-	
-	CreateStaircaseDialog*		CL_X_CreateStaircaseDialog;
 	Shapes_3D*					CL_X_Shapes_3D;
 
 	// Project

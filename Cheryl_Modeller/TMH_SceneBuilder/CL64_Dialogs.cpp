@@ -2133,7 +2133,7 @@ void CL64_Dialogs::List_Libraries(HWND List)
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->CL_CreateCylinder->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->CL_CreateCone->GetVersion());
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->CL_CreateArch->GetVersion());
-
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Libs->CL_CreateStaircase->GetVersion());
 	
 }
 

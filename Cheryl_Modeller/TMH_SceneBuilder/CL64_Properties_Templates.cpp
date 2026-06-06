@@ -197,7 +197,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 		
 		if (LOWORD(wParam) == IDC_BRUSH_STAIRCASE_PRIMITIVE)
 		{
-			App->CL_X_CreateStaircaseDialog->Start_CreateStaircase_Dlg();
+			App->CL_Libs->CL_CreateStaircase->Start_CreateStaircase_Dlg();
 			return 1;
 		}
 		
