@@ -422,7 +422,7 @@ void CL64_Views_Com::Init_Map_Views()
 
 	Create_Views();
 
-	App->CL_Interface->Show_Grids(false);
+	App->CL_Interface->Show_Grid_Windows(false);
 
 	RECT rcl;
 	GetClientRect(App->MainHwnd, &rcl);

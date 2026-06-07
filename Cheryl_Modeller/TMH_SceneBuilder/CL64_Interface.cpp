@@ -343,9 +343,9 @@ void CL64_Interface::Set_Title(bool Clear)
 }
 
 // *************************************************************************
-// *				Show_Grids:- Terry and Hazel Flanigan 2026			   *
+// *			Show_Grid_Windows:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Interface::Show_Grids(bool Show)
+void CL64_Interface::Show_Grid_Windows(bool Show)
 {
 	if (Show == true)
 	{
@@ -362,6 +362,38 @@ void CL64_Interface::Show_Grids(bool Show)
 		ShowWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd, false);
 
 		flag_Grids_Are_Visible = false;
+	}
+}
+
+// *************************************************************************
+// *	Show_TopTabs_Brushes_Panel:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Show_TopTabs_Brushes_Panel(bool show)
+{
+	ShowWindow(App->CL_Top_Tabs->TopTabs_Brushes_Dlg_hWnd, show);
+}
+
+// *************************************************************************
+// *	Enable_TopTabs_Brushes_Buttons:- Terry and Hazel Flanigan 2026	   *
+// *************************************************************************
+void CL64_Interface::Enable_TopTabs_Brushes_Buttons(bool option)
+{
+	auto& Win_hWnd = App->CL_Top_Tabs->TopTabs_Brushes_Dlg_hWnd;
+
+	// Array of button IDs to enable or disable
+	const int buttonIDs[] = 
+	{
+		IDC_BT_TT_BRUSH_SELECT,
+		IDC_BT_TT_BRUSH_MOVE,
+		IDC_BT_TT_BRUSH_SCALE,
+		IDC_BT_TT_BRUSH_ROTATE,
+		IDC_BT_TT_BRUSH_SHEAR
+	};
+
+	// Iterate through the button IDs and set their enabled state
+	for (int id : buttonIDs)
+	{
+		EnableWindow(GetDlgItem(Win_hWnd, id), option);
 	}
 }
 

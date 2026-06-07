@@ -282,7 +282,7 @@ void CL64_Top_Tabs::Start_Top_Tabs()
 	flag_TopTabs_Active = true;
 
 	TopTabs_Brushes_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_BRUSHES, TopTabs_Dlg_hWnd, (DLGPROC)Proc_Top_Tabs_Brushes);
-	ShowWindow(TopTabs_Brushes_Dlg_hWnd, true);
+	App->CL_Interface->Show_TopTabs_Brushes_Panel(false);
 
 }
 
@@ -890,13 +890,18 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_3DVIEW)
 		{
+			App->CL_Interface->Show_TopTabs_Brushes_Panel(false);
 			App->CL_Editor_Control->Set_3DEditor_View();
+	
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_MAPVIEW)
 		{
+			App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
+			App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
 			App->CL_Editor_Control->Set_Map_View();
+			
 			return TRUE;
 		}
 

@@ -54,7 +54,12 @@ public:
 	void Set_Editor_Startup();
 	void Set_Title(bool Clear);
 
-	void Show_Grids(bool Show);
+	void Show_Grid_Windows(bool Show);
+
+	// Top Tabs brush panel optins
+	void Show_TopTabs_Brushes_Panel(bool Show);
+	void Enable_TopTabs_Brushes_Buttons(bool option);
+
 
 	bool flag_Properties_Dlg_Active;
 	bool Materials_Dlg_Active;

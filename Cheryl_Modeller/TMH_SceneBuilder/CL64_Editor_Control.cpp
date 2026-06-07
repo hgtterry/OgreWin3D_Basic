@@ -187,7 +187,7 @@ void CL64_Editor_Control::Set_Map_View()
 
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
-	App->CL_Interface->Show_Grids(true);
+	App->CL_Interface->Show_Grid_Windows(true);
 
 	if (flag_Just_Loaded == false)
 	{
