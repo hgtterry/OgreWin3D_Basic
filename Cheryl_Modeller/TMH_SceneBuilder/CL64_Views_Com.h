@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-TMH_SceneBuilder
+Cheryl 3D Modeller
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,6 +48,7 @@ public:
 	void Init_Map_Views();
 	void Init_Views(int View);
 	void ResizeOgreWindow(void);
+	void Draw_Selected_Screen();
 
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
 	
@@ -68,8 +69,7 @@ public:
 
 	void Set_3D_FullView();
 	void Set_Selected_View(int Selected_View);
-	void Update_Selected_View();
-
+	
 	void On_Mouse_Move(POINT CursorPosition, HWND hDlg);
 	void On_Left_Button_Up(POINT CursorPosition);
 	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);

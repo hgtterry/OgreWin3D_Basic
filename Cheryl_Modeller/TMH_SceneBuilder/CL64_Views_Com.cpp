@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-TMH_SceneBuilder
+Cheryl 3D Modeller
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -148,6 +148,8 @@ CL64_Views_Com::CL64_Views_Com()
 	hcSizeNS = LoadCursor(NULL, IDC_SIZENS);
 	hcBoth = LoadCursor(NULL, IDC_SIZEALL);
 
+	hMenu = 0;
+
 	mStartPoint.x = 0;
 	mStartPoint.y = 0;
 
@@ -260,61 +262,44 @@ void CL64_Views_Com::Init_Views(int View)
 	RECT rect;
 	GetClientRect(Main_View_Dlg_Hwnd, &rect);
 
-	if (View == Enums::Selected_Map_View_None)
+	// Initialize default values
+	LEFT_WINDOW_WIDTH = 0;
+	nleftWnd_width = 0;
+	LEFT_WINDOW_DEPTH = 0;
+	TOP_POS_BOTLEFT = 0;
+
+	switch (View)
 	{
-		/*if (App->flag_Start_3DEditor_Mode == true)
-		{
-			LEFT_WINDOW_WIDTH = 0;
-			nleftWnd_width = 0;
+	case Enums::Selected_Map_View_None:
+		LEFT_WINDOW_WIDTH = rect.right / 2;
+		nleftWnd_width = rect.right / 2;
+		LEFT_WINDOW_DEPTH = rect.bottom / 2;
+		TOP_POS_BOTLEFT = rect.bottom / 2;
+		break;
 
-			LEFT_WINDOW_DEPTH = 0;
-			TOP_POS_BOTLEFT = 0;
+	case Enums::Selected_Map_View_3D:
+		break;
 
-		}
-		else*/
-		{
-			LEFT_WINDOW_WIDTH = rect.right / 2;
-			nleftWnd_width = rect.right / 2;
-
-			LEFT_WINDOW_DEPTH = rect.bottom / 2;
-			TOP_POS_BOTLEFT = rect.bottom / 2;
-		}
-	}
-
-	if (View == Enums::Selected_Map_View_3D)
-	{
-		LEFT_WINDOW_WIDTH = 0;
-		nleftWnd_width = 0;
-
-		LEFT_WINDOW_DEPTH = 0;
-		TOP_POS_BOTLEFT = 0;
-	}
-
-	if (View == Enums::Selected_Map_View_TL)
-	{
+	case Enums::Selected_Map_View_TL:
 		LEFT_WINDOW_WIDTH = rect.right;
 		nleftWnd_width = rect.right;
-
 		LEFT_WINDOW_DEPTH = rect.bottom;
 		TOP_POS_BOTLEFT = rect.bottom;
-	}
+		break;
 
-	if (View == Enums::Selected_Map_View_TR)
-	{
-		LEFT_WINDOW_WIDTH = 0;
-		nleftWnd_width = 0;
-
+	case Enums::Selected_Map_View_TR:
 		LEFT_WINDOW_DEPTH = rect.bottom;
 		TOP_POS_BOTLEFT = rect.bottom;
-	}
+		break;
 
-	if (View == Enums::Selected_Map_View_BL)
-	{
+	case Enums::Selected_Map_View_BL:
 		LEFT_WINDOW_WIDTH = rect.right;
 		nleftWnd_width = rect.right;
+		break;
 
-		LEFT_WINDOW_DEPTH = 0;
-		TOP_POS_BOTLEFT = 0;
+	default:
+		// Handle unexpected view types if necessary
+		break;
 	}
 
 	nleftWnd_Depth = LEFT_WINDOW_DEPTH;
@@ -367,7 +352,7 @@ void CL64_Views_Com::Resize_Windows(HWND hDlg, int newWidth, int newDepth)
 
 
 
-	//                                                                     Resize Ogre Window
+	//                                                       Resize Ogre Window
 	MoveWindow(App->CL_View_3D->Bottom_Right_Window_Hwnd,
 		newWidth + WIDTH_ADJUST,
 		newDepth,
@@ -431,6 +416,29 @@ void CL64_Views_Com::Init_Map_Views()
 	Init_Views(Enums::Selected_Map_View_None);
 	RedrawWindow(Main_View_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
+}
+
+// *************************************************************************
+// *		Draw_Selected_Screen:- Terry Mo and Hazel 2026				   *
+// *************************************************************************
+void CL64_Views_Com::Draw_Selected_Screen()
+{
+	auto& Views_Com = App->CL_Views_Com;
+
+	switch (Views_Com->Selected_Window)
+	{
+	case Enums::Selected_Map_View_TL:
+		App->CL_View_Top_Left->Redraw_Window_TL();
+		break;
+	case Enums::Selected_Map_View_TR:
+		App->CL_View_Top_Right->Redraw_Window_TR();
+		break;
+	case Enums::Selected_Map_View_BL:
+		App->CL_View_Bottom_Left->Redraw_Window_BL();
+		break;
+	default:
+		break;
+	}
 }
 
 // *************************************************************************
@@ -757,9 +765,16 @@ void CL64_Views_Com::Save_Splitter_Width_Depth()
 // *************************************************************************
 void CL64_Views_Com::Create_Views()
 {
+	// Create the top left view window
 	App->CL_View_Top_Left->Create_Top_Left_Window();
+
+	// Create the top right view window
 	App->CL_View_Top_Right->Create_Top_Right_Window();
+
+	// Create the bottom left view window
 	App->CL_View_Bottom_Left->Create_Bottom_Left_Window();
+
+	// Create the 3D view window
 	App->CL_View_3D->Create_Ogre_Bottom_Right();
 }
 
@@ -1335,7 +1350,7 @@ bool CL64_Views_Com::Context_Grids_Command(WPARAM wParam)
 			Temp_VCam->CamPos.y = Pos.y;
 			Temp_VCam->CamPos.z = Pos.z;
 
-			Update_Selected_View();
+			Draw_Selected_Screen();
 
 		}
 		
@@ -1379,7 +1394,7 @@ bool CL64_Views_Com::Context_Grids_Command(WPARAM wParam)
 			Temp_VCam->CamPos.y = Pos.y;
 			Temp_VCam->CamPos.z = Pos.z;
 
-			Update_Selected_View();
+			Draw_Selected_Screen();
 		}
 
 		return TRUE;
@@ -1464,28 +1479,6 @@ bool CL64_Views_Com::Context_Grids_Command(WPARAM wParam)
 }
 
 // *************************************************************************
-// *	  		Update_Selected_View:- Terry Mo and Hazel 2026			   *
-// *************************************************************************
-void CL64_Views_Com::Update_Selected_View()
-{
-	// Redraw the appropriate window based on the selection
-	switch (Selected_Window)
-	{
-	case Enums::Selected_Map_View_TL:
-		App->CL_View_Top_Left->Redraw_Window_TL();
-		break;
-	case Enums::Selected_Map_View_TR:
-		App->CL_View_Top_Right->Redraw_Window_TR();
-		break;
-	case Enums::Selected_Map_View_BL:
-		App->CL_View_Bottom_Left->Redraw_Window_BL();
-		break;
-	default:
-		break;
-	}
-}
-
-// *************************************************************************
 // *	  			On_Mouse_Move:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
 void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
@@ -1533,22 +1526,7 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Doc->MoveSelectedBrushes(&dv);
 				
-				auto& Views_Com = App->CL_Views_Com;
-
-				switch (Views_Com->Selected_Window)
-				{
-				case Enums::Selected_Map_View_TL:
-					App->CL_View_Top_Left->Redraw_Window_TL();
-					break;
-				case Enums::Selected_Map_View_TR:
-					App->CL_View_Top_Right->Redraw_Window_TR();
-					break;
-				case Enums::Selected_Map_View_BL:
-					App->CL_View_Bottom_Left->Redraw_Window_BL();
-					break;
-				default:
-					break;
-				}
+				Draw_Selected_Screen();
 			}
 
 			if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
@@ -1558,7 +1536,7 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 				
 				App->CL_Doc->RotateSelectedBrushes(Current_View, &dv);
 
-				//Draw_Screen(hDlg);
+				Draw_Selected_Screen();
 			}
 		}
 
@@ -1567,7 +1545,7 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 			//LockAxisView (&dx, &dy);
 			App->CL_Doc->ScaleSelected(dx, dy);
 
-			//Draw_Screen(hDlg);
+			Draw_Selected_Screen();
 		}
 
 		if (KEYDOWN(VK_CONTROL) == false)

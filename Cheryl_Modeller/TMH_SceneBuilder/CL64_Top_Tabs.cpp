@@ -807,7 +807,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_MAPVIEW)
 		{
-			//App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
+			App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
 			App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
 			App->CL_Editor_Control->Set_Map_View();
 			

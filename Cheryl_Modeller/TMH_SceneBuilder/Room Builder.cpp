@@ -1219,7 +1219,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case IDM_EXIT:
             {
-            
+                App->CL_Level->flag_Level_is_Modified = false;
                 if (App->CL_Level->flag_Level_is_Modified == true)
                 {
                     char Text[200];
@@ -1312,6 +1312,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_CLOSE:
     {
+        App->CL_Level->flag_Level_is_Modified = false;
         if (App->CL_Level->flag_Level_is_Modified == true)
         {
             char Text[200];
