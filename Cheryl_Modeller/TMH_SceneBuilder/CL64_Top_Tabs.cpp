@@ -1168,11 +1168,32 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs_Brushes(HWND hDlg, UINT message, W
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDOK)
+		if (LOWORD(wParam) == IDC_BT_TT_BRUSH_SELECT)
 		{
+			App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
+
+			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+
 			return TRUE;
 		}
+	}
 
+	if (LOWORD(wParam) == IDC_BT_TT_BRUSH_MOVE)
+	{
+		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 1);
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDC_BT_TT_BRUSH_SCALE)
+	{
+		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH, 2);
+		return TRUE;
+	}
+
+	if (LOWORD(wParam) == IDC_BT_TT_BRUSH_ROTATE)
+	{
+		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
+		return TRUE;
 	}
 
 	break;
