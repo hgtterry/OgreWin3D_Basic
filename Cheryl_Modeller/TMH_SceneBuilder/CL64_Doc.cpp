@@ -147,7 +147,7 @@ void CL64_Doc::Editor_Set_Dlgs(int Set_State)
 {
     if (Set_State == Enums::Editor_Dlgs_First_Brush)
     {
-        App->CL_Top_Tabs->Enable_Select_Button(true, true);
+        //App->CL_Top_Tabs->Enable_Select_Button(true, true);
         App->CL_Properties_Tabs->Enable_Tabs(true);
     }
 }
@@ -328,7 +328,7 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
 
             App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(false, false);
             App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
-            App->CL_Top_Tabs->Enable_Select_Button(true, true);
+            //App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
             App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
@@ -342,7 +342,7 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
 
         App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(true, false);
         App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(true);
-        App->CL_Top_Tabs->Enable_Select_Button(true, true);
+       // App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
         App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
     }

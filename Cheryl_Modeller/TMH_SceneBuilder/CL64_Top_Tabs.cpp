@@ -310,12 +310,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BT_HD_SCENEEDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_HD_PREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_MOVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_ROTATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SHEAR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
 		SendDlgItemMessage(hDlg, IDC_ST_HEADER_FACES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_ALLFACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_NEXTFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -509,91 +503,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 		
-		if (some_item->idFrom == IDC_BT_BRUSH_SELECT)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_SELECT));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Select);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_BRUSH_MOVE)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_MOVE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Move);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_BRUSH_ROTATE)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_ROTATE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Rotate);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-		
-		if (some_item->idFrom == IDC_BT_BRUSH_SCALE)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_SCALE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Scale);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_BRUSH_SHEAR)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_SHEAR));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Normal(item);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
 		if (some_item->idFrom == IDC_BT_ALLFACES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -898,7 +807,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_MAPVIEW)
 		{
-			App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
+			//App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
 			App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
 			App->CL_Editor_Control->Set_Map_View();
 			
@@ -920,33 +829,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 		
-		if (LOWORD(wParam) == IDC_BT_BRUSH_SELECT)
-		{
-			App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
-
-			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_BRUSH_MOVE)
-		{
-			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH,1);
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_BRUSH_SCALE)
-		{
-			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH, 2);
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_BRUSH_ROTATE)
-		{
-			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_CB_FACELIST)
 		{
 			switch (HIWORD(wParam)) // Find out what message it was
@@ -1334,7 +1216,7 @@ void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
 // *************************************************************************
 void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
 {
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_MOVE), Enable);
+	/*EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_MOVE), Enable);
 	flag_Brush_Move = Active;
 
 	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Evirons)
@@ -1350,7 +1232,7 @@ void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
 
 
 	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_ROTATE), Enable);
-	flag_Brush_Scale = Active;
+	flag_Brush_Scale = Active;*/
 }
 
 // *************************************************************************
@@ -1363,24 +1245,6 @@ void CL64_Top_Tabs::Enable_TopBar_Face_Buttons(bool Enable)
 	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_PREVFACE), Enable);
 	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_CB_FACELIST), Enable);
 	
-}
-
-// *************************************************************************
-// *		Enable_Select_Button:- Terry Mo and Hazel 2025			  	   *
-// *************************************************************************
-void CL64_Top_Tabs::Enable_Select_Button(bool Enable, bool Active)
-{
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SELECT), Enable);
-	flag_Brush_Select = Active;
-}
-
-// *************************************************************************
-// *		Enable_Move_Button:- Terry Mo and Hazel 2025   			 	   *
-// *************************************************************************
-void CL64_Top_Tabs::Enable_Move_Button(bool Enable, bool Active)
-{
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_MOVE), Enable);
-	flag_Brush_Move = Active;
 }
 
 // *************************************************************************
