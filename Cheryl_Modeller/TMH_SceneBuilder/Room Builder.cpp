@@ -443,6 +443,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
 
             // ----------------------------------------------------- File Import
+
+            case ID_FILE_NEWMODEL:
+            {
+                App->CL_Interface->Show_Properties_Panel(true);
+
+                return 1;
+            }
+           
             case ID_FILE_OPEN:
             {
                 App->CL_File->Start_Load(true);

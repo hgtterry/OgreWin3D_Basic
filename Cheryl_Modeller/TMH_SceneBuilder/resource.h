@@ -507,7 +507,6 @@
 #define IDC_BT_TT_BRUSH_MOVE            1333
 #define IDC_ST_STARTMODE                1334
 #define IDC_BT_AT_CHANGETEXTURE         1334
-#define IDC_BUTTON7                     1334
 #define IDC_BT_TT_BRUSH_SHEAR           1334
 #define IDC_COMBO1                      1335
 #define IDC_CB_BRUSH_CAT                1335
@@ -718,6 +717,7 @@
 #define ID_DEBUG_TESTZOOM               32901
 #define ID_TESTMODELS_COLLADA           32902
 #define ID_IMPORT_AUTODESKFBX           32903
+#define ID_FILE_NEWMODEL                32904
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
 
@@ -727,7 +727,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        228
-#define _APS_NEXT_COMMAND_VALUE         32904
+#define _APS_NEXT_COMMAND_VALUE         32905
 #define _APS_NEXT_CONTROL_VALUE         1407
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
