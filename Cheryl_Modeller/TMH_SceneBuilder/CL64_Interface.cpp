@@ -33,6 +33,11 @@ CL64_Interface::CL64_Interface()
 	Motions_Dlg_Active = false;
 	Textures_Dlg_Assimp_Active = false;
 
+	flag_Tab_Texture = true;
+	flag_Tab_Templates = false;
+	flag_Tab_Group = false;
+
+
 	flag_Grids_Are_Visible = false;
 	flag_Properties_Dlg_Active = false;
 }
@@ -402,11 +407,12 @@ void CL64_Interface::Enable_TopTabs_Brushes_Buttons(bool option)
 // *************************************************************************
 void CL64_Interface::Select_Tab(int Tab_ID)
 {
-	if (Tab_ID == Enums::Tab_ID_TEXTURES)
-	{
-		App->CL_Properties_Tabs->Hide_Dialogs();
-		App->CL_Properties_Tabs->flag_Tab_Texture = 1;
+	Hide_Tab_Dialogs(); // Hide all tab dialogs first
 
+	switch (Tab_ID)
+	{
+	case Enums::Tab_ID_TEXTURES:
+		flag_Tab_Texture = true;
 		if (App->CL_Model->Editor_Setup_Mode == Enums::Editor_Setup_Mode_Create_Model)
 		{
 			Show_Textures_Dialog(true);
@@ -415,33 +421,51 @@ void CL64_Interface::Select_Tab(int Tab_ID)
 		{
 			Show_Materials_Dialog(true);
 		}
+		break;
 
-		RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	}
+	case Enums::Tab_ID_TEMPLATES:
+		flag_Tab_Templates = true;
+		Show_TemplatesDialog(true);
+		break;
 
-	if (Tab_ID == Enums::Tab_ID_TEMPLATES)
-	{
-		App->CL_Properties_Tabs->Hide_Dialogs();
-		App->CL_Properties_Tabs->flag_Tab_Templates = 1;
-		App->CL_Interface->Show_TemplatesDialog(true);
-
-		RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	}
-
-	if (Tab_ID == Enums::Tab_ID_GROUPS)
-	{
-		App->CL_Properties_Tabs->Hide_Dialogs();
-		App->CL_Properties_Tabs->flag_Tab_Group = true;
-		App->CL_Interface->Show_Brushes_Dialog(true);
-
+	case Enums::Tab_ID_GROUPS:
+		flag_Tab_Group = true;
+		Show_Brushes_Dialog(true);
 		App->CL_Properties_Brushes->Fill_ListBox();
+		break;
 
-		RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	default:
+		// Handle unexpected Tab_ID
+		break;
 	}
+
+	// Redraw the window
+	RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
-// *	  	Show_Brushes_Dialog:- Terry Mo and Hazel 2026				   *
+// *	  	Hide_Tab_Dialogs:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Interface::Hide_Tab_Dialogs()
+{
+	// Reset all tab flags to indicate they are hidden
+	flag_Tab_Texture = false;
+	flag_Tab_Group = false;
+	flag_Tab_Templates = false;
+	App->CL_Properties_Tabs->flag_Tab_3DSettings = false;
+
+	// Hide the respective dialogs for textures, brushes, and templates
+	App->CL_Interface->Show_Textures_Dialog(false);
+	App->CL_Interface->Show_Materials_Dialog(false);
+	App->CL_Interface->Show_Brushes_Dialog(false);
+	App->CL_Interface->Show_TemplatesDialog(false);
+
+	// Redraw
+	RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *	  	Show_Brushes_Dialog:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 void CL64_Interface::Show_Brushes_Dialog(bool Show)
 {

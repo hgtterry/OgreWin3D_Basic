@@ -40,13 +40,8 @@ public:
 	void Enable_Tabs_Dlg(bool Enable);
 	void Enable_Tabs(bool Enable);
 
-	void Hide_Dialogs();
-
 	HWND Tabs_Control_Hwnd;
 
-	bool flag_Tab_Templates;
-	bool flag_Tab_Texture;
-	bool flag_Tab_Group;
 	bool flag_Tab_3DSettings;
 private:
 	static LRESULT CALLBACK Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

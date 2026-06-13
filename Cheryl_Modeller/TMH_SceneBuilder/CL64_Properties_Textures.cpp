@@ -45,6 +45,8 @@ CL64_Properties_Textures::CL64_Properties_Textures()
 	BasePicHeight = 0;
 
 	mSelected_Face = NULL;
+
+	mFileString_Textures.clear();
 }
 
 CL64_Properties_Textures::~CL64_Properties_Textures()
@@ -245,7 +247,6 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 			{
 				App->CL_Properties_Textures->List_Selection_Changed();
 			}
-
 			return TRUE;
 		}
 
@@ -607,7 +608,7 @@ bool CL64_Properties_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RE
 // *************************************************************************
 bool CL64_Properties_Textures::SelectBitmap()
 {
-	/*char mTextureName[MAX_PATH];
+	char mTextureName[MAX_PATH];
 	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(m_CurrentTexture);
 	strcpy(mTextureName, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
 	
@@ -621,25 +622,25 @@ bool CL64_Properties_Textures::SelectBitmap()
 		{
 			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
 
-			App->CL_Properties_Materials->mFileString_Ogre = ff->getAsString();
+			mFileString_Textures = ff->getAsString();
 
 			char mFileName[MAX_PATH];
-			strcpy(mFileName, App->RB_Directory_FullPath);
+			strcpy(mFileName, App->App_Directory_FullPath);
 			strcat(mFileName, "\\Data\\");
 			strcat(mFileName, mTextureName);
 
 			std::ofstream outFile;
 			outFile.open(mFileName, std::ios::binary);
-			outFile << App->CL_Properties_Materials->mFileString_Ogre;
+			outFile << mFileString_Textures;
 			outFile.close();
 
-			App->CL_Properties_Materials->mFileString_Ogre.clear();
+			mFileString_Textures.clear();
 
 			Texture_To_HBITMP(mFileName);
 			remove(mFileName);
 			return 1;
 		}
-	}*/
+	}
 
 	return 0;
 }

@@ -234,4 +234,8 @@ void CL64_Editor_Control::Start_Editor_New_Model()
 	App->CL_Interface->Show_Properties_Panel(true);
 
 	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEMPLATES), true);
+	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEXTURES), false);
+	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBGROUPS), false);
+
+	App->CL_Interface->Select_Tab(Enums::Tab_ID_TEMPLATES);
 }

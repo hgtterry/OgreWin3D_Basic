@@ -66,6 +66,8 @@ private:
 	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
 
+	Ogre::String mFileString_Textures;
+
 	void Init_Bmps_Globals(void);
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);

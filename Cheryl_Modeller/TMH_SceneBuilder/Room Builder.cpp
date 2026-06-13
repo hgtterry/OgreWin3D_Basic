@@ -1537,7 +1537,6 @@ void StartOgre()
         bool test = App->CL_Importers->Assimp_Loader(false);
     }
 
-
 	if (App->CL_Libs->CL_Preference->flag_SceneEditor == true)
 	{
 		App->CL_Editor_Control->Start_Editor_Scene();
@@ -1549,6 +1548,12 @@ void StartOgre()
     App->CL_Editor_Control->flag_Scene_Editor_Active = true;
     App->CL_Editor_Control->flag_Map_Editor_Active = false;
     App->CL_Views_Com->Selected_Window = Enums::Selected_Map_View_3D;
+
+    bool New_File = true;
+    if (New_File == true)
+    {
+        App->CL_Editor_Control->Start_Editor_New_Model();
+    }
 
 	App->CL_Ogre->Render_Loop_3D();
 
