@@ -75,14 +75,6 @@ void CL64_Properties_Brushes::Reset_Class()
 }
 
 // *************************************************************************
-// *	  	Show_Brushes_Dialog:- Terry Mo and Hazel 2025				   *
-// *************************************************************************
-void CL64_Properties_Brushes::Show_Brushes_Dialog(bool Show)
-{
-	ShowWindow(BrushesDlg_Hwnd, Show);
-}
-
-// *************************************************************************
 // *		 Set_Dlg_Options_Buttons:- Terry Mo and Hazel 2025			   *
 // *************************************************************************
 void CL64_Properties_Brushes::Set_Dlg_Brush_Options_Buttons(bool Enable)

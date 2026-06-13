@@ -20,6 +20,8 @@ CL64_Model::CL64_Model(void)
 	BoneCount = 0;
 	Selected_BoneIndex = 0;
 
+	Editor_Setup_Mode = Enums::Editor_Setup_Mode_None;
+
 	flag_Model_Loaded = false;
 
 	Imported_Ogre_Ent = nullptr;
@@ -219,5 +221,7 @@ void CL64_Model::Clear_Model()
 	}
 
 	App->CL_Editor_Control->flag_Just_Loaded = false;
+
+	App->CL_Model->Editor_Setup_Mode = Enums::Editor_Setup_Mode_None;
 }
 

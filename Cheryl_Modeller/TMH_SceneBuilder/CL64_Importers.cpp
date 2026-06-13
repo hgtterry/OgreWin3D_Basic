@@ -19,7 +19,7 @@ void CL64_Importers::Set_Editor()
 {
 	// Show the properties panel and materials dialog
 	App->CL_Interface->Show_Properties_Panel(true);
-	App->CL_Properties_Materials->Show_Materials_Dialog(true);
+	App->CL_Interface->Show_Materials_Dialog(true);
 
 	// Set the texture bitmap on the top tabs
 	App->CL_Top_Tabs->Set_Texture_Bmp_On();

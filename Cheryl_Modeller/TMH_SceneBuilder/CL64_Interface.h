@@ -60,6 +60,12 @@ public:
 	void Show_TopTabs_Brushes_Panel(bool Show);
 	void Enable_TopTabs_Brushes_Buttons(bool option);
 
+	void Select_Tab(int Tab_ID);
+	void Show_Brushes_Dialog(bool Show);
+	void Show_Textures_Dialog(bool Show);
+	void Show_Materials_Dialog(bool Show);
+	void Show_TemplatesDialog(bool Show);
+
 
 	bool flag_Properties_Dlg_Active;
 	bool Materials_Dlg_Active;

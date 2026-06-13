@@ -397,6 +397,81 @@ void CL64_Interface::Enable_TopTabs_Brushes_Buttons(bool option)
 	}
 }
 
+// *************************************************************************
+// *			Select_Tab:- Terry and Hazel Flanigan 2026				   *
+// *************************************************************************
+void CL64_Interface::Select_Tab(int Tab_ID)
+{
+	if (Tab_ID == Enums::Tab_ID_TEXTURES)
+	{
+		App->CL_Properties_Tabs->Hide_Dialogs();
+		App->CL_Properties_Tabs->flag_Tab_Texture = 1;
+
+		if (App->CL_Model->Editor_Setup_Mode == Enums::Editor_Setup_Mode_Create_Model)
+		{
+			Show_Textures_Dialog(true);
+		}
+		else
+		{
+			Show_Materials_Dialog(true);
+		}
+
+		RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
+
+	if (Tab_ID == Enums::Tab_ID_TEMPLATES)
+	{
+		App->CL_Properties_Tabs->Hide_Dialogs();
+		App->CL_Properties_Tabs->flag_Tab_Templates = 1;
+		App->CL_Interface->Show_TemplatesDialog(true);
+
+		RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
+
+	if (Tab_ID == Enums::Tab_ID_GROUPS)
+	{
+		App->CL_Properties_Tabs->Hide_Dialogs();
+		App->CL_Properties_Tabs->flag_Tab_Group = true;
+		App->CL_Interface->Show_Brushes_Dialog(true);
+
+		App->CL_Properties_Brushes->Fill_ListBox();
+
+		RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
+}
+
+// *************************************************************************
+// *	  	Show_Brushes_Dialog:- Terry Mo and Hazel 2026				   *
+// *************************************************************************
+void CL64_Interface::Show_Brushes_Dialog(bool Show)
+{
+	ShowWindow(App->CL_Properties_Brushes->BrushesDlg_Hwnd, Show);
+}
+
+// *************************************************************************
+// *	  	Show_Textures_Dialog:- Terry Mo and Hazel 2026				   *
+// *************************************************************************
+void CL64_Interface::Show_Textures_Dialog(bool Show)
+{
+	ShowWindow(App->CL_Properties_Textures->Textures_Dlg_Hwnd, Show);
+}
+
+// *************************************************************************
+// *	  	Show_Materials_Dialog:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Show_Materials_Dialog(bool Show)
+{
+	ShowWindow(App->CL_Properties_Materials->Materials_Dlg_Hwnd, Show);
+}
+
+// *************************************************************************
+// *	  	Show_TemplatesDialog:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Show_TemplatesDialog(bool Show)
+{
+	ShowWindow(App->CL_Properties_Templates->TemplatesDlg_Hwnd, Show);
+}
+
 
 
 

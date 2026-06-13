@@ -60,11 +60,11 @@ CreateBoxDialog::~CreateBoxDialog(void)
 }
 
 // *************************************************************************
-// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *			GetVersion:- Terry and Hazel Flanigan 2026			 	   *
 // *************************************************************************
 char* CreateBoxDialog::GetVersion()
 {
-	return (LPSTR)"Create Box [ 30-12-25 ] Build 1 ";
+	return (LPSTR)"Create Box [ 13-06-26 ] Build 1 ";
 }
 
 // *************************************************************************
@@ -143,7 +143,7 @@ void CreateBoxDialog::Remove_Edit_Boxes(HWND hDlg)
 }
 
 // *************************************************************************
-// *	  	Start_CreateBox_Dlg:- Terry and Hazel Flanigan 2025			   *
+// *	  	Start_CreateBox_Dlg:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 void CreateBoxDialog::Start_CreateBox_Dlg()
 {
@@ -168,7 +168,7 @@ void CreateBoxDialog::Start_CreateBox_Dlg()
 }
 
 // *************************************************************************
-// *		  Proc_CreateBox:- Terry and Hazel Flanigan 2025			   *
+// *		  Proc_CreateBox:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -223,24 +223,24 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 
 		m_Box->Init_Bmps_Globals(hDlg);
 
-		if (App->CL_X_Brush->Get_Brush_Count() == 0) // New Scene
-		{
-			m_Box->flag_Default = 0;
-			m_Box->flag_Room = 1;
+		//if (App->CL_X_Brush->Get_Brush_Count() == 0) // New Scene
+		//{
+		//	m_Box->flag_Default = 0;
+		//	m_Box->flag_Room = 1;
 
-			EnableWindow(GetDlgItem(hDlg, IDC_BOXDEFAULTS), false);
-			EnableWindow(GetDlgItem(hDlg, IDC_BT_BOXCUTBRUSH), false);
-			EnableWindow(GetDlgItem(hDlg, IDC_BT_BOXSOLID), false);
+		//	EnableWindow(GetDlgItem(hDlg, IDC_BOXDEFAULTS), false);
+		//	EnableWindow(GetDlgItem(hDlg, IDC_BT_BOXCUTBRUSH), false);
+		//	EnableWindow(GetDlgItem(hDlg, IDC_BT_BOXSOLID), false);
 
-			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		//	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			int brushCount = App->CL_X_Brush->Get_Brush_Count();
-			std::string boxName = "Room_" + std::to_string(brushCount);
+		//	int brushCount = App->CL_X_Brush->Get_Brush_Count();
+		//	std::string boxName = "Room_" + std::to_string(brushCount);
 
-			SetDlgItemText(hDlg, IDC_EDITNAME, boxName.c_str());
+		//	SetDlgItemText(hDlg, IDC_EDITNAME, boxName.c_str());
 
-			m_Box->SetRoom(hDlg);
-		}
+		//	m_Box->SetRoom(hDlg);
+		//}
 
 		return TRUE;
 	}

@@ -41,14 +41,6 @@ CL64_Properties_Templates::~CL64_Properties_Templates()
 }
 
 // *************************************************************************
-// *	  	Show_TemplatesDialog:- Terry Mo and Hazel 2025				   *
-// *************************************************************************
-void CL64_Properties_Templates::Show_TemplatesDialog(bool Show)
-{
-	ShowWindow(TemplatesDlg_Hwnd, Show);
-}
-
-// *************************************************************************
 // *			Init_Bmps_Globals:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
 void CL64_Properties_Templates::Init_Bmps_Globals(void)
@@ -245,12 +237,6 @@ void CL64_Properties_Templates::Insert_Template()
 			//App->CL_Project->flag_Is_New_Project = true;
 			App->CL_Doc->AddBrushToWorld();
 
-			// Create Player if none exists
-			//if (App->CL_Scene->Player_Count == 0)
-			//{
-			//	//App->CL_Com_Player->Create_New_Player("Main_Player", false);
-			//}
-
 			App->CL_Gizmos->Show_MarkerBox(false);
 
 			// Reset camera settings
@@ -269,6 +255,8 @@ void CL64_Properties_Templates::Insert_Template()
 			// Update file view with new names
 			//App->CL_FileView->Change_Level_Name();
 			//App->CL_FileView->Change_Project_Name();
+
+			App->CL_Interface->Enable_TopTabs_Brushes_Buttons(true);
 
 			App->CL_Editor_Control->Set_Map_Editor_Startup();
 			

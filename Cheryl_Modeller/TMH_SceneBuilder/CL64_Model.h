@@ -34,6 +34,8 @@ public:
 	int FaceCount;
 	int BoneCount;
 
+	int Editor_Setup_Mode;
+
 	bool flag_Model_Loaded;
 
 	Ogre::Entity* Imported_Ogre_Ent;

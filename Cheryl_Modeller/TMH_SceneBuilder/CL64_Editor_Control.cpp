@@ -219,3 +219,19 @@ void CL64_Editor_Control::Set_3DEditor_View()
 
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 }
+
+// *************************************************************************
+// *		Start_Editor_New_Model:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Editor_Control::Start_Editor_New_Model()
+{
+	App->CL_Model->Editor_Setup_Mode = Enums::Editor_Setup_Mode_Create_Model;
+
+	App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
+	App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
+	App->CL_Editor_Control->Set_Map_View();
+
+	App->CL_Interface->Show_Properties_Panel(true);
+
+	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEMPLATES), true);
+}

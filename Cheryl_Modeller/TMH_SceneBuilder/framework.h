@@ -52,6 +52,21 @@ struct Colour_Int
 
 namespace Enums
 {
+	enum Tab_ID
+	{
+		Tab_ID_None = 0,
+		Tab_ID_TEXTURES = 1,
+		Tab_ID_TEMPLATES = 2,
+		Tab_ID_GROUPS = 3
+	};
+
+	enum Editor_Setup_Mode
+	{
+		Editor_Setup_Mode_None = 0,
+		Editor_Setup_Mode_Import = 1,
+		Editor_Setup_Mode_Create_Model = 2
+	};
+
 	enum Model_Type
 	{
 		Model_Type_None = 0,

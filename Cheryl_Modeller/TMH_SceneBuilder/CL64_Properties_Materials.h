@@ -32,7 +32,6 @@ public:
 
 	void Reset_Class(void);
 
-	void Show_Materials_Dialog(bool Show);
 	bool Start_Texture_Editor_Dialog();
 
 	bool Start_Props_Materials_Dlg();

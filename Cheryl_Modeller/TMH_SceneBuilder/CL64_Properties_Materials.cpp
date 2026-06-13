@@ -73,18 +73,6 @@ void CL64_Properties_Materials::Reset_Class(void)
 }
 
 // *************************************************************************
-// *	  	Show_Materials_Dialog:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Properties_Materials::Show_Materials_Dialog(bool Show)
-{
-	ShowWindow(Materials_Dlg_Hwnd, Show);
-
-	//Dialog_Textures_Visible = Show;
-
-	//Get_Selected_Face();
-}
-
-// *************************************************************************
 // *					Init_Bmps:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
 void CL64_Properties_Materials::Init_Bmps(void)

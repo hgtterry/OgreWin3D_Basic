@@ -446,14 +446,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_FILE_NEWMODEL:
             {
-
-                App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
-                App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
-                App->CL_Editor_Control->Set_Map_View();
-
-                App->CL_Interface->Show_Properties_Panel(true);
-
-                EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEMPLATES), true);
+                App->CL_Editor_Control->Start_Editor_New_Model();
 
                 return 1;
             }

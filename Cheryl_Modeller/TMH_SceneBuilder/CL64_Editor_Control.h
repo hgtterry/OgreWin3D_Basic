@@ -38,6 +38,7 @@ public:
 
 	void Set_Map_View();
 	void Set_3DEditor_View();
+	void Start_Editor_New_Model();
 
 	bool flag_Scene_Editor_Active;
 	bool flag_Map_Editor_Active;

@@ -98,24 +98,25 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 
 	Init_Bmps_Globals();
 
-	// Brushes
+	// Start the Brushes dialog
 	App->CL_Properties_Brushes->Start_Brush_Tabs_Dialog();
-	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
+	App->CL_Interface->Show_Brushes_Dialog(false);
 
 	// Textures
-	/*App->CL_Properties_Textures->Start_TextureDialog();
-	App->CL_Properties_Textures->Show_Textures_Dialog(false);*/
-
+	App->CL_Properties_Textures->Start_TextureDialog();
+	App->CL_Interface->Show_Textures_Dialog(false);
+	
 	// Materials
 	App->CL_Properties_Materials->Start_Props_Materials_Dlg();
-	App->CL_Properties_Materials->Show_Materials_Dialog(true);
+	App->CL_Interface->Show_Materials_Dialog(true);
 
 	App->CL_Interface->Position_Properties_Dlg();
 	App->CL_Props_Dialogs->Start_Props_Dialogs();
 
 	// Templates/Shapes
 	App->CL_Properties_Templates->Start_TemplatesDialog();
-	App->CL_Properties_Templates->Show_TemplatesDialog(false);
+	App->CL_Interface->Show_TemplatesDialog(false);
+
 
 	App->CL_Properties_Motions->Start_Motions_Dialog();
 
@@ -224,33 +225,19 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 	{
 		if (LOWORD(wParam) == IDC_TBTEXTURES)
 		{
-			App->CL_Properties_Tabs->Hide_Dialogs();
-			App->CL_Properties_Tabs->flag_Tab_Texture = 1;
-			App->CL_Properties_Materials->Show_Materials_Dialog(true);
-
-			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Interface->Select_Tab(Enums::Tab_ID_TEXTURES);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_TBTEMPLATES)
 		{
-			App->CL_Properties_Tabs->Hide_Dialogs();
-			App->CL_Properties_Tabs->flag_Tab_Templates = 1;
-			App->CL_Properties_Templates->Show_TemplatesDialog(true);
-
-			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Interface->Select_Tab(Enums::Tab_ID_TEMPLATES);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_TBGROUPS)
 		{
-			App->CL_Properties_Tabs->Hide_Dialogs();
-			App->CL_Properties_Tabs->flag_Tab_Group = true;
-			App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
-
-			App->CL_Properties_Brushes->Fill_ListBox();
-
-			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Interface->Select_Tab(Enums::Tab_ID_GROUPS);
 			return TRUE;
 		}
 
@@ -289,9 +276,10 @@ void CL64_Properties_Tabs::Hide_Dialogs()
 	flag_Tab_3DSettings = false;
 
 	// Hide the respective dialogs for textures, brushes, and templates
-	App->CL_Properties_Materials->Show_Materials_Dialog(false);
-	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
-	App->CL_Properties_Templates->Show_TemplatesDialog(false);
+	App->CL_Interface->Show_Textures_Dialog(false);
+	App->CL_Interface->Show_Materials_Dialog(false);
+	App->CL_Interface->Show_Brushes_Dialog(false);
+	App->CL_Interface->Show_TemplatesDialog(false);
 
 	// Redraw
 	RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -309,7 +297,7 @@ void CL64_Properties_Tabs::Select_Brushes_Tab()
 		Hide_Dialogs();
 
 		// Show the brushes dialog
-		App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
+		App->CL_Interface->Show_Brushes_Dialog(true);
 		flag_Tab_Group = true; 
 
 		// Redraw
@@ -327,7 +315,7 @@ void CL64_Properties_Tabs::Select_Textures_Tab()
 		if (flag_Tab_Texture == false)
 		{
 			Hide_Dialogs();
-			App->CL_Properties_Materials->Show_Materials_Dialog(true);
+			App->CL_Interface->Show_Materials_Dialog(true);
 			flag_Tab_Texture = 1;
 
 			RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -347,7 +335,7 @@ void CL64_Properties_Tabs::Select_Templates_Tab()
 	if (Tabs_Control_Hwnd && App->CL_Interface->flag_Properties_Dlg_Active == true)
 	{
 		Hide_Dialogs();
-		App->CL_Properties_Templates->Show_TemplatesDialog(true);
+		App->CL_Interface->Show_TemplatesDialog(true);
 		flag_Tab_Templates = 1;
 
 		RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

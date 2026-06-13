@@ -40,6 +40,8 @@ public:
 	void Enable_Tabs_Dlg(bool Enable);
 	void Enable_Tabs(bool Enable);
 
+	void Hide_Dialogs();
+
 	HWND Tabs_Control_Hwnd;
 
 	bool flag_Tab_Templates;
@@ -49,7 +51,7 @@ public:
 private:
 	static LRESULT CALLBACK Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Hide_Dialogs();
+	
 	void Init_Bmps_Globals(void);
 };
 
