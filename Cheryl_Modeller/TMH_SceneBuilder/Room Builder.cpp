@@ -1549,8 +1549,7 @@ void StartOgre()
     App->CL_Editor_Control->flag_Map_Editor_Active = false;
     App->CL_Views_Com->Selected_Window = Enums::Selected_Map_View_3D;
 
-    bool New_File = true;
-    if (New_File == true)
+    if (App->flag_Release == false)
     {
         App->CL_Editor_Control->Start_Editor_New_Model();
     }

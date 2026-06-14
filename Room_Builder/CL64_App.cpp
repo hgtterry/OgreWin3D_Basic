@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-OW3D Scene Builder
+Cheryl Scene Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -68,6 +68,7 @@ CL64_App::CL64_App(void)
 	CL_X_Face_Editor =			nullptr;
 	
 	CL_Ogre	=					nullptr;
+	CL_Interface =				nullptr;
 	CL_Panels =					nullptr;
 	CL_Keyboard =				nullptr;
 	CL_Scene =					nullptr;
@@ -181,6 +182,7 @@ CL64_App::CL64_App(void)
 	ViewPLeaseWait = nullptr;
 
 	RB_Directory_FullPath[0] = 0;
+	App_Title[0] = 0;
 }
 
 CL64_App::~CL64_App(void)
@@ -231,6 +233,7 @@ void CL64_App::InitApp(void)
 	CL_X_Face_Editor =			new Face_Editor();
 
 	CL_Ogre =					new CL64_Ogre();
+	CL_Interface =				new CL64_Interface();
 	CL_Panels =					new CL64_Panels();
 	CL_Keyboard =				new CL64_Keyboard();
 	CL_Scene =					new CL64_Scene();

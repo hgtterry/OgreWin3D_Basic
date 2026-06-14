@@ -205,8 +205,9 @@ CL64_App::CL64_App(void)
 	flag_Debug_App = false;
 	flag_3D_Started = false;
 	flag_Block_Mouse_Buttons = false;
-	flag_Release = false;
 	flag_App_Initialized = false;
+
+	flag_Release = false;
 
 	Development = true; // Allow New Code to Run for Testing
 	flag_Start_3DEditor_Mode = true;

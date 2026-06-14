@@ -125,6 +125,7 @@ THE SOFTWARE.
 #include "CL64_View_3D.h"
 
 #include "Timer_Debug.h"
+#include "CL64_Interface.h"
 
 class CL64_App
 {
@@ -172,6 +173,8 @@ public:
 	Face_Editor*				CL_X_Face_Editor;			// Library
 
 	CL64_Ogre*					CL_Ogre;
+	CL64_Interface*				CL_Interface;
+
 	CL64_Panels*				CL_Panels;
 	CL64_Keyboard*				CL_Keyboard;
 	CL64_Scene*					CL_Scene;

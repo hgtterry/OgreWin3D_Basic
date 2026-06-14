@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-TMH_SceneBuilder
+Cheryl 3D Modeller
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -321,11 +321,13 @@ void CL64_Interface::Set_Editor_Startup()
 	{
 		EnableMenuItem(Men, 9, MF_BYPOSITION | MF_DISABLED | MF_GRAYED);
 		EnableMenuItem(Men, ID_IMPORT_AUTODESKFBX, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+		EnableMenuItem(Men, ID_FILE_NEWMODEL, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 	}
 	else
 	{
 		EnableMenuItem(App->Menu_Map, 9, MF_BYPOSITION | MF_ENABLED);
 		EnableMenuItem(Men, ID_IMPORT_AUTODESKFBX, MF_BYCOMMAND | MF_ENABLED);
+		EnableMenuItem(Men, ID_FILE_NEWMODEL, MF_BYCOMMAND | MF_ENABLED);
 	}
 
 }
