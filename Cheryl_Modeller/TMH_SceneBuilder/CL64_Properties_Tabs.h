@@ -42,7 +42,6 @@ public:
 
 	HWND Tabs_Control_Hwnd;
 
-	bool flag_Tab_3DSettings;
 private:
 	static LRESULT CALLBACK Proc_Tabs_Control(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 

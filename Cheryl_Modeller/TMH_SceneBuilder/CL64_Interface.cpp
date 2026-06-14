@@ -454,8 +454,7 @@ void CL64_Interface::Hide_Tab_Dialogs()
 	flag_Tab_Texture = false;
 	flag_Tab_Group = false;
 	flag_Tab_Templates = false;
-	App->CL_Properties_Tabs->flag_Tab_3DSettings = false;
-
+	
 	// Hide the respective dialogs for textures, brushes, and templates
 	App->CL_Interface->Show_Textures_Dialog(false);
 	App->CL_Interface->Show_Materials_Dialog(false);

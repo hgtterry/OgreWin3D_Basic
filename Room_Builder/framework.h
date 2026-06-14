@@ -45,6 +45,14 @@
 
 namespace Enums
 {
+	enum Tab_ID
+	{
+		Tab_ID_None = 0,
+		Tab_ID_TEXTURES = 1,
+		Tab_ID_TEMPLATES = 2,
+		Tab_ID_GROUPS = 3
+	};
+
 	enum Base
 	{
 		Base_None = 0,

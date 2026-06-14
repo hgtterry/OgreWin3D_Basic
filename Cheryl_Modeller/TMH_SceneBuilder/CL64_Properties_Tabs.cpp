@@ -30,8 +30,6 @@ THE SOFTWARE.
 CL64_Properties_Tabs::CL64_Properties_Tabs()
 {
 	Tabs_Control_Hwnd = nullptr;
-
-	flag_Tab_3DSettings = false;
 }
 
 CL64_Properties_Tabs::~CL64_Properties_Tabs()

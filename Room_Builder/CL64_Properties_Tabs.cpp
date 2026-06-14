@@ -31,10 +31,6 @@ CL64_Properties_Tabs::CL64_Properties_Tabs()
 {
 	Tabs_Control_Hwnd = nullptr;
 
-	flag_Tab_Templates = 1;
-	flag_Tab_Texture = 0;
-	flag_Tab_Group = 0;
-	flag_Tab_3DSettings = 0;
 	flag_Tabs_Dlg_Active = 0;
 }
 
@@ -131,7 +127,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Texture);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Interface->flag_Tab_Texture);
 			}
 
 			return CDRF_DODEFAULT;
@@ -140,7 +136,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 		if (some_item->idFrom == IDC_TBTEMPLATES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Templates);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Interface->flag_Tab_Templates);
 			return CDRF_DODEFAULT;
 		}
 
@@ -154,7 +150,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Tabs->flag_Tab_Group);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Interface->flag_Tab_Group);
 			}
 			
 			return CDRF_DODEFAULT;
@@ -167,33 +163,19 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 	{
 		if (LOWORD(wParam) == IDC_TBTEXTURES)
 		{
-			App->CL_Properties_Tabs->Hide_Dialogs();
-			App->CL_Properties_Tabs->flag_Tab_Texture = 1;
-			App->CL_Properties_Textures->Show_Textures_Dialog(true);
-
-			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Interface->Select_Tab(Enums::Tab_ID_TEXTURES);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_TBTEMPLATES)
 		{
-			App->CL_Properties_Tabs->Hide_Dialogs();
-			App->CL_Properties_Tabs->flag_Tab_Templates = 1;
-			App->CL_Properties_Templates->Show_TemplatesDialog(true);
-
-			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Interface->Select_Tab(Enums::Tab_ID_TEMPLATES);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_TBGROUPS)
 		{
-			App->CL_Properties_Tabs->Hide_Dialogs();
-			App->CL_Properties_Tabs->flag_Tab_Group = 1;
-			App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
-
-			//App->CL_Properties_Brushes->Fill_ListBox();
-
-			RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CL_Interface->Select_Tab(Enums::Tab_ID_GROUPS);
 			return TRUE;
 		}
 
@@ -223,26 +205,6 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 }
 
 // *************************************************************************
-// *	  	Hide_Dialogs:- Terry and Hazel Flanigan 2025				   *
-// *************************************************************************
-void CL64_Properties_Tabs::Hide_Dialogs()
-{
-	// Reset all tab flags to indicate they are hidden
-	flag_Tab_Texture = 0;
-	flag_Tab_Group = 0;
-	flag_Tab_Templates = 0;
-	flag_Tab_3DSettings = 0;
-
-	// Hide the respective dialogs for textures, brushes, and templates
-	App->CL_Properties_Textures->Show_Textures_Dialog(false);
-	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
-	App->CL_Properties_Templates->Show_TemplatesDialog(false);
-
-	// Redraw
-	RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-}
-
-// *************************************************************************
 // *	  	Select_Brushes_Tab:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Properties_Tabs::Select_Brushes_Tab()
@@ -251,11 +213,11 @@ void CL64_Properties_Tabs::Select_Brushes_Tab()
 	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == true)
 	{
 		// Hide any open dialogs
-		Hide_Dialogs();
+		App->CL_Interface->Hide_Tab_Dialogs();
 
 		// Show the brushes dialog
 		App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
-		flag_Tab_Group = true; 
+		App->CL_Interface->flag_Tab_Group = true;
 
 		// Redraw
 		RedrawWindow(Tabs_Control_Hwnd, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW); // Redraw the tabs control
@@ -269,11 +231,11 @@ void CL64_Properties_Tabs::Select_Textures_Tab()
 {
 	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
 	{
-		if (flag_Tab_Texture == false)
+		if (App->CL_Interface->flag_Tab_Texture == false)
 		{
-			Hide_Dialogs();
+			App->CL_Interface->Hide_Tab_Dialogs();
 			App->CL_Properties_Textures->Show_Textures_Dialog(true);
-			flag_Tab_Texture = 1;
+			App->CL_Interface->flag_Tab_Texture = true;
 
 			RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
@@ -291,9 +253,9 @@ void CL64_Properties_Tabs::Select_Templates_Tab()
 {
 	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
 	{
-		Hide_Dialogs();
+		App->CL_Interface->Hide_Tab_Dialogs();
 		App->CL_Properties_Templates->Show_TemplatesDialog(true);
-		flag_Tab_Templates = 1;
+		App->CL_Interface->flag_Tab_Templates = true;
 
 		RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}

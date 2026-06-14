@@ -97,6 +97,16 @@ void OGL_Listener::PostRender()
 // *************************************************************************
 void OGL_Listener::Render_Loop()
 {
+	/*HGLRC glCont = wglGetCurrentContext();
+	ImGui::SetCurrentContext();*/
+
+	//Ogre::ImGuiOverlay* imguiOverlay = Base->initialiseImGui();
+	//ImGuiIO& ImGuiInitialize();
+	//ImGuiContext* defaultContext = ImGui::GetCurrentContext();
+	////defaultContext = "poo"
+	//ImGui::SetCurrentContext(defaultContext);
+	//OgreBites::OgreImGui::Init;
+
 	GLboolean depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
 	glDisable(GL_DEPTH_TEST);
 	GLboolean stencilTestEnabled = glIsEnabled(GL_STENCIL_TEST);
