@@ -28,17 +28,7 @@ THE SOFTWARE.
 
 CL64_Scene::CL64_Scene()
 {
-	
 	flag_Project_Resources_Created = 0;
-
-	// Groups
-	GroupCount = 0;
-	VerticeCount = 0;
-	FaceCount = 0;
-
-	// Brushes
-	BrushCount = 0;
-	Brush_Face_Count = 0;
 
 	// Scene Objects
 	Object_Count = 0;
@@ -52,14 +42,6 @@ CL64_Scene::CL64_Scene()
 	flag_Show_Debug_Area = 0;
 	flag_Enable_Physics_Debug = 0;
 	
-
-	int Count = 0;
-	while (Count < 11999)
-	{
-		B_Brush[Count] = nullptr;
-		Count++;
-	}
-
 	B_Object.reserve(200);
 }
 
@@ -113,16 +95,18 @@ void CL64_Scene::Reset_Class()
 // *************************************************************************
 void CL64_Scene::Create_Brush_XX(int Index)
 {
-	if (B_Brush[Index] != nullptr)
+	CL64_Model* pModel = App->CL_Model; // Pointer App->CL_Model
+
+	if (pModel->B_Brush[Index] != nullptr)
 	{
-		delete B_Brush[Index];
-		B_Brush[Index] = nullptr;
+		delete pModel->B_Brush[Index];
+		pModel->B_Brush[Index] = nullptr;
 	}
 
-	B_Brush[Index] = new Base_Brush();
+	pModel->B_Brush[Index] = new Base_Brush();
 
-	B_Brush[Index]->Vertice_Count = 0;
-	B_Brush[Index]->Face_Count = 0;
+	pModel->B_Brush[Index]->Vertice_Count = 0;
+	pModel->B_Brush[Index]->Face_Count = 0;
 }
 
 // *************************************************************************

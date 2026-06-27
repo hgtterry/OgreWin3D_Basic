@@ -410,12 +410,12 @@ void CL64_Export::Write_ObjectFile_Commit(void)
 	int FaceCount = 0;
 	int FaceIndex = 1;
 
-	int GroupCountTotal = App->CL_Scene->GroupCount;
+	int GroupCountTotal = App->CL_Model->GroupCount;
 
 	char MaterialName[MAX_PATH];
 
 	//--------------------------------------------- Vertices v-
-	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Scene->VerticeCount);
+	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
 
 	while (GroupCount < GroupCountTotal)
 	{
@@ -436,7 +436,7 @@ void CL64_Export::Write_ObjectFile_Commit(void)
 	fprintf(Write_OBJECTFILE, "%s \n", " ");
 
 	//--------------------------------------------- Texture Cords vt-
-	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Scene->VerticeCount);
+	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
 
 	GroupCount = 0;
 
@@ -458,7 +458,7 @@ void CL64_Export::Write_ObjectFile_Commit(void)
 	fprintf(Write_OBJECTFILE, "%s \n", " ");
 
 	//--------------------------------------------- Normals vn-
-	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Scene->VerticeCount);
+	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
 
 	GroupCount = 0;
 
@@ -542,7 +542,7 @@ bool CL64_Export::WriteMTLFile(void)
 	fprintf(Write_MTLFile, "%s \n", " ");
 
 	int GroupCount = 0;
-	int GroupCountTotal = App->CL_Scene->GroupCount;
+	int GroupCountTotal = App->CL_Model->GroupCount;
 
 	while (GroupCount < GroupCountTotal)
 	{
@@ -578,7 +578,7 @@ bool CL64_Export::Export_Object_Textures(void)
 	char buf[MAX_PATH];
 
 	int GroupCount = 0;
-	int GroupCountTotal = App->CL_Scene->GroupCount;
+	int GroupCountTotal = App->CL_Model->GroupCount;
 
 	while (GroupCount < GroupCountTotal)
 	{
@@ -596,11 +596,11 @@ bool CL64_Export::Export_Object_Textures(void)
 // *************************************************************************
 void CL64_Export::Ogre_Export_Dlg()
 {
-	if (App->CL_Model->flag_Model_Loaded == false)
+	/*if (App->CL_Model->flag_Model_Loaded == false)
 	{
 		App->Say("No Model Loaded to Export");
 		return;
-	}
+	}*/
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_OGRE_EXPORT, App->MainHwnd, (DLGPROC)Proc_Ogre_Export_Dlg);
 }

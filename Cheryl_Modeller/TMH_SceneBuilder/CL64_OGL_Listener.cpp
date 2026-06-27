@@ -857,7 +857,7 @@ void CL64_OGL_Listener::Brushes_Render_Faces(void)
 {
 	int Count = 0;
 
-	int BrushCount = App->CL_Scene->BrushCount;
+	int BrushCount = App->CL_Model->BrushCount;
 
 	while (Count < BrushCount)
 	{
@@ -896,6 +896,8 @@ void CL64_OGL_Listener::Brushes_Render_Faces(void)
 // *************************************************************************
 void CL64_OGL_Listener::Brushes_Face_Parts(int Count)
 {
+	CL64_Model* pModel = App->CL_Model; // Pointer App->CL_Model
+
 	int FaceCount = 0;
 	int A = 0;
 	int B = 0;
@@ -903,22 +905,22 @@ void CL64_OGL_Listener::Brushes_Face_Parts(int Count)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	while (FaceCount < App->CL_Scene->B_Brush[Count]->Face_Count)
+	while (FaceCount < pModel->B_Brush[Count]->Face_Count)
 	{
-		A = App->CL_Scene->B_Brush[Count]->Face_Data[FaceCount].a;
-		B = App->CL_Scene->B_Brush[Count]->Face_Data[FaceCount].b;
-		C = App->CL_Scene->B_Brush[Count]->Face_Data[FaceCount].c;
+		A = pModel->B_Brush[Count]->Face_Data[FaceCount].a;
+		B = pModel->B_Brush[Count]->Face_Data[FaceCount].b;
+		C = pModel->B_Brush[Count]->Face_Data[FaceCount].c;
 
 		glBegin(GL_POLYGON);
 
 		//-----------------------------------------------
-		glVertex3fv(&App->CL_Scene->B_Brush[Count]->vertex_Data[A].x);
+		glVertex3fv(&pModel->B_Brush[Count]->vertex_Data[A].x);
 
 		//-----------------------------------------------
-		glVertex3fv(&App->CL_Scene->B_Brush[Count]->vertex_Data[B].x);
+		glVertex3fv(&pModel->B_Brush[Count]->vertex_Data[B].x);
 
 		//-----------------------------------------------
-		glVertex3fv(&App->CL_Scene->B_Brush[Count]->vertex_Data[C].x);
+		glVertex3fv(&pModel->B_Brush[Count]->vertex_Data[C].x);
 
 		FaceCount++;
 
@@ -938,7 +940,7 @@ void CL64_OGL_Listener::Groups_Render_Textures(void)
 	glEnable(GL_TEXTURE_2D);
 	glColor3f(1, 1, 1);
 
-	int GroupCount = App->CL_Scene->GroupCount;
+	int GroupCount = App->CL_Model->GroupCount;
 
 	//if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
 	//{
@@ -1036,7 +1038,7 @@ void CL64_OGL_Listener::Groups_Textured_Parts(int Count)
 void CL64_OGL_Listener::Groups_Render_Faces(void)
 {
 	int Count = 0;
-	int GroupCount = App->CL_Scene->GroupCount;
+	int GroupCount = App->CL_Model->GroupCount;
 
 	if (flag_Just_Face == 1)
 	{

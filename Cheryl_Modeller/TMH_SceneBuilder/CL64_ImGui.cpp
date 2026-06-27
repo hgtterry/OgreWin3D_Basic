@@ -1002,8 +1002,8 @@ void CL64_ImGui::App_Stats_GUI(void)
 		if (ImGui::TreeNode("Render"))
 		{
 			ImGui::Separator();
-			ImGui::Text("Groups:= %i", App->CL_Scene->GroupCount);
-			ImGui::Text("Brushes:= %i", App->CL_Scene->BrushCount);
+			ImGui::Text("Groups:= %i", App->CL_Model->GroupCount);
+			ImGui::Text("Brushes:= %i", App->CL_Model->BrushCount);
 
 			ImGui::Text("Render Groups:= %i", App->CL_Ogre->OGL_Listener->flag_Render_Groups);
 			ImGui::Text("Render Brushes:= %i", App->CL_Ogre->OGL_Listener->flag_Render_Brushes);
@@ -1064,7 +1064,7 @@ void CL64_ImGui::Render_Report_GUI(void)
 	{
 		ImGui::Text("Render Reports");
 		ImGui::Separator();
-		ImGui::Text("Groups:= %i", App->CL_Scene->GroupCount);
+		ImGui::Text("Groups:= %i", App->CL_Model->GroupCount);
 
 		ImGui::Text("Selected Group:= %i", App->CL_Picking->m_SubMesh);
 		ImGui::Text("Group Face Count:= %i", App->CL_Mesh->Group[App->CL_Picking->m_SubMesh]->GroupFaceCount);

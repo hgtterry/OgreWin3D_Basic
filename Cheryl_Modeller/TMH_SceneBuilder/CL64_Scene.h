@@ -41,21 +41,10 @@ public:
 
 	void Clear_Level(bool FromFile);
 
-	Base_Brush* B_Brush[12000];
-
 	char JustName[MAX_PATH];
 
 	// Resources
 	bool flag_Project_Resources_Created;
-
-	// Groups
-	int VerticeCount;
-	int GroupCount;		// Total number of groups created
-	int FaceCount;
-
-	// Brushes
-	int BrushCount;		// Total number of brushes created
-	int Brush_Face_Count;
 
 	// Scene Objects
 	int Object_Count;

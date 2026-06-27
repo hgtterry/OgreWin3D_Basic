@@ -18,6 +18,11 @@ CL64_Model::CL64_Model(void)
 	VerticeCount = 0;
 	FaceCount = 0;
 	BoneCount = 0;
+
+	// Brushes
+	BrushCount = 0;
+	Brush_Face_Count = 0;
+
 	Selected_BoneIndex = 0;
 
 	Editor_Setup_Mode = Enums::Editor_Setup_Mode_None;
@@ -26,6 +31,13 @@ CL64_Model::CL64_Model(void)
 
 	Imported_Ogre_Ent = nullptr;
 	Imported_Ogre_Node = nullptr;
+
+	int Count = 0;
+	while (Count < 11999)
+	{
+		B_Brush[Count] = nullptr;
+		Count++;
+	}
 
 	S_BoundingBox[0] = nullptr;
 }

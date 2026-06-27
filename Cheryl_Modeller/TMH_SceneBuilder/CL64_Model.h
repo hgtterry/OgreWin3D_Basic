@@ -34,12 +34,18 @@ public:
 	int FaceCount;
 	int BoneCount;
 
+	// Brushes
+	int BrushCount;		// Total number of brushes created
+	int Brush_Face_Count;
+
 	int Editor_Setup_Mode;
 
 	bool flag_Model_Loaded;
 
 	Ogre::Entity* Imported_Ogre_Ent;
 	Ogre::SceneNode* Imported_Ogre_Node;
+
+	Base_Brush* B_Brush[12000];
 
 	AABB_Type* S_BoundingBox[1];
 };

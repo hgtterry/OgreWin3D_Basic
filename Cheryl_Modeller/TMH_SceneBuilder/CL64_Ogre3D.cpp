@@ -161,8 +161,8 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Selected)
 	Export_Manual->setDynamic(false);
 	Export_Manual->setCastShadows(false);
 
-	Export_Manual->estimateVertexCount(App->CL_Scene->VerticeCount);
-	Export_Manual->estimateIndexCount(App->CL_Scene->FaceCount);
+	Export_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
+	Export_Manual->estimateIndexCount(App->CL_Model->FaceCount);
 
 	char MaterialNumber[MAX_PATH];
 	char MatName[MAX_PATH];
@@ -360,19 +360,19 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	World_Manual->setDynamic(false);
 	World_Manual->setCastShadows(false);
 
-	World_Manual->estimateVertexCount(App->CL_Scene->VerticeCount);
-	World_Manual->estimateIndexCount(App->CL_Scene->FaceCount);
+	World_Manual->estimateVertexCount(App->CL_Model->VerticeCount);
+	World_Manual->estimateIndexCount(App->CL_Model->FaceCount);
 
 	char MaterialNumber[255];
 	char MatName[255];
 
-	int GroupCountTotal = App->CL_Scene->GroupCount;
+	int GroupCountTotal = App->CL_Model->GroupCount;
 	int Count = 0;
 	int FaceCount = 0;
 	int FaceIndex = 0;
 	m_Total_Faces = 0;
 
-	if (App->CL_Scene->GroupCount == 0)
+	if (App->CL_Model->GroupCount == 0)
 	{
 		App->Say("No Groups");
 		return;
@@ -536,7 +536,7 @@ void CL64_Ogre3D::CreateMaterialFile()
 	Ogre::String OFile;
 	Ogre::String OMatName;
 
-	int numMaterials = App->CL_Scene->GroupCount;
+	int numMaterials = App->CL_Model->GroupCount;
 
 	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
 
