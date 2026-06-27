@@ -238,4 +238,7 @@ void CL64_Editor_Control::Start_Editor_New_Model()
 	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBGROUPS), false);
 
 	App->CL_Interface->Select_Tab(Enums::Tab_ID_TEMPLATES);
+
+	App->CL_Model->Model_Type = Enums::Model_Type_Brush;
+	App->CL_Model->flag_Model_Loaded = true;
 }

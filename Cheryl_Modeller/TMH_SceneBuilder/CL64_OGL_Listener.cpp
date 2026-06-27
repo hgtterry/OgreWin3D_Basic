@@ -649,7 +649,7 @@ void CL64_OGL_Listener::MeshData_Render_Points(void)
 void CL64_OGL_Listener::MeshData_Points_Groups(int Count)
 {
 	glPointSize(5);
-
+	glDisable(GL_TEXTURE_2D);
 	int VertCount = 0;
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -666,6 +666,8 @@ void CL64_OGL_Listener::MeshData_Points_Groups(int Count)
 
 		VertCount++;
 	}
+
+	glEnable(GL_TEXTURE_2D);
 }
 
 //**************************************************************************
@@ -692,7 +694,7 @@ void CL64_OGL_Listener::MeshData_Render_Normals(void)
 void CL64_OGL_Listener::MeshData_Normals_Groups(int Count)
 {
 	int VertCount = 0;
-
+	glDisable(GL_TEXTURE_2D);
 	glPointSize(3);
 	glBegin(GL_LINES);
 
@@ -709,6 +711,7 @@ void CL64_OGL_Listener::MeshData_Normals_Groups(int Count)
 	}
 
 	glEnd();
+
 }
 
 // *************************************************************************

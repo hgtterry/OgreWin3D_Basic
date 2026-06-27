@@ -139,30 +139,6 @@ void CL64_Scene::Clear_Level(bool FromFile)
 	App->CL_Resources->Delete_Project_Resources_Group();
 	flag_Project_Resources_Created = 0;
 
-	//// Bullet Related
-	//int i;
-	//int CO = App->CL_Physics->dynamicsWorld->getNumCollisionObjects();
-	//if (CO > 0)
-	//{
-	//	for (i = App->CL_Physics->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
-	//	{
-	//		btCollisionObject* obj = App->CL_Physics->dynamicsWorld->getCollisionObjectArray()[i];
-
-	//		if (obj)
-	//		{
-	//			if (obj->getUserIndex() == Enums::Obj_Usage_Player)
-	//			{
-
-	//			}
-	//			else
-	//			{
-	//				App->CL_Physics->dynamicsWorld->removeCollisionObject(obj);
-	//				//delete obj;
-	//			}
-	//		}
-	//	}
-	//}
-
 	//App->CL_Com_Player->Reset_Class();
 
 	if (FromFile == false) // Not from a file load

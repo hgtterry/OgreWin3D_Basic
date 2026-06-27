@@ -30,9 +30,6 @@ public:
 	~CL64_Entities();
 
 	int GetIndex_By_Name(char* Name);
-	void Create_Player_Brush(const char* name);
-	void Create_Entity_Brush(int Object_Index);
-
 	bool Ogre_To_Mesh_Data(Ogre::SceneNode* Ogre_Node);
 	
 	void Rename_Brush();

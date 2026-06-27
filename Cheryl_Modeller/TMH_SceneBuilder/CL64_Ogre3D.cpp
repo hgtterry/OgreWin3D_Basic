@@ -145,11 +145,13 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Selected)
 
 	
 	Export_MaterialFile(mExport_PathAndFile_Material);
+	DecompileTextures_TXL(mExport_Path);
 
-	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+
+	/*if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
 		DecompileTextures_from_Assimp(mExport_Path);
-	}
+	}*/
 	
 
 	Export_Manual = App->CL_Ogre->mSceneMgr->createManualObject("OgreManual2");
@@ -619,6 +621,17 @@ bool CL64_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
 		}
 	}
 
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Brush)
+	{
+		while (GroupCount < GroupCountTotal)
+		{
+			strcpy(buf, App->CL_Mesh->Group[GroupCount]->Assimp_Text_FileName);
+			Export_Texture(buf, PathAndFile);
+
+			GroupCount++;
+		}
+	}
+
 	return 1;
 }
 
@@ -777,6 +790,40 @@ bool CL64_Ogre3D::Export_Texture(char* Name, char* Folder)
 	}
 
 	if (App->CL_Model->Model_Type == Enums::Model_Type_Ogre3D)
+	{
+
+		Ogre::String mFileString;
+
+		Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
+		Ogre::FileInfoList::const_iterator i, iend;
+		iend = RFI->end();
+
+		for (i = RFI->begin(); i != iend; ++i)
+		{
+			if (i->filename == Name)
+			{
+				mFileString.clear();
+
+				Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+
+				mFileString = ff->getAsString();
+
+				char mFileName[MAX_PATH];
+				strcpy(mFileName, Folder);
+				strcat(mFileName, Name);
+
+				std::ofstream outFile;
+				outFile.open(mFileName, std::ios::binary);
+				outFile << mFileString;
+				outFile.close();
+
+				mFileString.clear();
+				return 1;
+			}
+		}
+	}
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Brush)
 	{
 
 		Ogre::String mFileString;
