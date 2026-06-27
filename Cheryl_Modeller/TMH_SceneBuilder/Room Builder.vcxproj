@@ -155,7 +155,6 @@
   <ItemGroup>
     <ClInclude Include="Base_Brush.h" />
     <ClInclude Include="Base_Group.h" />
-    <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Cheryl_3D_Modeller.h" />
     <ClInclude Include="CL64_App.h" />
     <ClInclude Include="CL64_Assimp.h" />
@@ -223,7 +222,6 @@
   <ItemGroup>
     <ClCompile Include="Base_Brush.cpp" />
     <ClCompile Include="Base_Group.cpp" />
-    <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="CL64_App.cpp" />
     <ClCompile Include="CL64_Assimp.cpp" />
     <ClCompile Include="CL64_Brush_X.cpp" />

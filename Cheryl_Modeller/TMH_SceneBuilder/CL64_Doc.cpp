@@ -890,69 +890,69 @@ void CL64_Doc::RotateSelectedBrushList(const ViewVars* view, SelBrushList* pList
        
 		if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
 		{
-            int Delta = 1;
-			int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
+   //         int Delta = 1;
+			//int Index = App->CL_Entities->GetIndex_By_Name(pBrush->Name);
 
-            if (Index > -1)
-            {
-                auto& m_object = App->CL_Scene->B_Object[Index];
+   //         if (Index > -1)
+   //         {
+   //             auto& m_object = App->CL_Scene->B_Object[Index];
 
-                switch (view->ViewType)
-                {
-                case TOP_LEFT_VIEW:
-                {
-                    if (v->y > 0)
-                    {
-                        m_object->Mesh_Rot.y += Delta;
-                        m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
-                    }
+   //             switch (view->ViewType)
+   //             {
+   //             case TOP_LEFT_VIEW:
+   //             {
+   //                 if (v->y > 0)
+   //                 {
+   //                     m_object->Mesh_Rot.y += Delta;
+   //                     m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+   //                 }
 
-                    if (v->y < 0)
-                    {
-                        m_object->Mesh_Rot.y -= Delta;
-                        m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
-                    }
-                    break;
-                }
-                case BOTTOM_LEFT_VIEW:
-                {
-                    if (v->z > 0)
-                    {
-                        m_object->Mesh_Rot.z += Delta;
-                        m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_WORLD);
-                    }
+   //                 if (v->y < 0)
+   //                 {
+   //                     m_object->Mesh_Rot.y -= Delta;
+   //                     m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+   //                 }
+   //                 break;
+   //             }
+   //             case BOTTOM_LEFT_VIEW:
+   //             {
+   //                 if (v->z > 0)
+   //                 {
+   //                     m_object->Mesh_Rot.z += Delta;
+   //                     m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_WORLD);
+   //                 }
 
-                    if (v->z < 0)
-                    {
-                        m_object->Mesh_Rot.z -= Delta;
-                        m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_WORLD);
-                    }
-                    break;
-                }
-                case TOP_RIGHT_VIEW:
-                {
-                    if (v->x > 0)
-                    {
-                        m_object->Mesh_Rot.x += Delta;
-                        m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_WORLD);
-                    }
+   //                 if (v->z < 0)
+   //                 {
+   //                     m_object->Mesh_Rot.z -= Delta;
+   //                     m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_WORLD);
+   //                 }
+   //                 break;
+   //             }
+   //             case TOP_RIGHT_VIEW:
+   //             {
+   //                 if (v->x > 0)
+   //                 {
+   //                     m_object->Mesh_Rot.x += Delta;
+   //                     m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(1.0f), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_WORLD);
+   //                 }
 
-                    if (v->x < 0)
-                    {
-                        m_object->Mesh_Rot.x -= Delta;
-                        m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_WORLD);
-                    }
-                    break;
-                }
-                default:
-                {
-                    App->Say("No View", "RotateSelectedBrushList");
-                }
-                }
+   //                 if (v->x < 0)
+   //                 {
+   //                     m_object->Mesh_Rot.x -= Delta;
+   //                     m_object->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-1.0f), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_WORLD);
+   //                 }
+   //                 break;
+   //             }
+   //             default:
+   //             {
+   //                 App->Say("No View", "RotateSelectedBrushList");
+   //             }
+   //             }
 
-                // TODO Test
-                App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, false);
-            }
+   //             // TODO Test
+   //             App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, false);
+   //         }
 		}
         else
         {
@@ -1278,69 +1278,69 @@ void CL64_Doc::DoneMove(void)
 
     case Enums::Brushs_ID_Particle:
     {
-        char Name[MAX_PATH]{ 0 };
-        strcpy(Name, pBrush->Name);
+        //char Name[MAX_PATH]{ 0 };
+        //strcpy(Name, pBrush->Name);
 
-        int Index = App->CL_Entities->GetIndex_By_Name(Name);
+        //int Index = App->CL_Entities->GetIndex_By_Name(Name);
 
-        if (Index > -1)
-        {
-            Ogre::Vector3 Ogre_Center = App->CL_Scene->B_Object[Index]->Object_Node->getPosition();
-            Ogre::Vector3 Ogre_BBCenter = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getCenter();
+        //if (Index > -1)
+        //{
+        //    Ogre::Vector3 Ogre_Center = App->CL_Scene->B_Object[Index]->Object_Node->getPosition();
+        //    Ogre::Vector3 Ogre_BBCenter = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getCenter();
 
-            float True_Center = (App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
+        //    float True_Center = (App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
 
-            // Adjust the center of selection based on the bounding box center
-            if (fabs(Ogre_BBCenter.y - Ogre_Center.y) > 1)
-            {
-                CenterOfSelection.y = CenterOfSelection.y - True_Center;
-            }
+        //    // Adjust the center of selection based on the bounding box center
+        //    if (fabs(Ogre_BBCenter.y - Ogre_Center.y) > 1)
+        //    {
+        //        CenterOfSelection.y = CenterOfSelection.y - True_Center;
+        //    }
 
-            // Update the position of the object in the scene
-            App->CL_Scene->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
-            App->CL_Scene->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
+        //    // Update the position of the object in the scene
+        //    App->CL_Scene->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
+        //    App->CL_Scene->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
 
-            App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, true);
-        }
+        //    App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, true);
+        //}
 
         break;
     }
 
     case Enums::Brushs_ID_Evirons: // Environment Brush Selected
     {
-        char Name[MAX_PATH]{ 0 };
-        strcpy(Name, pBrush->Name);
+        //char Name[MAX_PATH]{ 0 };
+        //strcpy(Name, pBrush->Name);
 
-        int Index = App->CL_Entities->GetIndex_By_Name(Name);
+        //int Index = App->CL_Entities->GetIndex_By_Name(Name);
 
-        if (Index > -1)
-        {
-            Ogre::Vector3 Ogre_Center = App->CL_Scene->B_Object[Index]->Object_Node->getPosition();
-            Ogre::Vector3 Ogre_BBCenter = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getCenter();
+        //if (Index > -1)
+        //{
+        //    Ogre::Vector3 Ogre_Center = App->CL_Scene->B_Object[Index]->Object_Node->getPosition();
+        //    Ogre::Vector3 Ogre_BBCenter = App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getCenter();
 
-            float True_Center = (App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
+        //    float True_Center = (App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getSize().y) / 2;
 
-            // Adjust the center of selection based on the bounding box center
-            if (fabs(Ogre_BBCenter.y - Ogre_Center.y) > 1)
-            {
-                CenterOfSelection.y = CenterOfSelection.y - True_Center;
-            }
+        //    // Adjust the center of selection based on the bounding box center
+        //    if (fabs(Ogre_BBCenter.y - Ogre_Center.y) > 1)
+        //    {
+        //        CenterOfSelection.y = CenterOfSelection.y - True_Center;
+        //    }
 
-            // Update the position of the object in the scene
-            App->CL_Scene->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
-            App->CL_Scene->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
+        //    // Update the position of the object in the scene
+        //    App->CL_Scene->B_Object[Index]->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
+        //    App->CL_Scene->B_Object[Index]->Mesh_Pos = { CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z };
 
-            App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, true);
+        //    App->CL_Brush_X->Set_Brush_From_Entity_ByName(pBrush->Name, true);
 
-            if (App->CL_Scene->B_Object[Index]->Shape == Enums::Shape_TriMesh)
-            {
-                App->CL_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z));
-            }
-            else
-            {
-                
-            }
-        }
+        //    if (App->CL_Scene->B_Object[Index]->Shape == Enums::Shape_TriMesh)
+        //    {
+        //        App->CL_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z));
+        //    }
+        //    else
+        //    {
+        //        
+        //    }
+        //}
 
         break;
     }
@@ -1471,80 +1471,80 @@ void CL64_Doc::DoneResize(int sides, int inidx)
 
         if (pBrush->GroupId == Enums::Brushs_ID_Evirons)
         {
-            if (Index > -1)
-            {
-                auto& pObject = App->CL_Scene->B_Object[Index];
+    //        if (Index > -1)
+    //        {
+    //            auto& pObject = App->CL_Scene->B_Object[Index];
 
-                App->CL_X_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
-                T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
+    //            App->CL_X_SelBrushList->SelBrushList_Center(App->CL_Doc->pSelBrushes, &App->CL_Doc->SelectedGeoCenter);
+    //            T_Vec3 CenterOfSelection = App->CL_Doc->SelectedGeoCenter;
 
-                pObject->Object_Node->setVisible(false);
+    //            pObject->Object_Node->setVisible(false);
 
-               // pObject->Object_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-                pObject->Object_Node->setScale(1, 1, 1);
-                App->CL_Ogre->RenderFrame(2);
+    //           // pObject->Object_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+    //            pObject->Object_Node->setScale(1, 1, 1);
+    //            App->CL_Ogre->RenderFrame(2);
 
-                // Get the new Scaled Brush Size
-				T_Vec3 Brush_Size =
-				{
-			        fabs(pBrush->BoundingBox.Max.x - pBrush->BoundingBox.Min.x),
-			        fabs(pBrush->BoundingBox.Max.y - pBrush->BoundingBox.Min.y),
-			        fabs(pBrush->BoundingBox.Max.z - pBrush->BoundingBox.Min.z)
-				};
+    //            // Get the new Scaled Brush Size
+				//T_Vec3 Brush_Size =
+				//{
+			 //       fabs(pBrush->BoundingBox.Max.x - pBrush->BoundingBox.Min.x),
+			 //       fabs(pBrush->BoundingBox.Max.y - pBrush->BoundingBox.Min.y),
+			 //       fabs(pBrush->BoundingBox.Max.z - pBrush->BoundingBox.Min.z)
+				//};
 
-                // Get Ogre BB Size at sacle 1,1,1
-                T_Vec3 Ogre_Size = 
-                {
-                    pObject->Object_Node->_getWorldAABB().getSize().x,
-                    pObject->Object_Node->_getWorldAABB().getSize().y,
-                    pObject->Object_Node->_getWorldAABB().getSize().z
-                };
+    //            // Get Ogre BB Size at sacle 1,1,1
+    //            T_Vec3 Ogre_Size = 
+    //            {
+    //                pObject->Object_Node->_getWorldAABB().getSize().x,
+    //                pObject->Object_Node->_getWorldAABB().getSize().y,
+    //                pObject->Object_Node->_getWorldAABB().getSize().z
+    //            };
 
-                // Recalculate the new Scale for Ogre
-                T_Vec3 Ogre_NewScale = 
-                {
-                    Brush_Size.x / Ogre_Size.x,
-                    Brush_Size.y / Ogre_Size.y,
-                    Brush_Size.z / Ogre_Size.z
-                };
+    //            // Recalculate the new Scale for Ogre
+    //            T_Vec3 Ogre_NewScale = 
+    //            {
+    //                Brush_Size.x / Ogre_Size.x,
+    //                Brush_Size.y / Ogre_Size.y,
+    //                Brush_Size.z / Ogre_Size.z
+    //            };
 
-               /* if (sides == 10)
-                {
-                    App->BeepBeep();
-                    T_Vec3 Ogre_NewScale =
-                    {
-                        Brush_Size.x / Ogre_Size.z,
-                        Brush_Size.y / Ogre_Size.y,
-                        Brush_Size.z / Ogre_Size.x
-                    };
+    //           /* if (sides == 10)
+    //            {
+    //                App->BeepBeep();
+    //                T_Vec3 Ogre_NewScale =
+    //                {
+    //                    Brush_Size.x / Ogre_Size.z,
+    //                    Brush_Size.y / Ogre_Size.y,
+    //                    Brush_Size.z / Ogre_Size.x
+    //                };
 
-                    pObject->Object_Node->setScale(1, 1, Ogre_NewScale.x);
-                    pObject->Mesh_Scale = { 1, 1 , Ogre_NewScale.x };
-                }
-                else*/
-                {
-                    pObject->Object_Node->setScale(Ogre_NewScale.x, Ogre_NewScale.y, Ogre_NewScale.z);
-                    pObject->Mesh_Scale = { Ogre_NewScale.x, Ogre_NewScale.y , Ogre_NewScale.z };
-                }
-                
-                // Set Position
-                pObject->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
-                App->CL_Ogre->RenderFrame(2);
+    //                pObject->Object_Node->setScale(1, 1, Ogre_NewScale.x);
+    //                pObject->Mesh_Scale = { 1, 1 , Ogre_NewScale.x };
+    //            }
+    //            else*/
+    //            {
+    //                pObject->Object_Node->setScale(Ogre_NewScale.x, Ogre_NewScale.y, Ogre_NewScale.z);
+    //                pObject->Mesh_Scale = { Ogre_NewScale.x, Ogre_NewScale.y , Ogre_NewScale.z };
+    //            }
+    //            
+    //            // Set Position
+    //            pObject->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y, CenterOfSelection.z);
+    //            App->CL_Ogre->RenderFrame(2);
 
-                float True_Center = (App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getCenter().y);
+    //            float True_Center = (App->CL_Scene->B_Object[Index]->Object_Node->_getWorldAABB().getCenter().y);
 
-                // check position are the same
-                if (True_Center > CenterOfSelection.y || True_Center < CenterOfSelection.y)
-                {
-                    float Size = (pObject->Object_Node->_getWorldAABB().getSize().y);
-                    pObject->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y - Size/2, CenterOfSelection.z);
-                 
-                    //App->BeepBeep();
-                }
-               
-                pObject->Object_Node->setVisible(true);
+    //            // check position are the same
+    //            if (True_Center > CenterOfSelection.y || True_Center < CenterOfSelection.y)
+    //            {
+    //                float Size = (pObject->Object_Node->_getWorldAABB().getSize().y);
+    //                pObject->Object_Node->setPosition(CenterOfSelection.x, CenterOfSelection.y - Size/2, CenterOfSelection.z);
+    //             
+    //                //App->BeepBeep();
+    //            }
+    //           
+    //            pObject->Object_Node->setVisible(true);
 
-            }
+    //        }
         }
     }
 

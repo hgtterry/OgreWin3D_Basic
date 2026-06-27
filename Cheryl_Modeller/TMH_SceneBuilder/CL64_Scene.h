@@ -24,7 +24,6 @@ THE SOFTWARE.
 
 #include "Base_Brush.h"
 #include "Base_Group.h"
-#include "Base_Object.h"
 
 #pragma once
 class CL64_Scene
@@ -46,17 +45,10 @@ public:
 	// Resources
 	bool flag_Project_Resources_Created;
 
-	// Scene Objects
-	int Object_Count;
-	int UniqueID_Object_Counter;
-
 	// Ogre
 	int Ogre_Face_Count;
 
 	bool flag_Show_Debug_Area;		// Flag to indicate if the debug area should be displayed
 	bool flag_Enable_Physics_Debug; // Flag to indicate if physics debugging is enabled
-
-	std::vector<Base_Object*> B_Object; // Vector to hold pointers to Base_Object objects
-
 };
 

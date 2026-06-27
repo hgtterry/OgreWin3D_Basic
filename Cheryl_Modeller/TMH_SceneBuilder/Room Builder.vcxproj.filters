@@ -117,9 +117,6 @@
     <ClInclude Include="CL64_Entities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Base_Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_PB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -309,9 +306,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Entities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Base_Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_PB.cpp">

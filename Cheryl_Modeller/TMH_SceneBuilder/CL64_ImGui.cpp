@@ -1022,9 +1022,9 @@ void CL64_ImGui::App_Stats_GUI(void)
 		{
 			ImGui::Separator();
 
-			ImGui::Text("X:= %f", App->CL_Scene->B_Object[0]->Mesh_Rot.x);
+			/*ImGui::Text("X:= %f", App->CL_Scene->B_Object[0]->Mesh_Rot.x);
 			ImGui::Text("Y:= %f", App->CL_Scene->B_Object[0]->Mesh_Rot.y);
-			ImGui::Text("Z:= %f", App->CL_Scene->B_Object[0]->Mesh_Rot.z);
+			ImGui::Text("Z:= %f", App->CL_Scene->B_Object[0]->Mesh_Rot.z);*/
 
 			ImGui::Text("X:= %f", Vec_Debug.x);
 			ImGui::Text("Y:= %f", Vec_Debug.y);

@@ -652,7 +652,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 		
 		// Check if the Brush is an Entity
 
-		if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Area)
+		/*if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Area)
 		{
 			int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
 
@@ -668,7 +668,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 			App->CL_Properties_Brushes->Rotation.x = App->CL_Scene->B_Object[Index]->Mesh_Rot.x;
 			App->CL_Properties_Brushes->Rotation.y = App->CL_Scene->B_Object[Index]->Mesh_Rot.y;
 			App->CL_Properties_Brushes->Rotation.z = App->CL_Scene->B_Object[Index]->Mesh_Rot.z;
-		}
+		}*/
 
 		//// ----------- ScaleLock
 		//if (App->CLSB_Brushes->ScaleLock_Flag == 1)
@@ -846,7 +846,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					/*auto& m_object = App->CL_Scene->B_Object[Index];
 
 					if (m_object)
 					{
@@ -858,7 +858,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
-					}
+					}*/
 				}
 				break;
 
@@ -870,7 +870,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					/*auto& m_object = App->CL_Scene->B_Object[Index];
 
 					if (m_object)
 					{
@@ -885,7 +885,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
-					}
+					}*/
 				}
 				break;
 			}
@@ -914,7 +914,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					/*auto& m_object = App->CL_Scene->B_Object[Index];
 
 					if (m_object)
 					{
@@ -929,7 +929,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
-					}
+					}*/
 				}
 
 				break;
@@ -945,7 +945,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					/*auto& m_object = App->CL_Scene->B_Object[Index];
 
 					if (m_object)
 					{
@@ -960,7 +960,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
-					}
+					}*/
 				}
 
 				break;
@@ -987,7 +987,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					/*auto& m_object = App->CL_Scene->B_Object[Index];
 
 					if (m_object)
 					{
@@ -1002,7 +1002,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
-					}
+					}*/
 				}
 
 				break;
@@ -1018,7 +1018,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					/*auto& m_object = App->CL_Scene->B_Object[Index];
 
 					if (m_object)
 					{
@@ -1033,7 +1033,7 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 						App->CL_Gizmos->MarkerBox_Adjust(Index);
 						App->CL_Ogre->RenderFrame(2);
-					}
+					}*/
 				}
 
 				break;
@@ -1063,36 +1063,36 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
-					
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
-						Old_Rot.x -= App->CL_Properties_Brushes->RotX_Delta;
+					//auto& m_object = App->CL_Scene->B_Object[Index];
+					//
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
+					//	Old_Rot.x -= App->CL_Properties_Brushes->RotX_Delta;
 
-						m_object->Object_Node->resetOrientation();
-						m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->resetOrientation();
+					//	m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
 
-						m_object->Mesh_Rot = Old_Rot;
-						m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
-						m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
-						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
-						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
+					//	m_object->Mesh_Rot = Old_Rot;
+					//	m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
+					//	m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
+					//	m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
+					//	m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						
+					//	
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
 
-					}
+					//}
 				}
 
 				break;
@@ -1108,34 +1108,34 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
-						Old_Rot.x += App->CL_Properties_Brushes->RotX_Delta;
+					//auto& m_object = App->CL_Scene->B_Object[Index];
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
+					//	Old_Rot.x += App->CL_Properties_Brushes->RotX_Delta;
 
-						m_object->Object_Node->resetOrientation();
-						m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->resetOrientation();
+					//	m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
 
-						m_object->Mesh_Rot = Old_Rot;
-						m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
-						m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
-						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
-						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
+					//	m_object->Mesh_Rot = Old_Rot;
+					//	m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
+					//	m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
+					//	m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
+					//	m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						
+					//	
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
-					}
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//}
 				}
 
 				break;
@@ -1164,35 +1164,35 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					//auto& m_object = App->CL_Scene->B_Object[Index];
 
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
-						Old_Rot.y += App->CL_Properties_Brushes->RotY_Delta;
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
+					//	Old_Rot.y += App->CL_Properties_Brushes->RotY_Delta;
 
-						m_object->Object_Node->resetOrientation();
-						m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->resetOrientation();
+					//	m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
 
-						m_object->Mesh_Rot = Old_Rot;
-						m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
-						m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
-						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
-						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
+					//	m_object->Mesh_Rot = Old_Rot;
+					//	m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
+					//	m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
+					//	m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
+					//	m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						
+					//	
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
-					}
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//}
 				}
 
 				break;
@@ -1208,35 +1208,35 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					//auto& m_object = App->CL_Scene->B_Object[Index];
 
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
-						Old_Rot.y -= App->CL_Properties_Brushes->RotY_Delta;
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
+					//	Old_Rot.y -= App->CL_Properties_Brushes->RotY_Delta;
 
-						m_object->Object_Node->resetOrientation();
-						m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->resetOrientation();
+					//	m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
 
-						m_object->Mesh_Rot = Old_Rot;
-						m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
-						m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
-						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
-						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
+					//	m_object->Mesh_Rot = Old_Rot;
+					//	m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
+					//	m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
+					//	m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
+					//	m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						
+					//	
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
-					}
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//}
 				}
 
 				break;
@@ -1265,35 +1265,35 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					//auto& m_object = App->CL_Scene->B_Object[Index];
 
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
-						Old_Rot.z += App->CL_Properties_Brushes->RotZ_Delta;
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
+					//	Old_Rot.z += App->CL_Properties_Brushes->RotZ_Delta;
 
-						m_object->Object_Node->resetOrientation();
-						m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->resetOrientation();
+					//	m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
 
-						m_object->Mesh_Rot = Old_Rot;
-						m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
-						m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
-						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
-						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
+					//	m_object->Mesh_Rot = Old_Rot;
+					//	m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
+					//	m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
+					//	m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
+					//	m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						
+					//	
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
-					}
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//}
 				}
 
 				break;
@@ -1309,35 +1309,35 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					//auto& m_object = App->CL_Scene->B_Object[Index];
 
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
-						Old_Rot.z -= App->CL_Properties_Brushes->RotZ_Delta;
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Rot = m_object->Mesh_Rot;
+					//	Old_Rot.z -= App->CL_Properties_Brushes->RotZ_Delta;
 
-						m_object->Object_Node->resetOrientation();
-						m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
-						m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->resetOrientation();
+					//	m_object->Object_Node->pitch(((Ogre::Degree)Old_Rot.x), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->yaw(((Ogre::Degree)Old_Rot.y), Ogre::Node::TS_WORLD);
+					//	m_object->Object_Node->roll(((Ogre::Degree)Old_Rot.z), Ogre::Node::TS_WORLD);
 
-						m_object->Mesh_Rot = Old_Rot;
-						m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
-						m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
-						m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
-						m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
+					//	m_object->Mesh_Rot = Old_Rot;
+					//	m_object->Mesh_Quat.w = m_object->Object_Node->getOrientation().w;
+					//	m_object->Mesh_Quat.x = m_object->Object_Node->getOrientation().x;
+					//	m_object->Mesh_Quat.y = m_object->Object_Node->getOrientation().y;
+					//	m_object->Mesh_Quat.z = m_object->Object_Node->getOrientation().z;
 
-						
+					//	
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
-					}
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//}
 				}
 
 				break;
@@ -1368,27 +1368,27 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					//auto& m_object = App->CL_Scene->B_Object[Index];
 
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
-						Old_Scale.x += App->CL_Properties_Brushes->ScaleX_Delta;
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+					//	Old_Scale.x += App->CL_Properties_Brushes->ScaleX_Delta;
 
-						m_object->Object_Node->setScale(Old_Scale);
-						m_object->Mesh_Scale = Old_Scale;
+					//	m_object->Object_Node->setScale(Old_Scale);
+					//	m_object->Mesh_Scale = Old_Scale;
 
-						
+					//	
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
-					}
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//}
 				}
 
 				break;
@@ -1409,27 +1409,27 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					//auto& m_object = App->CL_Scene->B_Object[Index];
 
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
-						Old_Scale.x -= App->CL_Properties_Brushes->ScaleX_Delta;
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+					//	Old_Scale.x -= App->CL_Properties_Brushes->ScaleX_Delta;
 
-						m_object->Object_Node->setScale(Old_Scale);
-						m_object->Mesh_Scale = Old_Scale;
+					//	m_object->Object_Node->setScale(Old_Scale);
+					//	m_object->Mesh_Scale = Old_Scale;
 
-						
+					//	
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
-					}
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//}
 				}
 
 				break;
@@ -1456,27 +1456,27 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					//auto& m_object = App->CL_Scene->B_Object[Index];
 
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
-						Old_Scale.y += App->CL_Properties_Brushes->ScaleY_Delta;
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+					//	Old_Scale.y += App->CL_Properties_Brushes->ScaleY_Delta;
 
-						m_object->Object_Node->setScale(Old_Scale);
-						m_object->Mesh_Scale = Old_Scale;
+					//	m_object->Object_Node->setScale(Old_Scale);
+					//	m_object->Mesh_Scale = Old_Scale;
 
-						
+					//	
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
-					}
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//}
 				}
 
 				break;
@@ -1496,27 +1496,27 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					//auto& m_object = App->CL_Scene->B_Object[Index];
 
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
-						Old_Scale.y -= App->CL_Properties_Brushes->ScaleY_Delta;
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+					//	Old_Scale.y -= App->CL_Properties_Brushes->ScaleY_Delta;
 
-						m_object->Object_Node->setScale(Old_Scale);
-						m_object->Mesh_Scale = Old_Scale;
+					//	m_object->Object_Node->setScale(Old_Scale);
+					//	m_object->Mesh_Scale = Old_Scale;
 
-						
+					//	
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
-					}
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//}
 				}
 
 				break;
@@ -1544,27 +1544,27 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					//auto& m_object = App->CL_Scene->B_Object[Index];
 
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
-						Old_Scale.z += App->CL_Properties_Brushes->ScaleY_Delta;
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+					//	Old_Scale.z += App->CL_Properties_Brushes->ScaleY_Delta;
 
-						m_object->Object_Node->setScale(Old_Scale);
-						m_object->Mesh_Scale = Old_Scale;
+					//	m_object->Object_Node->setScale(Old_Scale);
+					//	m_object->Mesh_Scale = Old_Scale;
 
-						
+					//	
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
-					}
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//}
 				}
 
 				break;
@@ -1584,27 +1584,27 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Dimensions_Dlg(HWND hDlg, UINT me
 				else
 				{
 					int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-					auto& m_object = App->CL_Scene->B_Object[Index];
+					//auto& m_object = App->CL_Scene->B_Object[Index];
 
-					if (m_object)
-					{
-						Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
-						Old_Scale.z -= App->CL_Properties_Brushes->ScaleY_Delta;
+					//if (m_object)
+					//{
+					//	Ogre::Vector3 Old_Scale = m_object->Mesh_Scale;
+					//	Old_Scale.z -= App->CL_Properties_Brushes->ScaleY_Delta;
 
-						m_object->Object_Node->setScale(Old_Scale);
-						m_object->Mesh_Scale = Old_Scale;
+					//	m_object->Object_Node->setScale(Old_Scale);
+					//	m_object->Mesh_Scale = Old_Scale;
 
-						
+					//	
 
-						App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
+					//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_object->Object_Name, true);
 
-						App->CL_Gizmos->MarkerBox_Adjust(Index);
-						App->CL_Ogre->RenderFrame(2);
+					//	App->CL_Gizmos->MarkerBox_Adjust(Index);
+					//	App->CL_Ogre->RenderFrame(2);
 
-						m_object->flag_Altered = 1;
-						App->CL_Level->flag_Level_is_Modified = true;
-						//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
-					}
+					//	m_object->flag_Altered = 1;
+					//	App->CL_Level->flag_Level_is_Modified = true;
+					//	//App->CL_FileView->Mark_Altered(m_object->FileViewItem);
+					//}
 				}
 
 				break;
@@ -1887,7 +1887,7 @@ void CL64_Properties_Brushes::Update_From_Brush_Dlg(HWND hDlg)
 	{
 		int Index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
 
-		if (App->CL_Scene->B_Object[Index])
+		/*if (App->CL_Scene->B_Object[Index])
 		{
 			Ogre::Vector3 Pos = App->CL_Scene->B_Object[Index]->Mesh_Pos;
 			Ogre::Vector3 Scale = App->CL_Scene->B_Object[Index]->Mesh_Scale;
@@ -1904,7 +1904,7 @@ void CL64_Properties_Brushes::Update_From_Brush_Dlg(HWND hDlg)
 			UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEX, Scale.x, "%.2f");
 			UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEY, Scale.y, "%.2f");
 			UpdateDialogItem(hDlg, IDC_ED_BRUSH_SCALEZ, Scale.z, "%.2f");
-		}
+		}*/
 	}
 
 

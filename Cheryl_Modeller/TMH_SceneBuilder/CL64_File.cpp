@@ -484,30 +484,30 @@ bool CL64_File::Open_3dt_File()
 // *************************************************************************
 void CL64_File::Check_Missing_Brushes()
 {
-	// Initialize the count of objects and a buffer for object names
-	int count = 0;
-	char objectName[MAX_PATH]{ 0 };
+	//// Initialize the count of objects and a buffer for object names
+	//int count = 0;
+	//char objectName[MAX_PATH]{ 0 };
 
-	// Iterate through all objects in the scene
-	while (count < App->CL_Scene->Object_Count)
-	{
-		// Copy the object name from the scene to the buffer
-		strcpy(objectName, App->CL_Scene->B_Object[count]->Object_Name);
+	//// Iterate through all objects in the scene
+	//while (count < App->CL_Scene->Object_Count)
+	//{
+	//	// Copy the object name from the scene to the buffer
+	//	strcpy(objectName, App->CL_Scene->B_Object[count]->Object_Name);
 
-		// Get the brush index by the object name
-		int index = App->CL_Brush_X->Get_Brush_Index_By_Name(objectName);
+	//	// Get the brush index by the object name
+	//	int index = App->CL_Brush_X->Get_Brush_Index_By_Name(objectName);
 
-		// If the brush index is not found, create a new entity brush
-		if (index == -1)
-		{
-			// Create Brush and mark level as modified
-			App->CL_Entities->Create_Entity_Brush(count);
-			App->CL_Brush_X->Set_Brush_From_Entity_ByName(objectName, true);
-			App->CL_Level->flag_Level_is_Modified = true;
-		}
+	//	// If the brush index is not found, create a new entity brush
+	//	if (index == -1)
+	//	{
+	//		// Create Brush and mark level as modified
+	//		App->CL_Entities->Create_Entity_Brush(count);
+	//		App->CL_Brush_X->Set_Brush_From_Entity_ByName(objectName, true);
+	//		App->CL_Level->flag_Level_is_Modified = true;
+	//	}
 
-		count++;
-	}
+	//	count++;
+	//}
 }
 
 // *************************************************************************

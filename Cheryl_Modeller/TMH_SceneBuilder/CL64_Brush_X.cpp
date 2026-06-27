@@ -485,11 +485,11 @@ void CL64_Brush_X::Move_Brush_By_Name(char* Brush_Name, int Object_Index)
 	App->CL_X_Brush->Brush_Get_Center(b, &App->CL_Doc->SelectedGeoCenter);
 
 	T_Vec3 Pos;
-	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
+	//Ogre::Vector3 Centre = App->CL_Scene->B_Object[Object_Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
 
-	Pos.x = Centre.x;
-	Pos.y = Centre.y;
-	Pos.z = Centre.z;
+	Pos.x = 0; // Centre.x;
+	Pos.y = 0; // Centre.y;
+	Pos.z = 0; // Centre.z;
 
 	App->CL_X_Maths->Vector3_Subtract(&Pos, &App->CL_Doc->SelectedGeoCenter, &Pos);
 
@@ -534,7 +534,7 @@ void CL64_Brush_X::Scale_Brush_By_Name(const char* Brush_Name, int Object_Index,
 		// App->CL_Brush->BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(b), App->CL_Brush->Brush_GetModelId(b), ::fdocBrushCSGCallback, this);
 	}
 
-	App->CL_Brush_X->Move_Brush_By_Name(App->CL_Scene->B_Object[Object_Index]->Object_Name, Object_Index);
+	//App->CL_Brush_X->Move_Brush_By_Name(App->CL_Scene->B_Object[Object_Index]->Object_Name, Object_Index);
 }
 
 // *************************************************************************
@@ -656,7 +656,7 @@ void CL64_Brush_X::Set_Brush_Face_Points(Brush* pBrush, bool Update)
 // *************************************************************************
 void CL64_Brush_X::Set_Brush_From_Entity_ByName(char* Name, bool Update)
 {
-	int Index = App->CL_Entities->GetIndex_By_Name(Name);
+	/*int Index = App->CL_Entities->GetIndex_By_Name(Name);
 
 	if (Index > -1)
 	{
@@ -671,7 +671,7 @@ void CL64_Brush_X::Set_Brush_From_Entity_ByName(char* Name, bool Update)
 			App->CL_Entities->Ogre_To_Mesh_Data(m_object->Object_Node);
 			Set_Brush_Face_Points(pBrush, Update);
 		}
-	}
+	}*/
 
 }
 

@@ -30,10 +30,6 @@ CL64_Scene::CL64_Scene()
 {
 	flag_Project_Resources_Created = 0;
 
-	// Scene Objects
-	Object_Count = 0;
-	UniqueID_Object_Counter = 0;
-
 	// Ogre
 	Ogre_Face_Count = 0;
 
@@ -41,8 +37,6 @@ CL64_Scene::CL64_Scene()
 
 	flag_Show_Debug_Area = 0;
 	flag_Enable_Physics_Debug = 0;
-	
-	B_Object.reserve(200);
 }
 
 CL64_Scene::~CL64_Scene()
@@ -54,39 +48,14 @@ CL64_Scene::~CL64_Scene()
 // *************************************************************************
 void CL64_Scene::Reset_Class()
 {
-	int Count = 0; // Remove Ogre Objects
-	while (Count < Object_Count)
-	{
-		if (B_Object[Count]->Object_Node && B_Object[Count]->Object_Ent)
-		{
-			B_Object[Count]->Object_Node->detachAllObjects();
+	//int Count = 0; // Remove Ogre Objects
+	//while (Count < Object_Count)
+	//{
+	//	Count++;
+	//}
 
-			App->CL_Ogre->mSceneMgr->destroySceneNode(B_Object[Count]->Object_Node);
-
-			App->CL_Ogre->mSceneMgr->destroyEntity(B_Object[Count]->Object_Ent);
-
-			B_Object[Count]->Object_Node = nullptr;
-			B_Object[Count]->Object_Ent = nullptr;
-		}
-
-		Count++;
-	}
-
-	// Remove B_Objects
-	Count = 0;
-	int NumObjects = B_Object.size();
-
-	while (Count < NumObjects)
-	{
-		delete B_Object[Count];
-		B_Object[Count] = nullptr;
-		Count++;
-	}
-
-	B_Object.resize(0);
-
-	Object_Count = 0;
-	UniqueID_Object_Counter = 0;
+	//Object_Count = 0;
+	//UniqueID_Object_Counter = 0;
 
 }
 

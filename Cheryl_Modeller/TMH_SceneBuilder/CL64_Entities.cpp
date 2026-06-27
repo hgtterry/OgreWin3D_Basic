@@ -54,23 +54,23 @@ CL64_Entities::~CL64_Entities()
 // **************************************************************************
 int CL64_Entities::GetIndex_By_Name(char* Name)
 {
-	int Count = 0;
-	int Total = App->CL_Scene->Object_Count;
+	//int Count = 0;
+	//int Total = App->CL_Scene->Object_Count;
 
-	while (Count < Total)
-	{
-		if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
-		{
-			int Result = 1;
-			Result = strcmp(App->CL_Scene->B_Object[Count]->Object_Name, Name);
-			if (Result == 0)
-			{
-				return Count;
-			}
-		}
+	//while (Count < Total)
+	//{
+	//	/*if (App->CL_Scene->B_Object[Count]->flag_Deleted == 0)
+	//	{
+	//		int Result = 1;
+	//		Result = strcmp(App->CL_Scene->B_Object[Count]->Object_Name, Name);
+	//		if (Result == 0)
+	//		{
+	//			return Count;
+	//		}
+	//	}*/
 
-		Count++;
-	}
+	//	Count++;
+	//}
 
 	return -1;
 }
@@ -133,76 +133,76 @@ void CL64_Entities::Create_Player_Brush(const char* name)
 // *************************************************************************
 void CL64_Entities::Create_Entity_Brush(int Object_Index)
 {
-	char m_Name[MAX_PATH];
-	strcpy(m_Name, App->CL_Scene->B_Object[Object_Index]->Object_Name);
+	//char m_Name[MAX_PATH];
+	//strcpy(m_Name, App->CL_Scene->B_Object[Object_Index]->Object_Name);
 
-	bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)m_Name);
-	if (test == true)
-	{
-		// TODO Test
-		App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_Name, true);
+	//bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)m_Name);
+	//if (test == true)
+	//{
+	//	// TODO Test
+	//	App->CL_Brush_X->Set_Brush_From_Entity_ByName(m_Name, true);
 
-		Debug
-		return;
-	}
+	//	Debug
+	//	return;
+	//}
 
-	Brush* New_Brush = NULL;
+	//Brush* New_Brush = NULL;
 
-	BrushTemplate_Box* pBoxTemplate;
+	//BrushTemplate_Box* pBoxTemplate;
 
-	pBoxTemplate = App->CL_Level->Level_GetBoxTemplate();
+	//pBoxTemplate = App->CL_Level->Level_GetBoxTemplate();
 
-	/*Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(App->CL_Scene->B_Object[Object_Index]->Object_Node);
+	///*Ogre::Vector3 size = App->CL_Com_Objects->GetMeshBoundingBoxSize(App->CL_Scene->B_Object[Object_Index]->Object_Node);
 
 
-	pBoxTemplate->Solid = 0;
-	pBoxTemplate->YSize = size.y;
+	//pBoxTemplate->Solid = 0;
+	//pBoxTemplate->YSize = size.y;
 
-	pBoxTemplate->XSizeBot = size.x;
-	pBoxTemplate->XSizeTop = size.x;
-	pBoxTemplate->ZSizeBot = size.z;
-	pBoxTemplate->ZSizeTop = size.z;*/
+	//pBoxTemplate->XSizeBot = size.x;
+	//pBoxTemplate->XSizeTop = size.x;
+	//pBoxTemplate->ZSizeBot = size.z;
+	//pBoxTemplate->ZSizeTop = size.z;*/
 
-	New_Brush = App->CL_X_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
+	//New_Brush = App->CL_X_BrushTemplate->BrushTemplate_CreateBox(pBoxTemplate);
 
-	App->CL_X_Brush->Brush_Bound(New_Brush);
+	//App->CL_X_Brush->Brush_Bound(New_Brush);
 
-	App->CL_Doc->SetDefaultBrushTexInfo(New_Brush);
+	//App->CL_Doc->SetDefaultBrushTexInfo(New_Brush);
 
-	App->CL_X_Brush->Brush_Bound(New_Brush);
+	//App->CL_X_Brush->Brush_Bound(New_Brush);
 
-	if (App->CL_Scene->B_Object[Object_Index]->Usage == Enums::Obj_Usage_Particle)
-	{
-		Brush_SetGroupId(New_Brush, Enums::Brushs_ID_Particle);
-	}
-	else
-	{
-		Brush_SetGroupId(New_Brush, Enums::Brushs_ID_Evirons);
-	}
+	//if (App->CL_Scene->B_Object[Object_Index]->Usage == Enums::Obj_Usage_Particle)
+	//{
+	//	Brush_SetGroupId(New_Brush, Enums::Brushs_ID_Particle);
+	//}
+	//else
+	//{
+	//	Brush_SetGroupId(New_Brush, Enums::Brushs_ID_Evirons);
+	//}
 
-	fdocFaceScales Scales;
+	//fdocFaceScales Scales;
 
-	Scales.DrawScale = App->CL_Level->Level_GetDrawScale(App->CL_Doc->Current_Level);
-	Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(App->CL_Doc->Current_Level);
-	App->CL_X_Brush->Brush_EnumFaces(New_Brush, &Scales, fdocSetFaceScales);
+	//Scales.DrawScale = App->CL_Level->Level_GetDrawScale(App->CL_Doc->Current_Level);
+	//Scales.LightmapScale = App->CL_Level->Level_GetLightmapScale(App->CL_Doc->Current_Level);
+	//App->CL_X_Brush->Brush_EnumFaces(New_Brush, &Scales, fdocSetFaceScales);
 
-	strcpy(New_Brush->Name, App->CL_Scene->B_Object[Object_Index]->Object_Name);
-	
-	T_Vec3 Pos{ 0, 0, 0 };
-	Pos.x = App->CL_Scene->B_Object[Object_Index]->Mesh_Pos.x;
-	Pos.y = App->CL_Scene->B_Object[Object_Index]->Mesh_Pos.y;
-	Pos.z = App->CL_Scene->B_Object[Object_Index]->Mesh_Pos.z;
+	//strcpy(New_Brush->Name, App->CL_Scene->B_Object[Object_Index]->Object_Name);
+	//
+	//T_Vec3 Pos{ 0, 0, 0 };
+	//Pos.x = App->CL_Scene->B_Object[Object_Index]->Mesh_Pos.x;
+	//Pos.y = App->CL_Scene->B_Object[Object_Index]->Mesh_Pos.y;
+	//Pos.z = App->CL_Scene->B_Object[Object_Index]->Mesh_Pos.z;
 
-	App->CL_X_Brush->Brush_Move(New_Brush, &Pos);
-	
-	App->CL_Level->Level_AppendBrush(New_Brush);
-	
-	App->CL_Doc->CurBrush = New_Brush;
-	App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
-	
-	App->CL_X_Brush->Brush_SetLocked(New_Brush, true);
-	
-	App->CL_Properties_Brushes->Fill_ListBox();
+	//App->CL_X_Brush->Brush_Move(New_Brush, &Pos);
+	//
+	//App->CL_Level->Level_AppendBrush(New_Brush);
+	//
+	//App->CL_Doc->CurBrush = New_Brush;
+	//App->CL_Brush_X->Set_Brush_Faces_Name(App->CL_Doc->CurBrush);
+	//
+	//App->CL_X_Brush->Brush_SetLocked(New_Brush, true);
+	//
+	//App->CL_Properties_Brushes->Fill_ListBox();
 	
 }
 
@@ -293,12 +293,12 @@ void CL64_Entities::Rename_Brush()
 			//	//App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Player[0]->FileViewItem, name);
 			//}
 
-			if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Players)
-			{
-				int index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
-				strcpy(App->CL_Scene->B_Object[index]->Object_Name, name);
-				//App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Object[index]->FileViewItem, name);
-			}
+			//if (App->CL_Properties_Brushes->Selected_Brush->GroupId > Enums::Brushs_ID_Players)
+			//{
+			//	int index = App->CL_Entities->GetIndex_By_Name(App->CL_Properties_Brushes->Selected_Brush->Name);
+			//	strcpy(App->CL_Scene->B_Object[index]->Object_Name, name);
+			//	//App->CL_FileView->Change_Item_Name(App->CL_Scene->B_Object[index]->FileViewItem, name);
+			//}
 
 			// Brush
 			App->CL_X_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, name);
@@ -320,33 +320,33 @@ void CL64_Entities::Rename_Brush()
 // *************************************************************************
 void CL64_Entities::Rename_Object(int Index)
 {
-	Rename_Brush();
-	return;
-	Base_Object* Object = App->CL_Scene->B_Object[Index];
+	//Rename_Brush();
+	//return;
+	//Base_Object* Object = App->CL_Scene->B_Object[Index];
 
-	strcpy(App->CL_Dialogs->btext, "Change Object Name");
-	strcpy(App->CL_Dialogs->Chr_Text, Object->Object_Name);
+	//strcpy(App->CL_Dialogs->btext, "Change Object Name");
+	//strcpy(App->CL_Dialogs->Chr_Text, Object->Object_Name);
 
-	App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+	//App->CL_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
-	if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
-	{
-		return;
-	}
-	
-	// Entity
-	strcpy(Object->Object_Name, App->CL_Dialogs->Chr_Text);
+	//if (App->CL_Dialogs->flag_Dlg_Canceled == 1)
+	//{
+	//	return;
+	//}
+	//
+	//// Entity
+	//strcpy(Object->Object_Name, App->CL_Dialogs->Chr_Text);
 
-	// Brush
-	Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Object->Object_Name);
-	
-	strcpy(b->Name, App->CL_Dialogs->Chr_Text);
-	App->CL_Properties_Brushes->Fill_ListBox();
-	App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
-	Debug
-	Object->flag_Altered = 1;
+	//// Brush
+	//Brush* b = App->CL_Brush_X->Get_Brush_By_Name(Object->Object_Name);
+	//
+	//strcpy(b->Name, App->CL_Dialogs->Chr_Text);
+	//App->CL_Properties_Brushes->Fill_ListBox();
+	//App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
+	//Debug
+	//Object->flag_Altered = 1;
 
-	App->CL_Level->flag_Level_is_Modified = 1;
+	//App->CL_Level->flag_Level_is_Modified = 1;
 	//App->CL_FileView->Mark_Altered(Object->FileViewItem);
 
 	//App->CL_FileView->Change_Item_Name(Object->FileViewItem, Object->Object_Name);
