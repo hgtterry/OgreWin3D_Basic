@@ -74,6 +74,8 @@ CL64_ImGui::CL64_ImGui()
 
 	Base = nullptr;
 	Win = nullptr;
+
+	imguiOverlay = nullptr;
 }
 
 CL64_ImGui::~CL64_ImGui()
@@ -128,7 +130,8 @@ void CL64_ImGui::Init_ImGui(void)
 	
 	Base = new OgreBites::ApplicationContextBase();
 	
-	Ogre::ImGuiOverlay* imguiOverlay = Base->initialiseImGui();
+	imguiOverlay = Base->initialiseImGui();
+
 	//Ogre::RenderWindow* Win = Base->getRenderWindow();
 	
 	//Win->

@@ -77,6 +77,8 @@ public:
 	OgreBites::ApplicationContextBase* Base;
 	Ogre::RenderWindow* Win;
 
+	Ogre::ImGuiOverlay* imguiOverlay;
+
 private:
 
 	/*void Load_Font(void);
