@@ -239,6 +239,8 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 		b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 		if (b)
 		{
+			
+
 			Brush_SetHollow(b, true);
 			Brush_SetHullSize(b, (float)pTemplate->Thickness);
 			bh = App->CL_X_Brush->Brush_CreateHollowFromBrush(b);
