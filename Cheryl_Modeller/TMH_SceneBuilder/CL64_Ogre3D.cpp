@@ -145,13 +145,17 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Selected)
 
 	
 	Export_MaterialFile(mExport_PathAndFile_Material);
-	DecompileTextures_TXL(mExport_Path);
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Brush)
+	{
+		DecompileTextures_TXL(mExport_Path);
+	}
 
 
-	/*if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Assimp)
 	{
 		DecompileTextures_from_Assimp(mExport_Path);
-	}*/
+	}
 	
 
 	Export_Manual = App->CL_Ogre->mSceneMgr->createManualObject("OgreManual2");
@@ -581,8 +585,6 @@ void CL64_Ogre3D::CreateMaterialFile()
 // *************************************************************************
 void CL64_Ogre3D::Get_Data(int Index, int FaceIndex)
 {
-
-
 	x = App->CL_Mesh->Group[Index]->vertex_Data[FaceIndex].x;
 	y = App->CL_Mesh->Group[Index]->vertex_Data[FaceIndex].y;
 	z = App->CL_Mesh->Group[Index]->vertex_Data[FaceIndex].z;

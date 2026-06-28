@@ -162,7 +162,7 @@ bool CL64_Mesh_Mgr::Update_World(int selected)
 
 		if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == false)
 		{
-			App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visible
+			App->CL_Ogre3D->Convert_ToOgre3D(true); // Will Set Node Visible
 		}
 	}
 	else
@@ -484,19 +484,30 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 
 	for (i = 0; i < pList->NumFaces; i++)
 	{
-		
+		Ogre::Vector3 temp[3];
+
 		const T_Vec3* verts;
 		verts = App->CL_X_Face->Face_GetPoints(pList->Faces[i]);
 		curnum_verts = App->CL_X_Face->Face_GetNumPoints(pList->Faces[i]);
+
+		for (j = 0; j < curnum_verts; j++)
+		{
+			temp[j].x = verts[j].x;
+			temp[j].y = verts[j].y;
+			temp[j].z = verts[j].z;
+		}
+
+		Ogre::Vector3 normal = Ogre::Math::calculateBasicFaceNormal(temp[0], temp[1], temp[2]);
+
 		for (j = 0; j < curnum_verts; j++)
 		{
 			pModel->B_Brush[App->CL_Model->BrushCount]->vertex_Data[VertIndex].x = verts[j].x;
 			pModel->B_Brush[App->CL_Model->BrushCount]->vertex_Data[VertIndex].y = verts[j].y;
 			pModel->B_Brush[App->CL_Model->BrushCount]->vertex_Data[VertIndex].z = verts[j].z;
 
-			pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].x = 0.5;
-			pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].y = 0.5;
-			pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].z = 0.5;
+			pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].x = -normal.x;
+			pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].y = -normal.y;
+			pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].z = -normal.z;
 
 			VertIndex++;
 		}
