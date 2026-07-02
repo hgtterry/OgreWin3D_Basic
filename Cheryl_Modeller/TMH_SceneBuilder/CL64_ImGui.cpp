@@ -131,7 +131,7 @@ void CL64_ImGui::Init_ImGui(void)
 	Base = new OgreBites::ApplicationContextBase();
 	
 	imguiOverlay = Base->initialiseImGui();
-
+	
 	//Ogre::RenderWindow* Win = Base->getRenderWindow();
 	
 	//Win->
@@ -200,6 +200,8 @@ void CL64_ImGui::Load_Font(void)
 	//ImGui::SetCurrentContext(context_);
 
 	io.IniFilename = NULL;
+	io.DisplaySize = ImVec2(1920, 1080); // < ---- Force the ImGui display size to 1920x1080
+	//io.DisplaySize(1920.00, 1080.00);
 }
 
 // *************************************************************************

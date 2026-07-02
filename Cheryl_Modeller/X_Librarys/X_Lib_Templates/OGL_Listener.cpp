@@ -97,6 +97,9 @@ void OGL_Listener::PostRender()
 // *************************************************************************
 void OGL_Listener::Render_Loop()
 {
+	//App->CL_Ogre->vp->setOverlaysEnabled(false);
+	App->CL_X_Shapes_3D->vp2->setOverlaysEnabled(true);
+	//Ogre::ImGuiOverlay::NewFrame();
 	//ImGui::SetCurrentContext(nullptr);
 	//auto m_context = ImGui::CreateContext();
 

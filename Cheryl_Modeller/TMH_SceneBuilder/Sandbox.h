@@ -50,6 +50,8 @@ public:
 	Ogre::Camera* Ogre_MV_Camera;
 	Ogre::SceneNode* Ogre_MV_CamNode;
 
+	Ogre::Viewport* vp_ImGui;
+
 	bool Colour_Dialog_Active;
 
 	HBRUSH Actual_Colour;

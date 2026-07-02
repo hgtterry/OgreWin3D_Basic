@@ -31,7 +31,7 @@ THE SOFTWARE.
 enum Base
 {
 	Colour_None = 0,
-	Colour_Background = 1,
+	Colour_Background = 1
 };
 
 Sandbox::Sandbox(void)
@@ -61,6 +61,8 @@ Sandbox::Sandbox(void)
 	Ogre_MV_CamNode = nullptr;
 
 	Colour_Dialog_Active = false;
+
+	vp_ImGui = NULL;
 }
 
 Sandbox::~Sandbox(void)
@@ -416,8 +418,6 @@ void Sandbox::Start_Ogre_Window()
 // *************************************************************************
 LRESULT CALLBACK Sandbox::Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//auto& m_Box = App->CL_App_Templates->CL_CreateBox; // App->CL_App_Templates->CL_CreateBox
-
 	switch (message)
 	{
 
@@ -430,25 +430,6 @@ LRESULT CALLBACK Sandbox::Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_CTLCOLORSTATIC:
 	{
-		/*const int controlIds[] =
-		{
-			IDC_STTOP, IDC_STBOTTOM, IDC_STTOPX, IDC_STWALL,
-			IDC_STGENERAL, IDC_STZTOP, IDC_STBOTX, IDC_STBOTZ,
-			IDC_STYSIZE, IDC_STNAME, IDC_STCAMPOS,
-			IDC_CKWORLDCENTRE, IDC_CKCAMPOSITION
-		};
-
-		for (const auto& id : controlIds)
-		{
-			if (GetDlgItem(hDlg, id) == (HWND)lParam)
-			{
-				SetBkColor((HDC)wParam, RGB(0, 0, 0));
-				SetTextColor((HDC)wParam, RGB(0, 0, 0));
-				SetBkMode((HDC)wParam, TRANSPARENT);
-				return (UINT)App->AppBackground;
-			}
-		}*/
-
 		return FALSE;
 	}
 
@@ -524,85 +505,43 @@ LRESULT CALLBACK Sandbox::Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam,
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-		//SetFocus(App->CL_X_Shapes_3D->Render_hWnd);
+		POINT pos;
+		GetCursorPos(&pos);
+		ScreenToClient(App->CL_Sandbox->Render_hWnd, &pos);
+
+		if (App->CL_ImGui->flag_Imgui_Initialized == 1)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			io.MousePos.x = static_cast<float>(pos.x);
+			io.MousePos.y = static_cast<float>(pos.y);
+		}
+
+		SetFocus(App->CL_Sandbox->Render_hWnd);
 		break;
 	}
 
 	// Right Mouse Button
-	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	case WM_RBUTTONDOWN:
 	{
-		////if (App->flag_3D_Started == true)
-		//{
-		//	POINT cursorPosition;
-		//	GetCursorPos(&cursorPosition);
-		//	App->CL_X_Shapes_3D->CursorPosX = cursorPosition.x;
-		//	App->CL_X_Shapes_3D->CursorPosY = cursorPosition.y;
-
-		//	auto& listener = App->CL_X_Shapes_3D->RenderListener;
-		//	listener->Pl_Cent500X = cursorPosition.x;
-		//	listener->Pl_Cent500Y = cursorPosition.y;
-
-		//	SetCapture(App->CL_X_Shapes_3D->Render_hWnd);
-		//	SetCursorPos(cursorPosition.x, cursorPosition.y);
-
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_RightMouseDown = true;
-		//	App->CUR = SetCursor(NULL);
-
-		//	return 1;
-		//}
-
 		return 1;
 	}
 	case WM_RBUTTONUP:
 	{
-		////if (App->flag_3D_Started == true)
-		//{
-		//	ReleaseCapture();
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_RightMouseDown = 0;
-		//	SetCursor(App->CUR);
-		//	return 1;
-		//}
-
 		return 1;
 	}
 	// Left Mouse Button
 	case WM_LBUTTONDOWN:
 	{
-		////if (App->flag_3D_Started == true)
-		//{
-		//	POINT p;
-		//	GetCursorPos(&p);
-
-		//	App->CL_X_Shapes_3D->CursorPosX = p.x;
-		//	App->CL_X_Shapes_3D->CursorPosY = p.y;
-
-		//	auto& listener = App->CL_X_Shapes_3D->RenderListener;
-		//	listener->Pl_Cent500X = p.x;
-		//	listener->Pl_Cent500Y = p.y;
-
-		//	SetCapture(App->CL_X_Shapes_3D->Render_hWnd);
-
-		//	SetCursorPos(App->CL_X_Shapes_3D->CursorPosX, App->CL_X_Shapes_3D->CursorPosY);
-
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_LeftMouseDown = 1;
-
-		//	App->CUR = SetCursor(NULL);
-
-		//	return 1;
-		//}
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = true;
 
 		return 1;
 	}
 
 	case WM_LBUTTONUP:
 	{
-		////if (App->flag_3D_Started == true)
-		//{
-		//	ReleaseCapture();
-		//	App->CL_X_Shapes_3D->RenderListener->flag_Pl_LeftMouseDown = 0;
-		//	SetCursor(App->CUR);
-		//	return 1;
-		//}
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = false;
 
 		return 1;
 	}
@@ -623,13 +562,13 @@ void Sandbox::Set_OgreWindow()
 	options["externalWindowHandle"] =
 		Ogre::StringConverter::toString((size_t)Render_hWnd);
 
-	Ogre_MV_Window = App->CL_Ogre->mRoot->createRenderWindow("MeshViewWin22", 1024, 768, false, &options);
+	Ogre_MV_Window = App->CL_Ogre->mRoot->createRenderWindow("ImGui_Render_Win", 1024, 768, false, &options);
 
-	Ogre_MV_SceneMgr = App->CL_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD22");
+	Ogre_MV_SceneMgr = App->CL_Ogre->mRoot->createSceneManager("DefaultSceneManager", "ImGui_Render_Win");
 
-	Ogre_MV_CamNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node22");
+	Ogre_MV_CamNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node_ImGui");
 
-	Ogre_MV_Camera = Ogre_MV_SceneMgr->createCamera("CameraMV22");
+	Ogre_MV_Camera = Ogre_MV_SceneMgr->createCamera("Camera_ImGui");
 	Ogre_MV_Camera->setNearClipDistance(0.1);
 	Ogre_MV_Camera->setFarClipDistance(8000);
 
@@ -638,28 +577,21 @@ void Sandbox::Set_OgreWindow()
 	Ogre_MV_CamNode->attachObject(Ogre_MV_Camera);
 	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, 0, 20));
 
-	Ogre::Viewport* vp = Ogre_MV_Window->addViewport(Ogre_MV_Camera);
-	Ogre_MV_Camera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-	vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
+	vp_ImGui = Ogre_MV_Window->addViewport(Ogre_MV_Camera);
+
+	Ogre_MV_Camera->setAspectRatio(Ogre::Real(vp_ImGui->getActualWidth()) / Ogre::Real(vp_ImGui->getActualHeight()));
+	vp_ImGui->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
 
 	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
-	Ogre_MV_Camera->setRenderQueueGroup(100);
+	Ogre_MV_SceneMgr->addRenderQueueListener(App->CL_Ogre->mOverlaySystem);
+
+	vp_ImGui->setOverlaysEnabled(true);
+
+	//Ogre_MV_Camera->setRenderQueueGroup(100);
 
 	RenderListener = new Ogre_Win_Render_Listener();
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
-
-	Ogre::Entity* Ogre_Ent;
-	Ogre::SceneNode* Ogre_Node;
-
-	Ogre_Ent = Ogre_MV_SceneMgr->createEntity("Imported_Entity", "Sinbad.mesh", App->CL_Ogre->App_Resource_Group);
-	Ogre_Node = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode();
-	Ogre_Node->attachObject(Ogre_Ent);
-
-	Ogre_Node->setVisible(true);
-	Ogre_Node->setOrientation(Ogre::Quaternion::IDENTITY);
-	Ogre_Node->setPosition(0, 0, 0);
-	Ogre_Node->setScale(1, 1, 1);
 
 }
 
@@ -670,7 +602,7 @@ void Sandbox::Close_OgreWindow(void)
 {
 	//App->CL_MeshViewer->flag_MV_Render_Debug = 0;
 
-	App->CL_Ogre->mRoot->detachRenderTarget("MeshViewWin");
+	App->CL_Ogre->mRoot->detachRenderTarget("ImGui_Render_Win");
 	Ogre_MV_Window->destroy();
 	App->CL_Ogre->mRoot->destroySceneManager(Ogre_MV_SceneMgr);
 

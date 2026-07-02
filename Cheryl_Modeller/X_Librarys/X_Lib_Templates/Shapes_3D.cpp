@@ -25,6 +25,7 @@ Shapes_3D::Shapes_3D(void)
 	OGL_Obj = nullptr;
 	OGL_Node = nullptr;
 
+	vp2 = nullptr;
 }
 
 Shapes_3D::~Shapes_3D(void)
@@ -54,11 +55,13 @@ void Shapes_3D::Set_OgreWindow()
 	Ogre_MV_CamNode->attachObject(Ogre_MV_Camera);
 	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, 0, Start_Zoom));
 
-	Ogre::Viewport* vp = Ogre_MV_Window->addViewport(Ogre_MV_Camera);
-	Ogre_MV_Camera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-	vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
+	vp2 = Ogre_MV_Window->addViewport(Ogre_MV_Camera);
+	Ogre_MV_Camera->setAspectRatio(Ogre::Real(vp2->getActualWidth()) / Ogre::Real(vp2->getActualHeight()));
+	vp2->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
 
 	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
+
+	Ogre_MV_SceneMgr->addRenderQueueListener(App->CL_Ogre->mOverlaySystem);
 
 	RenderListener = new Shapes_Render_Listener();
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
@@ -133,6 +136,17 @@ LRESULT CALLBACK Shapes_3D::Proc_Box_Viewer_3D(HWND hDlg, UINT message, WPARAM w
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
+		POINT pos;
+		GetCursorPos(&pos);
+		ScreenToClient(App->CL_X_Shapes_3D->Render_hWnd, &pos);
+
+		if (App->CL_ImGui->flag_Imgui_Initialized == 1)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			io.MousePos.x = static_cast<float>(pos.x);
+			io.MousePos.y = static_cast<float>(pos.y);
+		}
+
 		SetFocus(App->CL_X_Shapes_3D->Render_hWnd);
 		break;
 	}
@@ -179,6 +193,9 @@ LRESULT CALLBACK Shapes_3D::Proc_Box_Viewer_3D(HWND hDlg, UINT message, WPARAM w
 	{
 		//if (App->flag_3D_Started == true)
 		{
+			ImGuiIO& io = ImGui::GetIO();
+			io.MouseDown[0] = true;
+
 			POINT p;
 			GetCursorPos(&p);
 
@@ -205,6 +222,9 @@ LRESULT CALLBACK Shapes_3D::Proc_Box_Viewer_3D(HWND hDlg, UINT message, WPARAM w
 
 	case WM_LBUTTONUP:
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = false;
+
 		//if (App->flag_3D_Started == true)
 		{
 			ReleaseCapture();

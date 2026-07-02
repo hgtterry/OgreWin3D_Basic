@@ -54,6 +54,7 @@ CLP_3D_Listener::CLP_3D_Listener()
 	flag_StopOgre = false;
 	flag_Run_Physics = false;
 	flag_Animate_Ogre = false;
+	flag_Run_Imgui = true;
 }
 
 CLP_3D_Listener::~CLP_3D_Listener()
@@ -81,8 +82,11 @@ bool CLP_3D_Listener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool CLP_3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 {
-	Ogre::ImGuiOverlay::NewFrame();
-	App->CL_ImGui->ImGui_Render_Loop();
+	if (flag_Run_Imgui == true)
+	{
+		Ogre::ImGuiOverlay::NewFrame();
+		App->CL_ImGui->ImGui_Render_Loop();
+	}
 
 
 	/*if (CameraMode == Enums::Cam_Mode_None)

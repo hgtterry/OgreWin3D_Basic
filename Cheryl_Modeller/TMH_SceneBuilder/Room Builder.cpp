@@ -239,7 +239,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- Debug
 			case ID_DEBUG_GENERAL:
 			{ 
-                App->CL_Sandbox->Test();
+               // App->CL_Sandbox->Test();
 
                // float Sc_Size = App->CL_View_Top_Left->VCam_TL->Height;
                // float zoomValue = Sc_Size / App->CL_Model->S_BoundingBox[0]->Size->z;
@@ -248,6 +248,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                //// App->CL_Views_Com->Current_View->ZoomFactor = zoomValue;
 
                // App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+                //if (App->CL_Ogre->Listener_3D->flag_Run_Imgui == true)
+                //{
+                //    App->CL_Ogre->Listener_3D->flag_Run_Imgui = false;
+              
+                //    Ogre::ImGuiOverlay::NewFrame();
+
+                //   Ogre::OverlayManager::getSingleton().destroy(App->CL_ImGui->imguiOverlay);
+                //   //ImGui::DestroyContext();
+                //}
+                //else
+                //{
+                //    App->CL_ImGui->Init_ImGui();
+                //    App->CL_Ogre->Listener_3D->flag_Run_Imgui = true;
+                //}
+
+                //ImGuiIO& io = ImGui::GetIO();
+                //io.DisplaySize = ImVec2(100, 100); // < ---- Force the ImGui display size to 1920x1080
+                //io.DisplayFramebufferScale = ImVec2(100, 100);
+
+                App->CL_Sandbox->Start_Ogre_Window();
+
 				return 1;
 			}
 

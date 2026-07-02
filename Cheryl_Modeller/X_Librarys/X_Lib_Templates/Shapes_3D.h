@@ -33,6 +33,8 @@ public:
 	OGL_Listener* OGL_RenderListener;
 	Shapes_Render_Listener* RenderListener;
 
+	Ogre::Viewport* vp2;
+
 	static LRESULT CALLBACK Proc_Box_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 };

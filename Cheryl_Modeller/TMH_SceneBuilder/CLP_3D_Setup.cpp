@@ -276,6 +276,7 @@ bool CLP_3D_Setup::Init_CreateViewports(void)
 	mWindow->getViewport(0)->setBackgroundColour(fadeColour);
 
 	App->CL_Ogre->Log_Message_To_File((LPSTR)"createViewports");
+	
 
 	return 1;
 }
