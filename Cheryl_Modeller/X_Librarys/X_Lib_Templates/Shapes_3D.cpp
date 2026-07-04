@@ -61,8 +61,6 @@ void Shapes_3D::Set_OgreWindow()
 
 	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
-	Ogre_MV_SceneMgr->addRenderQueueListener(App->CL_Ogre->mOverlaySystem);
-
 	RenderListener = new Shapes_Render_Listener();
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
 

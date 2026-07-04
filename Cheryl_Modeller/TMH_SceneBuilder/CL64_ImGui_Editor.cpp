@@ -26,6 +26,12 @@ THE SOFTWARE.
 #include "CL64_App.h"
 #include "CL64_ImGui_Editor.h"
 
+enum System_Page
+{
+	System_Page_Camera = 0,
+	System_Page_Data = 1,
+};
+
 CL64_ImGui_Editor::CL64_ImGui_Editor()
 {
 	flag_Block_GUI = false;
@@ -50,7 +56,7 @@ CL64_ImGui_Editor::CL64_ImGui_Editor()
 	flag_Loop_Enabled = false;
 	flag_Show_System_Data = false;
 
-	Selected_System_Page = 0;
+	Selected_System_Page = System_Page_Camera;
 }
 
 CL64_ImGui_Editor::~CL64_ImGui_Editor()
@@ -117,15 +123,15 @@ void CL64_ImGui_Editor::Imgui_System_Data(void)
 
 		if (ImGui::Button(" Camera ", ImVec2(100, 0)))
 		{
-			Selected_System_Page = 0;
+			Selected_System_Page = System_Page_Camera;
 		}
 
 		if (ImGui::Button(" Data ", ImVec2(100, 0)))
 		{
-			Selected_System_Page = 1;
+			Selected_System_Page = System_Page_Data;
 		}
 
-		if (Selected_System_Page == 0)
+		if (Selected_System_Page == System_Page_Camera)
 		{
 			ImGui::NextColumn();
 			ImGui::AlignTextToFramePadding();
@@ -135,7 +141,7 @@ void CL64_ImGui_Editor::Imgui_System_Data(void)
 			Camera_Data();
 		}
 
-		if (Selected_System_Page == 1)
+		if (Selected_System_Page == System_Page_Data)
 		{
 			ImGui::NextColumn();
 			ImGui::AlignTextToFramePadding();

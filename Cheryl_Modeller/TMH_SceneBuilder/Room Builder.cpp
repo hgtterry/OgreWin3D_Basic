@@ -235,8 +235,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
 
-
             // ----------------------------- Debug
+
+            case ID_APPDEBUG:
+            {
+                App->CL_Sandbox->Start_Ogre_Window();
+                return 1;
+            }
 			case ID_DEBUG_GENERAL:
 			{ 
                // App->CL_Sandbox->Test();

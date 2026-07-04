@@ -504,7 +504,7 @@ LRESULT CALLBACK Sandbox::Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam,
 		GetCursorPos(&pos);
 		ScreenToClient(App->CL_Sandbox->Render_hWnd, &pos);
 
-		if (App->CL_ImGui->flag_Imgui_Initialized == 1)
+		if (App->CL_ImGui->flag_Imgui_Initialized == true && App->CL_ImGui_Editor->flag_Show_System_Data == true)
 		{
 			ImGuiIO& io = ImGui::GetIO();
 			io.MousePos.x = static_cast<float>(pos.x);
@@ -512,7 +512,8 @@ LRESULT CALLBACK Sandbox::Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam,
 		}
 
 		SetFocus(App->CL_Sandbox->Render_hWnd);
-		break;
+
+		return 1;
 	}
 
 	// Right Mouse Button
@@ -611,7 +612,7 @@ void Sandbox::Close_OgreWindow(void)
 	RenderListener = nullptr;
 
 	App->CL_ImGui_Editor->flag_Loop_Enabled = true;
-	App->CL_ImGui_Editor->flag_Show_System_Data = true;
+	App->CL_ImGui_Editor->flag_Show_System_Data = false;
 
 	App->CL_Ogre->vp->setOverlaysEnabled(true);
 	App->CL_Ogre->Listener_3D->flag_Run_Imgui = true;

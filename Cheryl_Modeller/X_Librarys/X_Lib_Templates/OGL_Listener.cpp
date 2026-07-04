@@ -97,50 +97,6 @@ void OGL_Listener::PostRender()
 // *************************************************************************
 void OGL_Listener::Render_Loop()
 {
-	//App->CL_Ogre->vp->setOverlaysEnabled(false);
-	App->CL_X_Shapes_3D->vp2->setOverlaysEnabled(true);
-	//Ogre::ImGuiOverlay::NewFrame();
-	//ImGui::SetCurrentContext(nullptr);
-	//auto m_context = ImGui::CreateContext();
-
-	//ImGui::SetCurrentContext(m_context);
-	/*App->CL_ImGui->Init_ImGui();
-	Ogre::ImGuiOverlay::NewFrame();
-	App->CL_ImGui->ImGui_Render_Loop();*/
-
-	//App->CL_ImGui->imguiOverlay = App->CL_ImGui->Base->initialiseImGui();
-	//if (App->CL_ImGui->imguiOverlay)
-	//{
-	//	App->CL_ImGui->Load_Font();
-
-	//	App->CL_ImGui->imguiOverlay->setZOrder(300);
-	//	App->CL_ImGui->imguiOverlay->show();
-
-	//	if (App->CL_ImGui->imguiOverlay->isInitialised())
-	//	{
-	//		
-	//			Ogre::ImGuiOverlay::NewFrame();
-	//		
-
-	//		
-	//	}
-	//}
-
-	//ImGuiContext* defaultContext = ImGui::GetCurrentContext();
-	////defaultContext = "poo"
-	//ImGui::SetCurrentContext(defaultContext);
-
-	//DrawRenderingSettings
-	//HGLRC glCont = wglGetCurrentContext();
-	//ImGui::SetCurrentContext();*/
-
-	////Ogre::ImGuiOverlay* imguiOverlay = Base->initialiseImGui();
-	////ImGuiIO& ImGuiInitialize();
-	//ImGuiContext* defaultContext = ImGui::GetCurrentContext();
-	//////defaultContext = "poo"
-	//ImGui::SetCurrentContext((ImGuiContext*) glCont);
-	//OgreBites::OgreImGui::Init;
-
 	GLboolean depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
 	glDisable(GL_DEPTH_TEST);
 	GLboolean stencilTestEnabled = glIsEnabled(GL_STENCIL_TEST);
