@@ -423,6 +423,9 @@ LRESULT CALLBACK Sandbox::Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->CL_Sandbox->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_OGRE_CANVAS, hDlg, (DLGPROC)Proc_Viewer_3D);
 		App->CL_Sandbox->Set_OgreWindow();
 		return TRUE;
@@ -435,40 +438,32 @@ LRESULT CALLBACK Sandbox::Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		return (LONG)App->BlackBrush;
 	}
 
 	case WM_NOTIFY:
 	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
-	//case WM_MOUSEWHEEL:
-	//{
-	//	int zDelta = (short)HIWORD(wParam);    // wheel rotation
-
-	//	if (zDelta > 0)
-	//	{
-	//		App->CL_X_Shapes_3D->RenderListener->Wheel_Move = -1;
-	//	}
-	//	else if (zDelta < 0)
-	//	{
-	//		App->CL_X_Shapes_3D->RenderListener->Wheel_Move = 1;
-	//	}
-
-	//	return 1;
-	//}
-
 	case WM_COMMAND:
 	{
-		// -----------------------------------------------------------------
-		if (LOWORD(wParam) == IDOK)
-		{
-			App->CL_Sandbox->Close_OgreWindow();
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Sandbox->Close_OgreWindow();
@@ -578,9 +573,9 @@ void Sandbox::Set_OgreWindow()
 	vp_ImGui = Ogre_MV_Window->addViewport(Ogre_MV_Camera);
 
 	Ogre_MV_Camera->setAspectRatio(Ogre::Real(vp_ImGui->getActualWidth()) / Ogre::Real(vp_ImGui->getActualHeight()));
-	vp_ImGui->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
+	vp_ImGui->setBackgroundColour(ColourValue(0.0, 0.0, 0.0));
 
-	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
+	//Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
 	Ogre_MV_SceneMgr->addRenderQueueListener(App->CL_Ogre->mOverlaySystem);
 	vp_ImGui->setOverlaysEnabled(true);
@@ -595,7 +590,7 @@ void Sandbox::Set_OgreWindow()
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
 
 	App->CL_ImGui_Editor->flag_Loop_Enabled = true;
-	App->CL_ImGui_Editor->flag_Show_Cam_Data = true;
+	App->CL_ImGui_Editor->flag_Show_System_Data = true;
 
 }
 
@@ -616,7 +611,7 @@ void Sandbox::Close_OgreWindow(void)
 	RenderListener = nullptr;
 
 	App->CL_ImGui_Editor->flag_Loop_Enabled = true;
-	App->CL_ImGui_Editor->flag_Show_Cam_Data = true;
+	App->CL_ImGui_Editor->flag_Show_System_Data = true;
 
 	App->CL_Ogre->vp->setOverlaysEnabled(true);
 	App->CL_Ogre->Listener_3D->flag_Run_Imgui = true;

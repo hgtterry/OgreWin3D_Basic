@@ -45,219 +45,16 @@ CL64_ImGui_Editor::CL64_ImGui_Editor()
 	flag_Show_Physics_Debug = false;
 	flag_Show_Mesh = true;
 
+	// Current 
+
 	flag_Loop_Enabled = false;
-	flag_Show_Cam_Data = false;
+	flag_Show_System_Data = false;
+
+	Selected_System_Page = 0;
 }
 
 CL64_ImGui_Editor::~CL64_ImGui_Editor()
 {
-}
-
-
-// **************************************************************************
-// *		ImGui_Render_Editor_Loop:- Terry and Hazel Flanigan 2025		*
-// **************************************************************************
-void CL64_ImGui_Editor::ImGui_Render_Editor_Loop(void)
-{
-	if (flag_Block_GUI == false)
-	{
-		if (flag_Show_Visuals == true)
-		{
-			Visuals_GUI();
-		}
-	}
-}
-
-// *************************************************************************
-// *			Visuals_GUI:- Terry and Hazel Flanigan 2025				   *
-// *************************************************************************
-void CL64_ImGui_Editor::Visuals_GUI(void)
-{
-	Visuals_PosX = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualWidth() -230);
-	Visuals_PosY = ((float)App->CL_Ogre->mWindow->getViewport(0)->getActualHeight() -450);
-
-
-	ImGui::SetNextWindowPos(ImVec2(Visuals_PosX, Visuals_PosY), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(216, 140), ImGuiCond_FirstUseEver);
-
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
-	ImGuiStyle* style = &ImGui::GetStyle();
-
-	if (!ImGui::Begin("Debug_Visuals", NULL, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
-
-		//// -------------- Highlight
-		////Selected_Button(flag_Object_Highlighted);
-
-		//if (ImGui::Button("Look At", ImVec2(200, 25)))
-		//{
-		//	int index = App->CL_Properties_Scene->Current_Selected_Object;
-
-		//	Ogre::Vector3 pos = App->CL_Scene->B_Object[index]->Object_Node->getPosition();
-
-		//	App->CL_Camera->Camera_Look_At(pos);
-		//}
-
-		// -------------- Highlight
-		Selected_Button(flag_Object_Highlighted);
-
-		if (ImGui::Button("Highlight", ImVec2(200, 25)))
-		{
-			/*int index = App->CL_Properties_Scene->Current_Selected_Object;
-
-			if (App->CL_Props_Dialogs->flag_isHighlighted == true)
-			{
-				flag_Object_Highlighted = false;
-				App->CL_Gizmos->unhighlight(App->CL_Scene->B_Object[index]->Object_Ent);
-			}
-			else
-			{
-				flag_Object_Highlighted = true;
-				App->CL_Gizmos->highlight(App->CL_Scene->B_Object[index]->Object_Ent);
-			}*/
-		}
-
-		// -------------- Show Mesh
-		Selected_Button(flag_Show_Mesh);
-		
-		if (ImGui::Button("Show Mesh", ImVec2(200, 25)))
-		{
-			//int Index = App->CL_Properties_Scene->Current_Selected_Object;
-
-			//if (App->CL_Scene->Object_Count > 0)
-			//{
-			//	auto& currentObject = App->CL_Scene->B_Object[Index];
-
-			//	// -----------------------  Area
-			//	/*if (App->CL_Properties->Edit_Category == Enums::Edit_Area)
-			//	{
-			//		if (App->CL_Com_Objects->flag_Show_Mesh_Debug == 1)
-			//		{
-			//			App->CL_Scene->B_Area[Index]->Area_Node->setVisible(false);
-			//			App->CL_Com_Objects->flag_Show_Mesh_Debug = 0;
-			//		}
-			//		else
-			//		{
-			//			App->CL_Scene->B_Area[Index]->Area_Node->setVisible(true);
-			//			App->CL_Com_Objects->flag_Show_Mesh_Debug = 1;
-			//		}
-			//		return 1;
-			//	}*/
-
-			//	if (currentObject->flag_Is_Visible == true)
-			//	{
-			//		flag_Show_Mesh = false;
-			//		currentObject->flag_Is_Visible = false;
-			//		App->CL_Scene->B_Object[Index]->Object_Node->setVisible(false);
-			//		//App->CL_Com_Objects->flag_Show_Mesh_Debug = 0;
-			//	}
-			//	else
-			//	{
-			//		flag_Show_Mesh = true;
-			//		currentObject->flag_Is_Visible = true;
-			//		App->CL_Scene->B_Object[Index]->Object_Node->setVisible(true);
-			//		//App->CL_Com_Objects->flag_Show_Mesh_Debug = true;
-			//	}
-			//}
-		}
-
-		// -------------- Show Physics
-		Selected_Button(flag_Show_Physics_Debug);
-		
-		if (ImGui::Button("Show Physics", ImVec2(200, 25)))
-		{
-			//int Index = App->CL_Properties_Scene->Current_Selected_Object;
-
-			//// -----------------------  Objects
-			//if (App->CL_Scene->Object_Count > 0)
-			//{
-			//	auto& currentObject = App->CL_Scene->B_Object[Index];
-
-			//	// Check if the physics body is null
-			//	if (currentObject->Phys_Body == nullptr)
-			//	{
-			//		App->Say("No Physics Shape");
-			//		return;
-			//	}
-
-			//	int collisionFlags = currentObject->Phys_Body->getCollisionFlags();
-
-			//	// Toggle physics debug mode
-			//	if (currentObject->flag_Physics_Debug_On == 1)
-			//	{
-			//		flag_Show_Physics_Debug = false;
-			//		//App->CL_Com_Objects->flag_Show_Physics_Debug = 0;
-			//		currentObject->Phys_Body->setCollisionFlags(collisionFlags | (1 << 5)); // Disable debug
-			//		currentObject->flag_Physics_Debug_On = false;
-
-			//		// Draw debug shape
-			//		//App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 0;
-			//		//App->CL_Ogre->RenderFrame(4);
-			//		//App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = 1;
-			//	}
-			//	else
-			//	{
-			//		flag_Show_Physics_Debug = true;
-			//		currentObject->flag_Physics_Debug_On = true;
-			//		//App->CL_Com_Objects->flag_Show_Physics_Debug = 1;
-			//		currentObject->Phys_Body->setCollisionFlags(collisionFlags & (~(1 << 5))); // Enable debug
-			//	}
-			//}
-
-		}
-		
-		// -------------- Only Mesh
-		/*if (flag_Show_Mesh == true)
-		{
-			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
-		}
-		else*/
-		{
-			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
-		}
-
-		if (ImGui::Button("Only Mesh", ImVec2(200, 25)))
-		{
-			//int Index = App->CL_Properties_Scene->Current_Selected_Object;
-
-			////// -----------------------  Area
-			////if (App->CL_Properties_Scene->Edit_Category == Enums::Edit_Area)
-			////{
-			////	if (App->CL_Com_Objects->flag_Hide_All_Except == 1)
-			////	{
-			////		App->CL_Com_Objects->flag_Hide_All_Except = 0;
-			////		App->CL_Com_Objects->Hide_AllObjects_Except(Index, true);
-			////	}
-			////	else
-			////	{
-			////		App->CL_Com_Objects->flag_Hide_All_Except = 1;
-			////		App->CL_Com_Objects->Hide_AllObjects_Except(Index, false);
-			////	}
-			////	return 1;
-			////}
-
-			//if (App->CL_Com_Objects->flag_Hide_All_Except == 1)
-			//{
-			//	App->CL_Com_Objects->flag_Hide_All_Except = 0;
-			//	App->CL_Com_Objects->Hide_AllObjects_Except(Index, true);
-			//}
-			//else
-			//{
-			//	App->CL_Com_Objects->flag_Hide_All_Except = 1;
-			//	App->CL_Com_Objects->Hide_AllObjects_Except(Index, false);
-			//}
-		}
-
-		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-
-		ImGui::PopStyleColor();
-		ImGui::End();
-	}
 }
 
 // *************************************************************************
@@ -278,40 +75,94 @@ void CL64_ImGui_Editor::Selected_Button(bool IsSelected)
 }
 
 // **************************************************************************
-// *	ImGui_Render_Editor_Loop_New:- Terry and Hazel Flanigan 2025		*
+// *			ImGui_Render_Loop:- Terry and Hazel Flanigan 2026			*
 // **************************************************************************
-void CL64_ImGui_Editor::ImGui_Render_Editor_Loop_New(void)
+void CL64_ImGui_Editor::ImGui_Render_Loop(void)
 {
 	if (flag_Loop_Enabled == true)
 	{
-		if (flag_Show_Cam_Data == true)
+		if (flag_Show_System_Data == true)
 		{
-			Imgui_Cam_Data();
+			Imgui_System_Data();
 		}
 	}
 }
 
 
 // *************************************************************************
-// *			Imgui_Cam_Data:- Terry and Hazel Flanigan 2026			   *
+// *			Imgui_System_Data:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_ImGui_Editor::Imgui_Cam_Data(void)
+void CL64_ImGui_Editor::Imgui_System_Data(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
+	ImGui::SetNextWindowSize(ImVec2(550, 620));
 
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+	bool doStyle = true;
 
-	if (!ImGui::Begin("Ogre Data", &flag_Show_Cam_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
+	if (doStyle == true)
+	{
+		ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(0, 0, 0, 0));
+		ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(239, 239, 239, 255));
+	}
+
+	if (!ImGui::Begin("Ogre Data", &flag_Show_System_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		ImGui::Spacing();
-		ImGui::Text("Cam X %f", App->CL_Ogre->camNode->getPosition().x);
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(-1, 120);
 
-		ImGui::PopStyleColor();
+		if (ImGui::Button(" Camera ", ImVec2(100, 0)))
+		{
+			Selected_System_Page = 0;
+		}
+
+		if (ImGui::Button(" Data ", ImVec2(100, 0)))
+		{
+			Selected_System_Page = 1;
+		}
+
+		if (Selected_System_Page == 0)
+		{
+			ImGui::NextColumn();
+			ImGui::AlignTextToFramePadding();
+
+			ImGui::Text("Camera:");
+			
+			Camera_Data();
+		}
+
+		if (Selected_System_Page == 1)
+		{
+			ImGui::NextColumn();
+			ImGui::AlignTextToFramePadding();
+
+			ImGui::Text("Data:");
+
+			//Camera_Data();
+		}
+
+		ImGui::Columns(0);
+
+		if (doStyle == true)
+		{
+			ImGui::PopStyleColor();
+			ImGui::PopStyleColor();
+		}
+
 		ImGui::End();
 	}
+}
+
+// *************************************************************************
+// *				Camera_Data:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui_Editor::Camera_Data(void)
+{
+	ImGui::Text("Cam X %f", App->CL_Ogre->camNode->getPosition().x);
+	ImGui::Text("Cam Y %f", App->CL_Ogre->camNode->getPosition().y);
+	ImGui::Text("Cam Z %f", App->CL_Ogre->camNode->getPosition().z);
 }

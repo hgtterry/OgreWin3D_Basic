@@ -147,7 +147,6 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	
 	//App->CL_Com_Objects->Show_Entities(true);
 	
-	App->CL_ImGui_Editor->flag_Block_GUI = false;
 }
 
 // *************************************************************************

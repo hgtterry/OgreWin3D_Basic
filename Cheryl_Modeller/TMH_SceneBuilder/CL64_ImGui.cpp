@@ -132,8 +132,9 @@ void CL64_ImGui::Init_ImGui(void)
 	
 	imguiOverlay = Base->initialiseImGui();
 	
-	//Ogre::RenderWindow* Win = Base->getRenderWindow();
+	//Ogre::RenderWindow* Win = Base->getRenderWindow().;
 	
+	//Win->getViewport(0)->getTarget().
 	//Win->
 	if (imguiOverlay)
 	{
@@ -332,8 +333,6 @@ void CL64_ImGui::ImGui_Render_Loop(void)
 	{
 		Show_Views_Data_GUI();
 	}
-	
-	App->CL_ImGui_Editor->ImGui_Render_Editor_Loop();
 	
 	// Iterate through the mapping and call the functions where the flag is true
 	for (const auto& guiFunction : guiFunctions)

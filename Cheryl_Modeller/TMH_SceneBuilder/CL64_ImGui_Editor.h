@@ -29,12 +29,9 @@ public:
 	CL64_ImGui_Editor();
 	~CL64_ImGui_Editor();
 
-	void ImGui_Render_Editor_Loop(void);
-	void ImGui_Render_Editor_Loop_New(void);
+	void ImGui_Render_Loop(void);
 
-	void Visuals_GUI(void);
-
-	void Imgui_Cam_Data(void);
+	void Imgui_System_Data(void);
 
 	int Visuals_PosX;
 	int Visuals_PosY;
@@ -53,10 +50,14 @@ public:
 	bool flag_Show_Mesh;
 
 	bool flag_Loop_Enabled;
-	bool flag_Show_Cam_Data;
+	bool flag_Show_System_Data;
+
+	int Selected_System_Page;
 
 private:
 
 	void Selected_Button(bool IsSelected);
+
+	void Camera_Data(void);
 };
 
