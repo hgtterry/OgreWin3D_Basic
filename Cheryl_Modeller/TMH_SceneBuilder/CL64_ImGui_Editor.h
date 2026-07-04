@@ -30,8 +30,11 @@ public:
 	~CL64_ImGui_Editor();
 
 	void ImGui_Render_Editor_Loop(void);
+	void ImGui_Render_Editor_Loop_New(void);
 
 	void Visuals_GUI(void);
+
+	void Imgui_Cam_Data(void);
 
 	int Visuals_PosX;
 	int Visuals_PosY;
@@ -48,6 +51,9 @@ public:
 	bool flag_Object_Highlighted;
 	bool flag_Show_Physics_Debug;
 	bool flag_Show_Mesh;
+
+	bool flag_Loop_Enabled;
+	bool flag_Show_Cam_Data;
 
 private:
 

@@ -572,8 +572,6 @@ void Sandbox::Set_OgreWindow()
 	Ogre_MV_Camera->setNearClipDistance(0.1);
 	Ogre_MV_Camera->setFarClipDistance(8000);
 
-	
-
 	Ogre_MV_CamNode->attachObject(Ogre_MV_Camera);
 	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, 0, 20));
 
@@ -585,13 +583,19 @@ void Sandbox::Set_OgreWindow()
 	Ogre_MV_SceneMgr->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
 	Ogre_MV_SceneMgr->addRenderQueueListener(App->CL_Ogre->mOverlaySystem);
-
 	vp_ImGui->setOverlaysEnabled(true);
+	
+
+	App->CL_Ogre->Listener_3D->flag_Run_Imgui = false;
+	App->CL_Ogre->vp->setOverlaysEnabled(false);
 
 	//Ogre_MV_Camera->setRenderQueueGroup(100);
 
 	RenderListener = new Ogre_Win_Render_Listener();
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
+
+	App->CL_ImGui_Editor->flag_Loop_Enabled = true;
+	App->CL_ImGui_Editor->flag_Show_Cam_Data = true;
 
 }
 
@@ -610,6 +614,12 @@ void Sandbox::Close_OgreWindow(void)
 
 	delete RenderListener;
 	RenderListener = nullptr;
+
+	App->CL_ImGui_Editor->flag_Loop_Enabled = true;
+	App->CL_ImGui_Editor->flag_Show_Cam_Data = true;
+
+	App->CL_Ogre->vp->setOverlaysEnabled(true);
+	App->CL_Ogre->Listener_3D->flag_Run_Imgui = true;
 }
 
 // *************************************************************************

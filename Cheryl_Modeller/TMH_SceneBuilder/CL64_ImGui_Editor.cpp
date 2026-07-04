@@ -44,6 +44,9 @@ CL64_ImGui_Editor::CL64_ImGui_Editor()
 	flag_Object_Highlighted = false;
 	flag_Show_Physics_Debug = false;
 	flag_Show_Mesh = true;
+
+	flag_Loop_Enabled = false;
+	flag_Show_Cam_Data = false;
 }
 
 CL64_ImGui_Editor::~CL64_ImGui_Editor()
@@ -271,5 +274,44 @@ void CL64_ImGui_Editor::Selected_Button(bool IsSelected)
 	else
 	{
 		style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 0.5f, 1.00f);
+	}
+}
+
+// **************************************************************************
+// *	ImGui_Render_Editor_Loop_New:- Terry and Hazel Flanigan 2025		*
+// **************************************************************************
+void CL64_ImGui_Editor::ImGui_Render_Editor_Loop_New(void)
+{
+	if (flag_Loop_Enabled == true)
+	{
+		if (flag_Show_Cam_Data == true)
+		{
+			Imgui_Cam_Data();
+		}
+	}
+}
+
+
+// *************************************************************************
+// *			Imgui_Cam_Data:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui_Editor::Imgui_Cam_Data(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(0, 0));
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Ogre Data", &flag_Show_Cam_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Spacing();
+		ImGui::Text("Cam X %f", App->CL_Ogre->camNode->getPosition().x);
+
+		ImGui::PopStyleColor();
+		ImGui::End();
 	}
 }

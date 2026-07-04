@@ -26,7 +26,9 @@ bool Ogre_Win_Render_Listener::frameStarted(const Ogre::FrameEvent& evt)
 // *************************************************************************
 bool Ogre_Win_Render_Listener::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
-	App->Flash_Window();
+	Ogre::ImGuiOverlay::NewFrame();
+	App->CL_ImGui_Editor->ImGui_Render_Editor_Loop_New();
+
 	return true;
 }
 
