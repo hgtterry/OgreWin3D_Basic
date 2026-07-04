@@ -59,5 +59,9 @@ private:
 	void Selected_Button(bool IsSelected);
 
 	void Camera_Data(void);
+	void Editor_Data(void);
+	void Model_Data(void);
+	void Grids_Data(void);
+
 };
 

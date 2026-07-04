@@ -30,10 +30,14 @@ enum System_Page
 {
 	System_Page_Camera = 0,
 	System_Page_Data = 1,
+	System_Page_Model = 2,
+	System_Page_Grids = 3
 };
 
 CL64_ImGui_Editor::CL64_ImGui_Editor()
 {
+	Selected_System_Page = System_Page_Grids;
+
 	flag_Block_GUI = false;
 
 	Visuals_PosX = 500;
@@ -55,8 +59,6 @@ CL64_ImGui_Editor::CL64_ImGui_Editor()
 
 	flag_Loop_Enabled = false;
 	flag_Show_System_Data = false;
-
-	Selected_System_Page = System_Page_Camera;
 }
 
 CL64_ImGui_Editor::~CL64_ImGui_Editor()
@@ -121,16 +123,28 @@ void CL64_ImGui_Editor::Imgui_System_Data(void)
 		ImGui::Columns(2);
 		ImGui::SetColumnWidth(-1, 120);
 
+		// Just Bottons
 		if (ImGui::Button(" Camera ", ImVec2(100, 0)))
 		{
 			Selected_System_Page = System_Page_Camera;
 		}
 
-		if (ImGui::Button(" Data ", ImVec2(100, 0)))
+		if (ImGui::Button(" Editor ", ImVec2(100, 0)))
 		{
 			Selected_System_Page = System_Page_Data;
 		}
 
+		if (ImGui::Button(" Model ", ImVec2(100, 0)))
+		{
+			Selected_System_Page = System_Page_Model;
+		}
+
+		if (ImGui::Button(" Grids ", ImVec2(100, 0)))
+		{
+			Selected_System_Page = System_Page_Grids;
+		}
+
+		// Functions
 		if (Selected_System_Page == System_Page_Camera)
 		{
 			ImGui::NextColumn();
@@ -146,9 +160,29 @@ void CL64_ImGui_Editor::Imgui_System_Data(void)
 			ImGui::NextColumn();
 			ImGui::AlignTextToFramePadding();
 
-			ImGui::Text("Data:");
+			ImGui::Text("Editor:");
 
-			//Camera_Data();
+			Editor_Data();
+		}
+
+		if (Selected_System_Page == System_Page_Model)
+		{
+			ImGui::NextColumn();
+			ImGui::AlignTextToFramePadding();
+
+			ImGui::Text("Model:");
+
+			Model_Data();
+		}
+
+		if (Selected_System_Page == System_Page_Grids)
+		{
+			ImGui::NextColumn();
+			ImGui::AlignTextToFramePadding();
+
+			ImGui::Text("Grids:");
+
+			Grids_Data();
 		}
 
 		ImGui::Columns(0);
@@ -168,7 +202,184 @@ void CL64_ImGui_Editor::Imgui_System_Data(void)
 // *************************************************************************
 void CL64_ImGui_Editor::Camera_Data(void)
 {
+	char Buff[MAX_PATH];
+
+	switch (App->CL_Ogre->Listener_3D->CameraMode) {
+	case Enums::Cam_Mode_None:
+		strcpy(Buff, "No Camera");
+		break;
+	case Enums::Cam_Mode_First:
+		strcpy(Buff, "First Person View Mode");
+		break;
+	case Enums::Cam_Mode_Free:
+		strcpy(Buff, "Free Mode");
+		break;
+	case Enums::Cam_Mode_Third:
+		strcpy(Buff, "Third Person View Mode");
+		break;
+	case Enums::Cam_Mode_Model:
+		strcpy(Buff, "   -- Model Mode --");
+		break;
+	default:
+		strcpy(Buff, "Unknown Camera Mode");
+		break;
+	}
+
+	ImGui::Text("Camera Mode %s", Buff);
+	ImGui::Spacing();
+
 	ImGui::Text("Cam X %f", App->CL_Ogre->camNode->getPosition().x);
 	ImGui::Text("Cam Y %f", App->CL_Ogre->camNode->getPosition().y);
 	ImGui::Text("Cam Z %f", App->CL_Ogre->camNode->getPosition().z);
+}
+
+// *************************************************************************
+// *				Editor_Data:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui_Editor::Editor_Data(void)
+{
+	char Buff[MAX_PATH];
+
+	switch (App->CL_Model->Editor_Setup_Mode) 
+	{
+	case Enums::Editor_Setup_Mode_None:
+		strcpy(Buff, "  -- Editor Not Set -- ");
+		break;
+	case Enums::Editor_Setup_Mode_Import:
+		strcpy(Buff, "  -- Imported Model Node -- ");
+		break;
+	case Enums::Editor_Setup_Mode_Create_Model:
+		strcpy(Buff, "  -- Create Model Mode -- ");
+		break;
+	default:
+		strcpy(Buff, "Unknown Model Mode");
+		break;
+	}
+
+	ImGui::Text("Editor Set Up %s", Buff);
+
+
+}
+
+// *************************************************************************
+// *				Model_Data:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui_Editor::Model_Data(void)
+{
+	char Buff_1[MAX_PATH];
+	char Buff_2[MAX_PATH];
+	char Buff_3[MAX_PATH];
+
+	if (App->CL_Model->Imported_Ogre_Ent)
+	{
+		strcpy(Buff_1, "  -- Loaded -- ");
+	}
+	else
+	{
+		strcpy(Buff_1, "  -- Nothing --");
+	}
+
+	if (App->CL_Mesh_Mgr->World_Ent)
+	{
+		strcpy(Buff_2, "  -- Loaded -- ");
+	}
+	else
+	{
+		strcpy(Buff_2, "  -- Nothing --");
+	}
+
+	switch (App->CL_Model->Editor_Setup_Mode)
+	{
+	case Enums::Editor_Setup_Mode_None:
+		strcpy(Buff_3, "  -- Editor Not Set -- ");
+		break;
+	case Enums::Editor_Setup_Mode_Import:
+		strcpy(Buff_3, "  -- Imported Model Node -- ");
+		break;
+	case Enums::Editor_Setup_Mode_Create_Model:
+		strcpy(Buff_3, "  -- Create Model Mode -- ");
+		break;
+	default:
+		strcpy(Buff_3, "Unknown Model Mode");
+		break;
+	}
+
+
+	ImGui::Text("Imported_Ogre_Ent %s", Buff_1);
+	ImGui::Text("World Entity %s", Buff_2);
+
+	ImGui::Text(" ");
+	ImGui::Text("Model Name %s", App->CL_Model->Model_Just_Name);
+	ImGui::Text("Editor Mode %s", Buff_3);
+
+	ImGui::Text(" ");
+	ImGui::Text("Counts ----------------------------------- ");
+	ImGui::Text("Group Count %i", App->CL_Model->GroupCount);
+	ImGui::Text("Texture Count %i", App->CL_Model->TextureCount);
+	ImGui::Text("Motions %i", App->CL_Model->MotionCount);
+	ImGui::Text("Vertice Count %i", App->CL_Model->VerticeCount);
+	ImGui::Text("Face Count %i", App->CL_Model->FaceCount);
+	ImGui::Text("Bone Count %i", App->CL_Model->BoneCount);
+
+}
+
+// *************************************************************************
+// *				Editor_Data:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui_Editor::Grids_Data(void)
+{
+
+	char Buff[MAX_PATH];
+
+	switch (App->CL_Views_Com->Selected_Window)
+	{
+	case Enums::Selected_Map_View_None:
+		strcpy(Buff, "  -- None -- ");
+		break;
+	case Enums::Selected_Map_View_3D:
+		strcpy(Buff, "  -- 3D View -- ");
+		break;
+	case Enums::Selected_Map_View_TL:
+		strcpy(Buff, "  -- Top Left Grid -- ");
+		break;
+
+	case Enums::Selected_Map_View_TR:
+		strcpy(Buff, "  -- Top Right Grid -- ");
+		break;
+
+	case Enums::Selected_Map_View_BL:
+		strcpy(Buff, "  -- Bottom Left Window -- ");
+		break;
+
+	default:
+		strcpy(Buff, "Unknown Model Mode");
+		break;
+	}
+
+	
+	ImGui::Text("Selected Window %s", Buff);
+	ImGui::Text(" ");
+
+	ImGui::Text("Name %s", App->CL_View_Top_Left->VCam_TL->Name);
+	ImGui::Text("Zoom Speed %f", App->CL_View_Top_Left->m_Zoom_Amount);
+	ImGui::Text("Zoom Amount %f", App->CL_View_Top_Left->VCam_TL->ZoomFactor);
+	ImGui::Text("Height %f", (float)App->CL_View_Top_Left->VCam_TL->Height);
+	ImGui::Text("Width %f", (float)App->CL_View_Top_Left->VCam_TL->Width);
+	ImGui::Text(" ");
+
+	ImGui::Text("Name %s", App->CL_View_Top_Right->VCam_TR->Name);
+	ImGui::Text("Zoom Speed %f", App->CL_View_Top_Right->m_Zoom_Amount);
+	ImGui::Text("Zoom Amount %f", App->CL_View_Top_Right->VCam_TR->ZoomFactor);
+	ImGui::Text("Height %f", (float)App->CL_View_Top_Right->VCam_TR->Height);
+	ImGui::Text("Width %f", (float)App->CL_View_Top_Right->VCam_TR->Width);
+	ImGui::Text(" ");
+
+	ImGui::Text("Name %s", App->CL_View_Bottom_Left->VCam_BL->Name);
+	ImGui::Text("Zoom Speed %f", App->CL_View_Bottom_Left->m_Zoom_Amount);
+	ImGui::Text("Zoom Amount %f", App->CL_View_Bottom_Left->VCam_BL->ZoomFactor);
+	ImGui::Text("Height %f", (float)App->CL_View_Bottom_Left->VCam_BL->Height);
+	ImGui::Text("Width %f", (float)App->CL_View_Bottom_Left->VCam_BL->Width);
+	ImGui::Text(" ");
+
+
 }
