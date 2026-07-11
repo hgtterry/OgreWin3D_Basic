@@ -82,6 +82,7 @@ typedef struct FaceTag
 	signed int		Cut_Brush_Index;		// If a Cut Brush created the face use Cut brush index
 	TexInfo			Tex;
 	T_Vec3* Points;
+	bool Inwards_Faces;
 
 } Face;
 

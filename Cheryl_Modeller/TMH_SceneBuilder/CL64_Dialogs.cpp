@@ -1044,6 +1044,17 @@ bool CL64_Dialogs::Show_Face_Data(int Index, const Face* f, HWND hDlg)
 	sprintf(buf, "%s %i", "Face Index", Index + 1);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+	if (f->Inwards_Faces == false)
+	{
+		sprintf(buf, "Face Direction = Outwards Face");
+	}
+	else
+	{
+		sprintf(buf, "Face Direction = Inwards Face");
+	}
+
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
 	sprintf(buf, "%s %i", "Main_Brush_Face", f->Real_Brush_Face_Index);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
