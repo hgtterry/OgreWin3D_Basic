@@ -375,6 +375,7 @@ void CX_Face::Face_CopyFaceInfo(const Face* src, Face* dst)
 	dst->LightXScale = src->LightXScale;
 	dst->LightYScale = src->LightYScale;
 	dst->Real_Brush_Face_Index = src->Real_Brush_Face_Index;
+	dst->Inwards_Faces = src->Inwards_Faces;
 
 	strcpy(dst->Brush_Name, src->Brush_Name);
 
@@ -1126,4 +1127,12 @@ void CX_Face::Face_SetTextureLock(Face* f, const signed int bState)
 bool CX_Face::Face_IsTextureLocked(const Face* f)
 {
 	return (f->Flags & FACE_TEXTURELOCKED) ? true : false;
+}
+
+// *************************************************************************
+// *						Face_Set_Direction				   			   *
+// *************************************************************************
+void CX_Face::Face_Set_Direction(Face* f,bool Direction)
+{
+	f->Inwards_Faces = Direction;
 }

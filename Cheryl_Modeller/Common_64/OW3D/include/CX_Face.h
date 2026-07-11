@@ -104,6 +104,8 @@ public:
 	void Face_SetTextureLock(Face* f, const signed int bState);
 	bool Face_IsTextureLocked(const Face* f);
 
+	void Face_Set_Direction(Face* f, bool Direction);
+
 	int Selected_Face_Index;
 };
 

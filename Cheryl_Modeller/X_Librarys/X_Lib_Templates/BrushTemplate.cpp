@@ -128,7 +128,7 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 	Brush* b;
 
 	fl = App->CL_X_FaceList->FaceList_Create(6);
-
+	
 	// Vertices 0 to 3 are the 4 corners of the top face
 	App->CL_X_Maths->Vector3_Set(&Verts[0], (float)-(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeTop / 2));
 	App->CL_X_Maths->Vector3_Set(&Verts[1], (float)-(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)(pTemplate->ZSizeTop / 2));
@@ -239,8 +239,6 @@ Brush* BrushTemplate::BrushTemplate_CreateBox(const BrushTemplate_Box* pTemplate
 		b = App->CL_X_Brush->Brush_Create(BRUSH_LEAF, fl, 0);
 		if (b)
 		{
-			
-
 			Brush_SetHollow(b, true);
 			Brush_SetHullSize(b, (float)pTemplate->Thickness);
 			bh = App->CL_X_Brush->Brush_CreateHollowFromBrush(b);

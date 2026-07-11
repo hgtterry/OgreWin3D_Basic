@@ -60,5 +60,7 @@ public:
 	void FaceList_Rotate(FaceList* pList, const Matrix3d* pXfm, const T_Vec3* pCenter);
 	void Face_Rotate(Face* f, const Matrix3d* pXfmRotate, const T_Vec3* pCenter);
 
+	void FaceList_Set_Face_Direction(const FaceList* fl, bool Direction);
+
 };
 

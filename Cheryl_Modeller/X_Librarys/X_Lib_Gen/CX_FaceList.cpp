@@ -43,6 +43,9 @@ char* CX_FaceList::GetVersion()
 	return (LPSTR)" CX_FaceList [ 06-09-25 ] Build 1 ";
 }
 
+// *************************************************************************
+// *		FaceList_SetBrushNames:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
 void CX_FaceList::FaceList_SetBrushNames(const FaceList* fl, const char* Name)
 {
 	int			i;
@@ -473,4 +476,15 @@ void CX_FaceList::Face_Rotate(Face* f, const Matrix3d* pXfmRotate, const T_Vec3*
 	App->CL_X_Maths->Vector3_Add(pPoint, pCenter, pPoint);
 
 	f->Tex.DirtyFlag = true;
+}
+
+// *************************************************************************
+// *	FaceList_Set_Face_Direction:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CX_FaceList::FaceList_Set_Face_Direction(const FaceList* fl, bool Direction)
+{
+	for (int i = 0; i < fl->NumFaces; i++)
+	{
+		fl->Faces[i]->Inwards_Faces = Direction;
+	}
 }

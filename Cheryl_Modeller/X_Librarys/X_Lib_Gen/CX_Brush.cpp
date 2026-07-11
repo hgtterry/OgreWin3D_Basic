@@ -332,6 +332,7 @@ Brush* CX_Brush::Brush_CreateHollowFromBrush(const Brush* b)
 	for (i = 0; i < App->CL_X_FaceList->FaceList_GetNumFaces(b->Faces); i++)
 	{
 		f = App->CL_X_FaceList->FaceList_GetFace(b->Faces, i);
+	
 		p = App->CL_X_Face->Face_GetPlane(f);
 
 		if (App->CL_X_Face->Face_IsFixedHull(f))
@@ -351,6 +352,7 @@ Brush* CX_Brush::Brush_CreateHollowFromBrush(const Brush* b)
 		sf = App->CL_X_Face->Face_CreateFromPlane(&ExpandPlane, BOGUS_RANGE, 0);
 		App->CL_X_Face->Face_CopyFaceInfo(f, sf);
 
+		sf->Inwards_Faces = true;
 		sf->Real_Brush_Face_Index = i + 7;
 
 		App->CL_X_FaceList->FaceList_AddFace(fl, sf);
