@@ -325,9 +325,6 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
         if (CL_Brush->Get_Brush_Count() > 0)
         {
             Set_Tool_GeneralSelect();
-
-            App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(false, false);
-            App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
             //App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
             App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
@@ -340,8 +337,6 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
     {
         Set_Tool_GeneralSelect();
 
-        App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(true, false);
-        App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(true);
        // App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
         App->CL_Top_Tabs->Redraw_TopTabs_Dlg();

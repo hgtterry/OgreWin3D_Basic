@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-TMH_SceneBuilder
+Cheryl 3D Modeller
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,9 +34,6 @@ public:
 	void Start_Top_Tabs();
 	void Set_View_Buttons(int Selected_View);
 	void Redraw_TopTabs_Dlg();
-
-	void Enable_TopBar_Brush_Buttons(bool Enable, bool Active);
-	void Enable_TopBar_Face_Buttons(bool Enable);
 
 	void Deselect_Faces_Dlg_Buttons();
 	void Reset_Brush_Buttons();

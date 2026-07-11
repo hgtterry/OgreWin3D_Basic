@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-TMH_SceneBuilder
+Cheryl 3D Modeller
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -61,9 +61,6 @@ CL64_Top_Tabs::~CL64_Top_Tabs(void)
 // *************************************************************************
 void CL64_Top_Tabs::Reset_Class()
 {
-	Enable_TopBar_Brush_Buttons(false, false);
-	Enable_TopBar_Face_Buttons(false);
-
 	App->CL_Top_Tabs->flag_Full_View_3D = 0;
 	App->CL_Top_Tabs->flag_View_Top_Left = 0;
 	App->CL_Top_Tabs->flag_View_Top_Right = 0;
@@ -310,11 +307,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BT_HD_SCENEEDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_HD_PREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_BT_ALLFACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_NEXTFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_PREVFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	
-
 		SendDlgItemMessage(hDlg, IDC_ST_MOUSESPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_TT_OPTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -486,57 +478,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 		
-		if (some_item->idFrom == IDC_BT_ALLFACES)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_ALLFACES));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_All_Faces);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_NEXTFACE)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_NEXTFACE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Next_Face);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_PREVFACE)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PREVFACE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Prev_Face);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
 		if (some_item->idFrom == IDC_BT_TT_OPTIONS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -546,16 +487,14 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 
-		
-
-		if (some_item->idFrom == IDC_BT_HELP)
+		/*if (some_item->idFrom == IDC_BT_HELP)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PREVFACE));
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_HELP));
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}
+		}*/
 		
 
 		return CDRF_DODEFAULT;
@@ -819,61 +758,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 		
-		if (LOWORD(wParam) == IDC_BT_ALLFACES)
-		{
-			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-			App->CL_Top_Tabs->flag_All_Faces = 1;
-
-			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-
-			App->CL_Doc->SelectAllFacesInBrushes();
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-			App->CL_Properties_Textures->Enable_FaceProps_Button(true);
-			App->CL_Properties_Tabs->Select_Textures_Tab();
-		
-			return TRUE;
-		}
-
-		// ----- Next Face
-		if (LOWORD(wParam) == IDC_BT_NEXTFACE)
-		{
-			App->CL_X_Face->Selected_Face_Index++;
-
-			if (App->CL_X_Face->Selected_Face_Index == App->CL_Brush_X->Face_Count)
-			{
-				App->CL_X_Face->Selected_Face_Index = 0;
-			}
-
-			App->CL_Top_Tabs->Select_Face();
-
-			if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
-			{
-				App->CL_X_Face_Editor->Change_Selection();
-			}
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_PREVFACE)
-		{
-			App->CL_X_Face->Selected_Face_Index--;
-
-			if (App->CL_X_Face->Selected_Face_Index < 0)
-			{
-				App->CL_X_Face->Selected_Face_Index = App->CL_Brush_X->Face_Count - 1;
-			}
-
-			App->CL_Top_Tabs->Select_Face();
-
-			if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
-			{
-				App->CL_X_Face_Editor->Change_Selection();
-			}
-
-			return TRUE;
-		}
-		
 		if (LOWORD(wParam) == IDC_BT_TT_OPTIONS)
 		{
 			App->CL_Libs->CL_Preference->Start_Quick_Options_Dlg();
@@ -1089,8 +973,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs_Faces(HWND hDlg, UINT message, WPA
 			}
 			else
 			{
-				//App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Select);
-				App->Custom_Button_Normal(item);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_All_Faces);
 			}
 
 			return CDRF_DODEFAULT;
@@ -1348,40 +1231,6 @@ void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
 //	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
 //	App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_SCALEBRUSH;
 //}
-
-// *************************************************************************
-// *		Enable_TopBar_Brush_Buttons:- Terry Mo and Hazel 2025   	   *
-// *************************************************************************
-void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
-{
-	/*EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_MOVE), Enable);
-	flag_Brush_Move = Active;
-
-	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Evirons)
-	{
-		EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SCALE), false);
-		flag_Brush_Scale = false;
-	}
-	else
-	{
-		EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SCALE), Enable);
-		flag_Brush_Scale = Active;
-	}
-
-
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_ROTATE), Enable);
-	flag_Brush_Scale = Active;*/
-}
-
-// *************************************************************************
-// *		Enable_TopBar_Face_Buttons:- Terry Mo and Hazel 2025		   *
-// *************************************************************************
-void CL64_Top_Tabs::Enable_TopBar_Face_Buttons(bool Enable)
-{
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_ALLFACES), Enable);
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_NEXTFACE), Enable);
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_PREVFACE), Enable);
-}
 
 // *************************************************************************
 // *	  	Reset_Brush_Buttons:- Terry Mo and Hazel 2025				   *

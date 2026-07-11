@@ -735,6 +735,12 @@ void CL64_Mesh::Show_Mesh_Points()
 // *************************************************************************
 void CL64_Mesh::Show_Mesh_BoundBox()
 {
+
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Brush)
+	{
+		return;
+	}
+
 	if (App->CL_Model->flag_Model_Loaded == true)
 	{
 		HWND tempButton = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_TBBOUNDBOX);
