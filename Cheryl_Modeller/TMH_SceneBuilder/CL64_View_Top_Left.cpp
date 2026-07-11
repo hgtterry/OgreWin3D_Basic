@@ -566,11 +566,11 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 			}
 		}
 
-		//// Draw selected faces
-		//BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
-		//SelectObject(m_MemoryhDC, Views_Com->PenSelectedFaces);
-		//App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
-
+		// Draw selected faces
+		BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
+		SelectObject(m_MemoryhDC_TL, Views_Com->PenSelectedFaces);
+		App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &m_brushDrawData_TL, BrushDrawSelFacesOrtho);
+		
 
 		// Draw camera if tracking
 		if (App->CL_Doc->flag_Track_Camera == true)

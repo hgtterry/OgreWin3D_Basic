@@ -65,10 +65,12 @@ public:
 
 	HWND TopTabs_Dlg_hWnd;
 	HWND TopTabs_Brushes_Dlg_hWnd;
+	HWND TopTabs_Faces_Dlg_hWnd;
 
 private:
 	static LRESULT CALLBACK Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Top_Tabs_Brushes(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Top_Tabs_Faces(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Init_Bmps_Globals(void);
 

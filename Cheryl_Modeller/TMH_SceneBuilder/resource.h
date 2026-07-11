@@ -116,6 +116,7 @@
 #define IDD_MAP_RENDER_WIN_TR           225
 #define IDD_MESSAGE1                    226
 #define IDD_TOP_TABS_BRUSHES            227
+#define IDD_TOP_TABS_FACES              228
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -584,6 +585,9 @@
 #define IDC_CB_MOTIONS_JOINTS           1404
 #define IDC_ST_MOT_JOINTS               1405
 #define IDC_BT_TT_BRUSH_SELECT          1406
+#define IDC_BT_TT_FACES_ALL             1407
+#define IDC_BT_TT_FACE_NEXT             1408
+#define IDC_BT_TT_FACE_PREV             1409
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -729,7 +733,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        228
 #define _APS_NEXT_COMMAND_VALUE         32906
-#define _APS_NEXT_CONTROL_VALUE         1407
+#define _APS_NEXT_CONTROL_VALUE         1410
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

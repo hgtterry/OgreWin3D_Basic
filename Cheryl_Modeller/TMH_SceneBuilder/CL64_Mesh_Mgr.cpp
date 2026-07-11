@@ -505,9 +505,18 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 			pModel->B_Brush[App->CL_Model->BrushCount]->vertex_Data[VertIndex].y = verts[j].y;
 			pModel->B_Brush[App->CL_Model->BrushCount]->vertex_Data[VertIndex].z = verts[j].z;
 
-			pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].x = -normal.x;
-			pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].y = -normal.y;
-			pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].z = -normal.z;
+			/*if (pList->Faces[i]->Inwards_Faces == false)
+			{*/
+				pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].x = -normal.x;
+				pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].y = -normal.y;
+				pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].z = -normal.z;
+			//}
+			//else
+			//{
+			//	pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].x = -0.5;// normal.x;
+			//	pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].y = -0.5;// normal.y;
+			//	pModel->B_Brush[App->CL_Model->BrushCount]->Normal_Data[VertIndex].z = -0.5;// normal.z;
+			//}
 
 			VertIndex++;
 		}

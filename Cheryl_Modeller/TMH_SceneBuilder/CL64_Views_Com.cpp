@@ -1695,7 +1695,7 @@ static POINT plist[64];
 // *************************************************************************
 void CL64_Views_Com::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC)
 {
-	/*int	i, j;
+	int	i, j;
 
 	if (!b)
 		return;
@@ -1713,8 +1713,8 @@ void CL64_Views_Com::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HD
 			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
 		}
 		plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[0]);
-		Polyline(MemoryhDC, plist, j + 1);
-	}*/
+		Polyline(App->CL_View_Top_Left->m_MemoryhDC_TL, plist, j + 1);
+	}
 }
 
 // *************************************************************************
