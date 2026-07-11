@@ -387,6 +387,14 @@ void CL64_Interface::Show_TopTabs_Brushes_Panel(bool show)
 }
 
 // *************************************************************************
+// *	Show_TopTabs_Faces_Panel:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Show_TopTabs_Faces_Panel(bool show)
+{
+	ShowWindow(App->CL_Top_Tabs->TopTabs_Faces_Dlg_hWnd, show);
+}
+
+// *************************************************************************
 // *	Enable_TopTabs_Brushes_Buttons:- Terry and Hazel Flanigan 2026	   *
 // *************************************************************************
 void CL64_Interface::Enable_TopTabs_Brushes_Buttons(bool option)
@@ -401,6 +409,29 @@ void CL64_Interface::Enable_TopTabs_Brushes_Buttons(bool option)
 		IDC_BT_TT_BRUSH_SCALE,
 		IDC_BT_TT_BRUSH_ROTATE,
 		IDC_BT_TT_BRUSH_SHEAR
+	};
+
+	// Iterate through the button IDs and set their enabled state
+	for (int id : buttonIDs)
+	{
+		EnableWindow(GetDlgItem(Win_hWnd, id), option);
+	}
+}
+
+// *************************************************************************
+// *	Enable_TopTabs_Faces_Buttons:- Terry and Hazel Flanigan 2026	   *
+// *************************************************************************
+void CL64_Interface::Enable_TopTabs_Faces_Buttons(bool option)
+{
+	auto& Win_hWnd = App->CL_Top_Tabs->TopTabs_Faces_Dlg_hWnd;
+
+	// Array of button IDs to enable or disable
+	const int buttonIDs[] =
+	{
+		IDC_BT_TT_FACES_ALL,
+		IDC_BT_TT_FACE_NEXT,
+		IDC_BT_TT_FACE_PREV,
+		IDC_TT_CB_FACES
 	};
 
 	// Iterate through the button IDs and set their enabled state

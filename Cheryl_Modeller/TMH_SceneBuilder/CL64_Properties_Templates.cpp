@@ -257,6 +257,7 @@ void CL64_Properties_Templates::Insert_Template()
 			//App->CL_FileView->Change_Project_Name();
 
 			App->CL_Interface->Enable_TopTabs_Brushes_Buttons(true);
+			App->CL_Interface->Enable_TopTabs_Faces_Buttons(true);
 
 			App->CL_Editor_Control->Set_Map_Editor_Startup();
 			

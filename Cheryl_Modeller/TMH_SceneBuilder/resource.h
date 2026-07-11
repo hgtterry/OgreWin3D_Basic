@@ -513,6 +513,7 @@
 #define IDC_CB_BRUSH_CAT                1335
 #define IDC_CB_MOTIONS_SPEED            1335
 #define IDC_BT_TT_BRUSH_SCALE           1335
+#define IDC_TT_CB_FACES                 1335
 #define IDC_ED_ZOOMDEFAULT              1336
 #define IDC_ST_ZOOM_TEXT                1337
 #define IDC_OPTIONS_TREE                1340

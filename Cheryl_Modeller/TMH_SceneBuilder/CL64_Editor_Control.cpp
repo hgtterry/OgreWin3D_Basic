@@ -227,7 +227,11 @@ void CL64_Editor_Control::Start_Editor_New_Model()
 	App->CL_Model->Editor_Setup_Mode = Enums::Editor_Setup_Mode_Create_Model;
 
 	App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
+	App->CL_Interface->Enable_TopTabs_Faces_Buttons(false);
+
 	App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
+	App->CL_Interface->Show_TopTabs_Faces_Panel(true);
+
 	App->CL_Editor_Control->Set_Map_View();
 
 	App->CL_Interface->Show_Properties_Panel(true);
