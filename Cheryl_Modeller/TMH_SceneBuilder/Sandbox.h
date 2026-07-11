@@ -53,7 +53,7 @@ public:
 	Ogre::Viewport* vp_ImGui;
 
 	bool Colour_Dialog_Active;
-
+	bool flag_Viewer_Active;
 	HBRUSH Actual_Colour;
 
 

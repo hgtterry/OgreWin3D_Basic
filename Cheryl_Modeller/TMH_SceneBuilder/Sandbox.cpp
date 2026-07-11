@@ -63,6 +63,8 @@ Sandbox::Sandbox(void)
 	Colour_Dialog_Active = false;
 
 	vp_ImGui = NULL;
+
+	flag_Viewer_Active = false;
 }
 
 Sandbox::~Sandbox(void)
@@ -410,7 +412,14 @@ void Sandbox::Duplicate_Brush()
 // *************************************************************************
 void Sandbox::Start_Ogre_Window()
 {
+	if (flag_Viewer_Active == true)
+	{
+		return;
+	}
+
 	CreateDialog(App->hInst, (LPCTSTR)IDD_OGRE_WINDOW, App->MainHwnd, (DLGPROC)Proc_Ogre_Dialog);
+
+	flag_Viewer_Active = true;
 }
 
 // *************************************************************************
@@ -466,6 +475,7 @@ LRESULT CALLBACK Sandbox::Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wPara
 	{
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->CL_Sandbox->flag_Viewer_Active = false;
 			App->CL_Sandbox->Close_OgreWindow();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

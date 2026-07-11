@@ -594,30 +594,37 @@ void CL64_View_Top_Left::Draw_Screen_TL(HWND hwnd)
 }
 
 // *************************************************************************
-// *	  	Zoom_To_Model:- Terry and Hazel Flanigan 2026				   *
+// *          Zoom_To_Model:- Terry and Hazel Flanigan 2026                *
 // *************************************************************************
 void CL64_View_Top_Left::Zoom_To_Model()
 {
-	if (App->CL_Model->flag_Model_Loaded == true)
+	// No model is loaded.
+	if (!App->CL_Model->flag_Model_Loaded)
 	{
-		RECT		Rect;
-
-		float Sc_Size = VCam_TL->Height - 140;
-		float zoomValue = Sc_Size / App->CL_Model->S_BoundingBox[0]->Size->z;
-
-		VCam_TL->ZoomFactor = zoomValue;
-
-		GetClientRect(VCam_TL->hDlg, &Rect);
-
-		VCam_TL->XCenter = static_cast<float>(Rect.right) / 2;
-		VCam_TL->YCenter = static_cast<float>(Rect.bottom) / 2;
-
-		VCam_TL->CamPos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
-		VCam_TL->CamPos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
-		VCam_TL->CamPos.z = App->CL_Model->S_BoundingBox[0]->Centre->z;
-
-		Redraw_Window_TL();
+		return;
 	}
+
+	constexpr float ViewMargin = 140.0f;
+	float AvailableHeight = VCam_TL->Height - ViewMargin;
+
+	// Scale the view so the model's depth (z-size) fits the available height.
+	auto& ModelBounds = App->CL_Model->S_BoundingBox[0]; // Pointer App->CL_Model->S_BoundingBox[0]
+	float ZoomValue = AvailableHeight / ModelBounds->Size->z;
+	VCam_TL->ZoomFactor = ZoomValue;
+
+	// Center the camera on the client area of the viewport window.
+	RECT ClientRect;
+	GetClientRect(VCam_TL->hDlg, &ClientRect);
+	VCam_TL->XCenter = static_cast<float>(ClientRect.right) / 2;
+	VCam_TL->YCenter = static_cast<float>(ClientRect.bottom) / 2;
+
+	// Point the grid camera at the model's bounding-box centre.
+	VCam_TL->CamPos.x = ModelBounds->Centre->x;
+	VCam_TL->CamPos.y = ModelBounds->Centre->y;
+	VCam_TL->CamPos.z = ModelBounds->Centre->z;
+
+	// Redraw Grid
+	Redraw_Window_TL();
 }
 
 
