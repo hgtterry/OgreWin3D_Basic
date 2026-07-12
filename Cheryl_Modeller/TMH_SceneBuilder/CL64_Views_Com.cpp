@@ -1677,46 +1677,6 @@ void CL64_Views_Com::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 
 #define	VectorToSUB(a, b) (*((((float *)(&a))) + (b)))
 
-static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
-{
-	BrushDrawData* pData;
-
-	pData = (BrushDrawData*)lParam;
-
-	App->CL_Views_Com->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
-
-	return	GE_TRUE;
-}
-
-static POINT plist[64];
-
-// *************************************************************************
-// *					Render_RenderBrushSelFacesOrtho		  			   *
-// *************************************************************************
-void CL64_Views_Com::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC)
-{
-	int	i, j;
-
-	if (!b)
-		return;
-
-	for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
-	{
-		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
-		const T_Vec3* pnts = App->CL_X_Face->Face_GetPoints(f);
-
-		if (!App->CL_X_Face->Face_IsSelected(f))
-			continue;
-
-		for (j = 0; j < App->CL_X_Face->Face_GetNumPoints(f); j++)
-		{
-			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
-		}
-		plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[0]);
-		Polyline(App->CL_View_Top_Left->m_MemoryhDC_TL, plist, j + 1);
-	}
-}
-
 // *************************************************************************
 // *	  						SetEditCursor							   *
 // *************************************************************************

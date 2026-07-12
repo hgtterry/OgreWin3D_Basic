@@ -562,6 +562,8 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
                 App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
                 EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_ENABLED);
+
+                App->CL_Interface->Enable_TopTabs_Buttons(true);
                 // Entity Selected in OnSelchangeBrushlist
 			}
         } 

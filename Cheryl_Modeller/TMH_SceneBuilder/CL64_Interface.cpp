@@ -81,10 +81,8 @@ void CL64_Interface::Deselect_All_Brushes_Update_Dlgs(void)
 	//App->CL_Doc->UpdateSelected();
 
 	App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
-	//App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(false, false);
-	//App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
-
-
+	Enable_TopTabs_Buttons(false);
+	
 	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
 	App->CL_Properties_Textures->Enable_FaceProps_Button(false);
@@ -438,6 +436,46 @@ void CL64_Interface::Enable_TopTabs_Faces_Buttons(bool option)
 	for (int id : buttonIDs)
 	{
 		EnableWindow(GetDlgItem(Win_hWnd, id), option);
+	}
+}
+
+// *************************************************************************
+// *		Enable_TopTabs_Buttons:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Enable_TopTabs_Buttons(bool option)
+{
+	auto& Win_hWnd = App->CL_Top_Tabs->TopTabs_Faces_Dlg_hWnd;
+
+	// Array of button IDs to enable or disable
+	const int buttonIDs[] =
+	{
+		IDC_BT_TT_FACES_ALL,
+		IDC_BT_TT_FACE_NEXT,
+		IDC_BT_TT_FACE_PREV,
+		IDC_TT_CB_FACES
+	};
+
+	// Iterate through the button IDs and set their enabled state
+	for (int id : buttonIDs)
+	{
+		EnableWindow(GetDlgItem(Win_hWnd, id), option);
+	}
+
+	auto& Win_hWnd2 = App->CL_Top_Tabs->TopTabs_Brushes_Dlg_hWnd;
+
+	// Array of button IDs to enable or disable
+	const int buttonID2s[] =
+	{
+		IDC_BT_TT_BRUSH_MOVE,
+		IDC_BT_TT_BRUSH_SCALE,
+		IDC_BT_TT_BRUSH_ROTATE,
+		IDC_BT_TT_BRUSH_SHEAR
+	};
+
+	// Iterate through the button IDs and set their enabled state
+	for (int id : buttonID2s)
+	{
+		EnableWindow(GetDlgItem(Win_hWnd2, id), option);
 	}
 }
 

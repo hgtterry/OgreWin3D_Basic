@@ -50,8 +50,6 @@ public:
 	void ResizeOgreWindow(void);
 	void Draw_Selected_Screen();
 
-	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
-	
 	void Context_3D_Menu(HWND hDlg);
 	bool Context_3D_Command(WPARAM wParam);
 
