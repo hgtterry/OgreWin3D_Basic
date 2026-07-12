@@ -423,14 +423,16 @@ static POINT plist[64];
 // *************************************************************************
 // *					Render_RenderBrushSelFacesOrtho		  			   *
 // *************************************************************************
-void CL64_View_Top_Right::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC)
+void CL64_View_Top_Right::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b)
 {
-	int	i, j;
+	int	j = 0;
 
 	if (!b)
+	{
 		return;
+	}
 
-	for (i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
+	for (int i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
 	{
 		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
 		const T_Vec3* pnts = App->CL_X_Face->Face_GetPoints(f);
@@ -453,7 +455,7 @@ static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 
 	pData = (BrushDrawData_TR*)lParam;
 
-	App->CL_View_Top_Right->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
+	App->CL_View_Top_Right->Render_RenderBrushSelFacesOrtho(pData->v, pBrush);
 
 	return	GE_TRUE;
 }

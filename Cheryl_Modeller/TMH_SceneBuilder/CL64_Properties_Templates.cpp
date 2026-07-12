@@ -265,6 +265,8 @@ void CL64_Properties_Templates::Insert_Template()
 
 			Enable_Shape_Buttons(true);
 
+			App->CL_Model->Set_BondingBox_Model(true);
+
 			FirstRoom = true;
 		}
 		else
@@ -301,6 +303,8 @@ void CL64_Properties_Templates::Insert_Template()
 	App->CL_Top_Tabs->flag_All_Faces = true;
 	App->CL_Doc->SelectAllFacesInBrushes();
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	App->CL_Model->Set_BondingBox_Model(false);
 
 	HWND temp = GetDlgItem(App->CL_Properties_Textures->Textures_Dlg_Hwnd, IDC_CK_FACESALL);
 	int test = SendMessage(temp, BM_SETCHECK, true, 0);

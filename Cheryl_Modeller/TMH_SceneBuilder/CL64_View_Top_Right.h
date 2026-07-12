@@ -49,7 +49,7 @@ public:
 
 	void Zoom_To_Model();
 
-	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
+	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b);
 
 	HWND Top_Right_Window_Hwnd;
 	HWND Top_Right_Banner_Hwnd;

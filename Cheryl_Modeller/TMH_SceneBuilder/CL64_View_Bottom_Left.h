@@ -48,7 +48,7 @@ public:
 	void Set_VCam_BL_Defaults();
 	void Zoom_To_Model();
 
-	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
+	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b);
 
 	HWND Bottom_Left_Window_Hwnd;
 	HWND Bottom_Left_Banner_Hwnd;

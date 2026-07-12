@@ -419,13 +419,44 @@ void CL64_View_Top_Right::Draw_Faces_TR(Brush* SB)
 	}
 }
 
+static POINT plist[64];
+
+// *************************************************************************
+// *					Render_RenderBrushSelFacesOrtho		  			   *
+// *************************************************************************
+void CL64_View_Top_Right::Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b)
+{
+	int	j = 0;
+
+	if (!b)
+	{
+		return;
+	}
+
+	for (int i = 0; i < App->CL_X_Brush->Brush_GetNumFaces(b); i++)
+	{
+		Face* f = App->CL_X_Brush->Brush_GetFace(b, i);
+		const T_Vec3* pnts = App->CL_X_Face->Face_GetPoints(f);
+
+		if (!App->CL_X_Face->Face_IsSelected(f))
+			continue;
+
+		for (j = 0; j < App->CL_X_Face->Face_GetNumPoints(f); j++)
+		{
+			plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[j]);
+		}
+		plist[j] = App->CL_Render->Render_OrthoWorldToView(Cam, &pnts[0]);
+		Polyline(m_MemoryhDC_TR, plist, j + 1);
+	}
+}
+
 static signed int BrushDrawSelFacesOrtho(Brush* pBrush, void* lParam)
 {
 	BrushDrawData_TR* pData;
 
 	pData = (BrushDrawData_TR*)lParam;
 
-	App->CL_Views_Com->Render_RenderBrushSelFacesOrtho(pData->v, pBrush, pData->pDC);
+	App->CL_View_Top_Right->Render_RenderBrushSelFacesOrtho(pData->v, pBrush);
 
 	return	GE_TRUE;
 }
@@ -591,10 +622,10 @@ void CL64_View_Top_Right::Draw_Screen_TR(HWND hwnd)
 			}
 		}
 
-		//// Draw selected faces
-		//BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
-		//SelectObject(m_MemoryhDC, Views_Com->PenSelectedFaces);
-		//App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
+		// Draw selected faces
+		BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
+		SelectObject(m_MemoryhDC_TR, Views_Com->PenSelectedFaces);
+		App->CL_X_Brush->BrushList_EnumLeafBrushes(BList, &m_brushDrawData_TR, BrushDrawSelFacesOrtho);
 
 
 		// Draw camera if tracking

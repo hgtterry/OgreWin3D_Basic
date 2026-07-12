@@ -47,6 +47,8 @@ public:
 	static int Draw_Brush(Brush* pBrush, void* lParam);
 	void Set_VCam_TR_Defaults();
 
+	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b);
+
 	HWND Top_Right_Window_Hwnd;
 	HWND Top_Right_Banner_Hwnd;
 

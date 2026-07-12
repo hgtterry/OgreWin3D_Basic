@@ -45,6 +45,8 @@ public:
 	void Redraw_Window_TL();
 	void Set_VCam_TL_Defaults();
 
+	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b);
+
 	HWND Top_Left_Window_Hwnd;
 	HWND Top_Left_Banner_Hwnd;
 

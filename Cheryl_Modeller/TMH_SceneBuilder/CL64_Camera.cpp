@@ -344,6 +344,15 @@ void CL64_Camera::Reset_View_and_Zoom(void)
 		App->CL_Ogre->camNode->setPosition(cameraPosition);
 		break;
 
+	case Enums::Model_Type_Brush:
+	{
+		if (App->CL_Mesh_Mgr->World_Ent)
+		{
+			App->CL_Mesh_Mgr->World_Node->setOrientation(Ogre::Quaternion::IDENTITY);
+		}
+		break;
+	}
+
 	default:
 		// Handle unsupported model types if necessary
 		break;

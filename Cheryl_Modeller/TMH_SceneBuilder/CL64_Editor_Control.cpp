@@ -246,6 +246,4 @@ void CL64_Editor_Control::Start_Editor_New_Model()
 	App->CL_Model->flag_Model_Loaded = true;
 
 	strcpy(App->CL_Model->Model_Just_Name, "New_Model");
-
-	//App->CL_Model->S_BoundingBox[0] = new AABB_Type;
 }
