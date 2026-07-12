@@ -362,3 +362,28 @@ void CL64_Camera::Reset_View_and_Zoom(void)
 	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
 }
 
+// *************************************************************************
+// *		Zoom_First_Brush:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Camera::Zoom_First_Brush(void)
+{
+	if (App->CL_Model->Model_Type == Enums::Model_Type_Brush)
+	{
+		if (App->CL_Mesh_Mgr->World_Ent)
+		{
+			Reset_View();
+
+			Ogre::Vector3 cameraPosition;
+
+			// Calculate the center of the bounding box
+			const auto& boundingBox = App->CL_Mesh_Mgr->World_Ent->getBoundingBox();
+			float centerY = (boundingBox.getMaximum().y + boundingBox.getMinimum().y) * 0.5f;
+			cameraPosition = Ogre::Vector3(0.0f, centerY, 0.0f);
+			App->CL_Ogre->camNode->setPosition(cameraPosition + Ogre::Vector3(0, 0, App->CL_Mesh_Mgr->World_Ent->getBoundingRadius() * 2.8f));
+
+		}
+
+		App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
+	}
+}
+

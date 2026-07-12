@@ -28,6 +28,7 @@ CL64_Model::CL64_Model(void)
 	Editor_Setup_Mode = Enums::Editor_Setup_Mode_None;
 
 	flag_Model_Loaded = false;
+	flag_BoundingBox_Created = false;
 
 	Imported_Ogre_Ent = nullptr;
 	Imported_Ogre_Node = nullptr;
@@ -40,6 +41,7 @@ CL64_Model::CL64_Model(void)
 	}
 
 	S_BoundingBox[0] = nullptr;
+
 }
 
 CL64_Model::~CL64_Model(void)
@@ -89,9 +91,15 @@ void CL64_Model::Set_Paths(void)
 // *************************************************************************
 void CL64_Model::Set_BondingBox_Model(bool Create)
 {
-	if (Create)
+	if (Create && flag_BoundingBox_Created == false)
 	{
 		S_BoundingBox[0] = new AABB_Type;
+		flag_BoundingBox_Created = true;
+	}
+
+	if (flag_BoundingBox_Created == false)
+	{
+		return;
 	}
 
 	auto& G = App->CL_Mesh->Group;
@@ -235,5 +243,19 @@ void CL64_Model::Clear_Model()
 	App->CL_Editor_Control->flag_Just_Loaded = false;
 
 	App->CL_Model->Editor_Setup_Mode = Enums::Editor_Setup_Mode_None;
+
+	if (S_BoundingBox[0])
+	{
+		delete S_BoundingBox[0];
+		S_BoundingBox[0] = nullptr;
+		flag_BoundingBox_Created = false;
+	}
+
+	if (App->CL_X_Brush->Get_Brush_Count() > 0)
+	{
+		App->CL_Doc->ResetAllSelectedFaces();
+		App->CL_Doc->SelectAll();
+		App->CL_Doc->DeleteCurrentThing();
+	}
 }
 

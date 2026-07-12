@@ -51,6 +51,7 @@ public:
 
 	void Reset_View(void);
 	void Reset_View_and_Zoom(void);
+	void Zoom_First_Brush(void);
 
 	bool flag_First_Person;
 	bool flag_Free;

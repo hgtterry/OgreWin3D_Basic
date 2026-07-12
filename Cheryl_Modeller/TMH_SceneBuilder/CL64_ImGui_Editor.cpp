@@ -320,6 +320,17 @@ void CL64_ImGui_Editor::Model_Data(void)
 	ImGui::Text("Vertice Count %i", App->CL_Model->VerticeCount);
 	ImGui::Text("Face Count %i", App->CL_Model->FaceCount);
 	ImGui::Text("Bone Count %i", App->CL_Model->BoneCount);
+	ImGui::Text(" ");
+
+	if (App->CL_Model->flag_BoundingBox_Created == true)
+	{
+		strcpy(Buff_2, "  -- Yes -- ");
+	}
+	else
+	{
+		strcpy(Buff_2, "  -- No --");
+	}
+	ImGui::Text("Bounding Box Created %s", Buff_2);
 
 }
 

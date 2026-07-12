@@ -240,7 +240,6 @@ void CL64_Properties_Templates::Insert_Template()
 			App->CL_Gizmos->Show_MarkerBox(false);
 
 			// Reset camera settings
-			App->CL_Ogre->Camera_Reset_Zero();
 			App->CL_Ogre->Listener_3D->CameraMode = Enums::Cam_Mode_Model;
 
 			App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
@@ -266,6 +265,7 @@ void CL64_Properties_Templates::Insert_Template()
 			Enable_Shape_Buttons(true);
 
 			App->CL_Model->Set_BondingBox_Model(true);
+			
 
 			FirstRoom = true;
 		}
@@ -283,9 +283,16 @@ void CL64_Properties_Templates::Insert_Template()
 	{
 		Brush* Temp = App->CL_Brush_X->Get_Brush_By_Name(LastCreated_ShapeName);
 		App->CL_Doc->CurBrush = Temp;
+
 	}
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
+
+	if (FirstRoom == true) // New Scene
+	{
+		App->CL_Camera->Zoom_First_Brush();
+
+	}
 
 	App->CL_Doc->Do_General_Select_Dlg(true);
 

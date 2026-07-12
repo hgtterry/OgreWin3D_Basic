@@ -41,6 +41,7 @@ public:
 	int Editor_Setup_Mode;
 
 	bool flag_Model_Loaded;
+	bool flag_BoundingBox_Created;
 
 	Ogre::Entity* Imported_Ogre_Ent;
 	Ogre::SceneNode* Imported_Ogre_Node;
