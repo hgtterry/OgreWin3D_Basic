@@ -240,24 +240,23 @@ void CL64_ImGui_Editor::Editor_Data(void)
 {
 	char Buff[MAX_PATH];
 
-	switch (App->CL_Model->Editor_Setup_Mode) 
+	switch (App->CL_Editor_Control->Editor_Mode) 
 	{
-	case Enums::Editor_Setup_Mode_None:
+	case Enums::Editor_Mode_None:
 		strcpy(Buff, "  -- Editor Not Set -- ");
 		break;
-	case Enums::Editor_Setup_Mode_Import:
-		strcpy(Buff, "  -- Imported Model Node -- ");
+	case Enums::Editor_Mode_Import_Model:
+		strcpy(Buff, "  -- Mode Import Model -- ");
 		break;
-	case Enums::Editor_Setup_Mode_Create_Model:
-		strcpy(Buff, "  -- Create Model Mode -- ");
+	case Enums::Editor_Mode_Design_Model:
+		strcpy(Buff, "  -- Mode Design Model -- ");
 		break;
 	default:
 		strcpy(Buff, "Unknown Model Mode");
 		break;
 	}
 
-	ImGui::Text("Editor Set Up %s", Buff);
-
+	ImGui::Text("Editor Mode %s", Buff);
 
 }
 
@@ -266,51 +265,54 @@ void CL64_ImGui_Editor::Editor_Data(void)
 // *************************************************************************
 void CL64_ImGui_Editor::Model_Data(void)
 {
-	char Buff_1[MAX_PATH];
-	char Buff_2[MAX_PATH];
-	char Buff_3[MAX_PATH];
-
+	char Buff[MAX_PATH];
+	
 	if (App->CL_Model->Imported_Ogre_Ent)
 	{
-		strcpy(Buff_1, "  -- Loaded -- ");
+		strcpy(Buff, "  -- Loaded -- ");
 	}
 	else
 	{
-		strcpy(Buff_1, "  -- Nothing --");
+		strcpy(Buff, "  -- Nothing --");
 	}
+
+	ImGui::Text("Imported_Ogre_Ent %s", Buff);
 
 	if (App->CL_Mesh_Mgr->World_Ent)
 	{
-		strcpy(Buff_2, "  -- Loaded -- ");
+		strcpy(Buff, "  -- Loaded -- ");
 	}
 	else
 	{
-		strcpy(Buff_2, "  -- Nothing --");
+		strcpy(Buff, "  -- Nothing --");
 	}
 
-	switch (App->CL_Model->Editor_Setup_Mode)
-	{
-	case Enums::Editor_Setup_Mode_None:
-		strcpy(Buff_3, "  -- Editor Not Set -- ");
-		break;
-	case Enums::Editor_Setup_Mode_Import:
-		strcpy(Buff_3, "  -- Imported Model Node -- ");
-		break;
-	case Enums::Editor_Setup_Mode_Create_Model:
-		strcpy(Buff_3, "  -- Create Model Mode -- ");
-		break;
-	default:
-		strcpy(Buff_3, "Unknown Model Mode");
-		break;
-	}
-
-
-	ImGui::Text("Imported_Ogre_Ent %s", Buff_1);
-	ImGui::Text("World Entity %s", Buff_2);
+	ImGui::Text("World Entity %s", Buff);
 
 	ImGui::Text(" ");
 	ImGui::Text("Model Name %s", App->CL_Model->Model_Just_Name);
-	ImGui::Text("Editor Mode %s", Buff_3);
+	
+	switch (App->CL_Model->Model_Type)
+	{
+	case Enums::Model_Type_None:
+		strcpy(Buff, "  -- Model_Type_None -- ");
+		break;
+	case Enums::Model_Type_Ogre3D:
+		strcpy(Buff, "  -- Model_Type_Ogre3D -- ");
+		break;
+	case Enums::Model_Type_Assimp:
+		strcpy(Buff, "  -- Model_Type_Assimp -- ");
+		break;
+	case Enums::Model_Type_Brush:
+		strcpy(Buff, "  -- Model_Type_Brush -- ");
+		break;
+
+	default:
+		strcpy(Buff, "Unknown Model Mode");
+		break;
+	}
+
+	ImGui::Text("Model Type %s", Buff);
 
 	ImGui::Text(" ");
 	ImGui::Text("Counts ----------------------------------- ");
@@ -324,22 +326,21 @@ void CL64_ImGui_Editor::Model_Data(void)
 
 	if (App->CL_Model->flag_BoundingBox_Created == true)
 	{
-		strcpy(Buff_2, "  -- Yes -- ");
+		strcpy(Buff, "  -- Yes -- ");
 	}
 	else
 	{
-		strcpy(Buff_2, "  -- No --");
+		strcpy(Buff, "  -- No --");
 	}
-	ImGui::Text("Bounding Box Created %s", Buff_2);
+	ImGui::Text("Bounding Box Created %s", Buff);
 
 }
 
 // *************************************************************************
-// *				Editor_Data:- Terry and Hazel Flanigan 2026			   *
+// *				Grids_Data:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 void CL64_ImGui_Editor::Grids_Data(void)
 {
-
 	char Buff[MAX_PATH];
 
 	switch (App->CL_Views_Com->Selected_Window)
@@ -391,6 +392,5 @@ void CL64_ImGui_Editor::Grids_Data(void)
 	ImGui::Text("Height %f", (float)App->CL_View_Bottom_Left->VCam_BL->Height);
 	ImGui::Text("Width %f", (float)App->CL_View_Bottom_Left->VCam_BL->Width);
 	ImGui::Text(" ");
-
 
 }

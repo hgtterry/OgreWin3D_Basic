@@ -35,15 +35,6 @@ CL64_Level::CL64_Level(void)
 	flag_UseGrid = 1;
 	flag_Working_Folder_Exists = 0;
 
-	strcpy(MTF_PathAndFile, "");
-	strcat(MTF_PathAndFile, "New_Room.mtf");
-
-	strcpy(MTF_Just_FileName, "New_Room.mtf");
-	strcpy(MTF_JustName_NoExt, "New_Room");
-	strcpy(MTF_Just_Path, "No_Path");
-
-	strcpy(Prj_Working_Folder, "None");
-
 	Level_Version = 1.5;
 
 	flag_File_Been_Saved = 0;

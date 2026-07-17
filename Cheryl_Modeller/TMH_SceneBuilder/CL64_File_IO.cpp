@@ -206,7 +206,7 @@ bool CL64_File_IO::Save_File(const LPCWSTR Type, const LPCWSTR Extensions)
 
 			LPCWSTR Test;
 			wchar_t wtext[MAX_PATH];
-			mbstowcs(wtext, App->CL_Level->MTF_Just_FileName, strlen(App->CL_Level->MTF_Just_FileName) + 1);
+			mbstowcs(wtext, App->CL_File->MTF_Just_FileName, strlen(App->CL_File->MTF_Just_FileName) + 1);
 			Test = wtext;
 			
 			hr = pFileSave->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);

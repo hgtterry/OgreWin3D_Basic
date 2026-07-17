@@ -76,13 +76,6 @@ public:
 
 	float Level_Version;
 
-	// MTF File
-	char MTF_PathAndFile[MAX_PATH];
-	char MTF_Just_FileName[MAX_PATH];
-	char MTF_Just_Path[MAX_PATH];
-	char MTF_JustName_NoExt[MAX_PATH];
-	char Prj_Working_Folder[MAX_PATH];
-
 	// TXL File
 	char TXL_PathAndFile[MAX_PATH];
 	char TXL_Just_File_Name[MAX_PATH];

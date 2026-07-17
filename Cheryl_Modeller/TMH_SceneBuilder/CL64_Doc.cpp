@@ -110,7 +110,7 @@ void CL64_Doc::Init_Doc()
 
 	App->CL_X_Maths->Vector3_Clear(&SelectedGeoCenter);
 
-    strcpy(App->CL_Export->mJustName, App->CL_Level->MTF_JustName_NoExt);
+    strcpy(App->CL_Export->mJustName, App->CL_File->MTF_JustName_NoExt);
 
     CheckMenuItem(App->Menu_Map, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
 
@@ -1858,26 +1858,26 @@ void CL64_Doc::Set_Paths(void)
 // *************************************************************************
 void CL64_Doc::Set_Current_3DT_Paths(void)
 {
-    strcpy(App->CL_Level->MTF_PathAndFile, App->CL_File->PathFileName_3dt);
-    strcpy(App->CL_Level->MTF_Just_FileName, App->CL_File->FileName_3dt);
+    strcpy(App->CL_File->MTF_PathAndFile, App->CL_File->PathFileName_3dt);
+    strcpy(App->CL_File->MTF_Just_FileName, App->CL_File->FileName_3dt);
 
     char buf[MAX_PATH];
-    strcpy(buf, App->CL_Level->MTF_Just_FileName);
+    strcpy(buf, App->CL_File->MTF_Just_FileName);
     int Len = strlen(buf);
     buf[Len - 4] = 0;
-    strcpy(App->CL_Level->MTF_JustName_NoExt, buf);
+    strcpy(App->CL_File->MTF_JustName_NoExt, buf);
 
-    strcpy(App->CL_Export->mJustName, App->CL_Level->MTF_JustName_NoExt);
+    strcpy(App->CL_Export->mJustName, App->CL_File->MTF_JustName_NoExt);
 
     // Just Path
     char Just_Path[MAX_PATH];
-    strcpy(Just_Path, App->CL_Level->MTF_PathAndFile);
+    strcpy(Just_Path, App->CL_File->MTF_PathAndFile);
 
-    int Len1 = strlen(App->CL_Level->MTF_PathAndFile);
-    int Len2 = strlen(App->CL_Level->MTF_Just_FileName);
+    int Len1 = strlen(App->CL_File->MTF_PathAndFile);
+    int Len2 = strlen(App->CL_File->MTF_Just_FileName);
     Just_Path[Len1 - Len2] = 0;
 
-    strcpy(App->CL_Level->MTF_Just_Path, Just_Path);
+    strcpy(App->CL_File->MTF_Just_Path, Just_Path);
    
 }
 

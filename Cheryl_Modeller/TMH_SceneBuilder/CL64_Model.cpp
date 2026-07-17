@@ -25,8 +25,6 @@ CL64_Model::CL64_Model(void)
 
 	Selected_BoneIndex = 0;
 
-	Editor_Setup_Mode = Enums::Editor_Setup_Mode_None;
-
 	flag_Model_Loaded = false;
 	flag_BoundingBox_Created = false;
 
@@ -242,7 +240,7 @@ void CL64_Model::Clear_Model()
 
 	App->CL_Editor_Control->flag_Just_Loaded = false;
 
-	App->CL_Model->Editor_Setup_Mode = Enums::Editor_Setup_Mode_None;
+	App->CL_Editor_Control->Editor_Mode = Enums::Editor_Mode_None;
 
 	if (S_BoundingBox[0])
 	{

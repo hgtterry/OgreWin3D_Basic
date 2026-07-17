@@ -129,7 +129,7 @@ void CL64_Scene::Clear_Level(bool FromFile)
 	App->CL_Mesh_Mgr->Reset_Class();
 	
 	App->CL_Level->flag_Working_Folder_Exists = 0;
-	strcpy(App->CL_Level->Prj_Working_Folder, "None");
+	strcpy(App->CL_File->Prj_Working_Folder, "None");
 
 	App->CL_Ogre->Listener_3D->CameraMode = Enums::Cam_Mode_Free;
 	App->CL_Gizmos->Show_MarkerBox(false);

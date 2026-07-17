@@ -490,7 +490,7 @@ void CL64_Interface::Select_Tab(int Tab_ID)
 	{
 	case Enums::Tab_ID_TEXTURES:
 		flag_Tab_Texture = true;
-		if (App->CL_Model->Editor_Setup_Mode == Enums::Editor_Setup_Mode_Create_Model)
+		if (App->CL_Editor_Control->Editor_Mode == Enums::Editor_Mode_Design_Model)
 		{
 			Show_Textures_Dialog(true);
 		}

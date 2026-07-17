@@ -31,14 +31,14 @@ public:
 
 	void Reset_Editor(void);
 
-	void Start_Editor_MapBrush_Mode(void);
-
 	void Start_Editor_Scene();
 	void Set_Map_Editor_Startup();
 
 	void Set_Map_View();
 	void Set_3DEditor_View();
-	void Start_Editor_New_Model();
+	void Set_Editor_Design_Model();
+
+	int Editor_Mode;
 
 	bool flag_Scene_Editor_Active;
 	bool flag_Map_Editor_Active;
@@ -48,8 +48,6 @@ public:
 	bool flag_Mode_Map_View;
 	bool flag_Start_3D_View;
 	bool flag_Just_Loaded;
-
-	HWND Parent_hWnd;				// Handle to the parent window for the editor
 
 private:
 	

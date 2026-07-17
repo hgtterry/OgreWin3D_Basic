@@ -60,11 +60,11 @@ namespace Enums
 		Tab_ID_GROUPS = 3
 	};
 
-	enum Editor_Setup_Mode
+	enum Editor_Mode
 	{
-		Editor_Setup_Mode_None = 0,
-		Editor_Setup_Mode_Import = 1,
-		Editor_Setup_Mode_Create_Model = 2
+		Editor_Mode_None = 0,
+		Editor_Mode_Import_Model = 1,
+		Editor_Mode_Design_Model = 2
 	};
 
 	enum Model_Type
@@ -124,7 +124,7 @@ namespace Enums
 		Render_Assimp = 3
 	};
 
-	enum Editor_Mode
+	enum Editor_Mode_Dlg
 	{
 		Editor_Dlgs_New = 0,
 		Editor_Dlgs_First_Brush = 1

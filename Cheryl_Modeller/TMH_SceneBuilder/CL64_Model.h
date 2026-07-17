@@ -38,8 +38,6 @@ public:
 	int BrushCount;		// Total number of brushes created
 	int Brush_Face_Count;
 
-	int Editor_Setup_Mode;
-
 	bool flag_Model_Loaded;
 	bool flag_BoundingBox_Created;
 

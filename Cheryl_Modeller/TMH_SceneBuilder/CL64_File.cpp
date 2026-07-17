@@ -35,6 +35,15 @@ CL64_File::CL64_File(void)
 	Read_Buffer[0] = 0;
 	flag_loading = 0;
 
+	// MTF File
+	strcpy(MTF_PathAndFile, "");
+	strcat(MTF_PathAndFile, "New_Model.mtf");
+
+	strcpy(MTF_Just_FileName, "New_Model.mtf");
+	strcpy(MTF_JustName_NoExt, "New_Model");
+	strcpy(MTF_Just_Path, "No_Path");
+	strcpy(Prj_Working_Folder, "No_Path");
+
 	fp = NULL;
 }
 
@@ -69,27 +78,27 @@ void CL64_File::Start_Save(bool useSaveDialog)
 		}
 
 		std::string& pathAndFile = App->CL_File_IO->s_Path_And_File;
-		strcpy(App->CL_Level->MTF_PathAndFile, pathAndFile.c_str());
+		strcpy(MTF_PathAndFile, pathAndFile.c_str());
 
-		if (_stricmp(App->CL_Level->MTF_PathAndFile + pathAndFile.length() - 4, ".mtf") != 0)
+		if (_stricmp(MTF_PathAndFile + pathAndFile.length() - 4, ".mtf") != 0)
 		{
-			strcat(App->CL_Level->MTF_PathAndFile, ".mtf");
+			strcat(MTF_PathAndFile, ".mtf");
 		}
 
-		App->CL_Utilities->Get_FileName_FromPath(App->CL_Level->MTF_PathAndFile, App->CL_Level->MTF_PathAndFile);
-		strcpy(App->CL_Level->MTF_Just_FileName, App->CL_Utilities->JustFileName);
+		App->CL_Utilities->Get_FileName_FromPath(MTF_PathAndFile, MTF_PathAndFile);
+		strcpy(MTF_Just_FileName, App->CL_Utilities->JustFileName);
 
 		char buf[MAX_PATH];
-		strcpy(buf, App->CL_Level->MTF_Just_FileName);
+		strcpy(buf, MTF_Just_FileName);
 		buf[strlen(buf) - 4] = '\0';
-		strcpy(App->CL_Level->MTF_JustName_NoExt, buf);
-		strcpy(App->CL_Export->mJustName, App->CL_Level->MTF_JustName_NoExt);
+		strcpy(MTF_JustName_NoExt, buf);
+		strcpy(App->CL_Export->mJustName, MTF_JustName_NoExt);
 	}
 
 	// If from Menu->Save Check if file exsits and ask for conformatin to overwrite
 	if (!useSaveDialog)
 	{
-		bool test = App->CL_Utilities->Check_File_Exist(App->CL_Level->MTF_PathAndFile);
+		bool test = App->CL_Utilities->Check_File_Exist(MTF_PathAndFile);
 		if (test == 1)
 		{
 			App->CL_Dialogs->YesNo("File Exsits", "Do you want to update File");
@@ -105,19 +114,19 @@ void CL64_File::Start_Save(bool useSaveDialog)
 
 	// Create Working Folder
 	char ProjectFolder[MAX_PATH];
-	strcpy(ProjectFolder, App->CL_Level->MTF_PathAndFile);
+	strcpy(ProjectFolder, MTF_PathAndFile);
 
-	int Len1 = strlen(App->CL_Level->MTF_PathAndFile);
-	int Len2 = strlen(App->CL_Level->MTF_Just_FileName);
+	int Len1 = strlen(MTF_PathAndFile);
+	int Len2 = strlen(MTF_Just_FileName);
 	ProjectFolder[Len1 - Len2] = 0;
 
-	strcat(ProjectFolder, App->CL_Level->MTF_JustName_NoExt);
+	strcat(ProjectFolder, MTF_JustName_NoExt);
 	strcat(ProjectFolder, "_ow3d_prj");
 	CreateDirectory(ProjectFolder, NULL);
 
 	App->CL_Level->flag_Working_Folder_Exists = true;
 	strcat(ProjectFolder, "\\");
-	strcpy(App->CL_Level->Prj_Working_Folder, ProjectFolder);
+	strcpy(Prj_Working_Folder, ProjectFolder);
 
 	// Save Texture Zip Version 1.5
 	//-------------------------------------------------
@@ -142,13 +151,13 @@ void CL64_File::Start_Save(bool useSaveDialog)
 
 	// ---------------------------------
 
-	App->Set_Title(App->CL_Level->MTF_PathAndFile);
+	App->Set_Title(MTF_PathAndFile);
 
 	App->CL_Level->flag_File_Been_Saved = 1;
 
 	App->CL_Libs->CL_Preference->Save_Config_File();
 
-	App->Say("Saved", App->CL_Level->MTF_Just_FileName);
+	App->Say("Saved", MTF_Just_FileName);
 }
 
 // *************************************************************************
@@ -156,7 +165,7 @@ void CL64_File::Start_Save(bool useSaveDialog)
 // *************************************************************************
 void CL64_File::Save_Document()
 {
-	if (Save(App->CL_Level->MTF_PathAndFile) == false)
+	if (Save(MTF_PathAndFile) == false)
 	{
 		App->Say("Error: Unable to save file");
 		return;
@@ -172,7 +181,7 @@ void CL64_File::Save_Document()
 bool CL64_File::Save(const char* FileName)
 {
 	// Construct the TXL file name
-	std::string TXL_File_Name = std::string(App->CL_Level->MTF_JustName_NoExt) + ".zip";
+	std::string TXL_File_Name = std::string(MTF_JustName_NoExt) + ".zip";
 
 	// Open the file for writing
 	FILE* Write_File = fopen(FileName, "wt");
@@ -351,16 +360,16 @@ void CL64_File::Start_Load(bool useOpenDialog)
 		strcpy(PathFileName_3dt, App->CL_File_IO->s_Path_And_File.c_str());
 		strcpy(FileName_3dt, App->CL_File_IO->s_Just_FileName.c_str());
 
-		strcpy(App->CL_Level->MTF_PathAndFile, App->CL_File_IO->s_Path_And_File.c_str());
-		strcpy(App->CL_Level->MTF_Just_FileName, App->CL_File_IO->s_Just_FileName.c_str());
+		strcpy(MTF_PathAndFile, App->CL_File_IO->s_Path_And_File.c_str());
+		strcpy(MTF_Just_FileName, App->CL_File_IO->s_Just_FileName.c_str());
 
 		char buf[MAX_PATH];
-		strcpy(buf, App->CL_Level->MTF_Just_FileName);
+		strcpy(buf, MTF_Just_FileName);
 		int Len = strlen(buf);
 		buf[Len - 4] = 0;
-		strcpy(App->CL_Level->MTF_JustName_NoExt, buf);
+		strcpy(MTF_JustName_NoExt, buf);
 
-		strcpy(App->CL_Export->mJustName, App->CL_Level->MTF_JustName_NoExt);
+		strcpy(App->CL_Export->mJustName, MTF_JustName_NoExt);
 
 	}
 	
@@ -414,8 +423,8 @@ bool CL64_File::Open_3dt_File()
 
 	// Check if Working Folder Exsits
 	char Work_Folder[MAX_PATH];
-	strcpy(Work_Folder, App->CL_Level->MTF_Just_Path);
-	strcat(Work_Folder, App->CL_Level->MTF_JustName_NoExt);
+	strcpy(Work_Folder, MTF_Just_Path);
+	strcat(Work_Folder, MTF_JustName_NoExt);
 	strcat(Work_Folder, "_ow3d_prj");
 	bool Folder_Test = App->CL_Utilities->Check_Directory_Exists(Work_Folder);
 	if (Folder_Test == true)
@@ -423,12 +432,12 @@ bool CL64_File::Open_3dt_File()
 		App->CL_Level->flag_Working_Folder_Exists = true;
 
 		strcat(Work_Folder, "\\");
-		strcpy(App->CL_Level->Prj_Working_Folder, Work_Folder);
+		strcpy(Prj_Working_Folder, Work_Folder);
 	}
 	else
 	{
 		App->CL_Level->flag_Working_Folder_Exists = false;
-		strcpy(App->CL_Level->Prj_Working_Folder, "None");
+		strcpy(Prj_Working_Folder, "None");
 	}
 	// -------------------------------------------------------
 
@@ -438,7 +447,7 @@ bool CL64_File::Open_3dt_File()
 
 	if (App->CL_Level->Level_Version == 1.0)
 	{
-		strcpy(pathAndFile, App->CL_Level->MTF_Just_Path);
+		strcpy(pathAndFile, MTF_Just_Path);
 		strcat(pathAndFile, App->CL_Level->TXL_Just_File_Name); // Gets it from MTF File
 
 		if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
@@ -588,7 +597,7 @@ bool CL64_File::Load_File(const char* FileName)
 void CL64_File::Set_Editor() 
 {
 	// Set title based on the current level's path and file
-	App->Set_Title(App->CL_Level->MTF_PathAndFile);
+	App->Set_Title(MTF_PathAndFile);
 
 	// Enable the select button and disable the insert button in the properties templates
 	//App->CL_Top_Tabs->Enable_Select_Button(true, 1);

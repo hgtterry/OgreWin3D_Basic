@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 CL64_Editor_Control::CL64_Editor_Control(void)
 {
-	Parent_hWnd = nullptr;
+	Editor_Mode = Enums::Editor_Mode_None;
 
 	flag_Map_Editor_Active = false;
 	flag_Scene_Editor_Active = false;
@@ -53,6 +53,8 @@ CL64_Editor_Control::~CL64_Editor_Control(void)
 void CL64_Editor_Control::Reset_Editor(void)
 {
 	App->CL_Model->Model_Type = Enums::Model_Type_None;
+	Editor_Mode = Enums::Editor_Mode_None;
+
 	App->CL_Model->flag_Model_Loaded = false;
 
 	auto& p_OGL_Rend = App->CL_Ogre->OGL_Listener; // Pointer-> App->CL_Ogre->OGL_Listener
@@ -74,43 +76,6 @@ void CL64_Editor_Control::Reset_Editor(void)
 	App->CL_Gizmos->Hair_SetVisible(true);
 	App->CL_Gizmos->Grid_SetVisible(true);
 
-}
-
-// *************************************************************************
-// *	Start_Editor_MapBrush_Mode:- Terry and Hazel Flanigan 2024	 	   *
-// *************************************************************************
-void CL64_Editor_Control::Start_Editor_MapBrush_Mode(void)
-{
-	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_HD_PREVIEW), true);
-	
-	App->CL_Dimensions->flag_Show_Dimensions = false;
-	
-	App->CL_Ogre->Listener_3D->flag_Run_Physics = 0;
-	App->CL_Ogre->Listener_3D->CameraMode = Enums::Cam_Mode_Free;
-
-	flag_Map_Editor_Active = true;
-
-	App->CL_ImGui->flag_Show_Press_Excape = false;
-	App->CL_Gizmos->Enable_Grid_And_Hair(true);
-	//App->CL_Gizmos->highlight(App->CL_Scene->B_Object[App->CL_Gizmos->Last_Selected_Object]->Object_Ent);
-   // App->CL_Com_Objects->Show_Entities(true);
-
-	SetParent(App->CL_View_3D->Bottom_Right_Window_Hwnd, Parent_hWnd);
-
-	App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
-
-	App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
-	
- 
-	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)
-	{
-		App->CL_Ogre->OGL_Listener->Show_Visuals(true);
-	}
-
-	if (App->CL_Views_Com->flag_Environment_On == false)
-	{
-		//App->CL_Com_Environments->Set_Environment_By_Index(false, -1);
-	}
 }
 
 // *************************************************************************
@@ -171,6 +136,61 @@ void CL64_Editor_Control::Set_Map_Editor_Startup()
 }
 
 // *************************************************************************
+// *			Set_3DEditor_View:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Editor_Control::Set_3DEditor_View()
+{
+	auto& Views_Com = App->CL_Views_Com;
+
+	App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_3D);
+	Views_Com->Init_Views(Enums::Selected_Map_View_3D);
+	Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
+
+	flag_Mode_3DEditor_View = true;
+	flag_Mode_Map_View = false;
+
+	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+}
+
+// *************************************************************************
+// *		Set_Editor_Design_Model:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Editor_Control::Set_Editor_Design_Model()
+{
+	// Set the editor mode to design model
+	Editor_Mode = Enums::Editor_Mode_Design_Model;
+	App->CL_Model->Model_Type = Enums::Model_Type_Brush;
+
+	// Disable brush and face buttons on the top tabs
+	App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
+	App->CL_Interface->Enable_TopTabs_Faces_Buttons(false);
+
+	// Show the brush and face panels
+	App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
+	App->CL_Interface->Show_TopTabs_Faces_Panel(true);
+
+	// Set the map view in the editor
+	Set_Map_View();
+
+	// Enable the templates tab and disable textures and groups tabs
+	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEMPLATES), true);
+	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEXTURES), false);
+	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBGROUPS), false);
+
+	// Select the templates tab and show the properties panel
+	App->CL_Interface->Select_Tab(Enums::Tab_ID_TEMPLATES);
+	App->CL_Interface->Show_Properties_Panel(true);
+
+	// Mark the model as loaded
+	App->CL_Model->flag_Model_Loaded = true;
+
+	// Set the model name to "New_Model"
+	strncpy(App->CL_Model->Model_Just_Name, "New_Model", sizeof(App->CL_Model->Model_Just_Name) - 1);
+	App->CL_Model->Model_Just_Name[sizeof(App->CL_Model->Model_Just_Name) - 1] = '\0'; // Ensure null termination
+
+}
+
+// *************************************************************************
 // *			Set_Map_View:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 void CL64_Editor_Control::Set_Map_View()
@@ -200,50 +220,4 @@ void CL64_Editor_Control::Set_Map_View()
 		App->CL_View_Bottom_Left->Zoom_To_Model();
 		flag_Just_Loaded = true;
 	}
-}
-
-// *************************************************************************
-// *			Set_3DEditor_View:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Editor_Control::Set_3DEditor_View()
-{
-	auto& Views_Com = App->CL_Views_Com;
-
-	App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_3D);
-	Views_Com->Init_Views(Enums::Selected_Map_View_3D);
-	Views_Com->Resize_Windows(Views_Com->Main_View_Dlg_Hwnd, Views_Com->nleftWnd_width, Views_Com->nleftWnd_Depth);
-
-	flag_Mode_3DEditor_View = true;
-	flag_Mode_Map_View = false;
-
-	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-}
-
-// *************************************************************************
-// *		Start_Editor_New_Model:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Editor_Control::Start_Editor_New_Model()
-{
-	App->CL_Model->Editor_Setup_Mode = Enums::Editor_Setup_Mode_Create_Model;
-
-	App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
-	App->CL_Interface->Enable_TopTabs_Faces_Buttons(false);
-
-	App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
-	App->CL_Interface->Show_TopTabs_Faces_Panel(true);
-
-	App->CL_Editor_Control->Set_Map_View();
-
-	App->CL_Interface->Show_Properties_Panel(true);
-
-	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEMPLATES), true);
-	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEXTURES), false);
-	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBGROUPS), false);
-
-	App->CL_Interface->Select_Tab(Enums::Tab_ID_TEMPLATES);
-
-	App->CL_Model->Model_Type = Enums::Model_Type_Brush;
-	App->CL_Model->flag_Model_Loaded = true;
-
-	strcpy(App->CL_Model->Model_Just_Name, "New_Model");
 }

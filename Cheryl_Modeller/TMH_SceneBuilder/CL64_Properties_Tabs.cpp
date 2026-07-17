@@ -290,7 +290,7 @@ void CL64_Properties_Tabs::Select_Textures_Tab()
 		{
 			App->CL_Interface->Hide_Tab_Dialogs();
 
-			if (App->CL_Model->Editor_Setup_Mode == Enums::Editor_Setup_Mode_Create_Model)
+			if (App->CL_Editor_Control->Editor_Mode == Enums::Editor_Mode_Design_Model)
 			{
 				App->CL_Interface->Show_Textures_Dialog(true);
 			}

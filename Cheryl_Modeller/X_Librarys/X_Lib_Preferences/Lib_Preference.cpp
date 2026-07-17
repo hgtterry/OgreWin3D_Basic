@@ -541,8 +541,8 @@ void Lib_Preference::Init_Configuration()
 // *************************************************************************
 void Lib_Preference::Config_SetDefaults()
 {
-	strcpy(App->CL_Level->MTF_PathAndFile, "");
-	strcpy(App->CL_Level->MTF_PathAndFile, "");
+	strcpy(App->CL_File->MTF_PathAndFile, "");
+	strcpy(App->CL_File->MTF_PathAndFile, "");
 
 	flag_OpenLastFile = false;
 	flag_MapEditor = true;
@@ -576,8 +576,8 @@ void Lib_Preference::Save_Config_File()
 
 	fprintf(WriteRecentFiles, "%s\n", "[Start_Up]");
 	fprintf(WriteRecentFiles, "%s%i\n", "Open_Last_File=", flag_OpenLastFile);
-	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Full=", App->CL_Level->MTF_PathAndFile);
-	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Name=", App->CL_Level->MTF_Just_FileName);
+	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Full=", App->CL_File->MTF_PathAndFile);
+	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Name=", App->CL_File->MTF_Just_FileName);
 
 	fprintf(WriteRecentFiles, "%s%i\n", "Start_Map_Editor=", flag_MapEditor);
 	fprintf(WriteRecentFiles, "%s%i\n", "Start_Scene_Editor=", flag_SceneEditor);

@@ -244,7 +244,7 @@ void CL64_Properties_Templates::Insert_Template()
 
 			App->CL_Doc->Editor_Set_Dlgs(Enums::Editor_Dlgs_First_Brush);
 
-			App->Set_Title(App->CL_Level->MTF_PathAndFile);
+			App->Set_Title(App->CL_File->MTF_PathAndFile);
 			App->CL_Level->flag_Level_is_Modified = true;
 
 			//// Set new level and project names

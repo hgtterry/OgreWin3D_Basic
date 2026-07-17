@@ -39,6 +39,13 @@ public:
 	char PathFileName_3dt[MAX_PATH];
 	char FileName_3dt[MAX_PATH];
 
+	// MTF File
+	char MTF_PathAndFile[MAX_PATH];
+	char MTF_Just_FileName[MAX_PATH];
+	char MTF_Just_Path[MAX_PATH];
+	char MTF_JustName_NoExt[MAX_PATH];
+	char Prj_Working_Folder[MAX_PATH];
+
 	bool flag_loading;
 
 	FILE* fp;

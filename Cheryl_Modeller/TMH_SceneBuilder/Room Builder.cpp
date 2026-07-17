@@ -473,7 +473,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_FILE_NEWMODEL:
             {
-                App->CL_Editor_Control->Start_Editor_New_Model();
+                App->CL_Editor_Control->Set_Editor_Design_Model();
 
                 return 1;
             }
@@ -1259,7 +1259,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 {
                     char Text[200];
                     strcpy(Text, "Save Changes To ");
-                    strcat(Text, App->CL_Level->MTF_Just_FileName);
+                    strcat(Text, App->CL_File->MTF_Just_FileName);
 
                     App->CL_Dialogs->YesNoCancel((LPSTR)"File has been Modified", Text);
 
@@ -1352,7 +1352,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             char Text[200];
             strcpy(Text, "Save Changes To ");
-            strcat(Text, App->CL_Level->MTF_Just_FileName);
+            strcat(Text, App->CL_File->MTF_Just_FileName);
 
             App->CL_Dialogs->YesNoCancel((LPSTR)"File has been Modified", Text);
 
@@ -1578,7 +1578,7 @@ void StartOgre()
 
     if (App->flag_Release == false)
     {
-        App->CL_Editor_Control->Start_Editor_New_Model();
+        App->CL_Editor_Control->Set_Editor_Design_Model();
     }
 
 	App->CL_Ogre->Render_Loop_3D();
