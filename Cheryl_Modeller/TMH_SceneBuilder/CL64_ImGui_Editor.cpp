@@ -324,6 +324,8 @@ void CL64_ImGui_Editor::Model_Data(void)
 	ImGui::Text("Bone Count %i", App->CL_Model->BoneCount);
 	ImGui::Text(" ");
 
+	ImGui::Text("Model Loaded %i", App->CL_Model->flag_Model_Loaded);
+
 	if (App->CL_Model->flag_BoundingBox_Created == true)
 	{
 		strcpy(Buff, "  -- Yes -- ");
@@ -333,7 +335,7 @@ void CL64_ImGui_Editor::Model_Data(void)
 		strcpy(Buff, "  -- No --");
 	}
 	ImGui::Text("Bounding Box Created %s", Buff);
-
+	
 }
 
 // *************************************************************************

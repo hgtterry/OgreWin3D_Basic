@@ -163,6 +163,19 @@ void CL64_Model::Clear_Model()
 		App->CL_Model->Imported_Ogre_Node = nullptr;
 	}
 	
+	// Check if the imported Ogre entity and node exist
+	if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+	{
+		// Detach all objects from the node and destroy the node and entity
+		App->CL_Mesh_Mgr->World_Node->detachAllObjects();
+		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Mesh_Mgr->World_Node);
+		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Mesh_Mgr->World_Ent);
+
+		// Nullify pointers to prevent dangling references
+		App->CL_Mesh_Mgr->World_Ent = nullptr;
+		App->CL_Mesh_Mgr->World_Node = nullptr;
+	}
+	
 	// Reset the mesh data filename
 	App->CL_Mesh->S_OgreMeshData[0]->mFileName_Str = "No Model Loaded";
 	App->CL_Mesh->S_OgreMeshData[0]->m_Motion_Names.resize(0);
@@ -210,6 +223,7 @@ void CL64_Model::Clear_Model()
 	
 	// Reset editor, camera, and panels
 	App->CL_Editor_Control->Reset_Editor();
+
 	App->CL_Camera->Reset_View();
 	
 	App->CL_Interface->Reset_All_Dialogs();

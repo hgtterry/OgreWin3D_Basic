@@ -475,6 +475,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_FILE_NEWMODEL:
             {
+                App->CL_Model->Clear_Model();
                 App->CL_Editor_Control->Set_Editor_Design_Model();
 
                 return 1;

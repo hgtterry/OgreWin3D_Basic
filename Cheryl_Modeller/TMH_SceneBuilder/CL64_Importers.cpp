@@ -88,7 +88,8 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 	
 	App->CL_PB->Nudge((LPSTR)"Clear Model");
 	App->CL_Model->Clear_Model();
-	
+	App->CL_Editor_Control->Set_Editor_Import_Model();
+
 	// Temporary resource management commented out for review
 	// App->CL_Resources->Destroy_Resources_Group(App->CL_Resources->Ogre_Loader_Resource_Group);
 	// App->CL_Resources->Ogre_ExternalResourceLoaded = 0;
@@ -172,7 +173,8 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	App->CL_PB->Nudge((LPSTR)"Clear Model");
 	App->CL_Model->Clear_Model();
-	
+	App->CL_Editor_Control->Set_Editor_Import_Model();
+
 	//if (Check_Resource_File == false)
 	{
 		//App->CL_Resources->Unload_OgreCFG_Resources();
