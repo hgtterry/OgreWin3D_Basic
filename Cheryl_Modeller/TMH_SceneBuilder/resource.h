@@ -583,6 +583,7 @@
 #define IDC_BT_TB_SHAPES                1403
 #define IDC_BT_MOT_TEXTURES             1403
 #define IDC_BT_ALL_GROUPS               1403
+#define IDC_BT_HIDEGROUP                1403
 #define IDC_CB_MOTIONS_JOINTS           1404
 #define IDC_ST_MOT_JOINTS               1405
 #define IDC_BT_TT_BRUSH_SELECT          1406

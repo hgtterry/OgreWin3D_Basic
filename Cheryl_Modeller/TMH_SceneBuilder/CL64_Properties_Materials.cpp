@@ -78,7 +78,6 @@ void CL64_Properties_Materials::Reset_Class(void)
 void CL64_Properties_Materials::Init_Bmps(void)
 {
 	HWND Temp = GetDlgItem(Materials_Dlg_Hwnd, IDC_BT_AT_MATERIAL_FACES);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON | TTS_NOFADE, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 250);
@@ -125,6 +124,8 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 		SendDlgItemMessage(hDlg, IDC_BT_AT_GROUPDETAILS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_AT_CHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_GROUP_ONLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BT_HIDEGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 
 		SendDlgItemMessage(hDlg, IDC_ST_AT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
@@ -197,6 +198,13 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 			App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->flag_ShowOnlySubMesh);
 		}
 
+		if (some_item->idFrom == IDC_BT_HIDEGROUP)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->flag_Show_HideGroup);
+		}
+
 		if (some_item->idFrom == IDC_BT_AT_GROUPDETAILS)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -245,7 +253,7 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 		if (some_item->idFrom == IDC_BT_AT_MATERIAL_FACES)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Globals(item);
+			App->Custom_Button_Toggle(item, App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces);
 
 			return CDRF_DODEFAULT;
 		}
@@ -302,16 +310,14 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 				if (App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces == true)
 				{
 					HWND Temp = GetDlgItem(App->CL_Properties_Materials->Materials_Dlg_Hwnd, IDC_BT_AT_MATERIAL_FACES);
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
-
+					
 					App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = false;
 					EnableWindow(GetDlgItem(hDlg, IDC_BT_MATFACESCOLOUR), false);
 				}
 				else
 				{
 					HWND Temp = GetDlgItem(App->CL_Properties_Materials->Materials_Dlg_Hwnd, IDC_BT_AT_MATERIAL_FACES);
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
-
+					
 					App->CL_Ogre->OGL_Listener->flag_Show_Material_Faces = true;
 					EnableWindow(GetDlgItem(hDlg, IDC_BT_MATFACESCOLOUR), true);
 				}
@@ -331,33 +337,29 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 				App->CL_Ogre->OGL_Listener->flag_ShowOnlySubMesh = true;
 			}
 
+			App->CL_Ogre->OGL_Listener->flag_Show_HideGroup = false;
+
+			RedrawWindow(App->CL_Properties_Materials->Materials_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
 		// ------------------------------------------------- Hide Group
-		/*if (LOWORD(wParam) == IDC_CKHIDEGROUP)
+		if (LOWORD(wParam) == IDC_BT_HIDEGROUP)
 		{
-			HWND temp = GetDlgItem(hDlg, IDC_CKHIDEGROUP);
-			HWND temp1 = GetDlgItem(hDlg, IDC_CKSHOWONLYGROUPS);
-
-			if (App->CL_Right_Groups->CK_HideGroup == 1)
+			if (App->CL_Ogre->OGL_Listener->flag_Show_HideGroup == true)
 			{
-				App->CL_Right_Groups->CK_HideGroup = 0;
-				App->Cl_Ogre->RenderListener->Show_HideGroup = 0;
-				SendMessage(temp, BM_SETCHECK, 0, 0);
+				App->CL_Ogre->OGL_Listener->flag_Show_HideGroup = false;	
 			}
 			else
 			{
-				App->CL_Right_Groups->CK_HideGroup = 1;
-				App->Cl_Ogre->RenderListener->Show_HideGroup = 1;
-				SendMessage(temp, BM_SETCHECK, 1, 0);
-
-				App->CL_Right_Groups->CK_ShowGroupOnly = 0;
-				App->Cl_Ogre->RenderListener->ShowOnlySubMesh = 0;
-				SendMessage(temp1, BM_SETCHECK, 0, 0);
+				App->CL_Ogre->OGL_Listener->flag_Show_HideGroup = true;
 			}
+
+			App->CL_Ogre->OGL_Listener->flag_ShowOnlySubMesh = false;
+
+			RedrawWindow(App->CL_Properties_Materials->Materials_Dlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDC_BT_AT_VIEWMAT)
 		{

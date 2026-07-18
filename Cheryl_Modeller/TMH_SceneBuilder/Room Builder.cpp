@@ -1309,11 +1309,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 
-       /* case WM_KEYDOWN:
-		{
-            App->Flash_Window();
-            return 0;
-		}*/
 
     case WM_SIZE:
     {
@@ -1397,6 +1392,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
 
     case WM_TIMER:
+    {
         if (wParam == 1)
         {
             if (App->flag_3D_Started == false)
@@ -1409,9 +1405,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     StartOgre();
                 }
             }
-
-            break;
         }
+
+        break;
+    }
 
     case WM_DESTROY:
         PostQuitMessage(0);
@@ -1419,6 +1416,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
+
     return 0;
 }
 
@@ -1518,7 +1516,7 @@ void StartOgre()
 
    // App->CL_Ogre->Init_Ogre();
 
-    Sleep(500);
+    Sleep(200);
 
     EndDialog(App->ViewPLeaseWait, LOWORD(0));
 
@@ -1549,7 +1547,7 @@ void StartOgre()
         App->CL_File->Start_Load(false);
     }*/
 
-    bool loadtestfile = false;
+    bool loadtestfile = true;
     if (loadtestfile == true)
     {
         strcpy(App->CL_Model->Loaded_FileName, "chapel-10-C.ms3d");
@@ -1578,11 +1576,6 @@ void StartOgre()
     App->CL_Editor_Control->flag_Map_Editor_Active = false;
     App->CL_Views_Com->Selected_Window = Enums::Selected_Map_View_3D;
 
-    if (App->flag_Release == false)
-    {
-        App->CL_Editor_Control->Set_Editor_Design_Model();
-    }
-
 	App->CL_Ogre->Render_Loop_3D();
 
 	Close_App();
@@ -1601,8 +1594,6 @@ void Close_App()
         delete App->CL_Ogre->mRoot;
         App->CL_Ogre->mRoot = NULL;
     }
-
-    //App->CL_Physics->ShutDown_Bullet();
 
     ImGui::DestroyContext();
 

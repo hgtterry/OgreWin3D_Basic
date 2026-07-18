@@ -207,8 +207,8 @@ void CL64_Editor_Control::Set_Editor_Import_Model()
 	App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
 	App->CL_Interface->Show_TopTabs_Faces_Panel(true);
 
-	//// Set the map view in the editor
-	//Set_Map_View();
+	// Set 3D view in the editor
+	Set_3DEditor_View();
 
 	// Enable the templates tab and disable textures and groups tabs
 	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEMPLATES), false);
