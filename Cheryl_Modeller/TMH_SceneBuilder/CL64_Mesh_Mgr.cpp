@@ -667,16 +667,23 @@ bool CL64_Mesh_Mgr::Brush_FaceList_Create(const Brush* b, const FaceList* pList,
 // *************************************************************************
 void CL64_Mesh_Mgr::Create_V_Face(int Index)
 {
+	if (Index < 0 || Index >= 200) //  TODO MAX_FACES NEEDS Sorting)
+	{
+		App->Say("Index is out of range.");
+	}
+
 	if (v_Face_Data[Index] != nullptr)
 	{
+		// delete existing Face_Data if it exists
 		delete v_Face_Data[Index];
 		v_Face_Data[Index] = nullptr;
 	}
 
+	// Allocate new Face_Data and initialize
 	v_Face_Data[Index] = new Face_Data;
-
 	strcpy(v_Face_Data[Index]->Brush_Name,"No_Brush");
 }
+
 
 // *************************************************************************
 // *	WE_Convert_All_Texture_Groups:- Terry and Hazel Flanigan 2025	   *
@@ -684,63 +691,42 @@ void CL64_Mesh_Mgr::Create_V_Face(int Index)
 bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
 	int totalVertices = 0;
 	ActualFaceCount = 0;
-	int Group_Count = 0;
+	int groupCount = 0;
 	Delete_Group_Brushes();
-	strcpy(App->CL_Scene->JustName, "Test");
-	//App->CL_Scene->GroupCount = mTextureCount;
-	//Debug
-	int count = 0;
 
-	while (count < mTextureCount)
+	strcpy(App->CL_Scene->JustName, "Test");
+
+	for (int count = 0; count < mTextureCount; ++count) 
 	{
 		int64_t faceCount = WE_Get_Vertice_Count(count);
 
-		//if (faceCount > 0)
+		if (faceCount > 0) 
 		{
-			//if (faceCount > 0)
-			{
-				App->CL_Scene->Create_Mesh_Group(Group_Count);
-			}
-			
-			// Get Group
-			if (faceCount > 0)
-			{
-				auto& group = App->CL_Mesh->Group[Group_Count];
+			App->CL_Scene->Create_Mesh_Group(groupCount);
+			auto& group = App->CL_Mesh->Group[groupCount];
 
-				strcpy(group->GroupName, TextureName2[Group_Count]);
-				strcpy(group->MaterialName, TextureName2[Group_Count]);
+			strcpy(group->GroupName, TextureName2[groupCount]);
+			strcpy(group->MaterialName, TextureName2[groupCount]);
 
-				int trueIndex = App->CL_TXL_Editor->GetIndex_From_Name(TextureName2[Group_Count]);
-				strcpy(group->Assimp_Text_FileName, App->CL_TXL_Editor->Texture_List[trueIndex]->FileName);
+			int trueIndex = App->CL_TXL_Editor->GetIndex_From_Name(TextureName2[groupCount]);
+			strcpy(group->Assimp_Text_FileName, App->CL_TXL_Editor->Texture_List[trueIndex]->FileName);
 
-				group->Has_Alpha = App->CL_TXL_Editor->Texture_List[trueIndex]->Has_Alpha;
-				group->MaterialIndex = Group_Count;
-				group->vertex_Data.resize(faceCount * 3);
-				group->Normal_Data.resize(faceCount * 3);
-				group->MapCord_Data.resize(faceCount * 3);
-				group->Face_Data.resize(faceCount);
-				group->FaceIndex_Data.resize(faceCount * 3);
+			group->Has_Alpha = App->CL_TXL_Editor->Texture_List[trueIndex]->Has_Alpha;
+			group->MaterialIndex = groupCount;
+			group->vertex_Data.resize(faceCount * 3);
+			group->Normal_Data.resize(faceCount * 3);
+			group->MapCord_Data.resize(faceCount * 3);
+			group->Face_Data.resize(faceCount);
+			group->FaceIndex_Data.resize(faceCount * 3);
 
-				WE_Convert_To_Texture_Group(Group_Count);
-				totalVertices += faceCount;
-			}
+			WE_Convert_To_Texture_Group(groupCount);
+			totalVertices += faceCount;
 
-			//if (faceCount > 0)
-			{
-				Group_Count++;
-			}
+			groupCount++;
 		}
-
-		count++;
-	}
-	
-	bool Get_Call = 0;
-	if (Get_Call == 1)
-	{
-		App->Say("Rebuild Called");
 	}
 
-	App->CL_Model->GroupCount = Group_Count;
+	App->CL_Model->GroupCount = groupCount;
 	App->CL_Model->VerticeCount = totalVertices * 3;
 	App->CL_Model->FaceCount = totalVertices;
 

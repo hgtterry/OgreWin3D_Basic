@@ -238,14 +238,6 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 			}
 			else
 			{
-				/*HGDIOBJ old_brush;
-				old_brush = App->CL_Sandbox->Actual_Colour;
-
-				old_brush = SelectObject(item->hdc, old_brush);
-
-				RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
-
-				SelectObject(item->hdc, old_brush);*/
 				App->Custom_Button_Normal(item);
 			}
 		}

@@ -72,6 +72,16 @@ void CL64_Importers::ConfigureForAssimp()
 // *************************************************************************
 bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const LPCWSTR Extension)
 {
+	if (App->CL_Model->flag_Model_Loaded == true)
+	{
+		App->CL_Dialogs->YesNo("Model Loaded", "Clear");
+
+		if (App->CL_Dialogs->flag_Dlg_Canceled == true)
+		{
+			return 1;
+		}
+	}
+
 	if (UseDialog)
 	{
 		if (!App->CL_File_IO->Open_File(Filetype, Extension))
@@ -86,6 +96,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 	App->CL_PB->Start_ProgressBar();
 	App->CL_PB->Set_Progress((LPSTR)"Loading Model", 3);
 	
+	// Clear previous model
 	App->CL_PB->Nudge((LPSTR)"Clear Model");
 	App->CL_Model->Clear_Model();
 	App->CL_Editor_Control->Set_Editor_Import_Model();
@@ -96,6 +107,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 
 	App->CL_Resources->mSelected_Resource_Group = "App_Resource_Group";
 
+	// Set paths and load file
 	App->CL_PB->Nudge((LPSTR)"Set_Paths");
 	App->CL_Model->Set_Paths();
 

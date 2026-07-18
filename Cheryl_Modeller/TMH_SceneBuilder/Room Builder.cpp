@@ -475,6 +475,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_FILE_NEWMODEL:
             {
+                if (App->CL_Model->flag_Model_Loaded == true)
+                {
+                    App->CL_Dialogs->YesNo("Model Loaded", "Clear");
+
+                    if (App->CL_Dialogs->flag_Dlg_Canceled == true)
+                    {
+                        return 1;
+                    }
+                }
+
                 App->CL_Model->Clear_Model();
                 App->CL_Editor_Control->Set_Editor_Design_Model();
 
