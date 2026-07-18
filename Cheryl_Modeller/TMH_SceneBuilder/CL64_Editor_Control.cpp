@@ -191,6 +191,44 @@ void CL64_Editor_Control::Set_Editor_Design_Model()
 }
 
 // *************************************************************************
+// *		Set_Editor_Import_Model:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Editor_Control::Set_Editor_Import_Model()
+{
+	// Set the editor mode to design model
+	Editor_Mode = Enums::Editor_Mode_Import_Model;
+	App->CL_Model->Model_Type = Enums::Model_Type_None;
+
+	// Disable brush and face buttons on the top tabs
+	App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
+	App->CL_Interface->Enable_TopTabs_Faces_Buttons(false);
+
+	//// Show the brush and face panels
+	App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
+	App->CL_Interface->Show_TopTabs_Faces_Panel(true);
+
+	//// Set the map view in the editor
+	//Set_Map_View();
+
+	// Enable the templates tab and disable textures and groups tabs
+	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEMPLATES), false);
+	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEXTURES), true);
+	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBGROUPS), true);
+
+	//// Select the templates tab and show the properties panel
+	App->CL_Interface->Select_Tab(Enums::Tab_ID_TEXTURES);
+	App->CL_Interface->Show_Properties_Panel(true);
+
+	//// Mark the model as loaded
+	//App->CL_Model->flag_Model_Loaded = true;
+
+	//// Set the model name to "New_Model"
+	//strncpy(App->CL_Model->Model_Just_Name, "New_Model", sizeof(App->CL_Model->Model_Just_Name) - 1);
+	//App->CL_Model->Model_Just_Name[sizeof(App->CL_Model->Model_Just_Name) - 1] = '\0'; // Ensure null termination
+
+}
+
+// *************************************************************************
 // *			Set_Map_View:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 void CL64_Editor_Control::Set_Map_View()

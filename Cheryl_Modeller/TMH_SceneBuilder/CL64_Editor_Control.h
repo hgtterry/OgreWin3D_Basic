@@ -36,7 +36,10 @@ public:
 
 	void Set_Map_View();
 	void Set_3DEditor_View();
+
 	void Set_Editor_Design_Model();
+	void Set_Editor_Import_Model();
+
 
 	int Editor_Mode;
 

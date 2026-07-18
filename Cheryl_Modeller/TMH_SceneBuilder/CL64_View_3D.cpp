@@ -72,7 +72,7 @@ void CL64_View_3D::Create_Ogre_Bottom_Right()
 
 	Set_VCam_3D_Defaults();
 
-	App->CL_View_3D->Bottom_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, App->CL_Views_Com->Main_View_Dlg_Hwnd, (DLGPROC)Proc_ViewerMain);
+	App->CL_View_3D->Bottom_Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_BOTTOM_RIGHT, App->CL_Views_Com->Main_View_Dlg_Hwnd, (DLGPROC)Proc_Bottom_Right_Window);
 
 	VCam_3D->hDlg = Bottom_Right_Window_Hwnd;
 
@@ -80,9 +80,9 @@ void CL64_View_3D::Create_Ogre_Bottom_Right()
 }
 
 // *************************************************************************
-// *			Proc_ViewerMain:- Terry Mo and Hazel 2026				   *
+// *		Proc_Bottom_Right_Window:- Terry Mo and Hazel 2026			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_View_3D::Proc_Bottom_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -92,7 +92,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 		SendDlgItemMessage(hDlg, IDC_ST_3D_TITLE, WM_SETFONT, (WPARAM)App->Font_CB10, MAKELPARAM(TRUE, 0));
 		App->CL_View_3D->Bottom_3D_Banner = GetDlgItem(hDlg, IDC_ST_3D_TITLE);
 
-		App->CL_View_3D->RenderWin3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, (DLGPROC)Proc_Ogre_BR);
+		App->CL_View_3D->RenderWin3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_MAP_RENDER_WINDOW, hDlg, (DLGPROC)Proc_3D_Window);
 		return TRUE;
 	}
 
@@ -163,9 +163,9 @@ LRESULT CALLBACK CL64_View_3D::Proc_ViewerMain(HWND hDlg, UINT message, WPARAM w
 }
 
 // *************************************************************************
-// *			Proc_Ogre_BR:- Terry Mo and Hazel 2026	 				   *
+// *			Proc_3D_Window:- Terry Mo and Hazel 2026	 			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_View_3D::Proc_3D_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -208,10 +208,6 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_MOUSEWHEEL:
 	{
-
-		/*if (App->CL_Editor_Control->flag_PreviewMode_Active == 1 &&
-			App->CL_Ogre->Listener_3D->flag_LeftMouseDown == 0)*/
-
 		if (App->CL_Views_Com->Current_View->hDlg == App->CL_View_3D->Bottom_Right_Window_Hwnd)
 		{
 			int zDelta = static_cast<short>(HIWORD(wParam)); // wheel rotation
@@ -239,22 +235,19 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 
 		SetFocus(App->CL_View_3D->RenderWin3D_hWnd);
 
-		//App->Flash_Window();
-
 		return 1;
 	}
 
 	// Left Mouse Down
 	case WM_LBUTTONDOWN:
 	{
+		auto& p_Views_Com = App->CL_Views_Com;
 
-		auto& Views_Com = App->CL_Views_Com;
+		p_Views_Com->Current_View = App->CL_View_3D->VCam_3D;
 
-		Views_Com->Current_View = App->CL_View_3D->VCam_3D;
-
-		if (Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
+		if (p_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
 		{
-			Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
+			p_Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 
 		if (App->CL_ImGui_Editor->flag_Show_System_Data == false)
@@ -267,11 +260,11 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 		{
 			if (App->flag_Block_Mouse_Buttons == false)
 			{
-				if (!ImGui::GetIO().WantCaptureMouse)
+				if (App->CL_ImGui_Editor->flag_Show_System_Data == true)
 				{
 					POINT p;
 					GetCursorPos(&p);
-					Views_Com->mStartPoint = p;
+					p_Views_Com->mStartPoint = p;
 
 					GetCursorPos(&p);
 					App->CursorPosX = p.x;
@@ -281,15 +274,33 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 
 					SetCapture(App->CL_View_3D->RenderWin3D_hWnd);
 					SetCursorPos(App->CursorPosX, App->CursorPosY);
-					App->CL_Ogre->Listener_3D->flag_LeftMouseDown = 1;
+					App->CL_Ogre->Listener_3D->flag_LeftMouseDown = true;
 					App->CUR = SetCursor(NULL);
 
 					App->CL_Camera->Camera_Save_Location();
 
+					return 1;
 				}
-				else
+
+				if (!ImGui::GetIO().WantCaptureMouse)
 				{
-					//App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = 1;
+					POINT p;
+					GetCursorPos(&p);
+					p_Views_Com->mStartPoint = p;
+
+					GetCursorPos(&p);
+					App->CursorPosX = p.x;
+					App->CursorPosY = p.y;
+					App->CL_Ogre->Listener_3D->Pl_Cent500X = p.x;
+					App->CL_Ogre->Listener_3D->Pl_Cent500Y = p.y;
+
+					SetCapture(App->CL_View_3D->RenderWin3D_hWnd);
+					SetCursorPos(App->CursorPosX, App->CursorPosY);
+					App->CL_Ogre->Listener_3D->flag_LeftMouseDown = true;
+					App->CUR = SetCursor(NULL);
+
+					App->CL_Camera->Camera_Save_Location();
+
 				}
 			}
 		}

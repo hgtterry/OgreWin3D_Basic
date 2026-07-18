@@ -718,7 +718,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			App->CL_Interface->Show_TopTabs_Brushes_Panel(false);
 			App->CL_Interface->Show_TopTabs_Faces_Panel(false);
 			App->CL_Editor_Control->Set_3DEditor_View();
-	
 			return TRUE;
 		}
 
@@ -731,8 +730,16 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			}
 			else
 			{
-				App->CL_Interface->Enable_TopTabs_Brushes_Buttons(true);
-				App->CL_Interface->Enable_TopTabs_Faces_Buttons(true);
+				if (App->CL_Editor_Control->Editor_Mode == Enums::Editor_Mode_Design_Model)
+				{
+					App->CL_Interface->Enable_TopTabs_Brushes_Buttons(true);
+					App->CL_Interface->Enable_TopTabs_Faces_Buttons(true);
+				}
+				else
+				{
+					App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
+					App->CL_Interface->Enable_TopTabs_Faces_Buttons(false);
+				}
 			}
 
 			App->CL_Interface->Show_TopTabs_Brushes_Panel(true);

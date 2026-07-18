@@ -273,7 +273,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 //io.DisplaySize = ImVec2(100, 100); // < ---- Force the ImGui display size to 1920x1080
                 //io.DisplayFramebufferScale = ImVec2(100, 100);
 
-                App->CL_Sandbox->Start_Ogre_Window();
+                App->CL_Model->Clear_Model();
+                App->CL_Editor_Control->Set_Editor_Import_Model();
+
 
 				return 1;
 			}
@@ -1567,7 +1569,6 @@ void StartOgre()
 	if (App->CL_Libs->CL_Preference->flag_SceneEditor == true)
 	{
 		App->CL_Editor_Control->Start_Editor_Scene();
-
 	}
 
 

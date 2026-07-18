@@ -40,10 +40,10 @@ public:
 
 	ViewVars* VCam_3D;
 
-	static LRESULT CALLBACK Proc_ViewerMain(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Bottom_Right_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 private:
-	//static LRESULT CALLBACK Proc_ViewerMain(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_3D_Window(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 

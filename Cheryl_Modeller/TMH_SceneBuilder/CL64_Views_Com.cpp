@@ -516,6 +516,8 @@ LRESULT CALLBACK CL64_Views_Com::Proc_Main_Dlg(HWND hDlg, UINT message, WPARAM w
 
 		//	return 1;
 		//}
+
+		return 1;
 	}
 
 	case WM_LBUTTONDOWN:
