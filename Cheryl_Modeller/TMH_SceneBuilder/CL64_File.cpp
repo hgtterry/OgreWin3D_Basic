@@ -376,7 +376,8 @@ void CL64_File::Start_Load(bool useOpenDialog)
 	flag_loading = true;
 
 	// Clear the current level
-	App->CL_Scene->Clear_Level(true);
+	App->CL_Model->Clear_Model();
+	App->CL_Editor_Control->Set_Editor_Design_Model();
 
 	// Attempt to open the 3DT file
 	if (Open_3dt_File())
