@@ -305,10 +305,10 @@ signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 
 	fprintf(wf, "\t\tNumPoints %d\n", f->NumPoints);
 	fprintf(wf, "\t\tFlags %d\n", f->Flags);
-	fprintf(wf, "\t\tLight %d\n", f->LightIntensity);
-	fprintf(wf, "\t\tMipMapBias %f\n", f->MipMapBias);
-	fprintf(wf, "\t\tTranslucency %f\n", f->Translucency);
-	fprintf(wf, "\t\tReflectivity %f\n", f->Reflectivity);
+	fprintf(wf, "\t\tLight %d\n", 0); // Dummy Value
+	fprintf(wf, "\t\tMipMapBias %f\n", (float) 0); // Dummy Value
+	fprintf(wf, "\t\tTranslucency %f\n", (float)0); // Dummy Value
+	fprintf(wf, "\t\tReflectivity %f\n", (float)0); // Dummy Value
 
 	for (i = 0; i < f->NumPoints; i++)
 	{
@@ -323,7 +323,7 @@ signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 		Rotate, xShift, yShift, xScale, yScale, App->CL_X_Face->Face_GetTextureName(f));
 		
 	
-	fprintf(wf, "\t\tLightScale %f %f\n", f->LightXScale, f->LightYScale);
+	fprintf(wf, "\t\tLightScale %f %f\n", (float) 0, (float) 0);  // Dummy Value
 
 	fprintf(wf, "%s%f %f %f %f %f %f %f %f %f %f %f %f\n", "\tTransform ",
 		f->Tex.XfmFaceAngle.AX, f->Tex.XfmFaceAngle.AY, f->Tex.XfmFaceAngle.AZ,
@@ -542,11 +542,14 @@ bool CL64_File::Load_File(const char* FileName)
 	{
 		App->CL_ParseFile->Tag_Float = 0;
 
-		if (App->CL_ParseFile->Get_Version(Read_Buffer) == 0)
+		if (App->CL_ParseFile->Get_Version(Read_Buffer) == false)
 		{
-			// TODO if Check Verison Fails
-			break;
+			return false;
 		}
+		/*else
+		{
+			App->Say_Float(App->CL_Level->Level_Version);
+		}*/
 		
 		// Create Clean Level
 		m_pLevel = App->CL_Level->Level_Create();

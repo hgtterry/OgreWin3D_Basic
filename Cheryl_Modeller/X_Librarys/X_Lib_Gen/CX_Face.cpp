@@ -69,12 +69,12 @@ Face* CX_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 		memset(f, 0, sizeof(Face));
 
 		f->NumPoints = NumPnts;
-		f->LightIntensity = FACE_DEFAULT_LIGHT;
-		f->MipMapBias = FACE_DEFAULT_BIAS;
-		f->Translucency = FACE_DEFAULT_TRANSLUCENCY;
-		f->Reflectivity = FACE_DEFAULT_REFLECTIVITY;
-		f->LightXScale = 1.0f;
-		f->LightYScale = 1.0f;
+	//	f->LightIntensity = FACE_DEFAULT_LIGHT;
+	//	f->MipMapBias = FACE_DEFAULT_BIAS;
+	//	f->Translucency = FACE_DEFAULT_TRANSLUCENCY;
+	//	f->Reflectivity = FACE_DEFAULT_REFLECTIVITY;
+	//	f->LightXScale = 1.0f;
+	//	f->LightYScale = 1.0f;
 		f->Selected = 0;
 		f->Real_Brush_Face_Index = -1;
 		f->Cut_Brush_Index = 0; // TODO does this need to be -1
@@ -367,13 +367,13 @@ void CX_Face::Face_CopyFaceInfo(const Face* src, Face* dst)
 	assert(dst);
 
 	dst->Flags = src->Flags;
-	dst->LightIntensity = src->LightIntensity;
-	dst->MipMapBias = src->MipMapBias;
-	dst->Translucency = src->Translucency;
-	dst->Reflectivity = src->Reflectivity;
+//	dst->LightIntensity = src->LightIntensity;
+//	dst->MipMapBias = src->MipMapBias;
+//	dst->Translucency = src->Translucency;
+//	dst->Reflectivity = src->Reflectivity;
 	dst->Tex = src->Tex;
-	dst->LightXScale = src->LightXScale;
-	dst->LightYScale = src->LightYScale;
+//	dst->LightXScale = src->LightXScale;
+//	dst->LightYScale = src->LightYScale;
 	dst->Real_Brush_Face_Index = src->Real_Brush_Face_Index;
 	dst->Inwards_Faces = src->Inwards_Faces;
 
@@ -531,8 +531,8 @@ Face* CX_Face::Face_Clone(const Face* src)
 // *************************************************************************
 void CX_Face::Face_SetLightScale(Face* f, const float xScale, const float yScale)
 {
-	f->LightXScale = xScale;
-	f->LightYScale = yScale;
+	//f->LightXScale = xScale;
+	//f->LightYScale = yScale;
 }
 
 // *************************************************************************

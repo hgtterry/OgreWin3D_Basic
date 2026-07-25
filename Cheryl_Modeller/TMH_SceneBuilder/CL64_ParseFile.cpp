@@ -156,16 +156,6 @@ Brush* CL64_ParseFile::Brush_CreateFromFile(bool SubBrush)
 		return NULL;
 	}
 
-	//if (tmpFlags & BRUSH_TRANSLUCENT)
-	//{
-	//	// set faces as translucent
-	//	if (fl != NULL)
-	//	{
-	//		FaceList_SetTransparent(fl, GE_TRUE);
-	//	}
-	//	tmpFlags &= ~BRUSH_TRANSLUCENT;
-	//}
-
 	b = App->CL_X_Brush->Brush_Create(tmpType, fl, blist);
 	if (b == NULL)
 	{
@@ -281,10 +271,10 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 		{
 			//App->CL_Face->Face_SetTextureLock(f, true);
 			f->Flags = flg;
-			f->LightIntensity = Light;
-			f->MipMapBias = MipMapBias;
-			f->Reflectivity = Reflectivity;
-			f->Translucency = Translucency;
+			//f->LightIntensity = Light;
+			//f->MipMapBias = MipMapBias;
+			//f->Reflectivity = Reflectivity;
+			//f->Translucency = Translucency;
 			f->Real_Brush_Face_Index = 0;
 			f->Cut_Brush_Index = 0; // TODO does this need to be -1
 		}
@@ -311,8 +301,8 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			App->CL_X_Face->Face_SetTextureScale(f, xScale, yScale);
 			App->CL_X_Face->Face_SetTexturePos(f);
 
-			f->LightXScale = LightXScale;
-			f->LightYScale = LightYScale;
+			//f->LightXScale = LightXScale;
+			//f->LightYScale = LightYScale;
 			
 			if (!Get_Matrix3d("Transform", &f->Tex.XfmFaceAngle)) { Debug }
 			
@@ -348,19 +338,16 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 bool CL64_ParseFile::Get_Version(char* Buffer)
 {
 	(void)sscanf(Buffer, "%s %f", &str_buff_1, &Tag_Float);
+
 	if (!strcmp(str_buff_1, "MTF_Version"))
 	{
 		App->CL_Level->Level_Version = Tag_Float;
-
-		if (Tag_Float == 1.000000 || Tag_Float == 1.500000)
-		{
-			return 1;
-		}
-		else
-		{
-			App->Say("Wrong Version");
-			return 0;
-		}
+		return true;
+	}
+	else
+	{
+		App->Say("Can Not Read Version");
+		return false;
 	}
 
 	return 1;
