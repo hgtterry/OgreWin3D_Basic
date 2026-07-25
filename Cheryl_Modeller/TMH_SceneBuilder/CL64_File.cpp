@@ -192,7 +192,7 @@ bool CL64_File::Save(const char* FileName)
 	}
 
 	// Write version and texture library name to the file
-	float Version = 1.5;
+	float Version = 2.0;
 	fprintf(Write_File, "MTF_Version %.2f\n", Version);
 	fprintf(Write_File, "TextureLib %s\n", TXL_File_Name.c_str());
 
@@ -305,10 +305,12 @@ signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 
 	fprintf(wf, "\t\tNumPoints %d\n", f->NumPoints);
 	fprintf(wf, "\t\tFlags %d\n", f->Flags);
-	fprintf(wf, "\t\tLight %d\n", 0); // Dummy Value
-	fprintf(wf, "\t\tMipMapBias %f\n", (float) 0); // Dummy Value
-	fprintf(wf, "\t\tTranslucency %f\n", (float)0); // Dummy Value
-	fprintf(wf, "\t\tReflectivity %f\n", (float)0); // Dummy Value
+
+
+//	fprintf(wf, "\t\tLight %d\n", 0); // Dummy Value
+//	fprintf(wf, "\t\tMipMapBias %f\n", (float) 0); // Dummy Value
+//	fprintf(wf, "\t\tTranslucency %f\n", (float)0); // Dummy Value
+//	fprintf(wf, "\t\tReflectivity %f\n", (float)0); // Dummy Value
 
 	for (i = 0; i < f->NumPoints; i++)
 	{
@@ -323,7 +325,7 @@ signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 		Rotate, xShift, yShift, xScale, yScale, App->CL_X_Face->Face_GetTextureName(f));
 		
 	
-	fprintf(wf, "\t\tLightScale %f %f\n", (float) 0, (float) 0);  // Dummy Value
+//	fprintf(wf, "\t\tLightScale %f %f\n", (float) 0, (float) 0);  // Dummy Value
 
 	fprintf(wf, "%s%f %f %f %f %f %f %f %f %f %f %f %f\n", "\tTransform ",
 		f->Tex.XfmFaceAngle.AX, f->Tex.XfmFaceAngle.AY, f->Tex.XfmFaceAngle.AZ,
@@ -461,7 +463,7 @@ bool CL64_File::Open_3dt_File()
 		App->Say("File Version is 1.0","Please Re-Save to Update 1.5");
 	}
 
-	if (App->CL_Level->Level_Version == 1.5 && App->CL_Level->flag_Working_Folder_Exists == true)
+	if (App->CL_Level->Level_Version == 1.5 || App->CL_Level->Level_Version == 2.0 && App->CL_Level->flag_Working_Folder_Exists == true)
 	{
 		//strcpy(pathAndFile, App->CL_Project->m_Main_TXL_Path);
 		

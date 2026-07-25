@@ -47,6 +47,8 @@ public:
 	bool Get_Matrix3d(const char* Should_Be, Matrix3d* Matrix3d_return);
 	bool Get_Text_Info(const char* Should_Be, float* ret_Rotate, Ogre::Vector2* ret_Shift, Ogre::Vector2* ret_Scale, char* Chr_Texture);
 
+	void Skip_Line();
+
 	char str_buff_1[MAX_PATH];
 	char str_buff_2[MAX_PATH];
 

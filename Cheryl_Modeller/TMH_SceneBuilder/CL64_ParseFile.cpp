@@ -224,13 +224,11 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 Face* CL64_ParseFile::Face_CreateFromFile()
 {
 	Face* f = NULL;
-	int		i, flg, NumPnts, xShift, yShift, Light;
+	int		i, flg, NumPnts, xShift, yShift;
 	
 	Ogre::Vector2 Shift;
 	Ogre::Vector2 Scale;
-	Ogre::Vector2 Vec_Light;
-
-	float MipMapBias, Reflectivity, Translucency;
+	
 	float xScale, yScale, Rotate;
 	T_Vec3* tmpPnts = NULL;
 	signed int LoadResult;
@@ -245,11 +243,19 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 	
 	flg &= ~FACE_SELECTED;
 
-	if (!Get_Int("Light", &Light)) { return NULL; }
-	
-	if (!Get_Float("MipMapBias", &MipMapBias)) { return NULL; }
-	if (!Get_Float("Translucency", &Translucency)) { return NULL; }
-	if (!Get_Float("Reflectivity", &Reflectivity)) { return NULL; }
+
+	if (App->CL_Level->Level_Version == 1.5)
+	{
+		Skip_Line();
+		Skip_Line();
+		Skip_Line();
+		Skip_Line();
+		/*if (!Get_Int("Light", &Light)) { return NULL; }
+
+		if (!Get_Float("MipMapBias", &MipMapBias)) { return NULL; }
+		if (!Get_Float("Translucency", &Translucency)) { return NULL; }
+		if (!Get_Float("Reflectivity", &Reflectivity)) { return NULL; }*/
+	}
 	
 
 	tmpPnts = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * NumPnts, "Create Points");
@@ -271,10 +277,6 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 		{
 			//App->CL_Face->Face_SetTextureLock(f, true);
 			f->Flags = flg;
-			//f->LightIntensity = Light;
-			//f->MipMapBias = MipMapBias;
-			//f->Reflectivity = Reflectivity;
-			//f->Translucency = Translucency;
 			f->Real_Brush_Face_Index = 0;
 			f->Cut_Brush_Index = 0; // TODO does this need to be -1
 		}
@@ -287,9 +289,13 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 		xScale = Scale.x;
 		yScale = Scale.y;
 
-		if (!Get_Vector2("LightScale", &Vec_Light)) { return NULL; }
-		LightXScale = Vec_Light.x;
-		LightYScale = Vec_Light.y;
+		if (App->CL_Level->Level_Version == 1.5)
+		{
+			Skip_Line();
+			/*if (!Get_Vector2("LightScale", &Vec_Light)) { return NULL; }
+			LightXScale = Vec_Light.x;
+			LightYScale = Vec_Light.y;*/
+		}
 
 		if (f)
 		{
@@ -301,9 +307,6 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 			App->CL_X_Face->Face_SetTextureScale(f, xScale, yScale);
 			App->CL_X_Face->Face_SetTexturePos(f);
 
-			//f->LightXScale = LightXScale;
-			//f->LightYScale = LightYScale;
-			
 			if (!Get_Matrix3d("Transform", &f->Tex.XfmFaceAngle)) { Debug }
 			
 			/*T_Vec3 Angles = { 0,0,0 };
@@ -654,5 +657,14 @@ bool CL64_ParseFile::Get_Text_Info(const char* Should_Be, float* ret_Rotate, Ogr
 	}
 
 	return 0;
+}
+
+// *************************************************************************
+// *	        Skip_Line:- Terry and Hazel Flanigan 2026		           *
+// *************************************************************************
+void CL64_ParseFile::Skip_Line()
+{
+	memset(App->CL_File->Read_Buffer, 0, MAX_PATH);
+	fgets(App->CL_File->Read_Buffer, sizeof(App->CL_File->Read_Buffer), App->CL_File->fp);
 }
 

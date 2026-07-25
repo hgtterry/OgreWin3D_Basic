@@ -31,12 +31,13 @@ enum System_Page
 	System_Page_Camera = 0,
 	System_Page_Data = 1,
 	System_Page_Model = 2,
-	System_Page_Grids = 3
+	System_Page_Grids = 3,
+	System_Page_File = 4
 };
 
 CL64_ImGui_Editor::CL64_ImGui_Editor()
 {
-	Selected_System_Page = System_Page_Grids;
+	Selected_System_Page = System_Page_File;
 
 	flag_Block_GUI = false;
 
@@ -144,6 +145,11 @@ void CL64_ImGui_Editor::Imgui_System_Data(void)
 			Selected_System_Page = System_Page_Grids;
 		}
 
+		if (ImGui::Button(" File ", ImVec2(100, 0)))
+		{
+			Selected_System_Page = System_Page_File;
+		}
+
 		// Functions
 		if (Selected_System_Page == System_Page_Camera)
 		{
@@ -183,6 +189,16 @@ void CL64_ImGui_Editor::Imgui_System_Data(void)
 			ImGui::Text("Grids:");
 
 			Grids_Data();
+		}
+
+		if (Selected_System_Page == System_Page_File)
+		{
+			ImGui::NextColumn();
+			ImGui::AlignTextToFramePadding();
+
+			ImGui::Text("File:");
+
+			File_Data();
 		}
 
 		ImGui::Columns(0);
@@ -394,5 +410,15 @@ void CL64_ImGui_Editor::Grids_Data(void)
 	ImGui::Text("Height %f", (float)App->CL_View_Bottom_Left->VCam_BL->Height);
 	ImGui::Text("Width %f", (float)App->CL_View_Bottom_Left->VCam_BL->Width);
 	ImGui::Text(" ");
+
+}
+
+// *************************************************************************
+// *				FIle_Data:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui_Editor::File_Data(void)
+{
+	
+	ImGui::Text("File Version %f", App->CL_Level->Level_Version);
 
 }
