@@ -33,8 +33,8 @@ CL64_Keyboard::CL64_Keyboard(void)
 	flag_Block_Keyboard = false;
 	flag_Update_Views = false;
 	Mouse_point = { 0,0 };
-	Mouse_Wheel_Zoom = 2;
-	Mouse_Wheel_Selected_Speed = 1;
+	Mouse_Wheel_Zoom = 10;
+	Mouse_Wheel_Selected_Speed = 2;
 }
 
 CL64_Keyboard::~CL64_Keyboard(void)

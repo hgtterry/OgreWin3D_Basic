@@ -339,6 +339,11 @@ LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message
 
 		if (LOWORD(wParam) == IDC_GD_BRUSHLIST)
 		{
+			if (App->CL_Editor_Control->Editor_Mode == Enums::Editor_Mode_Import_Model)
+			{
+				return TRUE;
+			}
+
 			if (App->CL_Properties_Brushes->flag_Brushes_Dlg_Created == true)
 			{
 				App->CL_Doc->Do_General_Select_Dlg(false);
