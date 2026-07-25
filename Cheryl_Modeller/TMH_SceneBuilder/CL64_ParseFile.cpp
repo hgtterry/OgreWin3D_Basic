@@ -219,120 +219,90 @@ FaceList* CL64_ParseFile::FaceList_CreateFromFile()
 }
 
 // *************************************************************************
-// *		   Face_CreateFromFile:- Terry and Hazel Flanigan 2025		   *
+// *		   Face_CreateFromFile:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 Face* CL64_ParseFile::Face_CreateFromFile()
 {
-	Face* f = NULL;
-	int		i, flg, NumPnts, xShift, yShift;
+	int	xShift, yShift;
 	
 	Ogre::Vector2 Shift;
 	Ogre::Vector2 Scale;
 	
 	float xScale, yScale, Rotate;
 	T_Vec3* tmpPnts = NULL;
-	signed int LoadResult;
+
 	char szTemp[MAX_PATH]{ 0 };
 
-	assert(Parser != NULL);
+	int numPoints = 0;
+	if (!Get_Int("NumPoints", &numPoints)) return nullptr;
 
-	LoadResult = false;
-	
-	if (!Get_Int("NumPoints", &NumPnts)) { return NULL; }
-	if (!Get_Int("Flags", &flg)) { return NULL; }
-	
-	flg &= ~FACE_SELECTED;
+	int flags = 0;
+	if (!Get_Int("Flags", &flags)) return nullptr;
+	flags &= ~FACE_SELECTED;
 
+
+	// Version-specific
+	if (App->CL_Level->Level_Version == 1.5)
+	{
+		for (int i = 0; i < 4; ++i) Skip_Line();
+	}
+	
+	tmpPnts = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * numPoints, "Create Points");
+
+	if (tmpPnts == NULL)
+	{
+		App->Say("Can not create points");
+		return nullptr;
+	}
+
+	// Read points from file
+	for (int i = 0; i < numPoints; i++)
+	{
+		if (!Get_Vector3("Vec3d", &tmpPnts[i])) { return NULL; }
+	}
+
+	// Create Face
+	Face* face = App->CL_X_Face->Face_Create(numPoints, tmpPnts, 0);
+	App->CL_X_Maths->Ram_Free(tmpPnts);
+	tmpPnts = NULL;
+
+	if (face)
+	{
+		//App->CL_Face->Face_SetTextureLock(f, true);
+		face->Flags = flags;
+		face->Real_Brush_Face_Index = 0;
+		face->Cut_Brush_Index = 0; // TODO does this need to be -1
+	}
+
+	Get_Text_Info("TexInfo", &Rotate, &Shift, &Scale, szTemp);
+
+	xShift = (int)Shift.x;
+	yShift = (int)Shift.y;
+
+	xScale = Scale.x;
+	yScale = Scale.y;
 
 	if (App->CL_Level->Level_Version == 1.5)
 	{
 		Skip_Line();
-		Skip_Line();
-		Skip_Line();
-		Skip_Line();
-		/*if (!Get_Int("Light", &Light)) { return NULL; }
-
-		if (!Get_Float("MipMapBias", &MipMapBias)) { return NULL; }
-		if (!Get_Float("Translucency", &Translucency)) { return NULL; }
-		if (!Get_Float("Reflectivity", &Reflectivity)) { return NULL; }*/
 	}
-	
 
-	tmpPnts = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * NumPnts, "Create Points");
-	if (tmpPnts)
+	if (face)
 	{
-		float LightXScale = 1.0f;
-		float LightYScale = 1.0f;
-		
-		for (i = 0; i < NumPnts; i++)
-		{
-			if (!Get_Vector3("Vec3d", &tmpPnts[i])) { return NULL; }
-		}
+		App->CL_X_Face->Face_InitTexInfo(&face->Tex, &face->Face_Plane.Normal);
 
-		f = App->CL_X_Face->Face_Create(NumPnts, tmpPnts, 0);
-		App->CL_X_Maths->Ram_Free(tmpPnts);
-		tmpPnts = NULL;
+		App->CL_X_Face->Face_SetTextureName(face, szTemp);
+		App->CL_X_Face->Face_SetTextureRotate(face, Rotate);
+		App->CL_X_Face->Face_SetTextureShift(face, xShift, yShift);
+		App->CL_X_Face->Face_SetTextureScale(face, xScale, yScale);
+		App->CL_X_Face->Face_SetTexturePos(face);
 
-		if (f)
-		{
-			//App->CL_Face->Face_SetTextureLock(f, true);
-			f->Flags = flg;
-			f->Real_Brush_Face_Index = 0;
-			f->Cut_Brush_Index = 0; // TODO does this need to be -1
-		}
+		if (!Get_Matrix3d("Transform", &face->Tex.XfmFaceAngle)) { Debug }
+		if (!Get_Vector3("Pos", &face->Tex.Pos)) { return NULL; }
 
-		Get_Text_Info("TexInfo", &Rotate, &Shift, &Scale, szTemp);
-
-		xShift = (int)Shift.x;
-		yShift = (int)Shift.y;
-
-		xScale = Scale.x;
-		yScale = Scale.y;
-
-		if (App->CL_Level->Level_Version == 1.5)
-		{
-			Skip_Line();
-			/*if (!Get_Vector2("LightScale", &Vec_Light)) { return NULL; }
-			LightXScale = Vec_Light.x;
-			LightYScale = Vec_Light.y;*/
-		}
-
-		if (f)
-		{
-			App->CL_X_Face->Face_InitTexInfo(&f->Tex, &f->Face_Plane.Normal);
-
-			App->CL_X_Face->Face_SetTextureName(f, szTemp);
-			App->CL_X_Face->Face_SetTextureRotate(f, Rotate);
-			App->CL_X_Face->Face_SetTextureShift(f, xShift, yShift);
-			App->CL_X_Face->Face_SetTextureScale(f, xScale, yScale);
-			App->CL_X_Face->Face_SetTexturePos(f);
-
-			if (!Get_Matrix3d("Transform", &f->Tex.XfmFaceAngle)) { Debug }
-			
-			/*T_Vec3 Angles = { 0,0,0 };
-			App->CL_Maths->XForm3d_GetEulerAngles(&f->Tex.XfmFaceAngle, &Angles);
-			App->Say_Vector3(Ogre::Vector3(Units_RadiansToDegrees(Angles.x), Units_RadiansToDegrees(Angles.y), Units_RadiansToDegrees(Angles.z)));*/
-
-
-			if (!Get_Vector3("Pos", &f->Tex.Pos)) { return NULL; }
-		}
-
-		LoadResult = true;
 	}
 
-//	if (LoadResult == false)
-//	{
-//		if (f != NULL)
-//		{
-//			Face_Destroy(&f);
-//		}
-//		if (tmpPnts != NULL)
-//		{
-//			geRam_Free(tmpPnts);
-//		}
-//	}
-
-	return f;
+	return face;
 }
 
 // *************************************************************************
