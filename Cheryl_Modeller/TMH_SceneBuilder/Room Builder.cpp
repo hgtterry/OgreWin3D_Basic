@@ -145,7 +145,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Initialize dialogs
     App->Init_Dialogs();
     App->CL_File_IO->Init_History();
-    App->CL_Interface->Set_Menu_Editor_Startup();
+    App->CL_Interface->Set_Menu_Items_Startup();
 
     // Set timer for the main window
     SetTimer(App->MainHwnd, 1, 100, NULL);

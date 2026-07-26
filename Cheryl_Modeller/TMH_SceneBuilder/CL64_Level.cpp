@@ -35,7 +35,7 @@ CL64_Level::CL64_Level(void)
 	flag_UseGrid = 1;
 	flag_Working_Folder_Exists = 0;
 
-	Level_Version = 1.5;
+	Level_Version = 2.0;
 
 	flag_File_Been_Saved = 0;
 	flag_Level_is_Modified = 0;
@@ -384,11 +384,12 @@ float CL64_Level::Level_GetGridSnapSize (const Level *pLevel)
 		case GridMetric :
 			return CENTIMETERS_TO_ENGINE (pGridInfo->MetricSnapSize);
 			break;
-		default :
-			assert (0);
-		case GridTexel :
+		case GridTexel:
 			return (float)pGridInfo->TexelSnapSize;
 			break;
+		default :
+			assert (0);
+		
 	}
 }
 

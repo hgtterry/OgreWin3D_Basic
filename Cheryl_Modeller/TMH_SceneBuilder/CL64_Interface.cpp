@@ -307,9 +307,9 @@ void CL64_Interface::Show_file_view(bool show)
 }
 
 // **************************************************************************
-// *	  	Set_Menu_Editor_Startup:- Terry and Hazel Flanigan 2026			*
+// *	  	Set_Menu_Items_Startup:- Terry and Hazel Flanigan 2026			*
 // **************************************************************************
-void CL64_Interface::Set_Menu_Editor_Startup()
+void CL64_Interface::Set_Menu_Items_Startup()
 {
 	Show_file_view(true);
 
@@ -331,9 +331,9 @@ void CL64_Interface::Set_Menu_Editor_Startup()
 }
 
 // **************************************************************************
-// *	  	Set_Menu_Editor_Design:- Terry and Hazel Flanigan 2026			*
+// *	  	Set_Menu_Items_Design:- Terry and Hazel Flanigan 2026			*
 // **************************************************************************
-void CL64_Interface::Set_Menu_Editor_Design()
+void CL64_Interface::Set_Menu_Items_Design()
 {
 	HMENU Men = GetMenu(App->MainHwnd);
 
@@ -341,6 +341,19 @@ void CL64_Interface::Set_Menu_Editor_Design()
 	EnableMenuItem(Men, ID_FILE_SAVEAS, MF_BYCOMMAND | MF_ENABLED);
 	EnableMenuItem(Men, ID_EXPORT_OGRE3D, MF_BYCOMMAND | MF_ENABLED);
 	EnableMenuItem(Men, ID_EXPORT_WAVEFRONTOBJ, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+}
+
+// **************************************************************************
+// *	  	Set_Menu_Items_Import:- Terry and Hazel Flanigan 2026			*
+// **************************************************************************
+void CL64_Interface::Set_Menu_Items_Import()
+{
+	HMENU Men = GetMenu(App->MainHwnd);
+
+	EnableMenuItem(Men, ID_FILE_SAVE, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+	EnableMenuItem(Men, ID_FILE_SAVEAS, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+	EnableMenuItem(Men, ID_EXPORT_OGRE3D, MF_BYCOMMAND | MF_ENABLED);
+	EnableMenuItem(Men, ID_EXPORT_WAVEFRONTOBJ, MF_BYCOMMAND | MF_ENABLED);
 }
 
 // *************************************************************************

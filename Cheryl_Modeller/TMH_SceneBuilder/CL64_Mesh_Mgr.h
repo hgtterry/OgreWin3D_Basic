@@ -41,29 +41,14 @@ public:
 
 	void Start_Mesh_Viewer();
 
+	void Rebuild_3D_Model();
+	
+	bool WE_Convert_All_Texture_Groups();
 	bool Update_World(int Selected);
 	void Brush_Build_List(int ExpSelected);
+
 	bool Brush_Build_Selected(BrushList* BList);
 
-	bool Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID);
-	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);
-
-	bool Brush_Create(const Brush* b);
-	bool HandleLeafBrush(const Brush* b);
-	bool HandleCSGBrush(const Brush* b);
-
-	bool Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
-
-	bool WE_Convert_All_Texture_Groups();
-	int WE_Get_Vertice_Count(int TextureID);
-	bool WE_Convert_To_Texture_Group(int TextureID);
-
-	void Delete_Brush_List();
-	void Delete_Group_Brushes();
-
-	int Get_Adjusted_Index(int RealIndex);
-
-	void Create_V_Face(int Index);
 	static signed int Brush_CSG_Callback(const Brush* pBrush, void* lParam);
 
 	//bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
@@ -101,10 +86,31 @@ public:
 private:
 	static LRESULT CALLBACK Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void RebuildTrees(void);
+	bool Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID);
+
+	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);
+	bool Brush_Create(const Brush* b);
+
+	bool Brush_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
+
+	int WE_Get_Vertices_Count(int TextureID);
+	bool WE_Convert_To_Texture_Group(int TextureID);
+
+	void Delete_Brush_List();
+	void Delete_Group_Brushes();
+
+	int Get_Adjusted_Index(int RealIndex);
+
+	void Create_V_Face(int Index);
+
 	void Populate_RenderMode_Combo(HWND DropHwnd);
 	void Update_Brush_List(HWND hDlg);
 	void UpdateBrushData(HWND hDlg, int Index);
 	void Update_World_Model_Info(HWND hDlg);
+
+	bool HandleLeafBrush(const Brush* b);
+	bool HandleCSGBrush(const Brush* b);
 
 	bool flag_Mesh_Viewer_Active;
 	bool flag_Select_Brush;

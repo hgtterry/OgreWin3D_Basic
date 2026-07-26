@@ -124,6 +124,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 
 	App->CL_Camera->Reset_View_and_Zoom();
 	App->CL_Interface->Set_Title(false);
+	App->CL_Interface->Set_Menu_Items_Import();
 
 	Set_Editor();
 	App->CL_File_IO->RecentFileHistory_Update();
@@ -279,6 +280,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 	////Get_BoneNames();
 
 	App->CL_Interface->Set_Title(false);
+	App->CL_Interface->Set_Menu_Items_Import();
 
 	if (App->CL_Resources->flag_Material_File_Loaded == false)
 	{

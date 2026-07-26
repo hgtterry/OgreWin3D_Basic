@@ -393,8 +393,7 @@ void CL64_Doc::Update3DView()
     int brushCount = App->CL_X_Brush->Get_Brush_Count();
     if (brushCount > 0)
     {
-        App->CL_Doc->RebuildTrees();
-        App->CL_Mesh_Mgr->Update_World(0); // Will Set Node Visible
+        App->CL_Mesh_Mgr->Rebuild_3D_Model();
     }
     else
     {
@@ -750,24 +749,6 @@ static signed int fdocBrushCSGCallback(const Brush* pBrush, void* lParam)
 
     // hgtterry Finish
     return 1;// (pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
-}
-
-// *************************************************************************
-// *             RebuildTrees:- Terry and Hazel Flanigan 2025              *
-// *************************************************************************
-void CL64_Doc::RebuildTrees(void)
-{
-    int	CurId = 0;
-  
-    BrushList* BList;
-   
-    BList = App->CL_Level->Level_Get_Main_Brushes();
-    //SetModifiedFlag();
-
-    App->CL_X_Brush->BrushList_ClearAllCSG(BList);
-    App->CL_Cut_Brush->BrushList_DoCSG(BList, CurId, ::fdocBrushCSGCallback, this);
-
-   //App->CL_X_Brush->BrushList_DoCSG(BList, CurId, ::fdocBrushCSGCallback, this);
 }
 
 // *************************************************************************

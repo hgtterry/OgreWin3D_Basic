@@ -85,7 +85,7 @@ int Lib_Ini_File::GetInt(LPCTSTR lpSection, LPCTSTR lpKey, int nDefault, int nBa
 {
 	TCHAR sz[DEF_PROFILE_NUM_LEN + 1] = _T("");
 	GetString(lpSection, lpKey, sz, DEF_PROFILE_NUM_LEN);
-	return *sz == _T('\0') ? nDefault : int(_tcstoul(sz, NULL, __ValidateBase(nBase)));
+	return *sz == _T('\0') ? nDefault : static_cast<int>(_tcstoul(sz, NULL, __ValidateBase(nBase)));
 }
 
 // *************************************************************************

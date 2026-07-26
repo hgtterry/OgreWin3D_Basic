@@ -131,7 +131,6 @@ public:
 	void UpdateSelected(void);
 	DWORD GetSelState(void) { return SelState; }
 
-	void RebuildTrees(void);
 	signed int BrushIsVisible(const Brush* pBrush) const;
 	void TempCopySelectedBrushes(void);
 	void LockAxis(T_Vec3* pWP);

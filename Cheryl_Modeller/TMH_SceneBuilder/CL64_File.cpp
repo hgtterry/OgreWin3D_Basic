@@ -387,7 +387,8 @@ void CL64_File::Start_Load(bool useOpenDialog)
 		App->CL_Doc->Do_General_Select_Dlg(false);
 
 		Set_Editor();
-		
+		App->CL_Interface->Set_Menu_Items_Design();
+
 		App->CL_Libs->CL_Preference->Save_Config_File();
 		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 		if (App->CL_Libs->CL_Preference->flag_OpenLastFile == false)

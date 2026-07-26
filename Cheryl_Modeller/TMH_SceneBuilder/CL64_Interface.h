@@ -51,8 +51,9 @@ public:
 	void Enable_Change_Textures_Button(bool option);
 
 
-	void Set_Menu_Editor_Startup();
-	void Set_Menu_Editor_Design();
+	void Set_Menu_Items_Startup();
+	void Set_Menu_Items_Design();
+	void Set_Menu_Items_Import();
 
 	void Set_Title(bool Clear);
 
