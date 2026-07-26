@@ -39,9 +39,11 @@ public:
 
 	void Reset_Class();
 
+	void Rebuild_3D_Model();
+
 	void Start_Mesh_Viewer();
 
-	bool Update_World(int Selected);
+	bool update_world(const bool selected);
 	void Brush_Build_List(int ExpSelected);
 	bool Brush_Build_Selected(BrushList* BList);
 
@@ -100,6 +102,8 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void rebuild_trees(void);
 
 	void Populate_RenderMode_Combo(HWND DropHwnd);
 	void Update_Brush_List(HWND hDlg);

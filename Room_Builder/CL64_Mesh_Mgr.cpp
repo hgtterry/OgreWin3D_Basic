@@ -88,11 +88,214 @@ void CL64_Mesh_Mgr::Reset_Class()
 }
 
 // *************************************************************************
+// *         fdocBrushCSGCallback:- Terry and Hazel Flanigan 2025          *
+// *************************************************************************
+static signed int fdocBrushCSGCallback(const Brush* pBrush, void* lParam)
+{
+	// hgtterry Finish
+	return 1;// (pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
+}
+
+// *************************************************************************
 // * 		Brush_CSG_Callback:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 signed int CL64_Mesh_Mgr::Brush_CSG_Callback(const Brush* pBrush, void* lParam)
 {
 	return 1;// (App->CL_Doc->BrushIsVisible(pBrush));
+}
+
+// *************************************************************************
+// *			Rebuild_3D_Model:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Mesh_Mgr::Rebuild_3D_Model()
+{
+	rebuild_trees();
+	update_world(false); // Will Set Node Visible
+}
+
+// *************************************************************************
+// *             RebuildTrees:- Terry and Hazel Flanigan 2026              *
+// *************************************************************************
+void CL64_Mesh_Mgr::rebuild_trees(void)
+{
+	constexpr int cur_id = 0;
+
+	BrushList* brush_list = App->CL_Level->Level_Get_Main_Brushes();
+	//SetModifiedFlag();
+
+	App->CL_X_Brush->BrushList_ClearAllCSG(brush_list);
+	App->CL_X_Brush->BrushList_DoCSG(brush_list, cur_id, ::fdocBrushCSGCallback, this);
+
+}
+
+// *************************************************************************
+// *		Update_World:- Terry and Hazel Flanigan 2025	 			   *
+// *************************************************************************
+bool CL64_Mesh_Mgr::update_world(const bool selected)
+{
+	v_Face_Data_Count = 0;
+
+	if (App->CL_X_Brush->Get_Brush_Count() > 0)
+	{
+		Brush_Build_List(selected);
+		WE_Convert_All_Texture_Groups();
+
+		if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == 0)
+		{
+			if (App->CL_Scene->GroupCount > 0)
+			{
+				App->CL_Ogre3D->Convert_ToOgre3D(true); // Will Set Node Visible
+			}
+			else
+			{
+				if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+				{
+					App->CL_Mesh_Mgr->World_Node->setVisible(false);
+				}
+			}
+
+		}
+	}
+	else
+	{
+		if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+		{
+			App->CL_Mesh_Mgr->World_Node->setVisible(false);
+		}
+	}
+
+	return true;
+}
+
+// *************************************************************************
+// * 		Brush_Build_List:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
+{
+	Delete_Brush_List();
+
+	App->CL_Scene->BrushCount = 0;
+	mBrushCount = 0;
+	mSubBrushCount = 0;
+
+	BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
+	if (!BList)
+	{
+		App->Say("Error: No brushes found.");
+		return;
+	}
+
+	if (ExpSelected == 0) // Build All
+	{
+		signed int fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->Current_Level), "FileName", BList, 0, 0, -1);
+
+	}
+	else
+	{
+		Brush_Build_Selected(BList);
+	}
+}
+
+// *************************************************************************
+// *		Brush_Build_Level_Brushes:- Terry and Hazel Flanigan 2025	   *
+// *************************************************************************
+bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID)
+{
+	CL64_WadFile* pWad = App->CL_Level->Level_GetWad_Class();
+	if (!pWad) {
+		App->Say("Failed to retrieve WAD Class.");
+		return false;
+	}
+
+	int ml_BitMap_Count = pWad->mBitmapCount;
+	mTextureCount = 0;
+	memset(mAdjusedIndex_Store, 0, sizeof(mAdjusedIndex_Store));
+	memset(UsedTextures, 0, sizeof(UsedTextures));
+
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(BList, UsedTextures);
+
+	// Add Textures GL
+	int AdjustedIndex = 0;
+
+	for (int i = 0; i < ml_BitMap_Count; i++)
+	{
+		if (UsedTextures[i])
+		{
+			strncpy(TextureName2[AdjustedIndex], pWad->mBitmaps[i].Name, MAX_PATH - 1);
+			TextureName2[AdjustedIndex][MAX_PATH - 1] = '\0'; // Ensure null-termination
+			mAdjusedIndex_Store[AdjustedIndex] = i;
+
+			if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == 0)
+			{
+				// AddTexture_GL(NULL, TextureName2[AdjustedIndex], AdjustedIndex);
+			}
+
+			AdjustedIndex++;
+		}
+	}
+
+	mTextureCount = AdjustedIndex;
+
+	if (mTextureCount == 0)
+	{
+		App->Say("No Textures in Brush");
+	}
+
+	Brush_Decode_List(BList, false);
+	return true;
+}
+
+// *************************************************************************
+// *			Brush_Decode_List:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
+{
+	Brush* pBrush;
+	BrushIterator bi;
+
+	pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
+
+	while (pBrush != nullptr)
+	{
+		if (pBrush->GroupId == 0)
+		{
+			// Get Main Brush Name not sub brushes 
+			strcpy(m_Main_Brush_Name, pBrush->Name);
+
+			bool isFirstBrush = (mSubBrushCount == 0 && (pBrush->Flags & 1)) || (pBrush->Flags & 1024);
+			if (isFirstBrush && SubBrush == 0)
+			{
+
+			}
+
+			if (!Brush_Create(pBrush))
+			{
+				return false;
+			}
+
+			if (SubBrush)
+			{
+				mSubBrushCount++;
+			}
+			else
+			{
+				mBrushCount++;
+				strcpy(Actual_mBrush_Name, pBrush->Name);
+			}
+		}
+
+		//App->Say_Int(pBrush->Faces->NumFaces);
+		pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
+	}
+
+	mSubBrushCount = 0;
+
+	if (SubBrush == 0)
+	{
+		mBrushCount = 0;
+	}
+
+	return true;
 }
 
 // *************************************************************************
@@ -143,64 +346,6 @@ void CL64_Mesh_Mgr::Delete_Group_Brushes()
 	App->CL_Scene->GroupCount = 0;
 	App->CL_Scene->VerticeCount = 0;
 	
-}
-
-// *************************************************************************
-// *		Update_World:- Terry and Hazel Flanigan 2025	 			   *
-// *************************************************************************
-bool CL64_Mesh_Mgr::Update_World(int selected)
-{
-	v_Face_Data_Count = 0;
-
-	int brushCount = App->CL_X_Brush->Get_Brush_Count();
-	if (brushCount > 0)
-	{
-		Brush_Build_List(selected);
-		WE_Convert_All_Texture_Groups();
-
-		if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == 0)
-		{
-			App->CL_Ogre3D->Convert_ToOgre3D(1); // Will Set Node Visible
-		}
-	}
-	else
-	{
-		if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
-		{
-			App->CL_Mesh_Mgr->World_Node->setVisible(false);
-		}
-	}
-
-	return true;
-}
-
-// *************************************************************************
-// * 		Brush_Build_List:- Terry and Hazel Flanigan 2025			   *
-// *************************************************************************
-void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
-{
-	Delete_Brush_List();
-
-	App->CL_Scene->BrushCount = 0;
-	mBrushCount = 0;
-	mSubBrushCount = 0;
-
-	BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
-	if (!BList)
-	{
-		App->Say("Error: No brushes found.");
-		return;
-	}
-
-	if (ExpSelected == 0) // Build All
-	{
-		signed int fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->Current_Level), "FileName", BList, 0, 0, -1);
-
-	}
-	else
-	{
-		Brush_Build_Selected(BList);
-	}
 }
 
 // *************************************************************************
@@ -258,107 +403,6 @@ bool CL64_Mesh_Mgr::Brush_Build_Selected(BrushList* BList)
 	return 1;
 }
 
-// *************************************************************************
-// *		Brush_Build_Level_Brushes:- Terry and Hazel Flanigan 2025	   *
-// *************************************************************************
-bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID)
-{
-	CL64_WadFile* pWad = App->CL_Level->Level_GetWad_Class();
-	if (!pWad) {
-		App->Say("Failed to retrieve WAD Class.");
-		return false;
-	}
-
-	int ml_BitMap_Count = pWad->mBitmapCount;
-	mTextureCount = 0;
-	memset(mAdjusedIndex_Store, 0, sizeof(mAdjusedIndex_Store));
-	memset(UsedTextures, 0, sizeof(UsedTextures));
-	
-	App->CL_Brush_X->BrushList_GetUsedTextures_X(BList, UsedTextures);
-
-	// Add Textures GL
-	int AdjustedIndex = 0;
-
-	for (int i = 0; i < ml_BitMap_Count; i++)
-	{
-		if (UsedTextures[i])
-		{
-			strncpy(TextureName2[AdjustedIndex], pWad->mBitmaps[i].Name, MAX_PATH - 1);
-			TextureName2[AdjustedIndex][MAX_PATH - 1] = '\0'; // Ensure null-termination
-			mAdjusedIndex_Store[AdjustedIndex] = i;
-
-			if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == 0)
-			{
-				// AddTexture_GL(NULL, TextureName2[AdjustedIndex], AdjustedIndex);
-			}
-
-			AdjustedIndex++;
-		}
-	}
-
-	mTextureCount = AdjustedIndex;
-
-	if (mTextureCount == 0)
-	{
-		App->Say("No Textures in Brush");
-	}
-
-	Brush_Decode_List(BList, false);
-	return true;
-}
-
-// *************************************************************************
-// *			Brush_Decode_List:- Terry and Hazel Flanigan 2025		   *
-// *************************************************************************
-bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
-{
-	Brush* pBrush;
-	BrushIterator bi;
-
-	pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
-
-	while (pBrush != nullptr)
-	{
-		if (pBrush->GroupId == 0)
-		{
-			// Get Main Brush Name not sub brushes 
-			strcpy(m_Main_Brush_Name, pBrush->Name);
-
-			bool isFirstBrush = (mSubBrushCount == 0 && (pBrush->Flags & 1)) || (pBrush->Flags & 1024);
-			if (isFirstBrush && SubBrush == 0)
-			{
-				
-			}
-
-			if (!Brush_Create(pBrush))
-			{
-				return false;
-			}
-
-			if (SubBrush)
-			{
-				mSubBrushCount++;
-			}
-			else
-			{
-				mBrushCount++;
-				strcpy(Actual_mBrush_Name, pBrush->Name);
-			}
-		}
-
-		//App->Say_Int(pBrush->Faces->NumFaces);
-		pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
-	}
-
-	mSubBrushCount = 0;
-
-	if (SubBrush == 0)
-	{
-		mBrushCount = 0;
-	}
-
-	return true;
-}
 
 // *************************************************************************
 // *			Brush_Create:- Terry and Hazel Flanigan 2025			   *

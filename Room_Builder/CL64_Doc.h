@@ -102,7 +102,10 @@ public:
 	void AddBrushToWorld();
 	void Brush_Add_To_world();
 	void SetDefaultBrushTexInfo(Brush* b);
+
 	void UpdateAllViews(int Update_Mode);
+	void Redraw_Grid_Views();
+	void Update3DView();
 
 	void Set_Tool_GeneralSelect();
 	void Do_General_Select_Dlg(bool from_Insert);
