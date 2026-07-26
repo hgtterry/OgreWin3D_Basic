@@ -229,6 +229,8 @@ void CL64_Model::Clear_Model()
 	App->CL_Interface->Reset_All_Dialogs();
 	
 	App->CL_Interface->Set_Title(true);
+	App->CL_Interface->Set_Menu_Editor_Startup();
+
 	
 	if (App->CL_Importers->Model_Brush)
 	{

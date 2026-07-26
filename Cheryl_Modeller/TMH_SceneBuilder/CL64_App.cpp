@@ -864,6 +864,19 @@ void* CL64_App::Ram_Allocate(size_t size, const char* Description)
 }
 
 // *************************************************************************
+// *				Ram_Free:- Terry Mo and Hazel 2026				 	   *
+// *************************************************************************
+void CL64_App::Ram_Free(void* ptr)
+{
+	/*if (ptr == NULL)
+	{
+		return;
+	}
+
+	free(ptr);*/
+}
+
+// *************************************************************************
 // *			Win_Translate_Message:- Terry Mo and Hazel 2026			   *
 // *************************************************************************
 void CL64_App::Win_Translate_Message()

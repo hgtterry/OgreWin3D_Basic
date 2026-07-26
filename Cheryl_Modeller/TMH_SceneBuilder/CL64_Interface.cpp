@@ -307,33 +307,40 @@ void CL64_Interface::Show_file_view(bool show)
 }
 
 // **************************************************************************
-// *	  		 Set_Editor_Startup:- Terry and Hazel Flanigan 2026			*
+// *	  	Set_Menu_Editor_Startup:- Terry and Hazel Flanigan 2026			*
 // **************************************************************************
-void CL64_Interface::Set_Editor_Startup()
+void CL64_Interface::Set_Menu_Editor_Startup()
 {
 	Show_file_view(true);
 
 	HMENU Men = GetMenu(App->MainHwnd);
 
+	EnableMenuItem(Men, ID_FILE_SAVE, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+	EnableMenuItem(Men, ID_FILE_SAVEAS, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+	EnableMenuItem(Men, ID_EXPORT_OGRE3D, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+	EnableMenuItem(Men, ID_EXPORT_WAVEFRONTOBJ, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+	
 	if (App->flag_Release == true)
 	{
-		EnableMenuItem(Men, 9, MF_BYPOSITION | MF_DISABLED | MF_GRAYED);
-		EnableMenuItem(Men, ID_IMPORT_AUTODESKFBX, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
-		EnableMenuItem(Men, ID_FILE_NEWMODEL, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
-		EnableMenuItem(Men, ID_FILE_OPEN, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
-		EnableMenuItem(Men, ID_FILE_SAVE, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
-		EnableMenuItem(Men, ID_FILE_SAVEAS, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+		EnableMenuItem(Men, 10, MF_BYPOSITION | MF_DISABLED | MF_GRAYED);
 	}
 	else
 	{
-		EnableMenuItem(App->Menu_Map, 9, MF_BYPOSITION | MF_ENABLED);
-		EnableMenuItem(Men, ID_IMPORT_AUTODESKFBX, MF_BYCOMMAND | MF_ENABLED);
-		EnableMenuItem(Men, ID_FILE_NEWMODEL, MF_BYCOMMAND | MF_ENABLED);
-		EnableMenuItem(Men, ID_FILE_OPEN, MF_BYCOMMAND | MF_ENABLED);
-		EnableMenuItem(Men, ID_FILE_SAVE, MF_BYCOMMAND | MF_ENABLED);
-		EnableMenuItem(Men, ID_FILE_SAVEAS, MF_BYCOMMAND | MF_ENABLED);
+		EnableMenuItem(App->Menu_Map, 10, MF_BYPOSITION | MF_ENABLED);
 	}
+}
 
+// **************************************************************************
+// *	  	Set_Menu_Editor_Design:- Terry and Hazel Flanigan 2026			*
+// **************************************************************************
+void CL64_Interface::Set_Menu_Editor_Design()
+{
+	HMENU Men = GetMenu(App->MainHwnd);
+
+	EnableMenuItem(Men, ID_FILE_SAVE, MF_BYCOMMAND | MF_ENABLED);
+	EnableMenuItem(Men, ID_FILE_SAVEAS, MF_BYCOMMAND | MF_ENABLED);
+	EnableMenuItem(Men, ID_EXPORT_OGRE3D, MF_BYCOMMAND | MF_ENABLED);
+	EnableMenuItem(Men, ID_EXPORT_WAVEFRONTOBJ, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 }
 
 // *************************************************************************

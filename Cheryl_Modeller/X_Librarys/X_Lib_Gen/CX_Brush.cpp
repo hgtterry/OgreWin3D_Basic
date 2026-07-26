@@ -476,10 +476,10 @@ void CX_Brush::Brush_Destroy(Brush** b)
 
 	if ((*b)->Name)
 	{
-		App->CL_X_Maths->Ram_Free((*b)->Name);
+		App->Ram_Free((*b)->Name);
 	}
 
-	App->CL_X_Maths->Ram_Free(*b);
+	App->Ram_Free(*b);
 
 	*b = NULL;
 }
@@ -494,7 +494,7 @@ void CX_Brush::BrushList_Destroy(BrushList** ppList)
 	pList = *ppList;
 	BrushList_DeleteAll(pList);
 
-	App->CL_X_Maths->Ram_Free(*ppList);
+	App->Ram_Free(*ppList);
 	*ppList = NULL;
 }
 
@@ -812,7 +812,7 @@ Brush* CX_Brush::Brush_Clone(Brush const* from)
 		}
 		if (to == NULL)
 		{
-			App->CL_X_Maths->Ram_Free(NewFaces);
+			App->Ram_Free(NewFaces);
 		}
 		break;
 
@@ -864,7 +864,7 @@ void CX_Brush::Brush_SetName(Brush* b, const char* newname)
 {
 	if (b->Name != NULL)
 	{
-		App->CL_X_Maths->Ram_Free(b->Name);
+		App->Ram_Free(b->Name);
 	}
 
 	strcpy(b->Name, newname);

@@ -82,7 +82,7 @@ void CX_SelFaceList::SelFaceList_Destroy(SelFaceList** ppList)
 		App->CL_X_Array->Array_Destroy(&pList->pItems);
 	}
 
-	App->CL_X_Maths->Ram_Free(*ppList);
+	App->Ram_Free(*ppList);
 }
 
 // *************************************************************************

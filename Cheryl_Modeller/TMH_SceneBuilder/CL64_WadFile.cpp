@@ -97,6 +97,7 @@ void CL64_WadFile::DestroyBitmapArray()
 		{
 			WadFileEntry_Free(&mBitmaps[mBitmapCount - 1]);
 		}
-		App->CL_X_Maths->Ram_Free(mBitmaps);
+
+		App->Ram_Free(mBitmaps);
 	}
 }

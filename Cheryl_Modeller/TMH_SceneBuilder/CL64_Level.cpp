@@ -214,7 +214,7 @@ void CL64_Level::Level_Delete_TXL_Class()
 
 	if (m_pLevel->WadSizeInfos != NULL)
 	{
-		App->CL_X_Maths->Ram_Free(m_pLevel->WadSizeInfos);
+		App->Ram_Free(m_pLevel->WadSizeInfos);
 		m_pLevel->WadSizeInfos = NULL;
 	}
 

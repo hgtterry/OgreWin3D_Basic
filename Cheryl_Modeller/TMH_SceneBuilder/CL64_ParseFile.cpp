@@ -229,7 +229,7 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 	Ogre::Vector2 Scale;
 	
 	float xScale, yScale, Rotate;
-	T_Vec3* tmpPnts = NULL;
+	T_Vec3* tmpPnts = nullptr;
 
 	char szTemp[MAX_PATH]{ 0 };
 
@@ -263,8 +263,8 @@ Face* CL64_ParseFile::Face_CreateFromFile()
 
 	// Create Face
 	Face* face = App->CL_X_Face->Face_Create(numPoints, tmpPnts, 0);
-	App->CL_X_Maths->Ram_Free(tmpPnts);
-	tmpPnts = NULL;
+	App->Ram_Free(tmpPnts);
+	tmpPnts = nullptr;
 
 	if (face)
 	{

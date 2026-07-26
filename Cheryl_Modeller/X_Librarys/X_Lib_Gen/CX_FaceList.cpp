@@ -153,8 +153,8 @@ void CX_FaceList::FaceList_Destroy(FaceList** ppList)
 	{
 		App->CL_X_Face->Face_Destroy(&pList->Faces[i]);
 	}
-	App->CL_X_Maths->Ram_Free(pList->Faces);
-	App->CL_X_Maths->Ram_Free(*ppList);
+	App->Ram_Free(pList->Faces);
+	App->Ram_Free(*ppList);
 	*ppList = NULL;
 }
 

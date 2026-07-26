@@ -96,14 +96,14 @@ Face* CX_Face::Face_Create(int NumPnts, const T_Vec3* pnts, int DibId)
 			}
 			else
 			{
-				App->CL_X_Maths->Ram_Free(f->Points); //hgtterry Debug
-				App->CL_X_Maths->Ram_Free(f);
+				App->Ram_Free(f->Points); //hgtterry Debug
+				App->Ram_Free(f);
 				f = NULL;
 			}
 		}
 		else
 		{
-			App->CL_X_Maths->Ram_Free(f);
+			App->Ram_Free(f);
 			f = NULL;
 		}
 	}
@@ -420,10 +420,10 @@ void CX_Face::Face_Destroy(Face** f)
 {
 	if ((*f)->Points)
 	{
-		App->CL_X_Maths->Ram_Free((*f)->Points);
+		App->Ram_Free((*f)->Points);
 	}
 
-	App->CL_X_Maths->Ram_Free(*f);
+	App->Ram_Free(*f);
 	*f = NULL;
 }
 
@@ -474,7 +474,7 @@ void CX_Face::Face_Clip(Face* f, const GPlane* p, float* dists, Ogre::uint8* sid
 		App->CL_X_Maths->Vector3_Copy(&mid, &spb[nbp]);
 		nbp++;
 	}
-	App->CL_X_Maths->Ram_Free(f->Points);
+	App->Ram_Free(f->Points);
 	f->NumPoints = nbp;
 	f->Points = (T_Vec3*)App->Ram_Allocate(sizeof(T_Vec3) * nbp, "Face_Clip");
 	memcpy(f->Points, spb, sizeof(T_Vec3) * nbp);

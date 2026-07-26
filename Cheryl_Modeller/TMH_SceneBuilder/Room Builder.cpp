@@ -129,13 +129,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    
     App->CL_Ogre->Init_3D();
 
-   // App->CL_Editor_Map->Init_Map_Views();
-
     App->CL_Editor_Control->Set_Map_Editor_Startup();
     App->CL_Editor_Control->Set_3DEditor_View();
     App->CL_Ogre->mWindow->windowMovedOrResized();
     App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
-
 
     App->CL_Picking->Init_Picking();
 
@@ -148,16 +145,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Initialize dialogs
     App->Init_Dialogs();
     App->CL_File_IO->Init_History();
-    App->CL_Interface->Set_Editor_Startup();
+    App->CL_Interface->Set_Menu_Editor_Startup();
 
-   /* if (App->flag_Start_3DEditor_Mode == true)
-    {
-        App->CL_Editor_Control->Set_3DEditor_View();
-    }*/
-
-    // App->CL_3D_TR_View->Set_OgreWindow();
     // Set timer for the main window
-
     SetTimer(App->MainHwnd, 1, 100, NULL);
 
     // Start main window/proc loop

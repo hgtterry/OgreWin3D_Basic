@@ -51,7 +51,9 @@ public:
 	void Enable_Change_Textures_Button(bool option);
 
 
-	void Set_Editor_Startup();
+	void Set_Menu_Editor_Startup();
+	void Set_Menu_Editor_Design();
+
 	void Set_Title(bool Clear);
 
 	void Show_Grid_Windows(bool Show);

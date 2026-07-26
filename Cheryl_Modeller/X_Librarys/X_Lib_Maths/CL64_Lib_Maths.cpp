@@ -46,38 +46,6 @@ char* CL64_Lib_Maths::GetVersion()
 }
 
 // *************************************************************************
-// *				Ram_Free										 	   *
-// *************************************************************************
-void CL64_Lib_Maths::Ram_Free(void* ptr)
-{
-	//char* p;
-	//Ogre::uint32 size;
-
-	//// make sure it's a valid block...
-	//p = ram_verify_block(ptr);
-	//if (p == NULL)
-	//{
-	//	return;
-	//}
-
-	//// gotta get the size before you free it
-	//size = *((Ogre::uint32*)p);
-
-	//// fill it with trash...
-	//memset(p, FreeFillerByte, size + EXTRA_SIZE);
-
-	//// free the memory
-	//free(p);
-
-	//// update allocations
-	//geRam_NumberOfAllocations--;
-	//assert((geRam_NumberOfAllocations >= 0) && "free()d more ram than you allocated!");
-
-	//geRam_CurrentlyUsed -= size;
-	//assert((geRam_CurrentlyUsed >= 0) && "free()d more ram than you allocated!");
-}
-
-// *************************************************************************
 // *							Vector3_Set								   *
 // *************************************************************************
 void CL64_Lib_Maths::Vector3_Set(T_Vec3* V, float X, float Y, float Z)

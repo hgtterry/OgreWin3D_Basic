@@ -150,6 +150,8 @@ public:
 	void Open_HTML(char* HelpTitle);
 
 	void* Ram_Allocate(size_t size, const char* Description);
+	void Ram_Free(void* ptr);
+
 	void Win_Translate_Message();
 
 	HINSTANCE hInst;
