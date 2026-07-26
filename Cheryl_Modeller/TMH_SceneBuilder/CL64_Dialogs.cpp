@@ -2041,15 +2041,15 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ------- Textures Used in Mesh");
 
 	int Count = 0;
-	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
+	memset(App->CL_Mesh_Mgr->used_textures, 0, 500);
 
 	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
-	App->CL_Brush_X->BrushList_GetUsedTextures_X(pList, App->CL_Mesh_Mgr->UsedTextures);
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(pList, App->CL_Mesh_Mgr->used_textures);
 
 	while (Count < App->CL_TXL_Editor->Texture_Count)
 	{
-		if (App->CL_Mesh_Mgr->UsedTextures[Count])
+		if (App->CL_Mesh_Mgr->used_textures[Count])
 		{
 			char matname[MAX_PATH];
 			strncpy(matname, App->CL_TXL_Editor->Texture_List[Count]->Name, MAX_PATH - 1);
@@ -2061,7 +2061,7 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 	
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" -------  Textures Selected Brush");
 
-	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
+	memset(App->CL_Mesh_Mgr->used_textures, 0, 500);
 
 	int SB = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
 
@@ -2088,12 +2088,12 @@ void CL64_Dialogs::List_Used_Textures(HWND List)
 			pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
 		}
 
-		App->CL_Brush_X->BrushList_GetUsedTextures_X(SBList, App->CL_Mesh_Mgr->UsedTextures);
+		App->CL_Brush_X->BrushList_GetUsedTextures_X(SBList, App->CL_Mesh_Mgr->used_textures);
 		
 		Count = 0;
 		while (Count < App->CL_TXL_Editor->Texture_Count)
 		{
-			if (App->CL_Mesh_Mgr->UsedTextures[Count])
+			if (App->CL_Mesh_Mgr->used_textures[Count])
 			{
 				char matname[MAX_PATH];
 				strncpy(matname, App->CL_TXL_Editor->Texture_List[Count]->Name, MAX_PATH - 1);

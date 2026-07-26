@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-TMH_SceneBuilder
+Cheryl 3D Modeller
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -44,6 +44,11 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 	Mesh_Viewer_HWND = nullptr;
 
 	memset(mAdjusedIndex_Store, 0, 500);
+	memset(is_texture_alpha, 0, 20);
+	memset(used_textures, 0, 500);
+
+	actual_m_brush_name[0] = 0;
+	texture_name2[0][0] = 0;
 
 	flag_Mesh_Viewer_Active = 0;
 	flag_Select_Brush = 0;
@@ -55,11 +60,11 @@ CL64_Mesh_Mgr::CL64_Mesh_Mgr()
 	Selected_Render_Mode = 0;
 	v_Face_Data_Count = 0;
 	
-	int Count = 0;
-	while (Count < 999)
+	int count = 0;
+	while (count < 999)
 	{
-		v_Face_Data[Count] = nullptr;
-		Count++;
+		v_Face_Data[count] = nullptr;
+		count++;
 	}
 
 }
@@ -92,8 +97,6 @@ void CL64_Mesh_Mgr::Reset_Class()
 // *************************************************************************
 static signed int fdocBrushCSGCallback(const Brush* pBrush, void* lParam)
 {
-	CL64_Doc* pDoc = (CL64_Doc*)lParam;
-
 	// hgtterry Finish
 	return 1;// (pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
 }
@@ -103,38 +106,35 @@ static signed int fdocBrushCSGCallback(const Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_Mesh_Mgr::Rebuild_3D_Model()
 {
-	RebuildTrees();
-	Update_World(0); // Will Set Node Visible
+	rebuild_trees();
+	update_world(false); // Will Set Node Visible
 }
 
 // *************************************************************************
 // *             RebuildTrees:- Terry and Hazel Flanigan 2026              *
 // *************************************************************************
-void CL64_Mesh_Mgr::RebuildTrees(void)
+void CL64_Mesh_Mgr::rebuild_trees(void)
 {
-	int	CurId = 0;
+	constexpr int cur_id = 0;
 
-	BrushList* BList;
-
-	BList = App->CL_Level->Level_Get_Main_Brushes();
+	BrushList* brush_list = App->CL_Level->Level_Get_Main_Brushes();
 	//SetModifiedFlag();
 
-	App->CL_X_Brush->BrushList_ClearAllCSG(BList);
-	App->CL_Cut_Brush->BrushList_DoCSG(BList, CurId, ::fdocBrushCSGCallback, this);
+	App->CL_X_Brush->BrushList_ClearAllCSG(brush_list);
+	App->CL_Cut_Brush->BrushList_DoCSG(brush_list, cur_id, ::fdocBrushCSGCallback, this);
 
 }
 
 // *************************************************************************
 // *		Update_World:- Terry and Hazel Flanigan 2025	 			   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::Update_World(int selected)
+bool CL64_Mesh_Mgr::update_world(const bool selected)
 {
 	v_Face_Data_Count = 0;
 
-	int brushCount = App->CL_X_Brush->Get_Brush_Count();
-	if (brushCount > 0)
+	if (App->CL_X_Brush->Get_Brush_Count() > 0)
 	{
-		Brush_Build_List(selected);
+		brush_build_list(selected);
 		WE_Convert_All_Texture_Groups();
 
 		if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == false)
@@ -166,7 +166,7 @@ bool CL64_Mesh_Mgr::Update_World(int selected)
 // *************************************************************************
 // * 		Brush_Build_List:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
+void CL64_Mesh_Mgr::brush_build_list(const bool selected)
 {
 	Delete_Brush_List();
 
@@ -174,21 +174,21 @@ void CL64_Mesh_Mgr::Brush_Build_List(int ExpSelected)
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 
-	BrushList* BList = App->CL_Level->Level_Get_Main_Brushes();
-	if (!BList)
+	BrushList* brush_list = App->CL_Level->Level_Get_Main_Brushes();
+	if (!brush_list)
 	{
 		App->Say("Error: No brushes found.");
 		return;
 	}
 
-	if (ExpSelected == false) // Build All
+	if (selected == false) // Build All
 	{
-		signed int fResult = Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->Current_Level), "FileName", BList, 0, 0, -1);
+		Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->Current_Level), "FileName", brush_list, 0, 0, -1);
 
 	}
 	else
 	{
-		Brush_Build_Selected(BList);
+		Brush_Build_Selected(brush_list);
 	}
 }
 
@@ -206,19 +206,19 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 	int ml_BitMap_Count = pWad->mBitmapCount;
 	mTextureCount = 0;
 	memset(mAdjusedIndex_Store, 0, sizeof(mAdjusedIndex_Store));
-	memset(UsedTextures, 0, sizeof(UsedTextures));
+	memset(used_textures, 0, sizeof(used_textures));
 
-	App->CL_Brush_X->BrushList_GetUsedTextures_X(BList, UsedTextures);
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(BList, used_textures);
 
 	// Add Textures GL
 	int AdjustedIndex = 0;
 
 	for (int i = 0; i < ml_BitMap_Count; i++)
 	{
-		if (UsedTextures[i])
+		if (used_textures[i])
 		{
-			strncpy(TextureName2[AdjustedIndex], pWad->mBitmaps[i].Name, MAX_PATH - 1);
-			TextureName2[AdjustedIndex][MAX_PATH - 1] = '\0'; // Ensure null-termination
+			strncpy(texture_name2[AdjustedIndex], pWad->mBitmaps[i].Name, MAX_PATH - 1);
+			texture_name2[AdjustedIndex][MAX_PATH - 1] = '\0'; // Ensure null-termination
 			mAdjusedIndex_Store[AdjustedIndex] = i;
 
 			if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == 0)
@@ -246,10 +246,9 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 // *************************************************************************
 bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 {
-	Brush* pBrush;
 	BrushIterator bi;
 
-	pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
+	Brush* pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
 
 	while (pBrush != nullptr)
 	{
@@ -276,7 +275,7 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 			else
 			{
 				mBrushCount++;
-				strcpy(Actual_mBrush_Name, pBrush->Name);
+				strcpy(actual_m_brush_name, pBrush->Name);
 			}
 		}
 
@@ -334,17 +333,17 @@ void CL64_Mesh_Mgr::Delete_Group_Brushes()
 {
 	CL64_Mesh* pModel = App->CL_Mesh;
 
-	int Count = 0;
-	while (Count < 4999)
+	int count = 0;
+	while (count < 4999)
 	{
-		if (pModel->Group[Count] != nullptr)
+		if (pModel->Group[count] != nullptr)
 		{
-			delete pModel->Group[Count];
+			delete pModel->Group[count];
 		}
 
-		pModel->Group[Count] = nullptr;
+		pModel->Group[count] = nullptr;
 
-		Count++;
+		count++;
 	}
 
 	App->CL_Model->GroupCount = 0;
@@ -750,10 +749,10 @@ bool CL64_Mesh_Mgr::WE_Convert_All_Texture_Groups() {
 			App->CL_Scene->Create_Mesh_Group(group_count);
 			auto& group = App->CL_Mesh->Group[group_count];
 
-			strcpy(group->GroupName, TextureName2[group_count]);
-			strcpy(group->MaterialName, TextureName2[group_count]);
+			strcpy(group->GroupName, texture_name2[group_count]);
+			strcpy(group->MaterialName, texture_name2[group_count]);
 
-			int trueIndex = App->CL_TXL_Editor->GetIndex_From_Name(TextureName2[group_count]);
+			int trueIndex = App->CL_TXL_Editor->GetIndex_From_Name(texture_name2[group_count]);
 			strcpy(group->Assimp_Text_FileName, App->CL_TXL_Editor->Texture_List[trueIndex]->FileName);
 
 			group->Has_Alpha = App->CL_TXL_Editor->Texture_List[trueIndex]->Has_Alpha;
@@ -1522,7 +1521,7 @@ void CL64_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 			int Brush_Index = pModel->B_Brush[Index]->Face_Data[Count].Brush_Index;
 			int Main_Face = pModel->B_Brush[Index]->Face_Data[Count].Main_Face;
 
-			sprintf(buf, "Text_ID %i %s Brush_Index %i Main_Face %i", TextureID, TextureName2[TextureID], Brush_Index, Main_Face);
+			sprintf(buf, "Text_ID %i %s Brush_Index %i Main_Face %i", TextureID, texture_name2[TextureID], Brush_Index, Main_Face);
 			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 			Count++;
 		}

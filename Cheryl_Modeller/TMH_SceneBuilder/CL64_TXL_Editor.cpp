@@ -588,15 +588,15 @@ int CL64_TXL_Editor::Check_if_FileName_Exist(const char* Name)
 bool CL64_TXL_Editor::Check_If_Texture_Used(const char* TextureName)
 {
 	int Count = 0;
-	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
+	memset(App->CL_Mesh_Mgr->used_textures, 0, 500);
 
 	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
-	App->CL_Brush_X->BrushList_GetUsedTextures_X(pList,App->CL_Mesh_Mgr->UsedTextures);
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(pList,App->CL_Mesh_Mgr->used_textures);
 
 	while (Count < App->CL_TXL_Editor->Texture_Count)
 	{
-		if (App->CL_Mesh_Mgr->UsedTextures[Count])
+		if (App->CL_Mesh_Mgr->used_textures[Count])
 		{
 			if (!strcmp(TextureName, Texture_List[Count]->FileName))
 			{
@@ -796,15 +796,15 @@ int CL64_TXL_Editor::Get_Used_Textures_Count()
 	int Used_Count = 0;
 	int Count = 0;
 
-	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
+	memset(App->CL_Mesh_Mgr->used_textures, 0, 500);
 
 	BrushList* pList = App->CL_Level->Level_Get_Main_Brushes();
 
-	App->CL_Brush_X->BrushList_GetUsedTextures_X(pList, App->CL_Mesh_Mgr->UsedTextures);
+	App->CL_Brush_X->BrushList_GetUsedTextures_X(pList, App->CL_Mesh_Mgr->used_textures);
 
 	while (Count < App->CL_TXL_Editor->Texture_Count)
 	{
-		if (App->CL_Mesh_Mgr->UsedTextures[Count])
+		if (App->CL_Mesh_Mgr->used_textures[Count])
 		{
 			Used_Count++;
 		}
@@ -812,7 +812,7 @@ int CL64_TXL_Editor::Get_Used_Textures_Count()
 		Count++;
 	}
 
-	memset(App->CL_Mesh_Mgr->UsedTextures, 0, 500);
+	memset(App->CL_Mesh_Mgr->used_textures, 0, 500);
 
 	return Used_Count;
 }

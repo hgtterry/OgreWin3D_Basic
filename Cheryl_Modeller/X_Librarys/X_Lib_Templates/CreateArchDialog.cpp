@@ -625,21 +625,28 @@ LRESULT CALLBACK CreateArchDialog::CreateArch_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_ARCHCUT)
 		{
-			if (m_Arch->flag_Cut_Flag == 0)
+			if (App->CL_X_Brush->Get_Brush_Count() > 0)
 			{
-				m_Arch->m_TCut = 1;
-				m_Arch->flag_Cut_Flag = 1;
+				if (m_Arch->flag_Cut_Flag == 0)
+				{
+					m_Arch->m_TCut = 1;
+					m_Arch->flag_Cut_Flag = 1;
 
-				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				return 1;
+					RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+					return 1;
+				}
+				else
+				{
+					m_Arch->m_TCut = 0;
+					m_Arch->flag_Cut_Flag = 0;
+
+					RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+					return 1;
+				}
 			}
 			else
 			{
-				m_Arch->m_TCut = 0;
-				m_Arch->flag_Cut_Flag = 0;
-
-				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				return 1;
+				App->Say("Can not add a Cut Brush to an Empty Model");
 			}
 
 			return TRUE;

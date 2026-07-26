@@ -145,7 +145,7 @@ bool CL64_Brush_X::Get_Brush_Faces_Info(const FaceList* pList)
 bool CL64_Brush_X::Get_Face_Data(int Index, const Face* f)
 {
 	int Dib = App->CL_X_Face->Face_GetTextureDibId(f);
-	App->CL_Mesh_Mgr->UsedTextures[Dib] = 1;
+	App->CL_Mesh_Mgr->used_textures[Dib] = 1;
 	
 	return 1;
 }

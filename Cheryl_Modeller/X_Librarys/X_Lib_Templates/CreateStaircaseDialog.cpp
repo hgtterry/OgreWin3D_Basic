@@ -443,15 +443,22 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 
 		if (LOWORD(wParam) == IDC_BT_STAIRS_CUT)
 		{
-			if (m_Staircase->m_TCut == 1)
+			if (App->CL_X_Brush->Get_Brush_Count() > 0)
 			{
-				m_Staircase->m_TCut = 0;
-				return 1;
+				if (m_Staircase->m_TCut == 1)
+				{
+					m_Staircase->m_TCut = 0;
+					return 1;
+				}
+				else
+				{
+					m_Staircase->m_TCut = 1;
+					return 1;
+				}
 			}
 			else
 			{
-				m_Staircase->m_TCut = 1;
-				return 1;
+				App->Say("Can not add a Cut Brush to an Empty Model");
 			}
 
 			return TRUE;

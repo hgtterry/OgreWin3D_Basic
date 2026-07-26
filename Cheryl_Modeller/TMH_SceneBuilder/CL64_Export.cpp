@@ -319,7 +319,7 @@ LRESULT CALLBACK CL64_Export::Proc_Object_Export_Dlg(HWND hDlg, UINT message, WP
 void CL64_Export::Export_To_Object(void)
 {
 	//App->CLSB_PB->Nudge("Build_Brush_List");
-	App->CL_Mesh_Mgr->Brush_Build_List(false);
+	App->CL_Mesh_Mgr->brush_build_list(false);
 
 	//App->CLSB_PB->Nudge("Converting to Groups");
 	App->CL_Mesh_Mgr->WE_Convert_All_Texture_Groups();

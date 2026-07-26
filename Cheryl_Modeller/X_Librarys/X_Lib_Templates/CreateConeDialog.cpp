@@ -490,15 +490,22 @@ LRESULT CALLBACK CreateConeDialog::Proc_CreateCone(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_CONE_CUTBRUSH)
 		{
-			if (m_Cone->m_TCut == 1)
+			if (App->CL_X_Brush->Get_Brush_Count() > 0)
 			{
-				m_Cone->m_TCut = 0;
-				return 1;
+				if (m_Cone->m_TCut == 1)
+				{
+					m_Cone->m_TCut = 0;
+					return 1;
+				}
+				else
+				{
+					m_Cone->m_TCut = 1;
+					return 1;
+				}
 			}
 			else
 			{
-				m_Cone->m_TCut = 1;
-				return 1;
+				App->Say("Can not add a Cut Brush to an Empty Model");
 			}
 
 			return TRUE;

@@ -421,17 +421,24 @@ LRESULT CALLBACK CreateBoxDialog::Proc_CreateBox(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDC_BT_BOXCUTBRUSH)
 		{
-			m_Box->m_TCut = !m_Box->Cut_Flag;
-			m_Box->Cut_Flag = !m_Box->Cut_Flag;
+			if (App->CL_X_Brush->Get_Brush_Count() > 0)
+			{
+				m_Box->m_TCut = !m_Box->Cut_Flag;
+				m_Box->Cut_Flag = !m_Box->Cut_Flag;
 
-			int Count = App->CL_X_Brush->Get_Brush_Count();
-			char Name[32];
-			snprintf(Name, sizeof(Name), "Box_%d%s", Count+1, m_Box->Cut_Flag ? "_Cut" : "");
+				int Count = App->CL_X_Brush->Get_Brush_Count();
+				char Name[32];
+				snprintf(Name, sizeof(Name), "Box_%d%s", Count + 1, m_Box->Cut_Flag ? "_Cut" : "");
 
-			m_Box->Update();
+				m_Box->Update();
 
-			SetDlgItemText(hDlg, IDC_EDITNAME, (LPTSTR)Name);
-			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				SetDlgItemText(hDlg, IDC_EDITNAME, (LPTSTR)Name);
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+			else
+			{
+				App->Say("Can not add a Cut Brush to an Empty Model");
+			}
 
 			return 1;
 		}

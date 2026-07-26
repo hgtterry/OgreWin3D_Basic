@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-TMH_SceneBuilder
+Cheryl 3D Modeller
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -44,8 +44,8 @@ public:
 	void Rebuild_3D_Model();
 	
 	bool WE_Convert_All_Texture_Groups();
-	bool Update_World(int Selected);
-	void Brush_Build_List(int ExpSelected);
+	bool update_world(const bool selected);
+	void brush_build_list(const bool selected);
 
 	bool Brush_Build_Selected(BrushList* BList);
 
@@ -64,7 +64,7 @@ public:
 	int mTextureCount;
 	
 	int mAdjusedIndex_Store[500];
-	int IsTextureAlpha[20];
+	int is_texture_alpha[20];
 	
 	int Ogre_List_Index;
 	int Groups_List_Index;
@@ -72,21 +72,21 @@ public:
 
 	int Selected_Render_Mode;
 
-	signed int UsedTextures[500];
+	signed int used_textures[500];
 
-	char Actual_mBrush_Name[MAX_PATH];
+	char actual_m_brush_name[MAX_PATH];
 	int v_Face_Data_Count;
 	Face_Data* v_Face_Data[1000];
 
 	char m_Main_Brush_Name[MAX_PATH]; // Main Brush Name not sub mesh names
-	char TextureName2[20][MAX_PATH];
+	char texture_name2[20][MAX_PATH];
 
 	HWND Mesh_Viewer_HWND;
 
 private:
 	static LRESULT CALLBACK Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void RebuildTrees(void);
+	void rebuild_trees(void);
 	bool Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID);
 
 	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);

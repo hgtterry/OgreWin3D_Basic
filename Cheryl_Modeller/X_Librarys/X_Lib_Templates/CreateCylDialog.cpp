@@ -617,13 +617,20 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_BT_CUTBRUSH)
 		{
-			if (m_Cylinder->m_TCut == 1)
+			if (App->CL_X_Brush->Get_Brush_Count() > 0)
 			{
-				m_Cylinder->m_TCut = 0;
+				if (m_Cylinder->m_TCut == 1)
+				{
+					m_Cylinder->m_TCut = 0;
+				}
+				else
+				{
+					m_Cylinder->m_TCut = 1;
+				}
 			}
 			else
 			{
-				m_Cylinder->m_TCut = 1;
+				App->Say("Can not add a Cut Brush to an Empty Model");
 			}
 
 			return TRUE;
