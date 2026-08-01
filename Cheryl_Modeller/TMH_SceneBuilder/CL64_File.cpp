@@ -44,6 +44,9 @@ CL64_File::CL64_File(void)
 	strcpy(MTF_Just_Path, "No_Path");
 	strcpy(Prj_Working_Folder, "No_Path");
 
+	strcpy(Loaded_PathFileName, "No File");
+	strcpy(Loaded_FileName, "No File");
+
 	fp = NULL;
 }
 

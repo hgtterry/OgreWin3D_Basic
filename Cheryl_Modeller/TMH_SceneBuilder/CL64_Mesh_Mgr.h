@@ -44,7 +44,7 @@ public:
 	void Rebuild_3D_Model();
 	
 	bool WE_Convert_All_Texture_Groups();
-	bool update_world(const bool selected);
+	bool Update_World(const bool selected);
 	void brush_build_list(const bool selected);
 
 	bool Brush_Build_Selected(BrushList* BList);
@@ -86,7 +86,6 @@ public:
 private:
 	static LRESULT CALLBACK Proc_Mesh_Viewer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void rebuild_trees(void);
 	bool Brush_Build_Level_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, signed int ExpLights, int GroupID);
 
 	bool Brush_Decode_List(BrushList* BList, signed int SubBrush);

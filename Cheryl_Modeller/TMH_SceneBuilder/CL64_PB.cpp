@@ -190,7 +190,7 @@ bool CL64_PB::Stop_Progress_Bar(char* ProcessText)
 	
 	App->CL_Ogre->RenderFrame();
 
-	App->CL_Dialogs->Loaded_DLG(App->CL_Model->Loaded_FileName, (LPSTR)"Loaded");
+	App->CL_Dialogs->Loaded_DLG(App->CL_File->Loaded_FileName, (LPSTR)"Loaded");
 
 	SetDlgItemText(ProgBarHwnd, IDC_PBBANNER, (LPCTSTR)"Finished");
 	

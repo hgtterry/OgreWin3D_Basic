@@ -369,7 +369,7 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Textures_Dialog(HWND hDlg, UINT
 					{
 						char MTL_File_And_Path[MAX_PATH];
 
-						strcpy(MTL_File_And_Path, App->CL_Model->Loaded_PathFileName);
+						strcpy(MTL_File_And_Path, App->CL_File->Loaded_PathFileName);
 						int Len = strlen(MTL_File_And_Path);
 						MTL_File_And_Path[Len - 4] = 0;
 

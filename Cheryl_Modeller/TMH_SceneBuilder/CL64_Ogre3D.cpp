@@ -127,7 +127,7 @@ void CL64_Ogre3D::Export_To_Ogre3D(bool Selected)
 {
 	if (Selected == 1)
 	{
-		App->CL_Mesh_Mgr->update_world(Selected);
+		App->CL_Mesh_Mgr->Update_World(Selected);
 	}
 
 

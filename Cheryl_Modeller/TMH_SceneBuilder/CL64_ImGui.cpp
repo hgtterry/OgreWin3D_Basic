@@ -679,7 +679,7 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 	colors[ImGuiCol_Header] = ImVec4(0, 1, 0.4, 0.7);
 
 	ImGui::SetNextItemOpen(true, ImGuiCond_Always);
-	if (ImGui::TreeNode("Assimp Model", "%s", App->CL_Model->Loaded_FileName))
+	if (ImGui::TreeNode("Assimp Model", "%s", App->CL_File->Loaded_FileName))
 	{
 		/*if (flag_Open_Textures_List == 1)
 		{

@@ -46,6 +46,9 @@ public:
 	char MTF_JustName_NoExt[MAX_PATH];
 	char Prj_Working_Folder[MAX_PATH];
 
+	char Loaded_PathFileName[MAX_PATH];
+	char Loaded_FileName[MAX_PATH];
+
 	bool flag_loading;
 
 	FILE* fp;

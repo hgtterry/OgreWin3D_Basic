@@ -511,10 +511,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_TESTMODELS_OGRE3DSINBAD:
             {
-                strcpy(App->CL_Model->Loaded_FileName, "Sinbad.mesh");
+                strcpy(App->CL_File->Loaded_FileName, "Sinbad.mesh");
 
-                strcpy(App->CL_Model->Loaded_PathFileName, App->App_Directory_FullPath);
-                strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Ogre3D_Models\\Sinbad_No_Config\\Sinbad.mesh");
+                strcpy(App->CL_File->Loaded_PathFileName, App->App_Directory_FullPath);
+                strcat(App->CL_File->Loaded_PathFileName, "\\Models\\Ogre3D_Models\\Sinbad_No_Config\\Sinbad.mesh");
 
                 bool test = App->CL_Importers->Load_Ogre_Model(false, false);
 
@@ -523,10 +523,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_TESTMODELS_WAVEFRONTCUBE:
             {
-                strcpy(App->CL_Model->Loaded_FileName, "Cube.obj");
+                strcpy(App->CL_File->Loaded_FileName, "Cube.obj");
 
-                strcpy(App->CL_Model->Loaded_PathFileName, App->App_Directory_FullPath);
-                strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Wavefront_Obj_Models\\Cube.obj");
+                strcpy(App->CL_File->Loaded_PathFileName, App->App_Directory_FullPath);
+                strcat(App->CL_File->Loaded_PathFileName, "\\Models\\Wavefront_Obj_Models\\Cube.obj");
 
                 App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate | 
                     aiProcess_FlipUVs | 
@@ -542,10 +542,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_MILKSHAPE_CHAPEL:
             {
-                strcpy(App->CL_Model->Loaded_FileName, "chapel-10-C.ms3d");
+                strcpy(App->CL_File->Loaded_FileName, "chapel-10-C.ms3d");
 
-                strcpy(App->CL_Model->Loaded_PathFileName, App->App_Directory_FullPath);
-                strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Milkshape_Models\\Chaple\\chapel-10-C.ms3d");
+                strcpy(App->CL_File->Loaded_PathFileName, App->App_Directory_FullPath);
+                strcat(App->CL_File->Loaded_PathFileName, "\\Models\\Milkshape_Models\\Chaple\\chapel-10-C.ms3d");
 
                 App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate |
                     aiProcess_FlipUVs |
@@ -561,10 +561,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_AUTODESK_BED:
             {
-                strcpy(App->CL_Model->Loaded_FileName, "bed.3ds");
+                strcpy(App->CL_File->Loaded_FileName, "bed.3ds");
 
-                strcpy(App->CL_Model->Loaded_PathFileName, App->App_Directory_FullPath);
-                strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\3ds_Models\\bed.3ds");
+                strcpy(App->CL_File->Loaded_PathFileName, App->App_Directory_FullPath);
+                strcat(App->CL_File->Loaded_PathFileName, "\\Models\\3ds_Models\\bed.3ds");
 
                 App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate |
                     aiProcess_FlipUVs |
@@ -580,10 +580,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_TESTMODELS_COLLADA:
             {
-                strcpy(App->CL_Model->Loaded_FileName, "duck.dae");
+                strcpy(App->CL_File->Loaded_FileName, "duck.dae");
 
-                strcpy(App->CL_Model->Loaded_PathFileName, App->App_Directory_FullPath);
-                strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Collada_Models\\duck.dae");
+                strcpy(App->CL_File->Loaded_PathFileName, App->App_Directory_FullPath);
+                strcat(App->CL_File->Loaded_PathFileName, "\\Models\\Collada_Models\\duck.dae");
 
                 App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate |
                     aiProcess_FlipUVs |
@@ -1550,10 +1550,10 @@ void StartOgre()
     bool loadtestfile = false;
     if (loadtestfile == true)
     {
-        strcpy(App->CL_Model->Loaded_FileName, "chapel-10-C.ms3d");
+        strcpy(App->CL_File->Loaded_FileName, "chapel-10-C.ms3d");
 
-        strcpy(App->CL_Model->Loaded_PathFileName, App->App_Directory_FullPath);
-        strcat(App->CL_Model->Loaded_PathFileName, "\\Models\\Milkshape_Models\\Chaple\\chapel-10-C.ms3d");
+        strcpy(App->CL_File->Loaded_PathFileName, App->App_Directory_FullPath);
+        strcat(App->CL_File->Loaded_PathFileName, "\\Models\\Milkshape_Models\\Chaple\\chapel-10-C.ms3d");
 
         App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate |
             aiProcess_FlipUVs |

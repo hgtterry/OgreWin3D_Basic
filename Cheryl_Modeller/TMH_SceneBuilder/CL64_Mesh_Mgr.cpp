@@ -106,29 +106,24 @@ static signed int fdocBrushCSGCallback(const Brush* pBrush, void* lParam)
 // *************************************************************************
 void CL64_Mesh_Mgr::Rebuild_3D_Model()
 {
-	rebuild_trees();
-	update_world(false); // Will Set Node Visible
+	// Rebuild Brush Trees
+	{ 
+		constexpr int currentId = 0;
+		BrushList* brushList = App->CL_Level->Level_Get_Main_Brushes();
+
+		App->CL_X_Brush->BrushList_ClearAllCSG(brushList);
+		App->CL_Cut_Brush->BrushList_DoCSG(brushList, currentId, ::fdocBrushCSGCallback, this);
+	}
+
+	// Update the world state and set nodes visible
+	Update_World(false);
 }
 
-// *************************************************************************
-// *             RebuildTrees:- Terry and Hazel Flanigan 2026              *
-// *************************************************************************
-void CL64_Mesh_Mgr::rebuild_trees(void)
-{
-	constexpr int cur_id = 0;
-
-	BrushList* brush_list = App->CL_Level->Level_Get_Main_Brushes();
-	//SetModifiedFlag();
-
-	App->CL_X_Brush->BrushList_ClearAllCSG(brush_list);
-	App->CL_Cut_Brush->BrushList_DoCSG(brush_list, cur_id, ::fdocBrushCSGCallback, this);
-
-}
 
 // *************************************************************************
 // *		Update_World:- Terry and Hazel Flanigan 2025	 			   *
 // *************************************************************************
-bool CL64_Mesh_Mgr::update_world(const bool selected)
+bool CL64_Mesh_Mgr::Update_World(const bool selected)
 {
 	v_Face_Data_Count = 0;
 
@@ -168,12 +163,13 @@ bool CL64_Mesh_Mgr::update_world(const bool selected)
 // *************************************************************************
 void CL64_Mesh_Mgr::brush_build_list(const bool selected)
 {
+	// Clear the existing brush list and reset counts
 	Delete_Brush_List();
-
 	App->CL_Model->BrushCount = 0;
 	mBrushCount = 0;
 	mSubBrushCount = 0;
 
+	// Retrieve the main brushes from the level
 	BrushList* brush_list = App->CL_Level->Level_Get_Main_Brushes();
 	if (!brush_list)
 	{
@@ -181,10 +177,10 @@ void CL64_Mesh_Mgr::brush_build_list(const bool selected)
 		return;
 	}
 
+	// Build brushes based on selection status
 	if (selected == false) // Build All
 	{
 		Brush_Build_Level_Brushes(reinterpret_cast<tag_Level3*>(App->CL_Doc->Current_Level), "FileName", brush_list, 0, 0, -1);
-
 	}
 	else
 	{
@@ -247,27 +243,29 @@ bool CL64_Mesh_Mgr::Brush_Build_Level_Brushes(Level3* pLevel, const char* Filena
 bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 {
 	BrushIterator bi;
-
 	Brush* pBrush = App->CL_X_Brush->BrushList_GetFirst(BList, &bi);
 
 	while (pBrush != nullptr)
 	{
 		if (pBrush->GroupId == 0)
 		{
-			// Get Main Brush Name not sub brushes 
+			// Store the main brush name
 			strcpy(m_Main_Brush_Name, pBrush->Name);
 
+			// Determine if this is the first brush based on flags
 			bool isFirstBrush = (mSubBrushCount == 0 && (pBrush->Flags & 1)) || (pBrush->Flags & 1024);
 			if (isFirstBrush && SubBrush == 0)
 			{
-
+				
 			}
 
+			// Attempt to create the brush
 			if (!Brush_Create(pBrush))
 			{
-				return false;
+				return false; // Return false if brush creation fails
 			}
 
+			// Update counts based on whether this is a sub-brush
 			if (SubBrush)
 			{
 				mSubBrushCount++;
@@ -279,18 +277,20 @@ bool CL64_Mesh_Mgr::Brush_Decode_List(BrushList* BList, signed int SubBrush)
 			}
 		}
 
-		//App->Say_Int(pBrush->Faces->NumFaces);
+		// Move to the next brush in the list
 		pBrush = App->CL_X_Brush->BrushList_GetNext(&bi);
 	}
 
+	// Reset sub-brush count
 	mSubBrushCount = 0;
 
+	// Reset brush count if no sub-brushes are processed
 	if (SubBrush == 0)
 	{
 		mBrushCount = 0;
 	}
 
-	return true;
+	return true; // Return true if processing is successful
 }
 
 // *************************************************************************

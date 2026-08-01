@@ -19,8 +19,6 @@ public:
 	void Clear_Model();
 	int Selected_BoneIndex;
 
-	char Loaded_PathFileName[MAX_PATH];
-	char Loaded_FileName[MAX_PATH];
 	char Model_FolderPath[MAX_PATH];
 	char Model_Just_Name[MAX_PATH];
 	

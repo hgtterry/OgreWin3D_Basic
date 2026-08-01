@@ -4,8 +4,6 @@
 
 CL64_Model::CL64_Model(void)
 {
-	strcpy(Loaded_PathFileName,"No File");
-	strcpy(Loaded_FileName, "No File");
 	strcpy(Model_FolderPath, "No Path");
 	strcpy(Model_Just_Name, "No Name");
 
@@ -52,32 +50,32 @@ CL64_Model::~CL64_Model(void)
 void CL64_Model::Set_Paths(void)
 {
 	// Model Folder Path
-	int len1 = strlen(Loaded_FileName);
-	int len2 = strlen(Loaded_PathFileName);
-	strcpy(Model_FolderPath, Loaded_PathFileName);
+	int len1 = strlen(App->CL_File->Loaded_FileName);
+	int len2 = strlen(App->CL_File->Loaded_PathFileName);
+	strcpy(Model_FolderPath, App->CL_File->Loaded_PathFileName);
 	Model_FolderPath[len2 - len1] = 0;
 
 	//strcpy(Texture_FolderPath, Model_FolderPath); // Back Slash remains
 
-	if (_stricmp(Loaded_FileName + strlen(Loaded_FileName) - 5, ".mesh") == 0)
+	if (_stricmp(App->CL_File->Loaded_FileName + strlen(App->CL_File->Loaded_FileName) - 5, ".mesh") == 0)
 	{
-		strcpy(Model_Just_Name, Loaded_FileName);
+		strcpy(Model_Just_Name, App->CL_File->Loaded_FileName);
 		int Len = strlen(Model_Just_Name);
 		Model_Just_Name[Len - 5] = 0;
 	}
-	else if (_stricmp(Loaded_FileName + strlen(Loaded_FileName) - 5, ".G3ds") == 0)
+	else if (_stricmp(App->CL_File->Loaded_FileName + strlen(App->CL_File->Loaded_FileName) - 5, ".G3ds") == 0)
 	{
-		strcpy(Loaded_FileName, Loaded_FileName);
-		int Len = strlen(Loaded_FileName);
-		Loaded_FileName[Len - 5] = 0;
+		strcpy(App->CL_File->Loaded_FileName, App->CL_File->Loaded_FileName);
+		int Len = strlen(App->CL_File->Loaded_FileName);
+		App->CL_File->Loaded_FileName[Len - 5] = 0;
 	}
-	else if (_stricmp(Loaded_FileName + strlen(Loaded_FileName) - 5, ".Wepf") == 0)
+	else if (_stricmp(App->CL_File->Loaded_FileName + strlen(App->CL_File->Loaded_FileName) - 5, ".Wepf") == 0)
 	{
 
 	}
 	else
 	{
-		strcpy(Model_Just_Name, Loaded_FileName);
+		strcpy(Model_Just_Name, App->CL_File->Loaded_FileName);
 		int Len = strlen(Model_Just_Name);
 		Model_Just_Name[Len - 4] = 0;
 

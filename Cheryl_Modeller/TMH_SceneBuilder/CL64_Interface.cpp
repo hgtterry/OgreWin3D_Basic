@@ -367,7 +367,7 @@ void CL64_Interface::Set_Title(bool Clear)
 
 	if (Clear == false)
 	{
-		strcat(TitleBar, App->CL_Model->Loaded_PathFileName);
+		strcat(TitleBar, App->CL_File->Loaded_PathFileName);
 	}
 
 	SetWindowText(App->MainHwnd, TitleBar);

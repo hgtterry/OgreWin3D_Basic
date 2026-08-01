@@ -405,7 +405,7 @@ void CL64_Mesh::Get_Ogre_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
 	auto& Ogre_Data = App->CL_Mesh->S_OgreMeshData[0]; // App->CL_Mesh->S_OgreMeshData[0]
 
-	Ogre_Data->mFileName_Str = App->CL_Model->Loaded_FileName;
+	Ogre_Data->mFileName_Str = App->CL_File->Loaded_FileName;
 
 	int Count = 0;
 

@@ -420,5 +420,9 @@ void CL64_ImGui_Editor::File_Data(void)
 {
 	
 	ImGui::Text("File Version %f", App->CL_Level->Level_Version);
+	ImGui::Text(" ");
+	ImGui::Text("File Name %s", App->CL_File->Loaded_FileName);
+	
+	ImGui::TextWrapped("File Path %s", App->CL_File->Loaded_PathFileName);
 
 }

@@ -89,8 +89,8 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 			return false;
 		}
 
-		strcpy(App->CL_Model->Loaded_PathFileName, App->CL_File_IO->s_Path_And_File.c_str());
-		strcpy(App->CL_Model->Loaded_FileName, App->CL_File_IO->s_Just_FileName.c_str());
+		strcpy(App->CL_File->Loaded_PathFileName, App->CL_File_IO->s_Path_And_File.c_str());
+		strcpy(App->CL_File->Loaded_FileName, App->CL_File_IO->s_Just_FileName.c_str());
 	}
 
 	App->CL_PB->Start_ProgressBar();
@@ -112,7 +112,7 @@ bool CL64_Importers::Assimp_Loader(bool UseDialog, const LPCWSTR Filetype, const
 	App->CL_Model->Set_Paths();
 
 	App->CL_PB->Nudge((LPSTR)"Load File");
-	if (App->CL_Assimp->LoadFile(App->CL_Model->Loaded_PathFileName) == false)
+	if (App->CL_Assimp->LoadFile(App->CL_File->Loaded_PathFileName) == false)
 	{
 		App->Say("Failed To Load");
 		return false;
@@ -176,8 +176,8 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 			return 0;
 		}
 
-		strcpy(App->CL_Model->Loaded_PathFileName, App->CL_File_IO->s_Path_And_File.c_str());
-		strcpy(App->CL_Model->Loaded_FileName, App->CL_File_IO->s_Just_FileName.c_str());
+		strcpy(App->CL_File->Loaded_PathFileName, App->CL_File_IO->s_Path_And_File.c_str());
+		strcpy(App->CL_File->Loaded_FileName, App->CL_File_IO->s_Just_FileName.c_str());
 
 	}
 	
@@ -228,7 +228,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 
 	try
 	{
-		App->CL_Model->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("Imported_Entity", App->CL_Model->Loaded_FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
+		App->CL_Model->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("Imported_Entity", App->CL_File->Loaded_FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
 		App->CL_Model->Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		App->CL_Model->Imported_Ogre_Node->attachObject(App->CL_Model ->Imported_Ogre_Ent);
 
@@ -328,7 +328,7 @@ void CL64_Importers::Reload_Ogre_Model(Ogre::Quaternion Rotation)
 
 	try
 	{
-		App->CL_Model->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Model->Loaded_FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
+		App->CL_Model->Imported_Ogre_Ent = App->CL_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_File->Loaded_FileName, App->CL_Resources->Ogre_Loader_Resource_Group);
 		App->CL_Model->Imported_Ogre_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		App->CL_Model->Imported_Ogre_Node->attachObject(App->CL_Model->Imported_Ogre_Ent);
 
@@ -550,16 +550,18 @@ void CL64_Importers::Create_Brush()
 // *************************************************************************
 void CL64_Importers::Load_Recent_File(char* FileAndPath)
 {
-	App->CL_Utilities->Get_FileName_FromPath((LPSTR)FileAndPath, (LPSTR)FileAndPath);
-	strcpy(App->CL_Model->Loaded_FileName, App->CL_Utilities->JustFileName);
-	strcpy(App->CL_Model->Loaded_PathFileName, FileAndPath);
+	auto& p_FileName = App->CL_File->Loaded_FileName;
 
-	if (_stricmp(App->CL_Model->Loaded_FileName + strlen(App->CL_Model->Loaded_FileName) - 5, ".mesh") == 0)
+	App->CL_Utilities->Get_FileName_FromPath((LPSTR)FileAndPath, (LPSTR)FileAndPath);
+	strcpy(p_FileName, App->CL_Utilities->JustFileName);
+	strcpy(App->CL_File->Loaded_PathFileName, FileAndPath);
+
+	if (_stricmp(p_FileName + strlen(p_FileName) - 5, ".mesh") == 0)
 	{
 		bool test = App->CL_Importers->Load_Ogre_Model(false, true);
 	}
 
-	if (_stricmp(App->CL_Model->Loaded_FileName + strlen(App->CL_Model->Loaded_FileName) - 4, ".obj") == 0)
+	if (_stricmp(p_FileName + strlen(p_FileName) - 4, ".obj") == 0)
 	{
 		App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 		App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
@@ -567,7 +569,7 @@ void CL64_Importers::Load_Recent_File(char* FileAndPath)
 		bool test = App->CL_Importers->Assimp_Loader(false, NULL, NULL);
 	}
 
-	if (_stricmp(App->CL_Model->Loaded_FileName + strlen(App->CL_Model->Loaded_FileName) - 5, ".ms3d") == 0)
+	if (_stricmp(p_FileName + strlen(p_FileName) - 5, ".ms3d") == 0)
 	{
 		App->CL_Assimp->Options.SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 		App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;

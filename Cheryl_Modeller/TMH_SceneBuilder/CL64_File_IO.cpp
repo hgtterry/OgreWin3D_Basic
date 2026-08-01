@@ -373,7 +373,7 @@ void  CL64_File_IO::RecentFileHistory_Update()
 
 	if (!mHistoryMenu)return;
 
-	std::string sz = std::string(App->CL_Model->Loaded_PathFileName);
+	std::string sz = std::string(App->CL_File->Loaded_PathFileName);
 	if (mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] == sz)return;
 
 	// add the new file to the list of recent files
