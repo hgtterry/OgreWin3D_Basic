@@ -731,7 +731,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
            
             case ID_FILE_SAVEAS:
             {
-                App->CL_File->Start_Save(true);
+                App->CL_File->Model_Export_Dlg();
                 return 1;
             }
            

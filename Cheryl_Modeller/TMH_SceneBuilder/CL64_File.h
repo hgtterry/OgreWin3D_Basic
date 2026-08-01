@@ -46,6 +46,7 @@ public:
 	char MTF_Just_FileName[MAX_PATH];
 	char MTF_Just_Path[MAX_PATH];
 	char MTF_Just_Name[MAX_PATH];
+	char MTF_FolderPath[MAX_PATH];
 	char Prj_Working_Folder[MAX_PATH];
 
 	char Loaded_PathFileName[MAX_PATH];

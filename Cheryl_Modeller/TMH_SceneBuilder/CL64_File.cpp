@@ -43,6 +43,8 @@ CL64_File::CL64_File(void)
 	strcpy(MTF_Just_FileName, "New_Model.mtf");
 	strcpy(MTF_Just_Name, "New_Model");
 	strcpy(MTF_Just_Path, "No_Path");
+	strcpy(MTF_FolderPath, "");
+	
 	strcpy(Prj_Working_Folder, "No_Path");
 
 	strcpy(Loaded_PathFileName, "No File");
@@ -256,8 +258,8 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			App->CL_File_IO->Select_Folder();
 			if (App->CL_File_IO->flag_Canceled == 0)
 			{
-				strcpy(App->CL_File->Prj_Working_Folder, App->CL_File_IO->szSelectedDir);
-				SetDlgItemText(hDlg, IDC_ST_MODEL_PATH, (LPCTSTR)App->CL_File->Prj_Working_Folder);
+				strcpy(App->CL_File->MTF_FolderPath, App->CL_File_IO->szSelectedDir);
+				SetDlgItemText(hDlg, IDC_ST_MODEL_PATH, (LPCTSTR)App->CL_File->MTF_FolderPath);
 			}
 
 			return TRUE;
@@ -284,15 +286,22 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 		if (LOWORD(wParam) == IDOK)
 		{
 			// Check Path
-			int result = strcmp(App->CL_Exp_Obj->m_Out_Folder_Path, "");
+			int result = strcmp(App->CL_File->MTF_FolderPath, "");
 			if (result == false)
 			{
 				App->Say("No Path Selected");
 				return 1;
 			}
 
-			App->CL_Exp_Obj->Create_ObjectFile();
-			App->CL_Exp_Obj->flag_File_Created = true;
+			strcpy(App->CL_File->MTF_PathAndFile, App->CL_File->MTF_FolderPath);
+			strcat(App->CL_File->MTF_PathAndFile, "\\");
+			strcat(App->CL_File->MTF_PathAndFile, App->CL_File->MTF_Just_Name);
+			strcat(App->CL_File->MTF_PathAndFile, ".mtf");
+
+			App->Say_Win(App->CL_File->MTF_PathAndFile);
+			App->CL_File->Start_Save(false);
+
+			//App->CL_Exp_Obj->flag_File_Created = true;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -314,8 +323,6 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 void CL64_File::Start_Save(bool useSaveDialog)
 {
-	Model_Export_Dlg();
-
 	// Check there are brushes to Save
 	int brushCount = App->CL_X_Brush->Get_Brush_Count();
 	if (brushCount <= 0)
