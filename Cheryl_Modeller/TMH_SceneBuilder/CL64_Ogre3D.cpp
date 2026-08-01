@@ -99,7 +99,7 @@ void CL64_Ogre3D::Set_Export_Paths(void)
 {
 	strcpy(mSelected_Directory, App->CL_Export->mFolder_Path);
 	strcpy(mDirectory_Name, App->CL_Export->mDirectory_Name);
-	strcpy(mExport_Just_Name, App->CL_Model->Model_Just_Name);
+	strcpy(mExport_Just_Name, App->CL_File->Model_Just_Name);
 
 	strcpy(mExport_Path, mSelected_Directory);
 	strcat(mExport_Path, "\\");

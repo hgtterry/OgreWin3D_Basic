@@ -46,6 +46,7 @@ CL64_File::CL64_File(void)
 
 	strcpy(Loaded_PathFileName, "No File");
 	strcpy(Loaded_FileName, "No File");
+	strcpy(Model_Just_Name, "No Name");
 
 	fp = NULL;
 }

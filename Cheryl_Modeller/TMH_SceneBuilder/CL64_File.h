@@ -48,6 +48,7 @@ public:
 
 	char Loaded_PathFileName[MAX_PATH];
 	char Loaded_FileName[MAX_PATH];
+	char Model_Just_Name[MAX_PATH];
 
 	bool flag_loading;
 

@@ -185,8 +185,8 @@ void CL64_Editor_Control::Set_Editor_Design_Model()
 	App->CL_Model->flag_Model_Loaded = true;
 
 	// Set the model name to "New_Model"
-	strncpy(App->CL_Model->Model_Just_Name, "New_Model", sizeof(App->CL_Model->Model_Just_Name) - 1);
-	App->CL_Model->Model_Just_Name[sizeof(App->CL_Model->Model_Just_Name) - 1] = '\0'; // Ensure null termination
+	strncpy(App->CL_File->Model_Just_Name, "New_Model", sizeof(App->CL_File->Model_Just_Name) - 1);
+	App->CL_File->Model_Just_Name[sizeof(App->CL_File->Model_Just_Name) - 1] = '\0'; // Ensure null termination
 
 }
 

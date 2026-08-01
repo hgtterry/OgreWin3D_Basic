@@ -58,7 +58,7 @@ void CL64_Exp_Obj::Object_Export_Dlg()
 
 	if (flag_First_Run == true)
 	{
-		strcpy(m_Out_JustName, App->CL_Model->Model_Just_Name);
+		strcpy(m_Out_JustName, App->CL_File->Model_Just_Name);
 		strcpy(m_Out_Folder_Path, DeskTop_Folder);
 
 		flag_First_Run = false;

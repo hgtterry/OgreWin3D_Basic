@@ -20,7 +20,6 @@ public:
 	int Selected_BoneIndex;
 
 	char Model_FolderPath[MAX_PATH];
-	char Model_Just_Name[MAX_PATH];
 	
 	int Model_Type;
 

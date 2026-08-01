@@ -5,7 +5,7 @@
 CL64_Model::CL64_Model(void)
 {
 	strcpy(Model_FolderPath, "No Path");
-	strcpy(Model_Just_Name, "No Name");
+	strcpy(App->CL_File->Model_Just_Name, "No Name");
 
 	Model_Type = Enums::Model_Type_None;
 	
@@ -59,9 +59,9 @@ void CL64_Model::Set_Paths(void)
 
 	if (_stricmp(App->CL_File->Loaded_FileName + strlen(App->CL_File->Loaded_FileName) - 5, ".mesh") == 0)
 	{
-		strcpy(Model_Just_Name, App->CL_File->Loaded_FileName);
-		int Len = strlen(Model_Just_Name);
-		Model_Just_Name[Len - 5] = 0;
+		strcpy(App->CL_File->Model_Just_Name, App->CL_File->Loaded_FileName);
+		int Len = strlen(App->CL_File->Model_Just_Name);
+		App->CL_File->Model_Just_Name[Len - 5] = 0;
 	}
 	else if (_stricmp(App->CL_File->Loaded_FileName + strlen(App->CL_File->Loaded_FileName) - 5, ".G3ds") == 0)
 	{
@@ -75,9 +75,9 @@ void CL64_Model::Set_Paths(void)
 	}
 	else
 	{
-		strcpy(Model_Just_Name, App->CL_File->Loaded_FileName);
-		int Len = strlen(Model_Just_Name);
-		Model_Just_Name[Len - 4] = 0;
+		strcpy(App->CL_File->Model_Just_Name, App->CL_File->Loaded_FileName);
+		int Len = strlen(App->CL_File->Model_Just_Name);
+		App->CL_File->Model_Just_Name[Len - 4] = 0;
 
 	}
 }

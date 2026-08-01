@@ -2159,7 +2159,7 @@ void CL64_Dialogs::List_Directories(HWND List)
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Model Path and Name");
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Model->Model_Just_Name);
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_File->Model_Just_Name);
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_File->Loaded_FileName);
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_File->Loaded_PathFileName);
 
