@@ -19,8 +19,6 @@ public:
 	void Clear_Model();
 	int Selected_BoneIndex;
 
-	char Model_FolderPath[MAX_PATH];
-	
 	int Model_Type;
 
 	// Internal

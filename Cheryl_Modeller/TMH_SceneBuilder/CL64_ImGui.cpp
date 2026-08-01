@@ -934,7 +934,7 @@ void CL64_ImGui::App_Stats_GUI(void)
 			ImGui::Text("Path And File:= %s", m_File->MTF_PathAndFile);
 			ImGui::Text("Just_Path:= %s", m_File->MTF_Just_Path);
 			ImGui::Text("Just_FileName:= %s", m_File->MTF_Just_FileName);
-			ImGui::Text("Just_File:= %s", m_File->MTF_JustName_NoExt);
+			ImGui::Text("Just_File:= %s", m_File->MTF_Just_Name);
 			ImGui::Text("Working Folder:= %s", m_File->Prj_Working_Folder);
 			ImGui::Separator();
 			ImGui::Text("TXL Path And File:= %s", App->CL_Level->TXL_PathAndFile);
@@ -1116,7 +1116,7 @@ void CL64_ImGui::Paths_GUI(void)
 
 		ImGui::Text("Path And File:= %s", m_File->MTF_PathAndFile);
 		ImGui::Text("Just_FileName:= %s", m_File->MTF_Just_FileName);
-		ImGui::Text("Just_File:= %s", m_File->MTF_JustName_NoExt);
+		ImGui::Text("Just_File:= %s", m_File->MTF_Just_Name);
 
 		ImGui::Separator();
 

@@ -40,13 +40,14 @@ CL64_File::CL64_File(void)
 	strcat(MTF_PathAndFile, "New_Model.mtf");
 
 	strcpy(MTF_Just_FileName, "New_Model.mtf");
-	strcpy(MTF_JustName_NoExt, "New_Model");
+	strcpy(MTF_Just_Name, "New_Model");
 	strcpy(MTF_Just_Path, "No_Path");
 	strcpy(Prj_Working_Folder, "No_Path");
 
 	strcpy(Loaded_PathFileName, "No File");
 	strcpy(Loaded_FileName, "No File");
 	strcpy(Model_Just_Name, "No Name");
+	strcpy(Model_FolderPath, "No Path");
 
 	fp = NULL;
 }
@@ -95,8 +96,8 @@ void CL64_File::Start_Save(bool useSaveDialog)
 		char buf[MAX_PATH];
 		strcpy(buf, MTF_Just_FileName);
 		buf[strlen(buf) - 4] = '\0';
-		strcpy(MTF_JustName_NoExt, buf);
-		strcpy(App->CL_Export->mJustName, MTF_JustName_NoExt);
+		strcpy(MTF_Just_Name, buf);
+		strcpy(App->CL_Export->mJustName, MTF_Just_Name);
 	}
 
 	// If from Menu->Save Check if file exsits and ask for conformatin to overwrite
@@ -114,8 +115,6 @@ void CL64_File::Start_Save(bool useSaveDialog)
 		}
 	}
 
-	Save_Document();
-
 	// Create Working Folder
 	char ProjectFolder[MAX_PATH];
 	strcpy(ProjectFolder, MTF_PathAndFile);
@@ -124,29 +123,41 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	int Len2 = strlen(MTF_Just_FileName);
 	ProjectFolder[Len1 - Len2] = 0;
 
-	strcat(ProjectFolder, MTF_JustName_NoExt);
-	strcat(ProjectFolder, "_ow3d_prj");
+	strcat(ProjectFolder, MTF_Just_Name);
+	strcat(ProjectFolder, "_C3D_prj");
 	CreateDirectory(ProjectFolder, NULL);
 
 	App->CL_Level->flag_Working_Folder_Exists = true;
 	strcat(ProjectFolder, "\\");
 	strcpy(Prj_Working_Folder, ProjectFolder);
 
-	// Save Texture Zip Version 1.5
-	//-------------------------------------------------
-	/*std::string Source = App->CL_Level->TXL_PathAndFile;
-	std::string Destination = std::string(App->CL_Project->m_Main_Assets_Path);
-	Destination.append("TXL_Texture.Zip");*/
+	char Path_And_File[MAX_PATH];
+	strcpy(Path_And_File, ProjectFolder);
+	strcat(Path_And_File, MTF_Just_FileName);
 
-	//// Cant copy to its self so test
-	//if (Destination != Source)
-	//{
-	//	if (!CopyFile(Source.c_str(),Destination.c_str(), false))
-	//	{
-	//		App->Say("Error: Failed to copy file");
-	//		return;
-	//	}
-	//}
+
+	Save_Document(Path_And_File);
+
+	// Save Texture Zip Version 2.0
+	//-------------------------------------------------
+	std::string Source = App->CL_Level->TXL_PathAndFile;
+	std::string Destination = std::string(Prj_Working_Folder);
+
+	char Zip_File[MAX_PATH];
+	strcpy(Zip_File, MTF_Just_Name);
+	strcat(Zip_File, ".zip");
+
+	Destination.append(Zip_File);
+
+	// Cant copy to its self so test
+	if (Destination != Source)
+	{
+		if (!CopyFile(Source.c_str(),Destination.c_str(), false))
+		{
+			App->Say("Error: Failed to copy file");
+			return;
+		}
+	}
 	//-------------------------------------------------
 	
 	//// Update the level's file paths
@@ -165,11 +176,11 @@ void CL64_File::Start_Save(bool useSaveDialog)
 }
 
 // *************************************************************************
-// *	          Save_Document:- Terry Mo and Hazel 2025		           *
+// *	          Save_Document:- Terry and Hazel Flanigan 2026		       *
 // *************************************************************************
-void CL64_File::Save_Document()
+void CL64_File::Save_Document(const char* Path_And_File)
 {
-	if (Save(MTF_PathAndFile) == false)
+	if (Save(Path_And_File) == false)
 	{
 		App->Say("Error: Unable to save file");
 		return;
@@ -180,12 +191,12 @@ void CL64_File::Save_Document()
 }
 
 // *************************************************************************
-// *					Save:- Terry Mo and Hazel 2025					   *
+// *					Save:- :- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 bool CL64_File::Save(const char* FileName)
 {
 	// Construct the TXL file name
-	std::string TXL_File_Name = std::string(MTF_JustName_NoExt) + ".zip";
+	std::string TXL_File_Name = std::string(MTF_Just_Name) + ".zip";
 
 	// Open the file for writing
 	FILE* Write_File = fopen(FileName, "wt");
@@ -373,9 +384,9 @@ void CL64_File::Start_Load(bool useOpenDialog)
 		strcpy(buf, MTF_Just_FileName);
 		int Len = strlen(buf);
 		buf[Len - 4] = 0;
-		strcpy(MTF_JustName_NoExt, buf);
+		strcpy(MTF_Just_Name, buf);
 
-		strcpy(App->CL_Export->mJustName, MTF_JustName_NoExt);
+		strcpy(App->CL_Export->mJustName, MTF_Just_Name);
 
 	}
 	
@@ -432,7 +443,7 @@ bool CL64_File::Open_3dt_File()
 	// Check if Working Folder Exsits
 	char Work_Folder[MAX_PATH];
 	strcpy(Work_Folder, MTF_Just_Path);
-	strcat(Work_Folder, MTF_JustName_NoExt);
+	strcat(Work_Folder, MTF_Just_Name);
 	strcat(Work_Folder, "_ow3d_prj");
 	bool Folder_Test = App->CL_Utilities->Check_Directory_Exists(Work_Folder);
 	if (Folder_Test == true)

@@ -110,7 +110,7 @@ void CL64_Doc::Init_Doc()
 
 	App->CL_X_Maths->Vector3_Clear(&SelectedGeoCenter);
 
-    strcpy(App->CL_Export->mJustName, App->CL_File->MTF_JustName_NoExt);
+    strcpy(App->CL_Export->mJustName, App->CL_File->MTF_Just_Name);
 
     CheckMenuItem(App->Menu_Map, ID_CAMERA_TRACKCAMERA, MF_BYCOMMAND | MF_CHECKED);
 
@@ -1846,9 +1846,9 @@ void CL64_Doc::Set_Current_3DT_Paths(void)
     strcpy(buf, App->CL_File->MTF_Just_FileName);
     int Len = strlen(buf);
     buf[Len - 4] = 0;
-    strcpy(App->CL_File->MTF_JustName_NoExt, buf);
+    strcpy(App->CL_File->MTF_Just_Name, buf);
 
-    strcpy(App->CL_Export->mJustName, App->CL_File->MTF_JustName_NoExt);
+    strcpy(App->CL_Export->mJustName, App->CL_File->MTF_Just_Name);
 
     // Just Path
     char Just_Path[MAX_PATH];

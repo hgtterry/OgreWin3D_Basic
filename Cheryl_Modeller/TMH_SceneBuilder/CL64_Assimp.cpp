@@ -180,7 +180,7 @@ void CL64_Assimp::Create_MeshGroups(const aiScene* pScene)
 		strcpy(App->CL_Mesh->Group[Count]->Assimp_Text_FileName, "No_Texture");
 
 		// Get Texture Path/Name
-		strcpy(App->CL_Mesh->Group[Count]->Assimp_Texture_FolderPath, App->CL_Model->Model_FolderPath); // Back Slash remains
+		strcpy(App->CL_Mesh->Group[Count]->Assimp_Texture_FolderPath, App->CL_File->Model_FolderPath); // Back Slash remains
 
 		aiString texPath;
 		aiMaterial* mtl = pScene->mMaterials[mesh->mMaterialIndex];

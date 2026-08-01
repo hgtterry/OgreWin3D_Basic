@@ -213,7 +213,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 	}
 
 	// Resource FolderPath
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Model->Model_FolderPath,
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_File->Model_FolderPath,
 		"FileSystem", App->CL_Resources->Ogre_Loader_Resource_Group);
 
 	try
@@ -314,7 +314,7 @@ bool CL64_Importers::Load_Ogre_Model(bool Use_File_Dialog, bool Check_Resource_F
 // *************************************************************************
 void CL64_Importers::Reload_Ogre_Model(Ogre::Quaternion Rotation)
 {
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Model->Model_FolderPath,
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_File->Model_FolderPath,
 		"FileSystem", App->CL_Resources->Ogre_Loader_Resource_Group);
 
 	try

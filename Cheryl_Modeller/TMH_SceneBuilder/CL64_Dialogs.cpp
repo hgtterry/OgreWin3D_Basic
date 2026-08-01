@@ -2165,7 +2165,7 @@ void CL64_Dialogs::List_Directories(HWND List)
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Model Folder");
-	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Model->Model_FolderPath);
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_File->Model_FolderPath);
 
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)" ");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Ogre Resource File");

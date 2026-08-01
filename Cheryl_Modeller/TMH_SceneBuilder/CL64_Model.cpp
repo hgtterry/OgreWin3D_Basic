@@ -4,9 +4,6 @@
 
 CL64_Model::CL64_Model(void)
 {
-	strcpy(Model_FolderPath, "No Path");
-	strcpy(App->CL_File->Model_Just_Name, "No Name");
-
 	Model_Type = Enums::Model_Type_None;
 	
 	// Internal
@@ -52,8 +49,8 @@ void CL64_Model::Set_Paths(void)
 	// Model Folder Path
 	int len1 = strlen(App->CL_File->Loaded_FileName);
 	int len2 = strlen(App->CL_File->Loaded_PathFileName);
-	strcpy(Model_FolderPath, App->CL_File->Loaded_PathFileName);
-	Model_FolderPath[len2 - len1] = 0;
+	strcpy(App->CL_File->Model_FolderPath, App->CL_File->Loaded_PathFileName);
+	App->CL_File->Model_FolderPath[len2 - len1] = 0;
 
 	//strcpy(Texture_FolderPath, Model_FolderPath); // Back Slash remains
 

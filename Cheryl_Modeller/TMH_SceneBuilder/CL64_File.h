@@ -43,19 +43,20 @@ public:
 	char MTF_PathAndFile[MAX_PATH];
 	char MTF_Just_FileName[MAX_PATH];
 	char MTF_Just_Path[MAX_PATH];
-	char MTF_JustName_NoExt[MAX_PATH];
+	char MTF_Just_Name[MAX_PATH];
 	char Prj_Working_Folder[MAX_PATH];
 
 	char Loaded_PathFileName[MAX_PATH];
 	char Loaded_FileName[MAX_PATH];
 	char Model_Just_Name[MAX_PATH];
+	char Model_FolderPath[MAX_PATH];
 
 	bool flag_loading;
 
 	FILE* fp;
 private:
 
-	void Save_Document();
+	void Save_Document(const char* Path_And_File);
 	bool Save(const char* FileName);
 
 	bool Open_3dt_File();

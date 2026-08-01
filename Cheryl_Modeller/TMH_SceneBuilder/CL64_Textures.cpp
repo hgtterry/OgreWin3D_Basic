@@ -204,7 +204,7 @@ void CL64_Textures::Load_Textures_Assimp()
 		{
 
 			char ImageFullPath[MAX_PATH];
-			strcpy(ImageFullPath, App->CL_Model->Model_FolderPath);
+			strcpy(ImageFullPath, App->CL_File->Model_FolderPath);
 			strcat(ImageFullPath, App->CL_Mesh->Group[Count]->Assimp_Text_FileName);
 
 			strcpy(App->CL_Mesh->Group[v]->Assimp_Texture_PathFileName, ImageFullPath);
@@ -217,10 +217,10 @@ void CL64_Textures::Load_Textures_Assimp()
 			if (test == 0)
 			{
 				//App->Error_ToFile("Loading Dummy Texture Instead");
-				Create_DummyTexture(App->CL_Model->Model_FolderPath);
+				Create_DummyTexture(App->CL_File->Model_FolderPath);
 
 				char buf[MAX_PATH];
-				strcpy(buf, App->CL_Model->Model_FolderPath);
+				strcpy(buf, App->CL_File->Model_FolderPath);
 				strcat(buf, "TTemp.bmp");
 				UINT* Texture_List = g_Texture;
 				Import_OpenGL_Texture(Texture_List, buf, App->CL_Mesh->Group[Count]->MaterialIndex);
@@ -234,10 +234,10 @@ void CL64_Textures::Load_Textures_Assimp()
 		{
 			//App->Error_ToFile("No Texture in File");
 			//App->Error_ToFile("Loading Dummy Texture Instead");
-			Create_DummyTexture(App->CL_Model->Model_FolderPath);
+			Create_DummyTexture(App->CL_File->Model_FolderPath);
 
 			char buf[MAX_PATH];
-			strcpy(buf, App->CL_Model->Model_FolderPath);
+			strcpy(buf, App->CL_File->Model_FolderPath);
 			strcat(buf, "TTemp.bmp");
 			UINT* Texture_List = g_Texture;
 			Import_OpenGL_Texture(Texture_List, buf, App->CL_Mesh->Group[Count]->MaterialIndex);
@@ -254,7 +254,7 @@ void CL64_Textures::Load_Textures_Assimp()
 	if (DummyCreated == 1)
 	{
 		char buf[MAX_PATH];
-		strcpy(buf, App->CL_Model->Model_FolderPath);
+		strcpy(buf, App->CL_File->Model_FolderPath);
 		strcat(buf, "TTemp.bmp");
 		remove(buf);
 	}
@@ -312,7 +312,7 @@ bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
 	int AddDummy = 0;
 
 	char buf[1024];
-	strcpy(buf, App->CL_Model->Model_FolderPath);
+	strcpy(buf, App->CL_File->Model_FolderPath);
 	strcat(buf, "Etemp.bmp");
 
 	UINT* Texture_List = g_Texture;
@@ -358,7 +358,7 @@ bool CL64_Textures::Load_OpenGL_Textures(int TextureID)
 		return 1;
 	}
 
-	Create_DummyTexture(App->CL_Model->Model_FolderPath);
+	Create_DummyTexture(App->CL_File->Model_FolderPath);
 	Import_OpenGL_Texture(g_Texture, buf, TextureID);
 	remove(buf);
 
