@@ -30,6 +30,8 @@ public:
 	CL64_File(void);
 	~CL64_File(void);
 
+	void Model_Export_Dlg();
+
 	void Start_Save(bool useSaveDialog);
 	void Start_Load(bool useOpenDialog);
 
@@ -55,6 +57,8 @@ public:
 
 	FILE* fp;
 private:
+
+	static LRESULT CALLBACK Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Save_Document(const char* Path_And_File);
 	bool Save(const char* FileName);

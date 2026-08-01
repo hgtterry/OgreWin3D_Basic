@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_File.h"
 #include "Structures.cpp"
@@ -57,10 +58,264 @@ CL64_File::~CL64_File(void)
 }
 
 // *************************************************************************
+// *	  		CL64_File_Export_Dlg:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_File::Model_Export_Dlg()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_EXPORT_BRUSH, App->MainHwnd, (DLGPROC)Proc_Model_Export_Dlg);
+
+}
+
+// *************************************************************************
+// *		Proc_Model_Export_Dlg:- Terry and Hazel Flanigan 2025		   *
+// *************************************************************************
+LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_ST_MODEL_BANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
+
+		//SendDlgItemMessage(hDlg, IDC_ST_STFILENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_MODEL_PATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_ST_STOGRESUB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		//SendDlgItemMessage(hDlg, IDC_ST_OGRE_FILENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_ST_OGRE_PATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_ST_OGRE_SUBFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		//SendDlgItemMessage(hDlg, IDC_BT_OGRE_NAMECHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_BT_OGREBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		//SendDlgItemMessage(hDlg, IDC_CK_BL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_CK_CREATE_SUBDIR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_CK_BUILDEDGELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_ST_MODEL_FILENAME, (LPCTSTR)App->CL_File->MTF_Just_Name);
+		SetDlgItemText(hDlg, IDC_ST_MODEL_PATH, (LPCTSTR)App->CL_File->Prj_Working_Folder);
+
+		//strcpy(App->CL_Export->mDirectory_Name, App->CL_Exp_Obj->m_Out_JustName);
+		//strcat(App->CL_Export->mDirectory_Name, "_Object_All");
+
+		SetDlgItemText(hDlg, IDC_ST_OGRE_SUBFOLDER, (LPCTSTR)App->CL_Export->mDirectory_Name);
+
+		//HWND Temp = GetDlgItem(hDlg, IDC_CK_CREATE_SUBDIR);
+		//SendMessage(Temp, BM_SETCHECK, 1, 0);
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ST_MODEL_BANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_MODEL_FILENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_MODEL_PATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		/*if (GetDlgItem(hDlg, IDC_ST_OGRE_SUBFOLDER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_STFILENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_STPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_STOGRESUB) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_BL_DESKTOP) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_CREATE_SUBDIR) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+
+		return FALSE;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_BT_OGRE_NAMECHANGE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_OGREBROWSE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		/*if (LOWORD(wParam) == IDC_BT_OGRE_NAMECHANGE)
+		{
+			strcpy(App->CL_Dialogs->btext, "Change File Name");
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Exp_Obj->m_Out_JustName);
+
+			App->CL_Dialogs->Dialog_Text(Enums::Check_Name_None);
+
+			if (App->CL_Dialogs->flag_Dlg_Canceled == 0)
+			{
+				strcpy(App->CL_Exp_Obj->m_Out_JustName, App->CL_Dialogs->Chr_Text);
+			}
+
+			SetDlgItemText(hDlg, IDC_ST_OGRE_FILENAME, App->CL_Exp_Obj->m_Out_JustName);
+
+			strcpy(App->CL_Export->mDirectory_Name, App->CL_Exp_Obj->m_Out_JustName);
+			strcat(App->CL_Export->mDirectory_Name, "_Object_All");
+
+			SetDlgItemText(hDlg, IDC_ST_OGRE_SUBFOLDER, (LPCTSTR)App->CL_Export->mDirectory_Name);
+
+			return TRUE;
+		}*/
+
+		if (LOWORD(wParam) == IDC_BT_MODEL_BROWSE)
+		{
+			App->CL_File_IO->Select_Folder();
+			if (App->CL_File_IO->flag_Canceled == 0)
+			{
+				strcpy(App->CL_File->Prj_Working_Folder, App->CL_File_IO->szSelectedDir);
+				SetDlgItemText(hDlg, IDC_ST_MODEL_PATH, (LPCTSTR)App->CL_File->Prj_Working_Folder);
+			}
+
+			return TRUE;
+		}
+
+		/*if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BL_DESKTOP);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				strcpy(App->CL_Exp_Obj->m_Out_Folder_Path, App->CL_Exp_Obj->DeskTop_Folder);
+				SetDlgItemText(hDlg, IDC_ST_OGRE_PATH, (LPCTSTR)App->CL_Exp_Obj->m_Out_Folder_Path);
+				return 1;
+			}
+			else
+			{
+				return 1;
+			}
+
+			return TRUE;
+		}*/
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			// Check Path
+			int result = strcmp(App->CL_Exp_Obj->m_Out_Folder_Path, "");
+			if (result == false)
+			{
+				App->Say("No Path Selected");
+				return 1;
+			}
+
+			App->CL_Exp_Obj->Create_ObjectFile();
+			App->CL_Exp_Obj->flag_File_Created = true;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Exp_Obj->flag_File_Created = false;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
 // *				 Start_Save:- Terry Mo and Hazel 2025			       *
 // *************************************************************************
 void CL64_File::Start_Save(bool useSaveDialog)
 {
+	Model_Export_Dlg();
+
 	// Check there are brushes to Save
 	int brushCount = App->CL_X_Brush->Get_Brush_Count();
 	if (brushCount <= 0)

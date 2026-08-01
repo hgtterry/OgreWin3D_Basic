@@ -117,6 +117,8 @@
 #define IDD_MESSAGE1                    226
 #define IDD_TOP_TABS_BRUSHES            227
 #define IDD_TOP_TABS_FACES              228
+#define IDD_OBJECT_EXPORT1              229
+#define IDD_EXPORT_BRUSH                229
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -590,6 +592,17 @@
 #define IDC_BT_TT_FACES_ALL             1407
 #define IDC_BT_TT_FACE_NEXT             1408
 #define IDC_BT_TT_FACE_PREV             1409
+#define IDC_ST_MODEL_BANNER             1410
+#define IDC_ST_MODEL_SUBFOLDER          1411
+#define IDC_ST_MODEL_FILENAME           1412
+#define IDC_ST_MODEL_PATH               1413
+#define IDC_BT_MODEL_NAMECHANGE         1414
+#define IDC_BT_MODEL_BROWSE             1415
+#define IDC_CK_BL_MODEL_DESKTOP         1416
+#define IDC_ST_STMODELSUB               1417
+#define IDC_ST_MODEL_NAME               1418
+#define IDC_ST_ST_MODEL_PATH            1419
+#define IDC_CK_MODEL_CREATE_SUBDIR      1420
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -735,7 +748,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        228
 #define _APS_NEXT_COMMAND_VALUE         32906
-#define _APS_NEXT_CONTROL_VALUE         1410
+#define _APS_NEXT_CONTROL_VALUE         1421
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
