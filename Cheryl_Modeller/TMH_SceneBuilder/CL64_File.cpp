@@ -161,8 +161,8 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	//-------------------------------------------------
 	
 	//// Update the level's file paths
-	//strcpy(App->CL_Level->TXL_PathAndFile,Destination.c_str());
-	//strcpy(App->CL_Level->TXL_Just_File_Name, "TXL_Texture.Zip");
+	strcpy(App->CL_Level->TXL_PathAndFile,Destination.c_str());
+	strcpy(App->CL_Level->TXL_Just_File_Name, Zip_File);
 
 	// ---------------------------------
 

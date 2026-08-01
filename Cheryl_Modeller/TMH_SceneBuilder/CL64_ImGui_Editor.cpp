@@ -418,7 +418,6 @@ void CL64_ImGui_Editor::Grids_Data(void)
 // *************************************************************************
 void CL64_ImGui_Editor::File_Data(void)
 {
-	
 	ImGui::Text("File Version %f", App->CL_Level->Level_Version);
 	ImGui::Text(" ");
 	ImGui::Text("Name %s", App->CL_File->Model_Just_Name);
@@ -427,4 +426,9 @@ void CL64_ImGui_Editor::File_Data(void)
 	ImGui::Text(" ");
 	ImGui::TextWrapped("File Path %s", App->CL_File->Loaded_PathFileName);
 
+	ImGui::Text(" ");
+	ImGui::Text("Texture Library File Name %s", App->CL_Level->TXL_Just_File_Name);
+	ImGui::Text(" ");
+	ImGui::TextWrapped("Texture Library Path %s", App->CL_Level->TXL_PathAndFile);
+	
 }
