@@ -52,6 +52,8 @@ CL64_File::CL64_File(void)
 	strcpy(Model_Just_Name, "No Name");
 	strcpy(Model_FolderPath, "No Path");
 
+	MTF_Directory_Name[0] = 0;
+
 	fp = NULL;
 }
 
@@ -60,9 +62,9 @@ CL64_File::~CL64_File(void)
 }
 
 // *************************************************************************
-// *	  		CL64_File_Export_Dlg:- Terry and Hazel Flanigan 2026		   *
+// *	  	Start_Model_Export_Dlg:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_File::Model_Export_Dlg()
+void CL64_File::Start_Model_Export_Dlg()
 {
 	int brushCount = App->CL_X_Brush->Get_Brush_Count();
 	if (brushCount <= 0)
@@ -108,10 +110,10 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 		SetDlgItemText(hDlg, IDC_ST_MODEL_FILENAME, (LPCTSTR)App->CL_File->MTF_Just_Name);
 		SetDlgItemText(hDlg, IDC_ST_MODEL_PATH, (LPCTSTR)App->CL_File->MTF_FolderPath);
 
-		//strcpy(App->CL_Export->mDirectory_Name, App->CL_Exp_Obj->m_Out_JustName);
-		//strcat(App->CL_Export->mDirectory_Name, "_Object_All");
+		strcpy(App->CL_File->MTF_Directory_Name, App->CL_File->MTF_Just_Name);
+		strcat(App->CL_File->MTF_Directory_Name, "_C3D_prj");
 
-		SetDlgItemText(hDlg, IDC_ST_OGRE_SUBFOLDER, (LPCTSTR)App->CL_Export->mDirectory_Name);
+		SetDlgItemText(hDlg, IDC_ST_MODEL_SUBFOLDER, (LPCTSTR)App->CL_File->MTF_Directory_Name);
 
 		//HWND Temp = GetDlgItem(hDlg, IDC_CK_CREATE_SUBDIR);
 		//SendMessage(Temp, BM_SETCHECK, 1, 0);
@@ -252,10 +254,10 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 
 			SetDlgItemText(hDlg, IDC_ST_MODEL_FILENAME, App->CL_File->MTF_Just_Name);
 
-			//strcpy(App->CL_Export->mDirectory_Name, App->CL_Exp_Obj->m_Out_JustName);
-			//strcat(App->CL_Export->mDirectory_Name, "_Object_All");
+			strcpy(App->CL_File->MTF_Directory_Name, App->CL_File->MTF_Just_Name);
+			strcat(App->CL_File->MTF_Directory_Name, "_C3D_prj");
 
-			//SetDlgItemText(hDlg, IDC_ST_OGRE_SUBFOLDER, (LPCTSTR)App->CL_Export->mDirectory_Name);
+			SetDlgItemText(hDlg, IDC_ST_MODEL_SUBFOLDER, (LPCTSTR)App->CL_File->MTF_Directory_Name);
 
 			return TRUE;
 		}
@@ -386,31 +388,32 @@ void CL64_File::Start_Save(bool useSaveDialog)
 
 	// Create Working Folder
 	char ProjectFolder[MAX_PATH];
-	strcpy(ProjectFolder, MTF_PathAndFile);
-
-	int Len1 = strlen(MTF_PathAndFile);
-	int Len2 = strlen(MTF_Just_FileName);
-	ProjectFolder[Len1 - Len2] = 0;
-
-	strcat(ProjectFolder, MTF_Just_Name);
-	strcat(ProjectFolder, "_C3D_prj");
+	strcpy(ProjectFolder, App->CL_File->MTF_FolderPath);
+	strcat(ProjectFolder, "\\");
+	strcat(ProjectFolder, App->CL_File->MTF_Directory_Name);
+	strcat(ProjectFolder, "\\");
 	CreateDirectory(ProjectFolder, NULL);
 
 	App->CL_Level->flag_Working_Folder_Exists = true;
-	strcat(ProjectFolder, "\\");
-	strcpy(Prj_Working_Folder, ProjectFolder);
+
+	strcpy(MTF_Just_FileName, MTF_Just_Name);
+	strcat(MTF_Just_FileName, ".cbf");
 
 	char Path_And_File[MAX_PATH];
 	strcpy(Path_And_File, ProjectFolder);
 	strcat(Path_And_File, MTF_Just_FileName);
 
 
+
+	App->Say_Win(Path_And_File);
+
 	Save_Document(Path_And_File);
+	
 
 	// Save Texture Zip Version 2.0
 	//-------------------------------------------------
 	std::string Source = App->CL_Level->TXL_PathAndFile;
-	std::string Destination = std::string(Prj_Working_Folder);
+	std::string Destination = std::string(ProjectFolder);
 
 	char Zip_File[MAX_PATH];
 	strcpy(Zip_File, MTF_Just_Name);
@@ -437,7 +440,7 @@ void CL64_File::Start_Save(bool useSaveDialog)
 
 	App->Set_Title(MTF_PathAndFile);
 
-	App->CL_Level->flag_File_Been_Saved = 1;
+	App->CL_Level->flag_File_Been_Saved = true;
 
 	App->CL_Libs->CL_Preference->Save_Config_File();
 

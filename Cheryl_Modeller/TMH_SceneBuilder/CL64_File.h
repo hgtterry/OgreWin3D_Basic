@@ -30,7 +30,7 @@ public:
 	CL64_File(void);
 	~CL64_File(void);
 
-	void Model_Export_Dlg();
+	void Start_Model_Export_Dlg();
 
 	void Start_Save(bool useSaveDialog);
 	void Start_Load(bool useOpenDialog);
@@ -47,6 +47,7 @@ public:
 	char MTF_Just_Path[MAX_PATH];
 	char MTF_Just_Name[MAX_PATH];
 	char MTF_FolderPath[MAX_PATH];
+	char MTF_Directory_Name[MAX_PATH];
 	char Prj_Working_Folder[MAX_PATH];
 
 	char Loaded_PathFileName[MAX_PATH];
