@@ -40,7 +40,7 @@ CL64_File::CL64_File(void)
 	strcpy(MTF_PathAndFile, "");
 	strcat(MTF_PathAndFile, "New_Model.mtf");
 
-	strcpy(MTF_Just_FileName, "New_Model.mtf");
+	strcpy(MTF_Just_FileName, "New_Model.cbf");
 	strcpy(MTF_Just_Name, "New_Model");
 	strcpy(MTF_Just_Path, "No_Path");
 	strcpy(MTF_FolderPath, "");
@@ -64,6 +64,13 @@ CL64_File::~CL64_File(void)
 // *************************************************************************
 void CL64_File::Model_Export_Dlg()
 {
+	int brushCount = App->CL_X_Brush->Get_Brush_Count();
+	if (brushCount <= 0)
+	{
+		App->Say("No Brushes to Save");
+		return;
+	}
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_EXPORT_BRUSH, App->MainHwnd, (DLGPROC)Proc_Model_Export_Dlg);
 
 }
@@ -84,9 +91,9 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 		SendDlgItemMessage(hDlg, IDC_ST_MODEL_PATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_ST_STOGRESUB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_ST_OGRE_FILENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ST_OGRE_PATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ST_OGRE_SUBFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_MODEL_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_ST_MODEL_PATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_STMODELSUB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		//SendDlgItemMessage(hDlg, IDC_BT_OGRE_NAMECHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_BT_OGREBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -99,7 +106,7 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_ST_MODEL_FILENAME, (LPCTSTR)App->CL_File->MTF_Just_Name);
-		SetDlgItemText(hDlg, IDC_ST_MODEL_PATH, (LPCTSTR)App->CL_File->Prj_Working_Folder);
+		SetDlgItemText(hDlg, IDC_ST_MODEL_PATH, (LPCTSTR)App->CL_File->MTF_FolderPath);
 
 		//strcpy(App->CL_Export->mDirectory_Name, App->CL_Exp_Obj->m_Out_JustName);
 		//strcat(App->CL_Export->mDirectory_Name, "_Object_All");
@@ -296,7 +303,7 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			strcpy(App->CL_File->MTF_PathAndFile, App->CL_File->MTF_FolderPath);
 			strcat(App->CL_File->MTF_PathAndFile, "\\");
 			strcat(App->CL_File->MTF_PathAndFile, App->CL_File->MTF_Just_Name);
-			strcat(App->CL_File->MTF_PathAndFile, ".mtf");
+			strcat(App->CL_File->MTF_PathAndFile, ".cbf");
 
 			App->Say_Win(App->CL_File->MTF_PathAndFile);
 			App->CL_File->Start_Save(false);
@@ -332,7 +339,7 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	}
 
 	// if Menu->Save As Use Dialog
-	if (useSaveDialog)
+	/*if (useSaveDialog)
 	{
 		LPCWSTR fileType = L"Mesh Text File(*.mtf) *.mtf";
 		LPCWSTR fileExtension = L" *.mtf";
@@ -360,10 +367,10 @@ void CL64_File::Start_Save(bool useSaveDialog)
 		buf[strlen(buf) - 4] = '\0';
 		strcpy(MTF_Just_Name, buf);
 		strcpy(App->CL_Export->mJustName, MTF_Just_Name);
-	}
+	}*/
 
 	// If from Menu->Save Check if file exsits and ask for conformatin to overwrite
-	if (!useSaveDialog)
+	/*if (!useSaveDialog)
 	{
 		bool test = App->CL_Utilities->Check_File_Exist(MTF_PathAndFile);
 		if (test == 1)
@@ -375,7 +382,7 @@ void CL64_File::Start_Save(bool useSaveDialog)
 				return;
 			}
 		}
-	}
+	}*/
 
 	// Create Working Folder
 	char ProjectFolder[MAX_PATH];
@@ -706,7 +713,7 @@ bool CL64_File::Open_3dt_File()
 	char Work_Folder[MAX_PATH];
 	strcpy(Work_Folder, MTF_Just_Path);
 	strcat(Work_Folder, MTF_Just_Name);
-	strcat(Work_Folder, "_ow3d_prj");
+	strcat(Work_Folder, "_C3D_prj");
 	bool Folder_Test = App->CL_Utilities->Check_Directory_Exists(Work_Folder);
 	if (Folder_Test == true)
 	{
