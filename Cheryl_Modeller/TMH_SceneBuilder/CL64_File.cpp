@@ -504,22 +504,28 @@ signed int CL64_File::Brush_Write(const Brush* b, FILE* ofile)
 // *************************************************************************
 // *			FaceList_Write:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
-signed int CL64_File::FaceList_Write(const FaceList* pList, FILE* f)
+signed int CL64_File::FaceList_Write(const FaceList* pList, FILE* f) 
 {
-	if (!pList || !f) return false; // Check for null pointers
-
-	int i;
-
-	assert(pList != NULL);
-	assert(f != NULL);
-
-	if (fprintf(f, "\tBrushFaces %d\n", pList->NumFaces) < 0) return false;
-	for (i = 0; i < pList->NumFaces; i++)
-	{
-		if (!Face_Write(pList->Faces[i], f)) return false;
+	// Check for null pointers and return false if any are found
+	if (!pList || !f) {
+		return false;
 	}
 
-	return true;
+	// Write the number of faces to the file and check for errors
+	if (fprintf(f, "\tBrushFaces %d\n", pList->NumFaces) < 0) 
+	{
+		return false;
+	}
+
+	// Iterate through each face and write it to the file
+	for (int i = 0; i < pList->NumFaces; i++) 
+	{
+		if (!Face_Write(pList->Faces[i], f)) {
+			return false;
+		}
+	}
+
+	return true; // Return true if all faces were written successfully
 }
 
 // *************************************************************************
@@ -527,43 +533,43 @@ signed int CL64_File::FaceList_Write(const FaceList* pList, FILE* f)
 // *************************************************************************
 signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 {
-	if (!f || !wf) return false; // Check for null pointers
+	// Check for null pointers
+	if (!f || !wf) return false;
 
-	int	i, xShift, yShift;
-	float xScale, yScale, Rotate;
-
+	// Write number of points and flags
 	fprintf(wf, "\t\tNumPoints %d\n", f->NumPoints);
 	fprintf(wf, "\t\tFlags %d\n", f->Flags);
 
-
-//	fprintf(wf, "\t\tLight %d\n", 0); // Dummy Value
-//	fprintf(wf, "\t\tMipMapBias %f\n", (float) 0); // Dummy Value
-//	fprintf(wf, "\t\tTranslucency %f\n", (float)0); // Dummy Value
-//	fprintf(wf, "\t\tReflectivity %f\n", (float)0); // Dummy Value
-
-	for (i = 0; i < f->NumPoints; i++)
+	// Write each point's coordinates
+	for (int i = 0; i < f->NumPoints; i++) 
 	{
-		if (fprintf(wf, "\t\t\tVec3d %f %f %f\n", f->Points[i].x, f->Points[i].y, f->Points[i].z) < 0) return GE_FALSE;
+		if (fprintf(wf, "\t\t\tVec3d %f %f %f\n", f->Points[i].x, f->Points[i].y, f->Points[i].z) < 0) 
+		{
+			return GE_FALSE; // Handle write error
+		}
 	}
 
+	// Retrieve texture information
+	int xShift, yShift;
+	float xScale, yScale, Rotate;
 	App->CL_X_Face->Face_GetTextureShift(f, &xShift, &yShift);
 	App->CL_X_Face->Face_GetTextureScale(f, &xScale, &yScale);
 	Rotate = App->CL_X_Face->Face_GetTextureRotate(f);
-		
+
+	// Write texture information
 	fprintf(wf, "\t\t\tTexInfo Rotate %f Shift %d %d Scale %f %f Name %s\n",
 		Rotate, xShift, yShift, xScale, yScale, App->CL_X_Face->Face_GetTextureName(f));
-		
-	
-//	fprintf(wf, "\t\tLightScale %f %f\n", (float) 0, (float) 0);  // Dummy Value
 
-	fprintf(wf, "%s%f %f %f %f %f %f %f %f %f %f %f %f\n", "\tTransform ",
+	// Write transformation data
+	fprintf(wf, "\tTransform %f %f %f %f %f %f %f %f %f %f %f %f\n",
 		f->Tex.XfmFaceAngle.AX, f->Tex.XfmFaceAngle.AY, f->Tex.XfmFaceAngle.AZ,
 		f->Tex.XfmFaceAngle.BX, f->Tex.XfmFaceAngle.BY, f->Tex.XfmFaceAngle.BZ,
 		f->Tex.XfmFaceAngle.CX, f->Tex.XfmFaceAngle.CY, f->Tex.XfmFaceAngle.CZ,
 		f->Tex.XfmFaceAngle.Translation.x, f->Tex.XfmFaceAngle.Translation.y, f->Tex.XfmFaceAngle.Translation.z);
 
-	fprintf(wf, "%s%f %f %f\n", "\tPos ", f->Tex.Pos.x, f->Tex.Pos.y, f->Tex.Pos.z);
-	
+	// Write position data
+	fprintf(wf, "\tPos %f %f %f\n", f->Tex.Pos.x, f->Tex.Pos.y, f->Tex.Pos.z);
+
 	return true;
 }
 
@@ -580,7 +586,7 @@ void CL64_File::Start_Load(bool useOpenDialog)
 	if (useOpenDialog)
 	{
 		LPCWSTR mType = L"Mesh Text File";
-		LPCWSTR mExtensions = L"*.mtf";
+		LPCWSTR mExtensions = L"*.cbf";
 
 		bool test = App->CL_File_IO->Open_File((LPCWSTR)mType, (LPCWSTR)mExtensions);
 		if (test == false)
@@ -610,6 +616,7 @@ void CL64_File::Start_Load(bool useOpenDialog)
 	App->CL_Model->Clear_Model();
 	App->CL_Editor_Control->Set_Editor_Design_Model();
 
+	
 	// Attempt to open the 3DT file
 	if (Open_3dt_File())
 	{
@@ -672,10 +679,8 @@ bool CL64_File::Open_3dt_File()
 		App->CL_Level->flag_Working_Folder_Exists = false;
 		strcpy(Prj_Working_Folder, "None");
 	}
-	// -------------------------------------------------------
-
-	// Load Scene ini File
 	
+	// Load Texture Zip File
 	char pathAndFile[MAX_PATH];
 
 	if (App->CL_Level->Level_Version == 1.0)
@@ -685,7 +690,7 @@ bool CL64_File::Open_3dt_File()
 
 		if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
 		{
-			// App->Say("Texture Library Does Not Exist", "Loading Default");
+			App->Say("Texture Library Does Not Exist", "Loading Default");
 			strcpy(pathAndFile, App->App_Directory_FullPath);
 			strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
 		}
@@ -693,63 +698,38 @@ bool CL64_File::Open_3dt_File()
 		App->Say("File Version is 1.0","Please Re-Save to Update 1.5");
 	}
 
-	if (App->CL_Level->Level_Version == 1.5 || App->CL_Level->Level_Version == 2.0 && App->CL_Level->flag_Working_Folder_Exists == true)
+	if (App->CL_Level->Level_Version == 2.0)// && App->CL_Level->flag_Working_Folder_Exists == true)
 	{
-		//strcpy(pathAndFile, App->CL_Project->m_Main_TXL_Path);
-		
+		strcpy(pathAndFile, MTF_Just_Path);
+		strcat(pathAndFile, App->CL_Level->TXL_Just_File_Name); // Gets it from MTF File
+
 		if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
 		{
-			//App->Say("Texture Library Does Not Exist", "Loading Default");
+			App->Say("Texture Library Does Not Exist", "Loading Default");
 			strcpy(pathAndFile, App->App_Directory_FullPath);
 			strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
 		}
+
+	}
+	else
+	{
+		App->Say("Texture Library Does Not Exist", "Loading Default");
+		strcpy(pathAndFile, App->App_Directory_FullPath);
+		strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
 	}
 
+	// Acctualy Load Texture Zip File
 	App->CL_Doc->Load_Wad_File(pathAndFile);
 	App->CL_Doc->UpdateAfterWadChange();
 
-	//Set_Player();
-
+	// Update Editor
 	App->CL_Properties_Brushes->Fill_ListBox();
 	App->CL_Properties_Textures->Fill_ListBox();
 	App->CL_Ogre->Listener_3D->CameraMode = Enums::Cam_Mode_Free;
 	App->CL_Doc->Set_Faces_To_Brush_Name_All(); // TODO: Fix up Brush Names and set Indexes
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 
-	//Check_Missing_Brushes();
-
 	return true;
-}
-
-// *************************************************************************
-// *		Check_Missing_Brushes:- Terry Mo and Hazel 2025				   *
-// *************************************************************************
-void CL64_File::Check_Missing_Brushes()
-{
-	//// Initialize the count of objects and a buffer for object names
-	//int count = 0;
-	//char objectName[MAX_PATH]{ 0 };
-
-	//// Iterate through all objects in the scene
-	//while (count < App->CL_Scene->Object_Count)
-	//{
-	//	// Copy the object name from the scene to the buffer
-	//	strcpy(objectName, App->CL_Scene->B_Object[count]->Object_Name);
-
-	//	// Get the brush index by the object name
-	//	int index = App->CL_Brush_X->Get_Brush_Index_By_Name(objectName);
-
-	//	// If the brush index is not found, create a new entity brush
-	//	if (index == -1)
-	//	{
-	//		// Create Brush and mark level as modified
-	//		App->CL_Entities->Create_Entity_Brush(count);
-	//		App->CL_Brush_X->Set_Brush_From_Entity_ByName(objectName, true);
-	//		App->CL_Level->flag_Level_is_Modified = true;
-	//	}
-
-	//	count++;
-	//}
 }
 
 // *************************************************************************
@@ -896,34 +876,4 @@ void CL64_File::Set_Editor()
 	App->CL_Ogre->RenderFrame(7);
 }
 
-
-// *************************************************************************
-// *			Set_Player:- Terry Mo and Hazel 2025 					   *
-// *************************************************************************
-void CL64_File::Set_Player()
-{
-	//// TODO Needed at the Moment to test for Player Brush and Set Ogre Player
-
-	//bool test = App->CL_Brush_X->Check_if_Brush_Name_Exist((LPSTR)"Main_Player");
-	//if (test == 0)
-	//{
-	//	App->CL_Entities->Create_Player_Brush("Main_Player");
-	//}
-
-	//Brush* Player = App->CL_Brush_X->Get_Brush_By_Name("Main_Player");
-	//if (Player)
-	//{
-	//	App->CL_X_Brush->Brush_SetLocked(Player, true);
-	//}
-
-	//T_Vec3 BrushPos;
-	//App->CL_X_Brush->Brush_Get_Center(Player, &BrushPos);
-
-	//App->CL_Scene->B_Player[0]->StartPos.x = BrushPos.x;
-	//App->CL_Scene->B_Player[0]->StartPos.y = BrushPos.y;
-	//App->CL_Scene->B_Player[0]->StartPos.z = BrushPos.z;
-
-	//App->CL_Physics->Reset_Physics();
-
-}
 
