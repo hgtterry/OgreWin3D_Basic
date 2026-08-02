@@ -476,6 +476,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 }
 
                 App->CL_Model->Clear_Model();
+
+                // Load Default Texture Zip File
+                char pathAndFile[MAX_PATH];
+                strcpy(pathAndFile, App->App_Directory_FullPath);
+                strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
+                App->CL_Doc->Load_Wad_File(pathAndFile);
+                App->CL_Doc->UpdateAfterWadChange();
+                App->CL_Properties_Textures->Fill_ListBox();
+                App->CL_Properties_Textures->List_Selection_Changed();
+
+
                 App->CL_Editor_Control->Set_Editor_Design_Model();
 
                 return 1;
@@ -721,11 +732,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 if (App->CL_Level->flag_File_Been_Saved == 0)
                 {
                     App->Say("This Project is new", "Will use Save As for this first time save");
-                    App->CL_File->Start_Save(true);
+                    App->CL_File->Start_Save();
                     return 1;
                 }
 
-                App->CL_File->Start_Save(false);
+                App->CL_File->Start_Save();
                 return 1;
             }
            
@@ -1184,7 +1195,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     if (App->CL_Level->flag_File_Been_Saved == 0)
                     {
                         App->Say("This Project is new", "Will use Save As for this first time save");
-                        App->CL_File->Start_Save(true);
+                        App->CL_File->Start_Save();
 
                         if (App->CL_Scene->flag_Project_Resources_Created == true)
                         {
@@ -1268,7 +1279,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                     if (App->CL_Dialogs->YesNoCancel_Result == 1)
                     {
-                        App->CL_File->Start_Save(true);
+                        App->CL_File->Start_Save();
                     }
 
                     if (App->CL_Dialogs->YesNoCancel_Result == 2)
@@ -1356,7 +1367,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             if (App->CL_Dialogs->YesNoCancel_Result == 1)
             {
-                App->CL_File->Start_Save(true);
+                App->CL_File->Start_Save();
             }
 
             if (App->CL_Dialogs->YesNoCancel_Result == 2)

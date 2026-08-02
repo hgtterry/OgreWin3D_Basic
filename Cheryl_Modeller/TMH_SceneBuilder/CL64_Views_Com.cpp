@@ -222,9 +222,9 @@ void CL64_Views_Com::Reset_Views_All()
 	Cam_BL->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
 
 	
-	App->CL_View_Top_Left->Zoom_To_Model();
-	App->CL_View_Top_Right->Zoom_To_Model();
-	App->CL_View_Bottom_Left->Zoom_To_Model();
+	//App->CL_View_Top_Left->Zoom_To_Model();
+	//App->CL_View_Top_Right->Zoom_To_Model();
+	//App->CL_View_Bottom_Left->Zoom_To_Model();
 
 	//App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 

@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-TMH_SceneBuilder
+Cheryl 3D Modeller
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -78,7 +78,7 @@ void CL64_File::Start_Model_Export_Dlg()
 }
 
 // *************************************************************************
-// *		Proc_Model_Export_Dlg:- Terry and Hazel Flanigan 2025		   *
+// *		Proc_Model_Export_Dlg:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -150,14 +150,6 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
 		}
-
-		/*if (GetDlgItem(hDlg, IDC_ST_OGRE_SUBFOLDER) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->Brush_White;
-		}*/
 
 		if (GetDlgItem(hDlg, IDC_ST_MODEL_NAME) == (HWND)lParam)
 		{
@@ -306,7 +298,7 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			strcat(App->CL_File->MTF_PathAndFile, App->CL_File->MTF_Just_Name);
 			strcat(App->CL_File->MTF_PathAndFile, ".cbf");
 
-			App->CL_File->Start_Save(false);
+			App->CL_File->Start_Save();
 
 			//App->CL_Exp_Obj->flag_File_Created = true;
 			EndDialog(hDlg, LOWORD(wParam));
@@ -326,9 +318,9 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 }
 
 // *************************************************************************
-// *				 Start_Save:- Terry Mo and Hazel 2025			       *
+// *				 Start_Save:- Terry Mo and Hazel 2026			       *
 // *************************************************************************
-void CL64_File::Start_Save(bool useSaveDialog)
+void CL64_File::Start_Save()
 {
 	// Check there are brushes to Save
 	int brushCount = App->CL_X_Brush->Get_Brush_Count();
@@ -435,7 +427,7 @@ bool CL64_File::Save(const char* FileName)
 }
 
 // *************************************************************************
-// *			BrushList_Write:- Terry Mo and Hazel 2025				   *
+// *			BrushList_Write:- Terry Mo and Hazel 2026				   *
 // *************************************************************************
 signed int CL64_File::BrushList_Write(BrushList* BList, FILE* ofile)
 {
@@ -459,7 +451,7 @@ signed int CL64_File::BrushList_Write(BrushList* BList, FILE* ofile)
 }
 
 // *************************************************************************
-// *			BrushList_Write:- Terry Mo and Hazel 2025				   *
+// *			BrushList_Write:- Terry Mo and Hazel 2026				   *
 // *************************************************************************
 signed int CL64_File::Brush_Write(const Brush* b, FILE* ofile)
 {
@@ -502,7 +494,7 @@ signed int CL64_File::Brush_Write(const Brush* b, FILE* ofile)
 }
 
 // *************************************************************************
-// *			FaceList_Write:- Terry Mo and Hazel 2025				   *
+// *			FaceList_Write:- Terry Mo and Hazel 2026				   *
 // *************************************************************************
 signed int CL64_File::FaceList_Write(const FaceList* pList, FILE* f) 
 {
@@ -529,7 +521,7 @@ signed int CL64_File::FaceList_Write(const FaceList* pList, FILE* f)
 }
 
 // *************************************************************************
-// *				Face_Write:- Terry Mo and Hazel 2025				   *
+// *				Face_Write:- Terry Mo and Hazel 2026				   *
 // *************************************************************************
 signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 {
@@ -579,7 +571,7 @@ signed int CL64_File::Face_Write(const Face* f, FILE* wf)
 // ----------------------------------------------------------------------
 
 // *************************************************************************
-// *	           Start_Load:- Terry Mo and Hazel 2025				       *
+// *	           Start_Load:- Terry Mo and Hazel 2026				       *
 // *************************************************************************
 void CL64_File::Start_Load(bool useOpenDialog)
 {
@@ -725,6 +717,8 @@ bool CL64_File::Open_3dt_File()
 	// Update Editor
 	App->CL_Properties_Brushes->Fill_ListBox();
 	App->CL_Properties_Textures->Fill_ListBox();
+	App->CL_Properties_Textures->List_Selection_Changed();
+
 	App->CL_Ogre->Listener_3D->CameraMode = Enums::Cam_Mode_Free;
 	App->CL_Doc->Set_Faces_To_Brush_Name_All(); // TODO: Fix up Brush Names and set Indexes
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
@@ -733,7 +727,7 @@ bool CL64_File::Open_3dt_File()
 }
 
 // *************************************************************************
-// *			Load_File:- Terry Mo and Hazel 2025 					   *
+// *			Load_File:- Terry Mo and Hazel 2026 					   *
 // *************************************************************************
 bool CL64_File::Load_File(const char* FileName)
 {
@@ -808,7 +802,7 @@ bool CL64_File::Load_File(const char* FileName)
 }
 
 // *************************************************************************
-// *			Set_Editor:- Terry Mo and Hazel 2025 					   *
+// *			Set_Editor:- Terry Mo and Hazel 2026 					   *
 // *************************************************************************
 void CL64_File::Set_Editor() 
 {
