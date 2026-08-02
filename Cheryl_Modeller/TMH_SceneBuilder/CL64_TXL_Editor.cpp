@@ -66,7 +66,7 @@ CL64_TXL_Editor::~CL64_TXL_Editor()
 // *************************************************************************
 void CL64_TXL_Editor::Start_Texl_Dialog()
 {
-	if (flag_Texl_Dialog_Active == 0)
+	if (flag_Texl_Dialog_Active == false)
 	{
 		App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
 		DialogBox(App->hInst, (LPCTSTR)IDD_TXL_EDITOR, App->MainHwnd, (DLGPROC)Proc_Texl_Dialog);
@@ -83,7 +83,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
-		App->CL_TXL_Editor->flag_Texl_Dialog_Active = 1;
+		App->CL_TXL_Editor->flag_Texl_Dialog_Active = true;
 
 		SendDlgItemMessage(hDlg, IDC_ST_TXL_TEXTURE, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_TXL_LIST, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
@@ -108,6 +108,11 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 
 		App->CL_TXL_Editor->Update_Texture_Info(TrueIndex);
 		
+		char TitleBar[MAX_PATH];
+		strcpy(TitleBar, "File:- ");
+		strcat(TitleBar, App->CL_Level->TXL_PathAndFile);
+		SetWindowText(hDlg, TitleBar);
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:

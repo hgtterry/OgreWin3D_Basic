@@ -427,8 +427,15 @@ void CL64_ImGui_Editor::File_Data(void)
 	ImGui::TextWrapped("File Path %s", App->CL_File->Loaded_PathFileName);
 
 	ImGui::Text(" ");
-	ImGui::Text("Texture Library File Name %s", App->CL_Level->TXL_Just_File_Name);
+	ImGui::Text("Model CBF File");
+	ImGui::Text("Name %s", App->CL_File->MTF_Just_Name);
+	ImGui::Text("File Name %s", App->CL_File->MTF_Just_FileName);
 	ImGui::Text(" ");
-	ImGui::TextWrapped("Texture Library Path %s", App->CL_Level->TXL_PathAndFile);
+
+	ImGui::Text("Texture Library Zip File");
+	
+	ImGui::Text("Texture Library File Name %s", App->CL_Level->TXL_Just_File_Name);
+	ImGui::Text("Path");
+	ImGui::TextWrapped("%s", App->CL_Level->TXL_PathAndFile);
 	
 }

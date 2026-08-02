@@ -617,7 +617,7 @@ void CL64_File::Start_Load(bool useOpenDialog)
 	App->CL_Editor_Control->Set_Editor_Design_Model();
 
 	
-	// Attempt to open the 3DT file
+	// Attempt to open the CBF file
 	if (Open_3dt_File())
 	{
 		App->CL_Doc->Do_General_Select_Dlg(false);
