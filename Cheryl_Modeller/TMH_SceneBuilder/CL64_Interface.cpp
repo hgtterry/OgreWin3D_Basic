@@ -337,7 +337,8 @@ void CL64_Interface::Set_Menu_Items_Design()
 {
 	HMENU Men = GetMenu(App->MainHwnd);
 
-	EnableMenuItem(Men, ID_FILE_SAVE, MF_BYCOMMAND | MF_ENABLED);
+	EnableMenuItem(Men, ID_FILE_SAVE, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+	//EnableMenuItem(Men, ID_FILE_SAVE, MF_BYCOMMAND | MF_ENABLED);
 	EnableMenuItem(Men, ID_FILE_SAVEAS, MF_BYCOMMAND | MF_ENABLED);
 	EnableMenuItem(Men, ID_EXPORT_OGRE3D, MF_BYCOMMAND | MF_ENABLED);
 	EnableMenuItem(Men, ID_EXPORT_WAVEFRONTOBJ, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);

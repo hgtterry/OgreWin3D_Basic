@@ -38,7 +38,7 @@ CL64_File::CL64_File(void)
 
 	// MTF File
 	strcpy(MTF_PathAndFile, "");
-	strcat(MTF_PathAndFile, "New_Model.mtf");
+	strcat(MTF_PathAndFile, "New_Model.cbf");
 
 	strcpy(MTF_Just_FileName, "New_Model.cbf");
 	strcpy(MTF_Just_Name, "New_Model");
@@ -87,16 +87,16 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_MODEL_BANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_ST_STFILENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_MODEL_FILENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_MODEL_PATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_ST_STOGRESUB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_MODEL_SUBFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_ST_MODEL_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_ST_MODEL_PATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_STMODELSUB, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_BT_OGRE_NAMECHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BT_OGREBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_MODEL_NAMECHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_MODEL_BROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		//SendDlgItemMessage(hDlg, IDC_CK_BL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		//SendDlgItemMessage(hDlg, IDC_CK_CREATE_SUBDIR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -156,9 +156,9 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
-		}
+		}*/
 
-		if (GetDlgItem(hDlg, IDC_ST_STFILENAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_MODEL_NAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -166,7 +166,7 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_ST_STPATH) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_ST_MODEL_PATH) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -174,7 +174,7 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_ST_STOGRESUB) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_STMODELSUB) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -182,7 +182,7 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_CK_BL_DESKTOP) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_CK_BL_DESKTOP) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -205,19 +205,19 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_BT_OGRE_NAMECHANGE)
+		if (some_item->idFrom == IDC_BT_MODEL_NAMECHANGE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_OGREBROWSE)
+		if (some_item->idFrom == IDC_BT_MODEL_BROWSE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		if (some_item->idFrom == IDOK)
 		{
@@ -238,27 +238,27 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 
 	case WM_COMMAND:
 	{
-		/*if (LOWORD(wParam) == IDC_BT_OGRE_NAMECHANGE)
+		if (LOWORD(wParam) == IDC_BT_MODEL_NAMECHANGE)
 		{
 			strcpy(App->CL_Dialogs->btext, "Change File Name");
-			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Exp_Obj->m_Out_JustName);
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_File->MTF_Just_Name);
 
 			App->CL_Dialogs->Dialog_Text(Enums::Check_Name_None);
 
 			if (App->CL_Dialogs->flag_Dlg_Canceled == 0)
 			{
-				strcpy(App->CL_Exp_Obj->m_Out_JustName, App->CL_Dialogs->Chr_Text);
+				strcpy(App->CL_File->MTF_Just_Name, App->CL_Dialogs->Chr_Text);
 			}
 
-			SetDlgItemText(hDlg, IDC_ST_OGRE_FILENAME, App->CL_Exp_Obj->m_Out_JustName);
+			SetDlgItemText(hDlg, IDC_ST_MODEL_FILENAME, App->CL_File->MTF_Just_Name);
 
-			strcpy(App->CL_Export->mDirectory_Name, App->CL_Exp_Obj->m_Out_JustName);
-			strcat(App->CL_Export->mDirectory_Name, "_Object_All");
+			//strcpy(App->CL_Export->mDirectory_Name, App->CL_Exp_Obj->m_Out_JustName);
+			//strcat(App->CL_Export->mDirectory_Name, "_Object_All");
 
-			SetDlgItemText(hDlg, IDC_ST_OGRE_SUBFOLDER, (LPCTSTR)App->CL_Export->mDirectory_Name);
+			//SetDlgItemText(hDlg, IDC_ST_OGRE_SUBFOLDER, (LPCTSTR)App->CL_Export->mDirectory_Name);
 
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDC_BT_MODEL_BROWSE)
 		{
@@ -305,7 +305,7 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			strcat(App->CL_File->MTF_PathAndFile, App->CL_File->MTF_Just_Name);
 			strcat(App->CL_File->MTF_PathAndFile, ".cbf");
 
-			App->Say_Win(App->CL_File->MTF_PathAndFile);
+			//App->Say_Win(App->CL_File->MTF_PathAndFile);
 			App->CL_File->Start_Save(false);
 
 			//App->CL_Exp_Obj->flag_File_Created = true;
