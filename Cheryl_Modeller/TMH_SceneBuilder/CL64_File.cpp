@@ -100,10 +100,9 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 		SendDlgItemMessage(hDlg, IDC_BT_MODEL_NAMECHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MODEL_BROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_CK_BL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CK_CREATE_SUBDIR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CK_BUILDEDGELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_CK_BL_MODEL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_MODEL_CREATE_SUBDIR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -115,8 +114,8 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 
 		SetDlgItemText(hDlg, IDC_ST_MODEL_SUBFOLDER, (LPCTSTR)App->CL_File->MTF_Directory_Name);
 
-		//HWND Temp = GetDlgItem(hDlg, IDC_CK_CREATE_SUBDIR);
-		//SendMessage(Temp, BM_SETCHECK, 1, 0);
+		HWND Temp = GetDlgItem(hDlg, IDC_CK_MODEL_CREATE_SUBDIR);
+		SendMessage(Temp, BM_SETCHECK, 1, 0);
 
 		return TRUE;
 	}
@@ -184,7 +183,7 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			return (UINT)App->AppBackground;
 		}
 
-		/*if (GetDlgItem(hDlg, IDC_CK_BL_DESKTOP) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_CK_BL_MODEL_DESKTOP) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -192,13 +191,13 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_CK_CREATE_SUBDIR) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_CK_MODEL_CREATE_SUBDIR) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 
 		return FALSE;
 	}
@@ -274,14 +273,14 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			return TRUE;
 		}
 
-		/*if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
+		if (LOWORD(wParam) == IDC_CK_BL_MODEL_DESKTOP)
 		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_BL_DESKTOP);
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BL_MODEL_DESKTOP);
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				strcpy(App->CL_Exp_Obj->m_Out_Folder_Path, App->CL_Exp_Obj->DeskTop_Folder);
-				SetDlgItemText(hDlg, IDC_ST_OGRE_PATH, (LPCTSTR)App->CL_Exp_Obj->m_Out_Folder_Path);
+				strcpy(App->CL_File->MTF_FolderPath, App->CL_Exp_Obj->DeskTop_Folder);
+				SetDlgItemText(hDlg, IDC_ST_MODEL_PATH, (LPCTSTR)App->CL_File->MTF_FolderPath);
 				return 1;
 			}
 			else
@@ -290,7 +289,7 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			}
 
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDOK)
 		{
@@ -307,7 +306,6 @@ LRESULT CALLBACK CL64_File::Proc_Model_Export_Dlg(HWND hDlg, UINT message, WPARA
 			strcat(App->CL_File->MTF_PathAndFile, App->CL_File->MTF_Just_Name);
 			strcat(App->CL_File->MTF_PathAndFile, ".cbf");
 
-			//App->Say_Win(App->CL_File->MTF_PathAndFile);
 			App->CL_File->Start_Save(false);
 
 			//App->CL_Exp_Obj->flag_File_Created = true;
@@ -340,52 +338,6 @@ void CL64_File::Start_Save(bool useSaveDialog)
 		return;
 	}
 
-	// if Menu->Save As Use Dialog
-	/*if (useSaveDialog)
-	{
-		LPCWSTR fileType = L"Mesh Text File(*.mtf) *.mtf";
-		LPCWSTR fileExtension = L" *.mtf";
-
-		App->CL_File_IO->Save_File(fileType, fileExtension);
-
-		if (App->CL_File_IO->flag_Canceled)
-		{
-			return;
-		}
-
-		std::string& pathAndFile = App->CL_File_IO->s_Path_And_File;
-		strcpy(MTF_PathAndFile, pathAndFile.c_str());
-
-		if (_stricmp(MTF_PathAndFile + pathAndFile.length() - 4, ".mtf") != 0)
-		{
-			strcat(MTF_PathAndFile, ".mtf");
-		}
-
-		App->CL_Utilities->Get_FileName_FromPath(MTF_PathAndFile, MTF_PathAndFile);
-		strcpy(MTF_Just_FileName, App->CL_Utilities->JustFileName);
-
-		char buf[MAX_PATH];
-		strcpy(buf, MTF_Just_FileName);
-		buf[strlen(buf) - 4] = '\0';
-		strcpy(MTF_Just_Name, buf);
-		strcpy(App->CL_Export->mJustName, MTF_Just_Name);
-	}*/
-
-	// If from Menu->Save Check if file exsits and ask for conformatin to overwrite
-	/*if (!useSaveDialog)
-	{
-		bool test = App->CL_Utilities->Check_File_Exist(MTF_PathAndFile);
-		if (test == 1)
-		{
-			App->CL_Dialogs->YesNo("File Exsits", "Do you want to update File");
-			
-			if (App->CL_Dialogs->flag_Dlg_Canceled == true)
-			{
-				return;
-			}
-		}
-	}*/
-
 	// Create Working Folder
 	char ProjectFolder[MAX_PATH];
 	strcpy(ProjectFolder, App->CL_File->MTF_FolderPath);
@@ -403,13 +355,8 @@ void CL64_File::Start_Save(bool useSaveDialog)
 	strcpy(Path_And_File, ProjectFolder);
 	strcat(Path_And_File, MTF_Just_FileName);
 
-
-
-	App->Say_Win(Path_And_File);
-
 	Save_Document(Path_And_File);
 	
-
 	// Save Texture Zip Version 2.0
 	//-------------------------------------------------
 	std::string Source = App->CL_Level->TXL_PathAndFile;
@@ -421,27 +368,22 @@ void CL64_File::Start_Save(bool useSaveDialog)
 
 	Destination.append(Zip_File);
 
-	// Cant copy to its self so test
+	// Check if the source and destination are different
 	if (Destination != Source)
 	{
 		if (!CopyFile(Source.c_str(),Destination.c_str(), false))
 		{
-			App->Say("Error: Failed to copy file");
+			App->Say("Error","Failed to copy Texture Zip file");
 			return;
 		}
 	}
-	//-------------------------------------------------
 	
-	//// Update the level's file paths
+	// Update the level's Texture Zip file paths
 	strcpy(App->CL_Level->TXL_PathAndFile,Destination.c_str());
 	strcpy(App->CL_Level->TXL_Just_File_Name, Zip_File);
 
-	// ---------------------------------
-
 	App->Set_Title(MTF_PathAndFile);
-
 	App->CL_Level->flag_File_Been_Saved = true;
-
 	App->CL_Libs->CL_Preference->Save_Config_File();
 
 	App->Say("Saved", MTF_Just_FileName);
