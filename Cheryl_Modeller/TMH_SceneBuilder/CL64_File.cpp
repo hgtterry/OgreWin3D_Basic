@@ -393,7 +393,7 @@ void CL64_File::Save_Document(const char* Path_And_File)
 	}
 
 	App->CL_Doc->flag_IsNewDocument = false;
-	App->CL_Level->flag_Level_is_Modified = false;
+	App->CL_Model->flag_Model_is_Modified = false;
 }
 
 // *************************************************************************

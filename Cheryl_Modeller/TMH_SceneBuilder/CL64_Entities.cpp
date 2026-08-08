@@ -161,7 +161,7 @@ void CL64_Entities::Rename_Brush()
 			App->CL_X_Brush->Brush_SetName(App->CL_Properties_Brushes->Selected_Brush, name);
 			App->CL_Properties_Brushes->Fill_ListBox();
 			App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
-			App->CL_Level->flag_Level_is_Modified = true;
+			App->CL_Model->flag_Model_is_Modified = true;
 
 			SendDlgItemMessage(App->CL_Properties_Brushes->BrushesDlg_Hwnd, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_Properties_Brushes->Selected_Index, (LPARAM)0);
 		}
@@ -262,7 +262,7 @@ void CL64_Entities::Delete_Brush_and_Object()
 	}
 
 	// Mark the level as modified
-	App->CL_Level->flag_Level_is_Modified = true;
+	App->CL_Model->flag_Model_is_Modified = true;
 }
 
 

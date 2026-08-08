@@ -23,6 +23,8 @@ CL64_Model::CL64_Model(void)
 	flag_Model_Loaded = false;
 	flag_BoundingBox_Created = false;
 
+	flag_Model_is_Modified = false;
+
 	Imported_Ogre_Ent = nullptr;
 	Imported_Ogre_Node = nullptr;
 
@@ -267,5 +269,7 @@ void CL64_Model::Clear_Model()
 		App->CL_Doc->SelectAll();
 		App->CL_Doc->DeleteCurrentThing();
 	}
+
+	App->CL_Model->flag_Model_is_Modified = false;
 }
 

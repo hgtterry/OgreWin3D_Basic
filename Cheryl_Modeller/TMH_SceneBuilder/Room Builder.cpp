@@ -1030,12 +1030,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     if (App->CL_X_Brush->Get_Brush_Count() == 0)
                     {
                        App->CL_Doc->AddBrushToWorld();
-                       App->CL_Level->flag_Level_is_Modified = true;
+                       App->CL_Model->flag_Model_is_Modified = true;
                     }
                     else
                     {
                        App->CL_Doc->AddBrushToWorld();
-                       App->CL_Level->flag_Level_is_Modified = true;
+                       App->CL_Model->flag_Model_is_Modified = true;
                     }
                 }
 
@@ -1282,8 +1282,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case IDM_EXIT:
             {
-                App->CL_Level->flag_Level_is_Modified = false;
-                if (App->CL_Level->flag_Level_is_Modified == true)
+               //App->CL_Level->flag_Level_is_Modified = false;
+                if (App->CL_Model->flag_Model_is_Modified == true)
                 {
                     char Text[200];
                     strcpy(Text, "Save Changes To ");
@@ -1293,7 +1293,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                     if (App->CL_Dialogs->YesNoCancel_Result == 1)
                     {
-                        App->CL_File->Start_Save();
+                        App->CL_File->Start_Model_Export_Dlg();
                     }
 
                     if (App->CL_Dialogs->YesNoCancel_Result == 2)
@@ -1370,8 +1370,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_CLOSE:
     {
-        App->CL_Level->flag_Level_is_Modified = false;
-        if (App->CL_Level->flag_Level_is_Modified == true)
+        //App->CL_Model->flag_Model_is_Modified = false;
+        if (App->CL_Model->flag_Model_is_Modified == true)
         {
             char Text[200];
             strcpy(Text, "Save Changes To ");
@@ -1381,7 +1381,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             if (App->CL_Dialogs->YesNoCancel_Result == 1)
             {
-                App->CL_File->Start_Save();
+                App->CL_File->Start_Model_Export_Dlg();
             }
 
             if (App->CL_Dialogs->YesNoCancel_Result == 2)

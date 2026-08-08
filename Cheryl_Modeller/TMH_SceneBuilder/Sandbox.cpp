@@ -399,7 +399,7 @@ void Sandbox::Duplicate_Brush()
 			App->CL_Brush_X->Select_Brush_Editor(App->CL_Doc->CurBrush);
 
 			App->CL_Doc->Set_Faces_To_Brush_Name_Selected();
-			App->CL_Level->flag_Level_is_Modified = true;
+			App->CL_Model->flag_Model_is_Modified = true;
 			App->Say("Duplicated");
 		}
 	}

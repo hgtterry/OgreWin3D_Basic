@@ -36,6 +36,8 @@ public:
 	bool flag_Model_Loaded;
 	bool flag_BoundingBox_Created;
 
+	bool flag_Model_is_Modified;
+
 	Ogre::Entity* Imported_Ogre_Ent;
 	Ogre::SceneNode* Imported_Ogre_Node;
 

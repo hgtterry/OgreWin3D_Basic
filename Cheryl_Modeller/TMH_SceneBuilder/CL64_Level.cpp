@@ -38,8 +38,7 @@ CL64_Level::CL64_Level(void)
 	Level_Version = 2.0;
 
 	flag_File_Been_Saved = 0;
-	flag_Level_is_Modified = 0;
-
+	
 	CL_Wad_Class = nullptr;
 
 	TXL_PathAndFile[0] = 0;

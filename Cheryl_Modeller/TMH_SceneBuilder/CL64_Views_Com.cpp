@@ -1579,7 +1579,7 @@ void CL64_Views_Com::On_Left_Button_Up(POINT CursorPosition)
 		{
 			App->CL_Doc->DoneMovingBrushes();
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-			App->CL_Level->flag_Level_is_Modified = true;
+			App->CL_Model->flag_Model_is_Modified = true;
 		}
 
 		if (App->CL_Top_Tabs->flag_Brush_Rotate == true)
@@ -1595,7 +1595,7 @@ void CL64_Views_Com::On_Left_Button_Up(POINT CursorPosition)
 			App->CL_Properties_Brushes->OnSelchangeBrushlist(Selected, 0);
 
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-			App->CL_Level->flag_Level_is_Modified = true;
+			App->CL_Model->flag_Model_is_Modified = true;
 
 			App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
 
@@ -1605,7 +1605,7 @@ void CL64_Views_Com::On_Left_Button_Up(POINT CursorPosition)
 
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 	{
-		App->CL_Level->flag_Level_is_Modified = true;
+		App->CL_Model->flag_Model_is_Modified = true;
 		//SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
 		App->CL_Doc->SnapScaleNearest(App->CL_Doc->sides, App->CL_Render->Render_GetInidx(Current_View), Current_View);
 

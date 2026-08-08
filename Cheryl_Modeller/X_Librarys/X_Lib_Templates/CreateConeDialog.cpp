@@ -658,7 +658,7 @@ void CreateConeDialog::CreateNewTemplateBrush(Brush* pBrush)
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
-	App->CL_Level->flag_Level_is_Modified = true;
+	App->CL_Model->flag_Model_is_Modified = true;
 }
 
 // *************************************************************************

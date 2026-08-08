@@ -357,7 +357,7 @@ void CL64_ImGui_Editor::Model_Data(void)
 	ImGui::Text("Vertice Count %i", App->CL_Model->VerticeCount);
 	ImGui::Text("Face Count %i", App->CL_Model->FaceCount);
 	ImGui::Text("Bone Count %i", App->CL_Model->BoneCount);
-	ImGui::Text(" ");
+	
 
 	ImGui::Text("Model Loaded %i", App->CL_Model->flag_Model_Loaded);
 
@@ -370,6 +370,17 @@ void CL64_ImGui_Editor::Model_Data(void)
 		strcpy(Buff, "  -- No --");
 	}
 	ImGui::Text("Bounding Box Created %s", Buff);
+
+	ImGui::Text(" ");
+	if (App->CL_Model->flag_Model_is_Modified == true)
+	{
+		strcpy(Buff, "  -- Yes -- ");
+	}
+	else
+	{
+		strcpy(Buff, "  -- No --");
+	}
+	ImGui::Text("Model Modified %s", Buff);
 	
 }
 

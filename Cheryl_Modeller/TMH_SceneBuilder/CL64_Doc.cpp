@@ -196,7 +196,7 @@ void CL64_Doc::AddBrushToWorld()
 		OnBrushSubtractfromworld();
 	}
 
-    App->CL_Level->flag_Level_is_Modified = true;
+    App->CL_Model->flag_Model_is_Modified = true;
 }
 
 // *************************************************************************
@@ -298,7 +298,7 @@ void CL64_Doc::Brush_Add_To_world()
 
 	if (Placed)
 	{
-        App->CL_Level->flag_Level_is_Modified = true;
+        App->CL_Model->flag_Model_is_Modified = true;
 	}
 }
 
@@ -1019,7 +1019,7 @@ static float SnapSide(float CurMin, float CurMax, float Delta, float SnapSize)
 void CL64_Doc::DoneMovingBrushes()
 {
  
-    App->CL_Level->flag_Level_is_Modified = true;
+    App->CL_Model->flag_Model_is_Modified = true;
 
     if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes) > 0)// || ModeTool == ID_TOOLS_TEMPLATE)
     {
@@ -1792,7 +1792,7 @@ bool CL64_Doc::DeleteSelectedBrushes()
         //turn off any operation tools
         mCurrentTool = CURTOOL_NONE;
 
-        App->CL_Level->flag_Level_is_Modified = true;
+        App->CL_Model->flag_Model_is_Modified = true;
     }
 
     
@@ -1865,7 +1865,7 @@ void CL64_Doc::SnapScaleNearest(int sides, int inidx, ViewVars* v)
 {
     float	bsnap;
 
-    App->CL_Level->flag_Level_is_Modified = true;
+    App->CL_Model->flag_Model_is_Modified = true;
 
     //App->CLSB_Doc->mLastOp = BRUSH_SCALE;
 
