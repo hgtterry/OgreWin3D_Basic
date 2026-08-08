@@ -348,6 +348,11 @@ void CL64_Camera::Reset_View_and_Zoom(void)
 	{
 		if (App->CL_Mesh_Mgr->World_Ent)
 		{
+			const auto& boundingBox = App->CL_Mesh_Mgr->World_Ent->getBoundingBox();
+			float centerY = (boundingBox.getMaximum().y + boundingBox.getMinimum().y) * 0.5f;
+			cameraPosition = Ogre::Vector3(0.0f, centerY, 0.0f);
+			App->CL_Ogre->camNode->setPosition(cameraPosition + Ogre::Vector3(0, 0, App->CL_Mesh_Mgr->World_Ent->getBoundingRadius() * 2.8f));
+
 			App->CL_Mesh_Mgr->World_Node->setOrientation(Ogre::Quaternion::IDENTITY);
 		}
 		break;
@@ -359,6 +364,7 @@ void CL64_Camera::Reset_View_and_Zoom(void)
 	}
 
 	// Reset camera orientation
+	App->CL_Ogre->RenderFrame(7);
 	App->CL_Ogre->camNode->setOrientation(Ogre::Quaternion::IDENTITY);
 }
 

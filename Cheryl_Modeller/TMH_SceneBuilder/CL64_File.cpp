@@ -612,6 +612,8 @@ void CL64_File::Start_Load(bool useOpenDialog)
 	// Attempt to open the CBF file
 	if (Open_3dt_File())
 	{
+		
+
 		App->CL_Doc->Do_General_Select_Dlg(false);
 
 		Set_Editor();
@@ -619,6 +621,10 @@ void CL64_File::Start_Load(bool useOpenDialog)
 
 		App->CL_Libs->CL_Preference->Save_Config_File();
 		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+
+		App->CL_Camera->Reset_View_and_Zoom();
+		
+
 		if (App->CL_Libs->CL_Preference->flag_OpenLastFile == false)
 		{
 			App->Say("File Loaded", App->CL_File->FileName_3dt);

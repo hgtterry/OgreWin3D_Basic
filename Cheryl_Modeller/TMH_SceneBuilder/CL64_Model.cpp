@@ -96,13 +96,14 @@ void CL64_Model::Set_BondingBox_Model(bool Create)
 	}
 
 	auto& G = App->CL_Mesh->Group;
+	auto& p_BB = S_BoundingBox[0]; // Pointer to S_BoundingBox[0]
 
 	if (GroupCount > 0 && App->CL_Model->VerticeCount > 4)
 	{
 		// Initialize bounding box with the first vertex
 		const auto& firstVertex = G[0]->vertex_Data[0];
-		S_BoundingBox[0]->BB_Min[0] = firstVertex;
-		S_BoundingBox[0]->BB_Max[0] = firstVertex;
+		p_BB->BB_Min[0] = firstVertex;
+		p_BB->BB_Max[0] = firstVertex;
 
 		// Iterate through each group and vertex to find the min and max
 		for (int count = 0; count < GroupCount; ++count)
@@ -110,26 +111,26 @@ void CL64_Model::Set_BondingBox_Model(bool Create)
 			for (int vertCount = 0; vertCount < G[count]->GroupVertCount; ++vertCount)
 			{
 				const auto& vertex = G[count]->vertex_Data[vertCount];
-				S_BoundingBox[0]->BB_Min[0].x = std::min(S_BoundingBox[0]->BB_Min[0].x, vertex.x);
-				S_BoundingBox[0]->BB_Min[0].y = std::min(S_BoundingBox[0]->BB_Min[0].y, vertex.y);
-				S_BoundingBox[0]->BB_Min[0].z = std::min(S_BoundingBox[0]->BB_Min[0].z, vertex.z);
-				S_BoundingBox[0]->BB_Max[0].x = std::max(S_BoundingBox[0]->BB_Max[0].x, vertex.x);
-				S_BoundingBox[0]->BB_Max[0].y = std::max(S_BoundingBox[0]->BB_Max[0].y, vertex.y);
-				S_BoundingBox[0]->BB_Max[0].z = std::max(S_BoundingBox[0]->BB_Max[0].z, vertex.z);
+				p_BB->BB_Min[0].x = std::min(S_BoundingBox[0]->BB_Min[0].x, vertex.x);
+				p_BB->BB_Min[0].y = std::min(S_BoundingBox[0]->BB_Min[0].y, vertex.y);
+				p_BB->BB_Min[0].z = std::min(p_BB->BB_Min[0].z, vertex.z);
+				p_BB->BB_Max[0].x = std::max(p_BB->BB_Max[0].x, vertex.x);
+				p_BB->BB_Max[0].y = std::max(p_BB->BB_Max[0].y, vertex.y);
+				p_BB->BB_Max[0].z = std::max(p_BB->BB_Max[0].z, vertex.z);
 			}
 		}
 
 		// Calculate size and radius
-		S_BoundingBox[0]->Size[0].x = std::fabs(S_BoundingBox[0]->BB_Max[0].x - S_BoundingBox[0]->BB_Min[0].x);
-		S_BoundingBox[0]->Size[0].y = std::fabs(S_BoundingBox[0]->BB_Max[0].y - S_BoundingBox[0]->BB_Min[0].y);
-		S_BoundingBox[0]->Size[0].z = std::fabs(S_BoundingBox[0]->BB_Max[0].z - S_BoundingBox[0]->BB_Min[0].z);
+		p_BB->Size[0].x = std::fabs(p_BB->BB_Max[0].x - p_BB->BB_Min[0].x);
+		p_BB->Size[0].y = std::fabs(p_BB->BB_Max[0].y - p_BB->BB_Min[0].y);
+		p_BB->Size[0].z = std::fabs(p_BB->BB_Max[0].z - p_BB->BB_Min[0].z);
 
-		S_BoundingBox[0]->radius = std::min(S_BoundingBox[0]->Size[0].x, S_BoundingBox[0]->Size[0].z) / 2.0f;
+		p_BB->radius = std::min(p_BB->Size[0].x, p_BB->Size[0].z) / 2.0f;
 
 		// Calculate center
-		S_BoundingBox[0]->Centre[0].x = (S_BoundingBox[0]->BB_Min[0].x + S_BoundingBox[0]->BB_Max[0].x) / 2.0f;
-		S_BoundingBox[0]->Centre[0].y = (S_BoundingBox[0]->BB_Min[0].y + S_BoundingBox[0]->BB_Max[0].y) / 2.0f;
-		S_BoundingBox[0]->Centre[0].z = (S_BoundingBox[0]->BB_Min[0].z + S_BoundingBox[0]->BB_Max[0].z) / 2.0f;
+		p_BB->Centre[0].x = (p_BB->BB_Min[0].x + p_BB->BB_Max[0].x) / 2.0f;
+		p_BB->Centre[0].y = (p_BB->BB_Min[0].y + p_BB->BB_Max[0].y) / 2.0f;
+		p_BB->Centre[0].z = (p_BB->BB_Min[0].z + p_BB->BB_Max[0].z) / 2.0f;
 	}
 }
 
