@@ -520,6 +520,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 return 1;
             }
 
+            case ID_TESTMODELS_CUT:
+            {
+                strcpy(App->CL_File->PathFileName_3dt, App->App_Directory_FullPath);
+                strcat(App->CL_File->PathFileName_3dt, "\\Models\\CBF_Files\\Cut_Cube_C3D_prj\\Cut_Cube.cbf");
+                strcpy(App->CL_File->FileName_3dt, "Cut_Cube.cbf");
+                App->CL_File->Start_Load(false);
+                return 1;
+            }
+           
             case ID_TESTMODELS_OGRE3DSINBAD:
             {
                 strcpy(App->CL_File->Loaded_FileName, "Sinbad.mesh");
