@@ -631,6 +631,8 @@ void CL64_File::Start_Load(bool useOpenDialog)
 
 		std::string LastFolder = App->CL_Utilities->Get_Directory_From_Path(MTF_PathAndFile);
 		strcpy(App->CL_File->MTF_FolderPath, App->CL_Utilities->Get_Directory_From_Path(LastFolder).c_str());
+
+		App->CL_Model->Set_BondingBox_Model(true);
 	}
 	else
 	{

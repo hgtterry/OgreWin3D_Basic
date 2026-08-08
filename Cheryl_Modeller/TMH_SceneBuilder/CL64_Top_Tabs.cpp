@@ -690,6 +690,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		//-------------------------------------------------------- Show Bounding Box
 		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
 		{
+			App->CL_Model->Set_BondingBox_Model(false);
 			App->CL_Mesh->Show_Mesh_BoundBox();
 			return TRUE;
 		}
