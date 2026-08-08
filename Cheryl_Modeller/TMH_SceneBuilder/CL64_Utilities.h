@@ -42,6 +42,8 @@ THE SOFTWARE.
 		void Extract_Textures(bool Extract_All, const char* Exclude_File);
 		bool Zip_Assets(char* SourceFolder, char* DestinationFolder);
 
+		std::string Get_Directory_From_Path(const std::string& fname);
+
 		char JustFileName[MAX_PATH];
 	};
 

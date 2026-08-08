@@ -231,4 +231,12 @@ bool CL64_Utilities::Zip_Assets(char* SourceFolder, char* DestinationFolder)
 	return 1;
 }
 
+std::string CL64_Utilities::Get_Directory_From_Path(const std::string& fname)
+{
+	size_t pos = fname.find_last_of("\\/");
+	return (std::string::npos == pos)
+		? ""
+		: fname.substr(0, pos);
+}
+
 

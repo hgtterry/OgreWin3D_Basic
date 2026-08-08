@@ -628,6 +628,8 @@ void CL64_File::Start_Load(bool useOpenDialog)
 
 		App->CL_Doc->Do_General_Select_Dlg(true);
 
+		std::string LastFolder = App->CL_Utilities->Get_Directory_From_Path(MTF_PathAndFile);
+		strcpy(App->CL_File->MTF_FolderPath, App->CL_Utilities->Get_Directory_From_Path(LastFolder).c_str());
 	}
 	else
 	{
