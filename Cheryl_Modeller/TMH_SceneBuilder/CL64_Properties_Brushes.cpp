@@ -459,20 +459,7 @@ void CL64_Properties_Brushes::OnSelchangeBrushlist(int index, bool clear)
 		Selected_Brush = App->CL_X_Brush->Get_Brush_ByIndex(index);
 		App->CL_X_SelBrushList->SelBrushList_Add(App->CL_Doc->pSelBrushes, Selected_Brush);
 
-		// Select Object in Scene Editor
-		if (Selected_Brush->GroupId > Enums::Brushs_ID_Players)
-		{
-			//int m_Object = App->CL_Com_Objects->GetIndex_By_Name(Selected_Brush->Name);
-
-			//if (m_Object == -1)
-			//{
-			//	App->Say("No Object to Select");
-			//}
-			//else
-			//{
-			//	//App->CL_FileView->SelectItem(App->CL_Scene->B_Object[m_Object]->FileViewItem);
-			//}
-		}
+		App->CL_Interface->Enable_TopTabs_Buttons(true);
 
 		if (clear)
 		{

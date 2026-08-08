@@ -276,6 +276,8 @@ void CL64_OGL_Listener::Render_Loop()
 	// ---------------------- Selected Brush
 	if (flag_Show_Selected_Brush == 1)
 	{
+		glColor3f(0.0f, 1, 1);
+
 		int BC = App->CL_X_Brush->Get_Brush_Count();
 		if (BC > 0)
 		{
@@ -1259,7 +1261,6 @@ bool CL64_OGL_Listener::Brush_FaceList_Render(const Brush* b, const FaceList* pL
 // *************************************************************************
 bool CL64_OGL_Listener::Render_Brush(const Brush* b)
 {
-
 	if (b->Type == BRUSH_MULTI)
 	{
 		return Render_Sub_Brushes(b->BList); // Recursive
@@ -1327,7 +1328,6 @@ bool CL64_OGL_Listener::Render_Face(const Face* f)
 	curnum_verts = 0;
 
 	// -----------------------------------  Vertices
-	glColor3f(0.0f, 1.0f, 0.0f);
 
 	const T_Vec3* verts;
 	verts = App->CL_X_Face->Face_GetPoints(f);

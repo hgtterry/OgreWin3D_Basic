@@ -66,7 +66,7 @@ void CL64_Top_Tabs::Reset_Class()
 	App->CL_Top_Tabs->flag_View_Top_Right = 0;
 	App->CL_Top_Tabs->flag_View_Bottom_Left = 0;
 
-	App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
+	App->CL_Interface->Unselect_Brush_And_Set_Dlgs();
 
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 }
@@ -915,8 +915,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs_Brushes(HWND hDlg, UINT message, W
 	{
 		if (LOWORD(wParam) == IDC_BT_TT_BRUSH_SELECT)
 		{
-			App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
-
+			App->CL_Interface->Unselect_Brush_And_Set_Dlgs();
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 			return TRUE;

@@ -693,7 +693,7 @@ LRESULT CALLBACK CreateCylDialog::Proc_Create_Cylinder(HWND hDlg, UINT message, 
 
 			m_Cylinder->Remove_Edit_Boxes(hDlg);
 
-			App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
+			App->CL_Interface->Unselect_Brush_And_Set_Dlgs();
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 

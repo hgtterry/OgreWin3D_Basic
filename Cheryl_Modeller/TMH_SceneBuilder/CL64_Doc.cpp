@@ -540,46 +540,27 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
     float Dist;
     int FoundThingType;
 
-   if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
-    {
-        ResetAllSelections();
-    }
-
     FoundThingType = FindClosestThing(&point, v, &pMinBrush,&Dist);
 
     if ((FoundThingType != fctNOTHING) && (Dist <= 25)) //MAX_PIXEL_SELECT_DIST))
     {
-        if (FoundThingType == fctBRUSH)
-        {
-            if (pMinBrush->GroupId == Enums::Brushs_ID_Players)
+		if (FoundThingType == fctBRUSH)
+		{
+           // if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
             {
-               
+                ResetAllSelections();
             }
-			else
-			{
-				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
-                App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
-                EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_ENABLED);
+			App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
+			App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
-                App->CL_Interface->Enable_TopTabs_Buttons(true);
-                // Entity Selected in OnSelchangeBrushlist
-			}
-        } 
+			EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_ENABLED);
+
+			App->CL_Interface->Enable_TopTabs_Buttons(true);
+			// Entity Selected in OnSelchangeBrushlist
+
+		}
     }
-    else
-    {
-        if (App->CL_X_Face_Editor->flag_FaceDlg_Active == true)
-        {
-            App->CL_X_Face_Editor->Close_Faces_Dialog();
-        }
-
-        App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
-        App->CL_Top_Tabs->Update_Faces_Combo();
-        App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-        EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
-    }
-
 }
 
 // *************************************************************************

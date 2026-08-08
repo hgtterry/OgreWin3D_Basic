@@ -41,7 +41,7 @@ public:
 	void Position_Motions_Dlg(void);
 
 	bool Resize_FileView(void);
-	void Deselect_All_Brushes_Update_Dlgs(void);
+	void Unselect_Brush_And_Set_Dlgs(void);
 
 	void Menu_Enable_OgreExport(bool option);
 

@@ -71,9 +71,9 @@ void CL64_Interface::Reset_All_Dialogs(void)
 }
 
 // *************************************************************************
-// *  Deselect_All_Brushes_Update_Dlgs:- Terry and Hazel Flanigan 2025     *
+// *	Unselect_Brush_And_Set_Dlgs:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Interface::Deselect_All_Brushes_Update_Dlgs(void)
+void CL64_Interface::Unselect_Brush_And_Set_Dlgs(void)
 {
 	App->CL_Doc->Set_Tool_GeneralSelect();
 	App->CL_Doc->ResetAllSelections();
@@ -95,6 +95,11 @@ void CL64_Interface::Deselect_All_Brushes_Update_Dlgs(void)
 
 	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
+	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+
+	App->CL_Top_Tabs->Update_Faces_Combo();
+
+	//EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
 }
 
 // *************************************************************************
@@ -488,6 +493,7 @@ void CL64_Interface::Enable_TopTabs_Buttons(bool option)
 	// Array of button IDs to enable or disable
 	const int buttonID2s[] =
 	{
+		IDC_BT_TT_BRUSH_SELECT,
 		IDC_BT_TT_BRUSH_MOVE,
 		IDC_BT_TT_BRUSH_SCALE,
 		IDC_BT_TT_BRUSH_ROTATE,

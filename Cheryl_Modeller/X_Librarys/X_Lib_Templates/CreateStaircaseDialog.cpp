@@ -559,7 +559,7 @@ LRESULT CALLBACK CreateStaircaseDialog::Proc_CreateStaircase(HWND hDlg, UINT mes
 
 			m_Staircase->Remove_Edit_Boxes(hDlg);
 
-			App->CL_Interface->Deselect_All_Brushes_Update_Dlgs();
+			App->CL_Interface->Unselect_Brush_And_Set_Dlgs();
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 			App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 
