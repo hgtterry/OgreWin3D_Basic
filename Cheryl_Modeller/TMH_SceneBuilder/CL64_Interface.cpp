@@ -37,6 +37,7 @@ CL64_Interface::CL64_Interface()
 	flag_Tab_Templates = false;
 	flag_Tab_Group = false;
 
+	flag_Dark_Mode = false;
 
 	flag_Grids_Are_Visible = false;
 	flag_Properties_Dlg_Active = false;

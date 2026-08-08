@@ -52,6 +52,8 @@ public:
 	bool flag_Loop_Enabled;
 	bool flag_Show_System_Data;
 
+	bool flag_Dark_Mode;
+
 	int Selected_System_Page;
 
 private:

@@ -329,7 +329,14 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		if (App->CL_Interface->flag_Dark_Mode == true)
+		{
+			return (LONG)App->BlackBrush;
+		}
+		else
+		{
+			return (LONG)App->AppBackground;
+		}
 	}
 
 	case WM_CTLCOLORBTN:

@@ -76,7 +76,7 @@ public:
 	bool flag_Tab_Texture;
 	bool flag_Tab_Templates;
 	bool flag_Tab_Group;
-
+	bool flag_Dark_Mode;
 
 	bool flag_Properties_Dlg_Active;
 	bool Materials_Dlg_Active;

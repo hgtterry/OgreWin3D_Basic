@@ -56,6 +56,8 @@ CL64_ImGui_Editor::CL64_ImGui_Editor()
 	flag_Show_Physics_Debug = false;
 	flag_Show_Mesh = true;
 
+	flag_Dark_Mode = false;
+
 	// Current 
 
 	flag_Loop_Enabled = false;
@@ -273,6 +275,23 @@ void CL64_ImGui_Editor::Editor_Data(void)
 	}
 
 	ImGui::Text("Editor Mode %s", Buff);
+
+	ImGui::Text("Dark Mode:");
+	ImGui::SameLine();
+	int test = ImGui::Checkbox("##DarkMode", &flag_Dark_Mode);
+	if (test == 1)
+	{
+		if (flag_Dark_Mode == true)
+		{
+			App->CL_Interface->flag_Dark_Mode = true;
+			RedrawWindow(App->MainHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		}
+		else
+		{
+			App->CL_Interface->flag_Dark_Mode = false;
+			RedrawWindow(App->MainHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		}
+	}
 
 }
 
