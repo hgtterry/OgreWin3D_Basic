@@ -534,32 +534,32 @@ static signed int ResetSelectedFacesCB(Brush* b, void* pVoid)
 // *************************************************************************
 void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 {
-    point.y = point.y - 5;
+    // Adjust the y-coordinate of the point for selection
+    point.y -= 5;
 
-    Brush* pMinBrush;
-    float Dist;
-    int FoundThingType;
+    Brush* pMinBrush = nullptr;
+    float distance = 0.0f;
+    int foundThingType = FindClosestThing(&point, v, &pMinBrush, &distance);
 
-    FoundThingType = FindClosestThing(&point, v, &pMinBrush,&Dist);
-
-    if ((FoundThingType != fctNOTHING) && (Dist <= 25)) //MAX_PIXEL_SELECT_DIST))
+    // Check if a valid object is found within the selection distance
+    if (foundThingType != fctNOTHING && distance <= 25) // MAX_PIXEL_SELECT_DIST
     {
-		if (FoundThingType == fctBRUSH)
-		{
-           // if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
-            {
-                ResetAllSelections();
-            }
+        if (foundThingType == fctBRUSH)
+        {
+            // Reset selections so we pick new selection
+             // if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
+            ResetAllSelections();
 
-			App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
-			App->CL_Ogre->OGL_Listener->Show_Visuals(true);
+            // Select the brush and show visuals
+            App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
+            App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
-			EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_ENABLED);
+            // Enable the delete menu item
+            EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_ENABLED);
 
-			App->CL_Interface->Enable_TopTabs_Buttons(true);
-			// Entity Selected in OnSelchangeBrushlist
-
-		}
+            // Enable top tabs buttons in the interface
+            App->CL_Interface->Enable_TopTabs_Buttons(true);
+        }
     }
 }
 

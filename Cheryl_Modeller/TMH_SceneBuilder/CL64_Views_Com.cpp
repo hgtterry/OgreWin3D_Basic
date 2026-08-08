@@ -1149,9 +1149,25 @@ void CL64_Views_Com::Context_Grids_Menu(HWND hDlg)
 
 	hMenu = CreatePopupMenu();
 
-
-
 	HMENU hMouseWheelMenu = CreatePopupMenu();
+
+	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
+	{
+		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Unselect   Esc Key");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DESELECT, L"&Unselect   Esc Key");
+	}
+
+	if (App->CL_Level->flag_UseGrid == true)
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_GRID_SNAP, L"&Grid Snap");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
+	}
 
 	AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hMouseWheelMenu, "Mouse Wheel Zoom");
 
@@ -1166,26 +1182,7 @@ void CL64_Views_Com::Context_Grids_Menu(HWND hDlg)
 		AppendMenu(hMouseWheelMenu, flags, speedIDs[i], speedOptions[i]);
 	}
 
-
-	/*HMENU hDisplayMenu = CreatePopupMenu();
-
-	AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hDisplayMenu, "Mouse Wheel Zoom");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed1, "Speed 1");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed2, "Speed 2");
-	AppendMenu(hDisplayMenu, MF_STRING, IDM_Grid_Wheel_Speed3, "Speed 3");*/
-
 	AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
-
-	//if (App->CL_Level->flag_UseGrid == true)
-	//{
-	//	AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_GRID_SNAP, L"&Grid Snap");
-	//}
-	//else
-	//{
-	//	AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
-	//}
-
-	
 
 	// Panel View
 	//AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
@@ -1452,7 +1449,6 @@ bool CL64_Views_Com::Context_Grids_Command(WPARAM wParam)
 	{
 		App->CL_Interface->Unselect_Brush_And_Set_Dlgs();
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 		return TRUE;
 	}
 
