@@ -730,8 +730,13 @@ bool CL64_File::Open_3dt_File()
 		}
 		else
 		{
-			//std::string LastFolder = App->CL_Utilities->Get_Directory_From_Path(MTF_PathAndFile);
-			strcpy(App->CL_File->MTF_FolderPath, MTF_Just_Path);
+			char Just_Path[MAX_PATH];
+			strcpy(Just_Path, MTF_Just_Path);
+			
+			int Len1 = strlen(Just_Path);
+			Just_Path[Len1 - 1] = 0;
+
+			strcpy(App->CL_File->MTF_FolderPath, Just_Path);
 		}
 
 
