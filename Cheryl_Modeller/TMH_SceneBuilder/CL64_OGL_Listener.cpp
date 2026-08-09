@@ -228,7 +228,7 @@ void CL64_OGL_Listener::PostRender()
 }
 
 // *************************************************************************
-// *				Render_Loop:- Terry and Hazel Flanigan 2024			   *
+// *				Render_Loop:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
 void CL64_OGL_Listener::Render_Loop()
 {
@@ -277,6 +277,7 @@ void CL64_OGL_Listener::Render_Loop()
 	if (flag_Show_Selected_Brush == 1)
 	{
 		glColor3f(0.0f, 1, 1);
+		glLineWidth(1);
 
 		int BC = App->CL_X_Brush->Get_Brush_Count();
 		if (BC > 0)
@@ -293,7 +294,7 @@ void CL64_OGL_Listener::Render_Loop()
 	{
 		glDisable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glLineWidth(2);
+		glLineWidth(5);
 		Render_Selected_Face();
 	}
 	
@@ -320,6 +321,8 @@ void CL64_OGL_Listener::Render_Loop()
 	// ---------------------- Mesh
 	if (App->CL_Model->flag_Model_Loaded == true && flag_ShowFaces == true)
 	{
+		glLineWidth(1);
+
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		MeshData_Render_Faces();
 	}
