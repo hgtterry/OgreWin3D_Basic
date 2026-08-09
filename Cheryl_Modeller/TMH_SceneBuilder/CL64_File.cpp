@@ -343,11 +343,18 @@ void CL64_File::Start_Save()
 	strcpy(MTF_Just_FileName, MTF_Just_Name);
 	strcat(MTF_Just_FileName, ".cbf");
 
-	char Path_And_File[MAX_PATH];
+	/*char Path_And_File[MAX_PATH];
 	strcpy(Path_And_File, ProjectFolder);
-	strcat(Path_And_File, MTF_Just_FileName);
+	strcat(Path_And_File, MTF_Just_FileName);*/
 
-	Save_Document(Path_And_File);
+	//Save_Document(Path_And_File);
+
+	char New_Path_And_File[MAX_PATH];
+	strcpy(New_Path_And_File, App->CL_File->MTF_FolderPath);
+	strcat(New_Path_And_File, "\\");
+	strcat(New_Path_And_File, MTF_Just_FileName);
+
+	Save_Document(New_Path_And_File);
 	
 	// Save Texture Zip Version 2.0
 	//-------------------------------------------------
@@ -612,8 +619,6 @@ void CL64_File::Start_Load(bool useOpenDialog)
 	// Attempt to open the CBF file
 	if (Open_3dt_File())
 	{
-		
-
 		App->CL_Doc->Do_General_Select_Dlg(false);
 
 		Set_Editor();
@@ -635,8 +640,8 @@ void CL64_File::Start_Load(bool useOpenDialog)
 		App->CL_Doc->Do_General_Select_Dlg(true);
 
 
-		std::string LastFolder = App->CL_Utilities->Get_Directory_From_Path(MTF_PathAndFile);
-		strcpy(App->CL_File->MTF_FolderPath, App->CL_Utilities->Get_Directory_From_Path(LastFolder).c_str());
+		//std::string LastFolder = App->CL_Utilities->Get_Directory_From_Path(MTF_PathAndFile);
+		//strcpy(App->CL_File->MTF_FolderPath, App->CL_Utilities->Get_Directory_From_Path(LastFolder).c_str());
 
 		App->CL_Model->Set_BondingBox_Model(true);
 	}
@@ -703,15 +708,32 @@ bool CL64_File::Open_3dt_File()
 
 	if (App->CL_Level->Level_Version == 2.0)// && App->CL_Level->flag_Working_Folder_Exists == true)
 	{
-		strcpy(pathAndFile, MTF_Just_Path);
+		strcpy(pathAndFile, Prj_Working_Folder);
 		strcat(pathAndFile, App->CL_Level->TXL_Just_File_Name); // Gets it from MTF File
 
 		if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
 		{
-			App->Say("Texture Library Does Not Exist", "Loading Default");
-			strcpy(pathAndFile, App->App_Directory_FullPath);
-			strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
+			strcpy(pathAndFile, MTF_Just_Path); // Old System
+			strcat(pathAndFile, App->CL_Level->TXL_Just_File_Name); // Gets it from MTF File
+
+			if (!App->CL_Utilities->Check_File_Exist(pathAndFile))
+			{
+				App->Say("Texture Library Does Not Exist", "Loading Default");
+				strcpy(pathAndFile, App->App_Directory_FullPath);
+				strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
+			}
+			else
+			{
+				std::string LastFolder = App->CL_Utilities->Get_Directory_From_Path(MTF_PathAndFile);
+				strcpy(App->CL_File->MTF_FolderPath, App->CL_Utilities->Get_Directory_From_Path(LastFolder).c_str());
+			}
 		}
+		else
+		{
+			//std::string LastFolder = App->CL_Utilities->Get_Directory_From_Path(MTF_PathAndFile);
+			strcpy(App->CL_File->MTF_FolderPath, MTF_Just_Path);
+		}
+
 
 	}
 	else
