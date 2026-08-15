@@ -966,6 +966,11 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs_Faces(HWND hDlg, UINT message, WPA
 		
 		SendDlgItemMessage(hDlg, IDC_TT_CB_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		/*SetWindowLong(hDlg, GWL_EXSTYLE, GetWindowLong(hDlg, GWL_EXSTYLE) | WS_EX_LAYERED);
+
+		COLORREF transparentColor = RGB(213, 222, 242);
+		SetLayeredWindowAttributes(hDlg, transparentColor, 0, LWA_COLORKEY);*/
+
 		return TRUE;
 	}
 
@@ -973,6 +978,16 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs_Faces(HWND hDlg, UINT message, WPA
 	{
 		return (LONG)App->AppBackground;
 	}
+
+	//case WM_NCHITTEST:
+	//{
+	//	if (DefWindowProc(hDlg, message, wParam, lParam) == HTCLIENT)
+	//	{
+	//		return HTCAPTION;
+	//	}
+	//	//return 0;
+	//	return DefWindowProc(hDlg, message, wParam, lParam);
+	//}
 
 	case WM_NOTIFY:
 	{

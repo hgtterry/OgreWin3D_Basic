@@ -118,11 +118,21 @@ void CL64_ImGui::Close_Dialogs(void)
 //extern thread_local ImGuiContext* ImGuiTLS;
 //#define GImGui ImGuiTLS
 
+//#include "OgreGLSupportPrerequisites.h"
+
+//#include "OgreRenderSystem.h"
+//#include "OgreRenderWindow.h"
+//#include "OgreGLRenderTarget.h"
+
 // *************************************************************************
 // *			Init_ImGui:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
 void CL64_ImGui::Init_ImGui(void)
 {
+	/*GLContext* mMainContext;
+
+	Ogre::glmMainContext = dynamic_cast<GLRenderTarget*>(primary)->getContext();*/
+
 	//ImGuiContext* main_context;
 	//ImGuiContext* secondary_context;
 
@@ -132,10 +142,15 @@ void CL64_ImGui::Init_ImGui(void)
 	
 	imguiOverlay = Base->initialiseImGui();
 	
-	//Ogre::RenderWindow* Win = Base->getRenderWindow().;
+	/*Ogre::RenderWindow* Win = Base->getRenderWindow();
+
+	Ogre::GLContext* mMainContext = dynamic_cast<GLRenderTarget*>(Win)->getContext();*/
 	
+	//mMainContext->setCurrent();
+	//Win->
 	//Win->getViewport(0)->getTarget().
 	//Win->
+
 	if (imguiOverlay)
 	{
 		Load_Font();
