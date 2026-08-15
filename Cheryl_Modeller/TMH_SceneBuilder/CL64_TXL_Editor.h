@@ -26,8 +26,8 @@ THE SOFTWARE.
 
 typedef	struct	BitmapEntry
 {
-	char	Name[20];
-	char	FileName[20];
+	char	Name[MAX_PATH];
+	char	FileName[MAX_PATH];
 	int		Dib_Index;
 	bool	Dirty;
 	bool	Deleted;

@@ -249,7 +249,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_TXL_ADD_TEXTURE)
 		{
 			bool test = App->CL_TXL_Editor->Add_File();
-			if (test == 1)
+			if (test == true)
 			{
 				App->CL_Resources->Load_Texture_Resources();
 				App->CL_TXL_Editor->Scan_Textures_Resource_Group();
@@ -394,7 +394,7 @@ void CL64_TXL_Editor::Scan_Textures_Resource_Group()
 
 	if (flag_Textures_Scanned == 1)
 	{
-		char Just_Name[20];
+		char Just_Name[MAX_PATH];
 		uint Height = 0;
 		
 		Ogre::TextureManager* texture_manager = Ogre::TextureManager::getSingletonPtr();

@@ -56,7 +56,7 @@ typedef struct TexInfoTag
 	float	Rotate;			// texture rotation angle in degrees
 	TexInfo_Vectors TVecs;
 	int Dib;				// index into the wad
-	char Name[16];
+	char Name[MAX_PATH];
 	signed int DirtyFlag;
 	T_Vec3 Pos;
 	int txSize, tySize;		// texture size (not currently used)
