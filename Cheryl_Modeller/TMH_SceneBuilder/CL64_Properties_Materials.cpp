@@ -558,6 +558,8 @@ LRESULT CALLBACK CL64_Properties_Materials::Proc_Texture_Editor(HWND hDlg, UINT 
 
 		App->CL_Properties_Materials->Slider_Index = 500;
 		App->CL_Properties_Materials->Slider_Index_Copy = 500;
+		
+		return TRUE;
 	}
 
 	case WM_CTLCOLORSTATIC:

@@ -282,7 +282,7 @@ void CL64_Top_Tabs::Start_Top_Tabs()
 	TopTabs_Brushes_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_BRUSHES, TopTabs_Dlg_hWnd, (DLGPROC)Proc_Top_Tabs_Brushes);
 	App->CL_Interface->Show_TopTabs_Brushes_Panel(false);
 
-	TopTabs_Faces_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_FACES, TopTabs_Dlg_hWnd, (DLGPROC)Proc_Top_Tabs_Faces);
+	TopTabs_Faces_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_FACES, App->MainHwnd, (DLGPROC)Proc_Top_Tabs_Faces);
 	App->CL_Interface->Show_TopTabs_Faces_Panel(false);
 }
 
@@ -690,7 +690,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		//-------------------------------------------------------- Show Bounding Box
 		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
 		{
-			App->CL_Model->Set_BondingBox_Model(false);
+			App->CL_Model->Set_BondingBox_Model();
 			App->CL_Mesh->Show_Mesh_BoundBox();
 			return TRUE;
 		}
@@ -962,6 +962,8 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs_Faces(HWND hDlg, UINT message, WPA
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_NEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_PREV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_BT_FACE_SHOWSELECTEDFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_TT_CB_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
@@ -976,6 +978,26 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs_Faces(HWND hDlg, UINT message, WPA
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_BT_FACE_SHOWSELECTEDFACE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FACE_SHOWSELECTEDFACE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				if (App->flag_3D_Started == true)
+				{
+					App->Custom_Button_Toggle_Tabs(item, App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face);
+				}
+			}
+
+			return CDRF_DODEFAULT;
+		}
+		
 		if (some_item->idFrom == IDC_BT_TT_FACES_ALL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -1034,6 +1056,20 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs_Faces(HWND hDlg, UINT message, WPA
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_FACE_SHOWSELECTEDFACE)
+		{
+			if (App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face == true)
+			{
+				App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = false;
+			}
+			else
+			{
+				App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = true;
+			}
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_TT_FACES_ALL)
 		{
 			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();

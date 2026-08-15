@@ -45,8 +45,7 @@ CL64_Model::CL64_Model(void)
 	Selected_BoneIndex = 0;
 
 	flag_Model_Loaded = false;
-	flag_BoundingBox_Created = false;
-
+	
 	flag_Model_is_Modified = false;
 
 	Imported_Ogre_Ent = nullptr;
@@ -64,6 +63,7 @@ CL64_Model::CL64_Model(void)
 	BBox_Size = Ogre::Vector3::ZERO;
 	BBox_Centre = Ogre::Vector3::ZERO;
 	BBox_Radius = 0;
+	flag_BoundingBox_Created = false;
 
 }
 
@@ -112,7 +112,7 @@ void CL64_Model::Set_Paths(void)
 // *************************************************************************
 // *		Create_BondingBox_Model:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Model::Set_BondingBox_Model(bool Create)
+void CL64_Model::Set_BondingBox_Model()
 {
 	auto& G = App->CL_Mesh->Group;
 	
@@ -120,8 +120,7 @@ void CL64_Model::Set_BondingBox_Model(bool Create)
 	{
 		// Initialize bounding box with the first vertex
 		const auto& firstVertex = G[0]->vertex_Data[0];
-		BBox_Min = Ogre::Vector3(firstVertex.x, firstVertex.y, firstVertex.z);
-		BBox_Max = Ogre::Vector3(firstVertex.x, firstVertex.y, firstVertex.z);
+		BBox_Min = BBox_Max = Ogre::Vector3(firstVertex.x, firstVertex.y, firstVertex.z);
 
 		// Iterate through each group and vertex to find the min and max
 		for (int count = 0; count < GroupCount; ++count)
@@ -139,16 +138,11 @@ void CL64_Model::Set_BondingBox_Model(bool Create)
 		}
 
 		// Calculate size and radius
-		BBox_Size.x = std::fabs(BBox_Max.x - BBox_Min.x);
-		BBox_Size.y = std::fabs(BBox_Max.y - BBox_Min.y);
-		BBox_Size.z = std::fabs(BBox_Max.z - BBox_Min.z);
-
+		BBox_Size = BBox_Max - BBox_Min;
 		BBox_Radius = std::min(BBox_Size.x, BBox_Size.z) / 2.0f;
 
 		// Calculate center
-		BBox_Centre.x = (BBox_Min.x + BBox_Max.x) / 2.0f;
-		BBox_Centre.y = (BBox_Min.y + BBox_Max.y) / 2.0f;
-		BBox_Centre.z = (BBox_Min.z + BBox_Max.z) / 2.0f;
+		BBox_Centre = (BBox_Min + BBox_Max) / 2.0f;
 	}
 
 	flag_BoundingBox_Created = true;

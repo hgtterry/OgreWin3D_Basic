@@ -118,6 +118,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 
 		return TRUE;
 	}
+
 	case WM_CTLCOLORSTATIC:
 	{
 		if (GetDlgItem(hDlg, IDC_ST_GD_TEXTURES) == (HWND)lParam)

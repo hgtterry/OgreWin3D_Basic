@@ -141,7 +141,7 @@ void CL64_Motioins::Update_MeshData(void)
 {
 	UpdateBones_Orge(false);
 	AnimationExtract_Mesh(false);
-	App->CL_Model->Set_BondingBox_Model(false);
+	App->CL_Model->Set_BondingBox_Model();
 }
 
 // *************************************************************************
@@ -230,7 +230,7 @@ void CL64_Motioins::Motion_Set_Pose()
 		// Update bones and extract mesh
 		UpdateBones_Orge(true);
 		AnimationExtract_Mesh(true);
-		App->CL_Model->Set_BondingBox_Model(false);
+		App->CL_Model->Set_BondingBox_Model();
 	}
 }
 

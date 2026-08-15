@@ -306,7 +306,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureAngle);
 
 		//SetScrollRange(GetDlgItem(hDlg, IDC_SBXSCALE), SB_HORZ, 0, 200, true);
-
+		
 		return TRUE;
 	}
 
@@ -1339,16 +1339,18 @@ void Face_Editor::Update_Face_Info(HWND hDlg)
 // *************************************************************************
 void Face_Editor::Update_Faces()
 {
+	auto& p_Doc = App->CL_Doc;
+
 	if (App->CL_Top_Tabs->flag_All_Faces == true)
 	{
-		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
-		App->CL_Doc->SelectAllFacesInBrushes();
+		p_Doc->UpdateAllViews(Enums::UpdateViews_3D);
+		p_Doc->SelectAllFacesInBrushes();
 	}
 	else
 	{
-		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
+		p_Doc->UpdateAllViews(Enums::UpdateViews_3D);
 		App->CL_X_SelFaceList->SelFaceList_RemoveAll(App->CL_Doc->pSelFaces);
-		App->CL_Doc->SelectAllFacesInBrushes();
+		p_Doc->SelectAllFacesInBrushes();
 		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
 	}
 

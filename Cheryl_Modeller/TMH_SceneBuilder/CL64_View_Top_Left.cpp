@@ -636,7 +636,7 @@ void CL64_View_Top_Left::Zoom_To_Model()
 	}
 
 
-	App->CL_Model->Set_BondingBox_Model(false);
+	App->CL_Model->Set_BondingBox_Model();
 
 	constexpr float ViewMargin = 140.0f;
 	float AvailableHeight = VCam_TL->Height - ViewMargin;

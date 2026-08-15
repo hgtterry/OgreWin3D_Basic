@@ -38,7 +38,7 @@ bool CL64_Mesh::Ogre_To_Mesh_Data(Ogre::Entity* Ogre_Entity)
 {
 	Ogre_Convert_To_Mesh_Data(Ogre_Entity);
 
-	App->CL_Model->Set_BondingBox_Model(true);
+	App->CL_Model->Set_BondingBox_Model();
 
 
 	Get_SkeletonInstance(Ogre_Entity);

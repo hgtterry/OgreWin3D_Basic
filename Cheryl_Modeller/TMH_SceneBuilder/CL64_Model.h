@@ -31,7 +31,7 @@ public:
 	~CL64_Model(void);
 
 	void Set_Paths(void);
-	void Set_BondingBox_Model(bool Create);
+	void Set_BondingBox_Model();
 	void Clear_Model();
 	int Selected_BoneIndex;
 
