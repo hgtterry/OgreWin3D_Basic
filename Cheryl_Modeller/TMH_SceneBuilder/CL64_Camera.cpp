@@ -340,7 +340,7 @@ void CL64_Camera::Reset_View_and_Zoom(void)
 		break;
 
 	case Enums::Model_Type_Assimp:
-		cameraPosition = Ogre::Vector3(0, App->CL_Model->S_BoundingBox[0]->Size[0].y / 2, App->CL_Model->S_BoundingBox[0]->Size[0].z * 2.8f);
+		cameraPosition = Ogre::Vector3(0, App->CL_Model->BBox_Size.y / 2, App->CL_Model->BBox_Size.z * 2.8f);
 		App->CL_Ogre->camNode->setPosition(cameraPosition);
 		break;
 

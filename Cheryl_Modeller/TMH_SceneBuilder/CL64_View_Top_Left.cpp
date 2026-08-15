@@ -642,8 +642,7 @@ void CL64_View_Top_Left::Zoom_To_Model()
 	float AvailableHeight = VCam_TL->Height - ViewMargin;
 
 	// Scale the view so the model's depth (z-size) fits the available height.
-	auto& ModelBounds = App->CL_Model->S_BoundingBox[0]; // Pointer App->CL_Model->S_BoundingBox[0]
-	float ZoomValue = AvailableHeight / ModelBounds->Size->z;
+	float ZoomValue = AvailableHeight / App->CL_Model->BBox_Size.z;
 	VCam_TL->ZoomFactor = ZoomValue;
 
 	// Center the camera on the client area of the viewport window.
@@ -653,9 +652,9 @@ void CL64_View_Top_Left::Zoom_To_Model()
 	VCam_TL->YCenter = static_cast<float>(ClientRect.bottom) / 2;
 
 	// Point the grid camera at the model's bounding-box centre.
-	VCam_TL->CamPos.x = ModelBounds->Centre->x;
-	VCam_TL->CamPos.y = ModelBounds->Centre->y;
-	VCam_TL->CamPos.z = ModelBounds->Centre->z;
+	VCam_TL->CamPos.x = App->CL_Model->BBox_Centre.x;
+	VCam_TL->CamPos.y = App->CL_Model->BBox_Centre.y;
+	VCam_TL->CamPos.z = App->CL_Model->BBox_Centre.z;
 
 	// Redraw Grid
 	Redraw_Window_TL();

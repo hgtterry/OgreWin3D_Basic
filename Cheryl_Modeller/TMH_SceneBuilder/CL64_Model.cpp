@@ -1,3 +1,27 @@
+/*
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
+
+Cheryl 3D Modeller
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
 #include "pch.h"
 #include "CL64_App.h"
 #include "CL64_Model.h"
@@ -35,7 +59,11 @@ CL64_Model::CL64_Model(void)
 		Count++;
 	}
 
-	S_BoundingBox[0] = nullptr;
+	BBox_Max = Ogre::Vector3::ZERO;
+	BBox_Min = Ogre::Vector3::ZERO;
+	BBox_Size = Ogre::Vector3::ZERO;
+	BBox_Centre = Ogre::Vector3::ZERO;
+	BBox_Radius = 0;
 
 }
 
@@ -86,26 +114,14 @@ void CL64_Model::Set_Paths(void)
 // *************************************************************************
 void CL64_Model::Set_BondingBox_Model(bool Create)
 {
-	if (Create && flag_BoundingBox_Created == false)
-	{
-		S_BoundingBox[0] = new AABB_Type;
-		flag_BoundingBox_Created = true;
-	}
-
-	if (flag_BoundingBox_Created == false)
-	{
-		return;
-	}
-
 	auto& G = App->CL_Mesh->Group;
-	auto& p_BB = S_BoundingBox[0]; // Pointer to S_BoundingBox[0]
-
+	
 	if (GroupCount > 0 && App->CL_Model->VerticeCount > 4)
 	{
 		// Initialize bounding box with the first vertex
 		const auto& firstVertex = G[0]->vertex_Data[0];
-		p_BB->BB_Min[0] = firstVertex;
-		p_BB->BB_Max[0] = firstVertex;
+		BBox_Min = Ogre::Vector3(firstVertex.x, firstVertex.y, firstVertex.z);
+		BBox_Max = Ogre::Vector3(firstVertex.x, firstVertex.y, firstVertex.z);
 
 		// Iterate through each group and vertex to find the min and max
 		for (int count = 0; count < GroupCount; ++count)
@@ -113,27 +129,29 @@ void CL64_Model::Set_BondingBox_Model(bool Create)
 			for (int vertCount = 0; vertCount < G[count]->GroupVertCount; ++vertCount)
 			{
 				const auto& vertex = G[count]->vertex_Data[vertCount];
-				p_BB->BB_Min[0].x = std::min(S_BoundingBox[0]->BB_Min[0].x, vertex.x);
-				p_BB->BB_Min[0].y = std::min(S_BoundingBox[0]->BB_Min[0].y, vertex.y);
-				p_BB->BB_Min[0].z = std::min(p_BB->BB_Min[0].z, vertex.z);
-				p_BB->BB_Max[0].x = std::max(p_BB->BB_Max[0].x, vertex.x);
-				p_BB->BB_Max[0].y = std::max(p_BB->BB_Max[0].y, vertex.y);
-				p_BB->BB_Max[0].z = std::max(p_BB->BB_Max[0].z, vertex.z);
+				BBox_Min.x = std::min(BBox_Min.x, vertex.x);
+				BBox_Min.y = std::min(BBox_Min.y, vertex.y);
+				BBox_Min.z = std::min(BBox_Min.z, vertex.z);
+				BBox_Max.x = std::max(BBox_Max.x, vertex.x);
+				BBox_Max.y = std::max(BBox_Max.y, vertex.y);
+				BBox_Max.z = std::max(BBox_Max.z, vertex.z);
 			}
 		}
 
 		// Calculate size and radius
-		p_BB->Size[0].x = std::fabs(p_BB->BB_Max[0].x - p_BB->BB_Min[0].x);
-		p_BB->Size[0].y = std::fabs(p_BB->BB_Max[0].y - p_BB->BB_Min[0].y);
-		p_BB->Size[0].z = std::fabs(p_BB->BB_Max[0].z - p_BB->BB_Min[0].z);
+		BBox_Size.x = std::fabs(BBox_Max.x - BBox_Min.x);
+		BBox_Size.y = std::fabs(BBox_Max.y - BBox_Min.y);
+		BBox_Size.z = std::fabs(BBox_Max.z - BBox_Min.z);
 
-		p_BB->radius = std::min(p_BB->Size[0].x, p_BB->Size[0].z) / 2.0f;
+		BBox_Radius = std::min(BBox_Size.x, BBox_Size.z) / 2.0f;
 
 		// Calculate center
-		p_BB->Centre[0].x = (p_BB->BB_Min[0].x + p_BB->BB_Max[0].x) / 2.0f;
-		p_BB->Centre[0].y = (p_BB->BB_Min[0].y + p_BB->BB_Max[0].y) / 2.0f;
-		p_BB->Centre[0].z = (p_BB->BB_Min[0].z + p_BB->BB_Max[0].z) / 2.0f;
+		BBox_Centre.x = (BBox_Min.x + BBox_Max.x) / 2.0f;
+		BBox_Centre.y = (BBox_Min.y + BBox_Max.y) / 2.0f;
+		BBox_Centre.z = (BBox_Min.z + BBox_Max.z) / 2.0f;
 	}
+
+	flag_BoundingBox_Created = true;
 }
 
 // *************************************************************************
@@ -256,12 +274,12 @@ void CL64_Model::Clear_Model()
 
 	App->CL_Editor_Control->Editor_Mode = Enums::Editor_Mode_None;
 
-	if (S_BoundingBox[0])
-	{
-		delete S_BoundingBox[0];
-		S_BoundingBox[0] = nullptr;
-		flag_BoundingBox_Created = false;
-	}
+	BBox_Max = Ogre::Vector3::ZERO;
+	BBox_Min = Ogre::Vector3::ZERO;
+	BBox_Size = Ogre::Vector3::ZERO;
+	BBox_Centre = Ogre::Vector3::ZERO;
+	BBox_Radius = 0;
+	flag_BoundingBox_Created = false;
 
 	if (App->CL_X_Brush->Get_Brush_Count() > 0)
 	{

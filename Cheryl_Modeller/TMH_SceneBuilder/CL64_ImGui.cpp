@@ -419,7 +419,7 @@ void CL64_ImGui::Show_Views_Data_GUI(void)
 			ImGui::Text("Selected Window = %i", App->CL_Views_Com->Selected_Window);
 			ImGui::Text("Zoom = %f", App->CL_Views_Com->Current_View->ZoomFactor);
 
-			float ModSize = App->CL_Model->S_BoundingBox[0]->Size->z;
+			float ModSize = App->CL_Model->BBox_Size.z;
 			float ScSize = 473;
 
 			ImGui::Text("Test Zoom = %f %f %f", ScSize, ModSize, ScSize / ModSize);
@@ -776,15 +776,15 @@ void CL64_ImGui::Show_Assimp_Model_Data_GUI(void)
 		// Bounds
 		if (ImGui::TreeNode("Bounds"))
 		{
-			ImGui::Text("Width:- %f", App->CL_Model->S_BoundingBox[0]->Size->x);
-			ImGui::Text("Height:- %f", App->CL_Model->S_BoundingBox[0]->Size->y);
-			ImGui::Text("Depth:- %f", App->CL_Model->S_BoundingBox[0]->Size->z);
+			ImGui::Text("Width:- %f", App->CL_Model->BBox_Size.x);
+			ImGui::Text("Height:- %f", App->CL_Model->BBox_Size.y);
+			ImGui::Text("Depth:- %f", App->CL_Model->BBox_Size.z);
 
-			ImGui::Text("Min:- %.5f  %.5f  %.5f", App->CL_Model->S_BoundingBox[0]->BB_Min->x, App->CL_Model->S_BoundingBox[0]->BB_Min->y, App->CL_Model->S_BoundingBox[0]->BB_Min->z);
-			ImGui::Text("Max:- %.5f  %.5f  %.5f", App->CL_Model->S_BoundingBox[0]->BB_Max->x, App->CL_Model->S_BoundingBox[0]->BB_Max->y, App->CL_Model->S_BoundingBox[0]->BB_Max->z);
+			ImGui::Text("Min:- %.5f  %.5f  %.5f", App->CL_Model->BBox_Min.x, App->CL_Model->BBox_Min.y, App->CL_Model->BBox_Min.z);
+			ImGui::Text("Max:- %.5f  %.5f  %.5f", App->CL_Model->BBox_Max.x, App->CL_Model->BBox_Max.y, App->CL_Model->BBox_Max.z);
 
-			ImGui::Text("Centre:- %.5f  %.5f  %.5f", App->CL_Model->S_BoundingBox[0]->Centre->x, App->CL_Model->S_BoundingBox[0]->Centre->y, App->CL_Model->S_BoundingBox[0]->Centre->z);
-			ImGui::Text("Radius:- %f", App->CL_Model->S_BoundingBox[0]->radius);
+			ImGui::Text("Centre:- %.5f  %.5f  %.5f", App->CL_Model->BBox_Centre.x, App->CL_Model->BBox_Centre.y, App->CL_Model->BBox_Centre.z);
+			ImGui::Text("Radius:- %f", App->CL_Model->BBox_Radius);
 
 			ImGui::TreePop();
 		}

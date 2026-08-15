@@ -616,7 +616,7 @@ void CL64_View_Bottom_Left::Zoom_To_Model()
 		RECT		Rect;
 
 		float Sc_Size = VCam_BL->Height - 140;
-		float zoomValue = Sc_Size / App->CL_Model->S_BoundingBox[0]->Size->z;
+		float zoomValue = Sc_Size / App->CL_Model->BBox_Size.z;
 
 		VCam_BL->ZoomFactor = zoomValue;
 
@@ -625,9 +625,9 @@ void CL64_View_Bottom_Left::Zoom_To_Model()
 		VCam_BL->XCenter = static_cast<float>(Rect.right) / 2;
 		VCam_BL->YCenter = static_cast<float>(Rect.bottom) / 2;
 
-		VCam_BL->CamPos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
-		VCam_BL->CamPos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
-		VCam_BL->CamPos.z = App->CL_Model->S_BoundingBox[0]->Centre->z;
+		VCam_BL->CamPos.x = App->CL_Model->BBox_Centre.x;
+		VCam_BL->CamPos.y = App->CL_Model->BBox_Centre.y;
+		VCam_BL->CamPos.z = App->CL_Model->BBox_Centre.z;
 
 		Redraw_Window_BL();
 	}

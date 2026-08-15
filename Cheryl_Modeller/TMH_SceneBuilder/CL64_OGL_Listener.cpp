@@ -724,13 +724,13 @@ void CL64_OGL_Listener::MeshData_Normals_Groups(int Count)
 // *************************************************************************
 void CL64_OGL_Listener::MeshData_Render_BoundingBox(void)
 {
-	float m_xMin = App->CL_Model->S_BoundingBox[0]->BB_Min[0].x;
-	float m_yMin = App->CL_Model->S_BoundingBox[0]->BB_Min[0].y;
-	float m_zMin = App->CL_Model->S_BoundingBox[0]->BB_Min[0].z;
+	float m_xMin = App->CL_Model->BBox_Min.x;
+	float m_yMin = App->CL_Model->BBox_Min.y;
+	float m_zMin = App->CL_Model->BBox_Min.z;
 
-	float m_xMax = App->CL_Model->S_BoundingBox[0]->BB_Max[0].x;
-	float m_yMax = App->CL_Model->S_BoundingBox[0]->BB_Max[0].y;
-	float m_zMax = App->CL_Model->S_BoundingBox[0]->BB_Max[0].z;
+	float m_xMax = App->CL_Model->BBox_Max.x;
+	float m_yMax = App->CL_Model->BBox_Max.y;
+	float m_zMax = App->CL_Model->BBox_Max.z;
 
 	glDisable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
