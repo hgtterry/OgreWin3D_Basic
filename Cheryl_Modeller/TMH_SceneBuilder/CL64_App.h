@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "Cheryl_3D_Modeller.h"
 #include "CX_Cut_Brush.h"
 #include "Timer_Debug.h"
+#include "CL64_Faces_Control.h"
 
 class CL64_App
 {
@@ -123,6 +124,7 @@ public:
 	CL64_View_3D*				CL_View_3D;
 
 	CX_Cut_Brush*				CL_Cut_Brush;
+	CL64_Faces_Control*			CL_Faces_Control;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

@@ -257,6 +257,8 @@ void CL64_Properties_Templates::Insert_Template()
 
 			App->CL_Interface->Enable_TopTabs_Brushes_Buttons(true);
 			App->CL_Interface->Enable_TopTabs_Faces_Buttons(true);
+			App->CL_Interface->Show_TopTabs_Faces_Panel(true);
+
 			App->CL_Interface->Set_Menu_Items_Design();
 
 			App->CL_Editor_Control->Set_Map_Editor_Startup();
