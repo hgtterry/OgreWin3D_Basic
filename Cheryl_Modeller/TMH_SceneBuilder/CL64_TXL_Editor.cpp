@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-TMH_SceneBuilder
+Cheryl 3D Modeller
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+*/
 */
 
 #include "pch.h"
@@ -523,12 +524,17 @@ bool CL64_TXL_Editor::SelectBitmap()
 // *************************************************************************
 void CL64_TXL_Editor::Select_From_TextureName(const  char* TextureName)
 {
+	// Select the texture from the list based on the provided texture name
 	SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextureName);
 	
-	App->CL_TXL_Editor->SelectBitmap();
-	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_TXL_Editor->m_Selected_TextureName);
-	App->CL_TXL_Editor->Update_Texture_Info(TrueIndex);
+	// Update the selected bitmap and redraw
+	SelectBitmap();
 
+	// Retrieve the index of the selected texture based on its filename
+	int TrueIndex = GetIndex_From_FileName(m_Selected_TextureName);
+	Update_Texture_Info(TrueIndex);
+
+	// Get the current selection index from the texture list
 	int Index = SendDlgItemMessage(TXL_Dlg_HWND, IDC_TEXTURELIST2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 	Selected_Texure_Index = Index;
 }
@@ -820,6 +826,29 @@ int CL64_TXL_Editor::Get_Used_Textures_Count()
 	memset(App->CL_Mesh_Mgr->used_textures, 0, 500);
 
 	return Used_Count;
+}
+
+// *************************************************************************
+// *		   Load_Zipped_TXL_File:- Terry and Hazel Flanigan 2026 	   *
+// *************************************************************************
+void CL64_TXL_Editor::Load_Zipped_TXL_File(char* TXL_File)
+{
+	// Set the Wad path and file
+	strcpy(App->CL_Level->TXL_PathAndFile, TXL_File);
+
+	// Extract the file name from the path
+	App->CL_Utilities->Get_FileName_FromPath(TXL_File, TXL_File);
+	strcpy(App->CL_Level->TXL_Just_File_Name, App->CL_Utilities->JustFileName);
+
+	// Load texture resources and scan the texture resource group
+	App->CL_Resources->Load_Texture_Resources();
+	Scan_Textures_Resource_Group();
+
+	// Create the TXL class and handle failure
+	if (!App->CL_Level->Level_Create_TXL_Class())
+	{
+		App->Say_Win("Cannot create class");
+	}
 }
 
 

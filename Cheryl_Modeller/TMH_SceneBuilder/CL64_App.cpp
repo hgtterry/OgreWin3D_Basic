@@ -365,6 +365,8 @@ void CL64_App::Init_Dialogs(void)
 {
 	App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
 
+	CL_Interface->Position_Face_Options_Dlg();
+	
 	/*App->CL_Properties_Textures_Com->Start_Props_Materials_Dlg();
 	CL_Interface->Position_Textures_Dlg();
 

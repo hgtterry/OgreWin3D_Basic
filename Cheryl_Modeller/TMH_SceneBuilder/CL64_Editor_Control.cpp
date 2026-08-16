@@ -167,8 +167,7 @@ void CL64_Editor_Control::Set_Editor_Design_Model()
 
 	// Show the brush and face panels
 	App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
-	App->CL_Interface->Show_TopTabs_Faces_Panel(true);
-
+	
 	// Set the map view in the editor
 	Set_Map_View();
 
@@ -205,7 +204,6 @@ void CL64_Editor_Control::Set_Editor_Import_Model()
 
 	//// Show the brush and face panels
 	App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
-	App->CL_Interface->Show_TopTabs_Faces_Panel(true);
 
 	// Set 3D view in the editor
 	Set_3DEditor_View();

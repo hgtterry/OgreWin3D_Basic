@@ -166,6 +166,27 @@ bool CL64_Interface::Position_Properties_Dlg(void)
 }
 
 // *************************************************************************
+// *		Position_Face_Options_Dlg:- Terry and Hazel Flanigan 2026	   *
+// *************************************************************************
+void CL64_Interface::Position_Face_Options_Dlg(void)
+{
+	RECT rect;
+	GetWindowRect(App->MainHwnd, &rect);
+
+	RECT rect2;
+	GetWindowRect(App->CL_Top_Tabs->TopTabs_Faces_Dlg_hWnd, &rect2);
+
+	int widthX = rect2.right - rect2.left;
+
+	int Pos_X = (rect.right / 2);
+
+	SetWindowPos(App->CL_Top_Tabs->TopTabs_Faces_Dlg_hWnd, NULL,
+		Pos_X - widthX / 2, 150,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+
+}
+
+// *************************************************************************
 // *			Position_Tabs_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Interface::Position_Tabs_Dlg(void)

@@ -117,30 +117,6 @@ void CL64_Doc::Init_Doc()
 }
 
 // *************************************************************************
-// *		    Load_Default_Wad:- Terry and Hazel Flanigan 2025 	  	   *
-// *************************************************************************
-void CL64_Doc::Load_Wad_File(char* TXL_File)
-{
-    // Set the Wad path and file
-    strcpy(App->CL_Level->TXL_PathAndFile,TXL_File);
-
-    // Extract the file name from the path
-   
-    App->CL_Utilities->Get_FileName_FromPath(TXL_File, TXL_File);
-    strcpy(App->CL_Level->TXL_Just_File_Name,App->CL_Utilities->JustFileName);
-  
-    // Load texture resources and scan the texture resource group
-    App->CL_Resources->Load_Texture_Resources();
-    App->CL_TXL_Editor->Scan_Textures_Resource_Group();
-
-    // Create the TXL class and handle failure
-    if (!App->CL_Level->Level_Create_TXL_Class())
-    {
-        App->Say_Win("Cannot create class");
-    }
-}
-
-// *************************************************************************
 // *	    	Set_Editor:- Terry and Hazel Flanigan 2025	    		   *
 // *************************************************************************
 void CL64_Doc::Editor_Set_Dlgs(int Set_State)
@@ -559,6 +535,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 
             // Enable top tabs buttons in the interface
             App->CL_Interface->Enable_TopTabs_Buttons(true);
+            App->CL_Interface->Show_TopTabs_Faces_Panel(true);
         }
     }
 }

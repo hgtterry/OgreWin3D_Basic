@@ -752,7 +752,7 @@ bool CL64_File::Open_3dt_File()
 	}
 
 	// Acctualy Load Texture Zip File
-	App->CL_Doc->Load_Wad_File(pathAndFile);
+	App->CL_TXL_Editor->Load_Zipped_TXL_File(pathAndFile);
 	App->CL_Doc->UpdateAfterWadChange();
 
 	// Update Editor

@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 TMH_Software W.T.Flanigan M.Habib H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-TMH_SceneBuilder
+Cheryl 3D Modeller
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -45,11 +45,12 @@ public:
 	void Start_Texl_Dialog();
 	void Scan_Textures_Resource_Group();
 
+	void Load_Zipped_TXL_File(char* TXL_File);
+
 	int GetIndex_From_FileName(const char* Name);
 	int GetIndex_From_Name(const char* Name);
 	void Select_From_TextureName(const char* TextureName);
-	int Get_Used_Textures_Count();
-
+	
 	bool flag_Texl_Dialog_Active;
 
 	int Texture_Count;
@@ -82,7 +83,7 @@ private:
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
 	void Update_Texture_Info(int Index);
-
+	int Get_Used_Textures_Count();
 	void Delete_File(const char* File);
 	bool Add_File();
 

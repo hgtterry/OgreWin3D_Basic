@@ -140,7 +140,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     char DefaultWad[MAX_PATH];
     strcpy(DefaultWad, App->App_Directory_FullPath);
     strcat(DefaultWad, "\\Data\\Room_Builder\\Default.zip");
-    App->CL_Doc->Load_Wad_File(DefaultWad); // Needs Ogre at the Moment
+    App->CL_TXL_Editor->Load_Zipped_TXL_File(DefaultWad); // Needs Ogre at the Moment
    
     // Initialize dialogs
     App->Init_Dialogs();
@@ -481,7 +481,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 char pathAndFile[MAX_PATH];
                 strcpy(pathAndFile, App->App_Directory_FullPath);
                 strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
-                App->CL_Doc->Load_Wad_File(pathAndFile);
+                App->CL_TXL_Editor->Load_Zipped_TXL_File(pathAndFile);
                 App->CL_Doc->UpdateAfterWadChange();
                 App->CL_Properties_Textures->Fill_ListBox();
                 App->CL_Properties_Textures->List_Selection_Changed();

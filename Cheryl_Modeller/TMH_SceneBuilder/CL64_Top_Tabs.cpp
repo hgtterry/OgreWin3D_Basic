@@ -751,8 +751,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			}
 
 			App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
-			App->CL_Interface->Show_TopTabs_Faces_Panel(true);
-
+			
 			App->CL_Editor_Control->Set_Map_View();
 			
 			return TRUE;
@@ -917,6 +916,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs_Brushes(HWND hDlg, UINT message, W
 		if (LOWORD(wParam) == IDC_BT_TT_BRUSH_SELECT)
 		{
 			App->CL_Interface->Unselect_Brush_And_Set_Dlgs();
+			App->CL_Interface->Show_TopTabs_Faces_Panel(false);
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 			return TRUE;

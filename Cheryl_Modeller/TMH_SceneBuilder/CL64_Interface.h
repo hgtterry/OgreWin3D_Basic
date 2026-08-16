@@ -39,6 +39,7 @@ public:
 	void Position_Tabs_Dlg(void);
 
 	void Position_Motions_Dlg(void);
+	void Position_Face_Options_Dlg(void);
 
 	bool Resize_FileView(void);
 	void Unselect_Brush_And_Set_Dlgs(void);
