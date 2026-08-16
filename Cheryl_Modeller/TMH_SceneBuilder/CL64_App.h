@@ -133,7 +133,10 @@ public:
 
 	void Custom_Button_Globals(LPNMCUSTOMDRAW item) const;
 	bool Custom_Button_Greyed(LPNMCUSTOMDRAW item);
+
 	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
+	bool Custom_Button_Normal_DM(LPNMCUSTOMDRAW item);
+
 	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
 	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
 
@@ -159,11 +162,15 @@ public:
 	HINSTANCE hInst;
 	HWND MainHwnd;
 	HBRUSH AppBackground;
-	
+	HBRUSH DM_Background;
+
 	HWND ViewPLeaseWait;
 
 	HBRUSH Brush_But_Pressed;
+
 	HBRUSH Brush_But_Normal;
+	HBRUSH Brush_But_Normal_DM;
+
 	HBRUSH Brush_But_Hover;
 	HBRUSH Brush_Tabs_UnSelected;
 	HBRUSH Brush_Tabs;

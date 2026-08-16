@@ -263,9 +263,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 //io.DisplaySize = ImVec2(100, 100); // < ---- Force the ImGui display size to 1920x1080
                 //io.DisplayFramebufferScale = ImVec2(100, 100);
 
-                App->CL_Model->Clear_Model();
-                App->CL_Editor_Control->Set_Editor_Import_Model();
-
+                //App->CL_Model->Clear_Model();
+               // App->CL_Editor_Control->Set_Editor_Import_Model();
+                App->CL_Interface->Show_TopTabs_Faces_Panel(true);
 
 				return 1;
 			}

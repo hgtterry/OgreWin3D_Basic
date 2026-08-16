@@ -105,12 +105,14 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 					App->Custom_Button_Toggle_Tabs(item, App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face);
 				}
 			}
-
+			
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_TT_FACES_ALL)
 		{
+			
+
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
 			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACES_ALL));
@@ -137,10 +139,19 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			}
 			else
 			{
-				//App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Move);
 				App->Custom_Button_Normal(item);
 			}
 
+			SetTextColor(item->hdc, RGB(0, 0, 0)); 
+			SetBkMode(item->hdc, TRANSPARENT);
+
+			LPDRAWITEMSTRUCT Item2;
+			Item2 = (LPDRAWITEMSTRUCT)lParam;
+
+			char text[64];
+			GetWindowText(Item2->hwndItem, text, 64);
+			DrawText(item->hdc, "Next Face", -1, &item->rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+			
 			return CDRF_DODEFAULT;
 		}
 
@@ -155,7 +166,6 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			}
 			else
 			{
-				//App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Rotate);
 				App->Custom_Button_Normal(item);
 			}
 

@@ -132,9 +132,13 @@ CL64_App::CL64_App(void)
 	CursorPosY = 500;
 
 	AppBackground = 0;
+	DM_Background = 0;
 
 	Brush_But_Pressed = 0;
+
 	Brush_But_Normal = 0;
+	Brush_But_Normal_DM = 0;
+
 	Brush_But_Hover = 0;
 	Brush_Tabs_UnSelected = 0;
 	Brush_Tabs = 0;
@@ -208,7 +212,7 @@ CL64_App::CL64_App(void)
 	flag_Block_Mouse_Buttons = false;
 	flag_App_Initialized = false;
 
-	flag_Release = true;
+	flag_Release = false;
 
 	Development = true; // Allow New Code to Run for Testing
 	flag_Start_3DEditor_Mode = true;
@@ -383,6 +387,8 @@ void CL64_App::Set_Brushes_Fonts(void)
 {
 	// Initialize brushes
 	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
+	DM_Background = CreateSolidBrush(RGB(77, 77, 77));
+
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 
@@ -395,7 +401,10 @@ void CL64_App::Set_Brushes_Fonts(void)
 
 	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(240, 240, 240));
+
 	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 180));
+	Brush_But_Normal_DM = CreateSolidBrush(RGB(46, 89, 148));
+
 	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 230));
 	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
 	Brush_But_Test = CreateSolidBrush(RGB(240, 240, 190));
@@ -551,7 +560,7 @@ bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 	// Determine the pen color and brush based on the button state
 	COLORREF penColor = RGB(0, 0, 0); // Default to black for idle state
 	HGDIOBJ old_pen, old_brush;
-
+	
 	// Set pen color and brush based on the button state
 	if (item->uItemState & CDIS_SELECTED) // Button is pressed
 	{
@@ -574,7 +583,50 @@ bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 	old_brush = SelectObject(item->hdc, old_brush);
 
 	// Draw the rounded rectangle
-	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+	// Clean up
+	SelectObject(item->hdc, old_pen);
+	SelectObject(item->hdc, old_brush);
+	DeleteObject(pen);
+
+	return CDRF_DODEFAULT;
+}
+
+// *************************************************************************
+// *			Custom_Button_Normal:- Terry Mo and Hazel 2025   	  	   *
+// *************************************************************************
+bool CL64_App::Custom_Button_Normal_DM(LPNMCUSTOMDRAW item)
+{
+	// Determine the pen color and brush based on the button state
+	COLORREF penColor = RGB(0, 255, 0); // Default to black for idle state
+	HGDIOBJ old_pen, old_brush;
+
+	// Set pen color and brush based on the button state
+	if (item->uItemState & CDIS_SELECTED) // Button is pressed
+	{
+		penColor = RGB(0, 0, 0); // Black for pressed state
+		old_brush = App->Brush_But_Pressed;
+	}
+	else if (item->uItemState & CDIS_HOT) // Mouse is over the button
+	{
+		penColor = RGB(0, 255, 0); // Green for hover state
+		old_brush = App->Brush_But_Hover;
+	}
+	else // Idle state
+	{
+		old_brush = App->Brush_But_Normal_DM;
+	}
+
+	// Create pen for button border
+	HPEN pen = CreatePen(PS_INSIDEFRAME, 0, penColor);
+	old_pen = SelectObject(item->hdc, pen);
+	old_brush = SelectObject(item->hdc, old_brush);
+
+	SetTextColor(item->hdc, RGB(0, 255, 0));
+	
+	// Draw the rounded rectangle
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
 
 	// Clean up
 	SelectObject(item->hdc, old_pen);
