@@ -48,7 +48,7 @@ Lib_Ini_File::~Lib_Ini_File(void)
 // *************************************************************************
 char* Lib_Ini_File::GetVersion()
 {
-	return (LPSTR)" Lib_Ini_File [ 16-08-26 ] Build T ";
+	return (LPSTR)" Lib_Ini_File [ 22-08-26 ] Build T ";
 }
 
 // *************************************************************************

@@ -142,15 +142,18 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 				App->Custom_Button_Normal(item);
 			}
 
-			SetTextColor(item->hdc, RGB(0, 0, 0)); 
-			SetBkMode(item->hdc, TRANSPARENT);
+			//SetTextColor(item->hdc, RGB(0, 255, 0)); 
+			//SetBkMode(item->hdc, TRANSPARENT);
 
-			LPDRAWITEMSTRUCT Item2;
+			/*LPDRAWITEMSTRUCT Item2;
 			Item2 = (LPDRAWITEMSTRUCT)lParam;
 
-			char text[64];
-			GetWindowText(Item2->hwndItem, text, 64);
-			DrawText(item->hdc, "Next Face", -1, &item->rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+			char text[64];*/
+			//GetWindowText(Item2->hwndItem, text, 64);
+
+			//SetDlgItemText(hDlg, IDC_BT_TT_FACE_NEXT,(LPSTR)"xx");
+
+			//DrawText(item->hdc, text, -1, &item->rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 			
 			return CDRF_DODEFAULT;
 		}
