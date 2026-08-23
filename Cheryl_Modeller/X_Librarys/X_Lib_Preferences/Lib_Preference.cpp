@@ -37,6 +37,8 @@ Lib_Preference::Lib_Preference(void)
 	Wad_File_Name[0] = 0;
 	UserData_Folder[0] = 0;
 
+	Prefs_App_Directory_FullPath[0] = 0;
+
 	Prefs_Last_PathAndFile[0] = 0;
 	Prefs_Last_JustFileName[0] = 0;
 
@@ -55,6 +57,8 @@ Lib_Preference::Lib_Preference(void)
 	ListPanel = nullptr;
 	Root = nullptr;
 	GD_ProjectFolder = nullptr;
+
+	tvinsert = { 0 };
 }
 
 
@@ -214,15 +218,17 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 
 		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		if (some_item->idFrom == IDOK)
+		switch (some_item->idFrom)
 		{
+		case IDOK:
 			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
+			break;
 
-		if (some_item->idFrom == IDCANCEL)
-		{
+		case IDCANCEL:
 			App->Custom_Button_Normal(item);
+			break;
+
+		default:
 			return CDRF_DODEFAULT;
 		}
 
@@ -374,7 +380,7 @@ void Lib_Preference::Init_Configuration()
 	char DirCheck[MAX_PATH];
 	strcpy(DirCheck, UserData_Folder);
 	strcat(DirCheck, "\\");
-	strcat(DirCheck, "TMH_Dir");
+	strcat(DirCheck, "Cheryl_3D");
 
 	bool check = 0;
 	check = Search_For_Folder(DirCheck);
@@ -390,7 +396,7 @@ void Lib_Preference::Init_Configuration()
 	{
 		char mCheckFile[MAX_PATH];
 		strcpy(mCheckFile, DirCheck);
-		strcat(mCheckFile, "\\TMH_MeshBuilder.cfg");
+		strcat(mCheckFile, "\\Cheryl_3D_Modeller.cfg");
 
 		bool checkfile = Check_File_Exist(mCheckFile);
 
@@ -434,7 +440,7 @@ void Lib_Preference::Save_Config_File()
 
 	char buf[MAX_PATH];
 	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\TMH_Dir\\TMH_MeshBuilder.cfg");
+	strcat(buf, "\\Cheryl_3D\\Cheryl_3D_Modeller.cfg");
 
 	WriteRecentFiles = std::fopen(buf, "wt");
 
@@ -470,7 +476,7 @@ void Lib_Preference::Load_Config_File()
 	char buf[MAX_PATH];
 
 	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\TMH_Dir\\TMH_MeshBuilder.cfg");
+	strcat(buf, "\\Cheryl_3D\\Cheryl_3D_Modeller.cfg");
 
 	auto& Ini_File = App->CL_X_Ini_File; // App->CL_X_Ini_File-> (Pointer)
 
@@ -495,7 +501,7 @@ void Lib_Preference::Load_Config_File()
 // *************************************************************************
 bool Lib_Preference::Search_For_Folder(char* FolderPath)
 {
-	char pSearchPath[1024];
+	char pSearchPath[MAX_PATH];
 
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;

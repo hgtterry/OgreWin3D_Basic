@@ -1566,14 +1566,7 @@ void StartOgre()
             App->CL_File->Start_Load(false);
         }
     }
-   /* else
-    {
-        strcpy(App->CL_File->PathFileName_3dt, App->RB_Directory_FullPath);
-        strcat(App->CL_File->PathFileName_3dt, "\\Data\\Room_Builder\\Just_Room\\Just_Room.mtf");
-        strcpy(App->CL_File->FileName_3dt, "Just_Room.mtf");
-        App->CL_File->Start_Load(false);
-    }*/
-
+  
     bool loadtestfile = false;
     if (loadtestfile == true)
     {
