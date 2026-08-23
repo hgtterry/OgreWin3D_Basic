@@ -230,7 +230,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		sprintf(buf, "%i", m_FaceEditor->m_NumberOfFaces);
 		SetDlgItemText(hDlg, IDC_ST_NUM_FACES, (LPCTSTR)buf);
 
-		if (App->CL_Top_Tabs->flag_All_Faces == 0)
+		if (App->CL_Faces_Control->flag_All_Faces == 0)
 		{
 			m_FaceEditor->Update_Face_List(hDlg);
 		}
@@ -252,12 +252,12 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 		m_FaceEditor->Fill_ComboBox_AngleValues(hDlg);
 
-		if (App->CL_Top_Tabs->flag_All_Faces == 0)
+		if (App->CL_Faces_Control->flag_All_Faces == 0)
 		{
 			m_FaceEditor->Update_Face_Info(hDlg);
 		}
 
-		if (App->CL_Top_Tabs->flag_All_Faces == 1)
+		if (App->CL_Faces_Control->flag_All_Faces == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ALLFACES);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -679,7 +679,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 				float pAngle = (float)m_FaceEditor->m_TextureAngle;
 
-				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				if (App->CL_Faces_Control->flag_All_Faces == 1)
 				{
 					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureAngle, &pAngle);
 				}
@@ -700,7 +700,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 				float pAngle = (float)m_FaceEditor->m_TextureAngle;
 
-				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				if (App->CL_Faces_Control->flag_All_Faces == 1)
 				{
 					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureAngle, &pAngle);
 				}
@@ -735,7 +735,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 				int pXOffset = (int)m_FaceEditor->m_TextureXOffset;
 				int xOff, yOff;
 
-				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				if (App->CL_Faces_Control->flag_All_Faces == 1)
 				{
 					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeXOffset, &pXOffset);
 				}
@@ -762,7 +762,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 				int pXOffset = (int)m_FaceEditor->m_TextureXOffset;
 				int xOff, yOff;
 
-				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				if (App->CL_Faces_Control->flag_All_Faces == 1)
 				{
 					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeXOffset, &pXOffset);
 				}
@@ -794,7 +794,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 				int pYOffset = (int)m_FaceEditor->m_TextureYOffset;
 				int xOff, yOff;
 
-				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				if (App->CL_Faces_Control->flag_All_Faces == 1)
 				{
 					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeYOffset, &pYOffset);
 				}
@@ -817,7 +817,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 				int pYOffset = (int)m_FaceEditor->m_TextureYOffset;
 				int xOff, yOff;
 
-				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				if (App->CL_Faces_Control->flag_All_Faces == 1)
 				{
 					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeYOffset, &pYOffset);
 				}
@@ -849,7 +849,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 				float pXScale = (float)m_FaceEditor->m_TextureXScale;
 				float xScale, yScale;
 
-				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				if (App->CL_Faces_Control->flag_All_Faces == 1)
 				{
 					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureXScale, &pXScale);
 				}
@@ -878,7 +878,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 				float pXScale = (float)m_FaceEditor->m_TextureXScale;
 				float xScale, yScale;
 
-				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				if (App->CL_Faces_Control->flag_All_Faces == 1)
 				{
 				}
 				else
@@ -888,7 +888,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 				if (pXScale > 0)
 				{
-					if (App->CL_Top_Tabs->flag_All_Faces == 1)
+					if (App->CL_Faces_Control->flag_All_Faces == 1)
 					{
 						App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureXScale, &pXScale);
 					}
@@ -899,7 +899,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 				}
 				else
 				{
-					if (App->CL_Top_Tabs->flag_All_Faces == 1)
+					if (App->CL_Faces_Control->flag_All_Faces == 1)
 					{
 						pXScale = 0.001;
 						App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureXScale, &pXScale);
@@ -932,7 +932,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 				float pYScale = (float)m_FaceEditor->m_TextureYScale;
 				float xScale, yScale;
 
-				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				if (App->CL_Faces_Control->flag_All_Faces == 1)
 				{
 					App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureYScale, &pYScale);
 				}
@@ -960,7 +960,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 				float pYScale = (float)m_FaceEditor->m_TextureYScale;
 				float xScale, yScale;
-				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				if (App->CL_Faces_Control->flag_All_Faces == 1)
 				{
 				}
 				else
@@ -970,7 +970,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 				if (pYScale > 0)
 				{
-					if (App->CL_Top_Tabs->flag_All_Faces == 1)
+					if (App->CL_Faces_Control->flag_All_Faces == 1)
 					{
 						App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureYScale, &pYScale);
 					}
@@ -981,7 +981,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 				}
 				else
 				{
-					if (App->CL_Top_Tabs->flag_All_Faces == 1)
+					if (App->CL_Faces_Control->flag_All_Faces == 1)
 					{
 						pYScale = 0.001;
 						App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, ChangeTextureYScale, &pYScale);
@@ -1021,7 +1021,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 				App->CL_X_Face->Selected_Face_Index = Index;
 
-				App->CL_Top_Tabs->Select_Face();
+				App->CL_Faces_Control->Select_Face();
 				m_FaceEditor->Change_Selection();
 				m_FaceEditor->Update_Face_Info(hDlg);
 			}
@@ -1178,7 +1178,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		{
 			float xScale, yScale;
 
-			if (App->CL_Top_Tabs->flag_All_Faces == 1)
+			if (App->CL_Faces_Control->flag_All_Faces == 1)
 			{
 				App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipHorizontal, NULL);
 			}
@@ -1198,7 +1198,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		{
 			float xScale, yScale;
 
-			if (App->CL_Top_Tabs->flag_All_Faces == 1)
+			if (App->CL_Faces_Control->flag_All_Faces == 1)
 			{
 				App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipVertical, NULL);
 			}
@@ -1341,7 +1341,7 @@ void Face_Editor::Update_Faces()
 {
 	auto& p_Doc = App->CL_Doc;
 
-	if (App->CL_Top_Tabs->flag_All_Faces == true)
+	if (App->CL_Faces_Control->flag_All_Faces == true)
 	{
 		p_Doc->UpdateAllViews(Enums::UpdateViews_3D);
 		p_Doc->SelectAllFacesInBrushes();

@@ -30,10 +30,18 @@ public:
 	~CL64_Faces_Control(void);
 
 	void Start_Faces_Control_Dlg();
+	void Select_Face();
+
+	bool flag_All_Faces;
+	bool flag_Next_Face;
+	bool flag_Prev_Face;
+
+	HWND Faces_Control_Dlg_hWnd;
 
 private:
 	static LRESULT CALLBACK Proc_Top_Tabs_Faces(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	
 
 };
 

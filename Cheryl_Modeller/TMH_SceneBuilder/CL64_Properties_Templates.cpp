@@ -308,9 +308,9 @@ void CL64_Properties_Templates::Insert_Template()
 
 	App->CL_Brush_X->Select_Brush_Editor(App->CL_Doc->CurBrush);
 	
-	App->CL_Top_Tabs->Select_Face();
+	App->CL_Faces_Control->Select_Face();
 
-	App->CL_Top_Tabs->flag_All_Faces = true;
+	App->CL_Faces_Control->flag_All_Faces = true;
 	App->CL_Doc->SelectAllFacesInBrushes();
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 

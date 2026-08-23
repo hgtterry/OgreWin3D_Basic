@@ -174,13 +174,13 @@ void CL64_Interface::Position_Face_Options_Dlg(void)
 	GetWindowRect(App->MainHwnd, &rect);
 
 	RECT rect2;
-	GetWindowRect(App->CL_Top_Tabs->TopTabs_Faces_Dlg_hWnd, &rect2);
+	GetWindowRect(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, &rect2);
 
 	int widthX = rect2.right - rect2.left;
 
 	int Pos_X = (rect.right / 2);
 
-	SetWindowPos(App->CL_Top_Tabs->TopTabs_Faces_Dlg_hWnd, NULL,
+	SetWindowPos(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, NULL,
 		Pos_X - widthX / 2, 150,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
@@ -437,7 +437,7 @@ void CL64_Interface::Show_TopTabs_Brushes_Panel(bool show)
 // *************************************************************************
 void CL64_Interface::Show_TopTabs_Faces_Panel(bool show)
 {
-	ShowWindow(App->CL_Top_Tabs->TopTabs_Faces_Dlg_hWnd, show);
+	ShowWindow(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, show);
 }
 
 // *************************************************************************
@@ -469,7 +469,7 @@ void CL64_Interface::Enable_TopTabs_Brushes_Buttons(bool option)
 // *************************************************************************
 void CL64_Interface::Enable_TopTabs_Faces_Buttons(bool option)
 {
-	auto& Win_hWnd = App->CL_Top_Tabs->TopTabs_Faces_Dlg_hWnd;
+	auto& Win_hWnd = App->CL_Faces_Control->Faces_Control_Dlg_hWnd;
 
 	// Array of button IDs to enable or disable
 	const int buttonIDs[] =
@@ -492,7 +492,7 @@ void CL64_Interface::Enable_TopTabs_Faces_Buttons(bool option)
 // *************************************************************************
 void CL64_Interface::Enable_TopTabs_Buttons(bool option)
 {
-	auto& Win_hWnd = App->CL_Top_Tabs->TopTabs_Faces_Dlg_hWnd;
+	auto& Win_hWnd = App->CL_Faces_Control->Faces_Control_Dlg_hWnd;
 
 	// Array of button IDs to enable or disable
 	const int buttonIDs[] =

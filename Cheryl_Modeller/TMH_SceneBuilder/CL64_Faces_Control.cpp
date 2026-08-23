@@ -29,6 +29,11 @@ THE SOFTWARE.
 
 CL64_Faces_Control::CL64_Faces_Control(void)
 {
+	flag_All_Faces = false;
+	flag_Next_Face = false;
+	flag_Prev_Face = false;
+
+	Faces_Control_Dlg_hWnd = nullptr;
 }
 
 CL64_Faces_Control::~CL64_Faces_Control(void)
@@ -40,7 +45,7 @@ CL64_Faces_Control::~CL64_Faces_Control(void)
 // *************************************************************************
 void CL64_Faces_Control::Start_Faces_Control_Dlg()
 {
-	App->CL_Top_Tabs->TopTabs_Faces_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_FACES, App->MainHwnd, (DLGPROC)Proc_Top_Tabs_Faces);
+	Faces_Control_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_FACES, App->MainHwnd, (DLGPROC)Proc_Top_Tabs_Faces);
 	App->CL_Interface->Show_TopTabs_Faces_Panel(false);
 }
 
@@ -54,6 +59,7 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_BT_FACES_NONE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACES_ALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_NEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_PREV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -109,6 +115,15 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_FACES_NONE)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			App->Custom_Button_Normal(item);
+			
+			return CDRF_DODEFAULT;
+		}
+		
 		if (some_item->idFrom == IDC_BT_TT_FACES_ALL)
 		{
 			
@@ -122,7 +137,7 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_All_Faces);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Faces_Control->flag_All_Faces);
 			}
 
 			return CDRF_DODEFAULT;
@@ -194,10 +209,20 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_FACES_NONE)
+		{
+			App->CL_Doc->ResetAllSelectedFaces();
+			App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = false;
+			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+			RedrawWindow(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_TT_FACES_ALL)
 		{
 			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-			App->CL_Top_Tabs->flag_All_Faces = 1;
+			App->CL_Faces_Control->flag_All_Faces = true;
 
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
@@ -219,7 +244,7 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 				App->CL_X_Face->Selected_Face_Index = 0;
 			}
 
-			App->CL_Top_Tabs->Select_Face();
+			App->CL_Faces_Control->Select_Face();
 
 			if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
 			{
@@ -237,7 +262,7 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 				App->CL_X_Face->Selected_Face_Index = App->CL_Brush_X->Face_Count - 1;
 			}
 
-			App->CL_Top_Tabs->Select_Face();
+			App->CL_Faces_Control->Select_Face();
 
 			if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
 			{
@@ -264,7 +289,7 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 				else
 				{
 					App->CL_X_Face->Selected_Face_Index = Index;
-					App->CL_Top_Tabs->Select_Face();
+					App->CL_Faces_Control->Select_Face();
 
 					if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
 					{
@@ -282,4 +307,36 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Select_Face:- Terry and Hazel Flanigan 2026				   *
+// *************************************************************************
+void CL64_Faces_Control::Select_Face()
+{
+	if (App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
+	{
+		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
+		flag_Next_Face = true;
+		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+
+		App->CL_Doc->SelectAllFacesInBrushes();
+		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
+	}
+	else
+	{
+		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
+		flag_Next_Face = true;
+		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+
+		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
+	}
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	App->CL_Properties_Textures->Enable_FaceProps_Button(true);
+	App->CL_Properties_Tabs->Select_Textures_Tab();
+
+	HWND Temp = GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES);
+	SendMessage(Temp, CB_SETCURSEL, App->CL_X_Face->Selected_Face_Index, 0);
 }

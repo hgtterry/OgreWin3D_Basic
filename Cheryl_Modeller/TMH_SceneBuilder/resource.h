@@ -601,6 +601,7 @@
 #define IDC_ST_ST_MODEL_PATH            1419
 #define IDC_CK_MODEL_CREATE_SUBDIR      1420
 #define IDC_BT_FACE_SHOWSELECTEDFACE    1421
+#define IDC_BT_FACES_NONE               1422
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -747,7 +748,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        228
 #define _APS_NEXT_COMMAND_VALUE         32907
-#define _APS_NEXT_CONTROL_VALUE         1422
+#define _APS_NEXT_CONTROL_VALUE         1423
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

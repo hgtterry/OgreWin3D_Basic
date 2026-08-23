@@ -38,7 +38,6 @@ public:
 	void Deselect_Faces_Dlg_Buttons();
 	void Reset_Brush_Buttons();
 
-	void Select_Face();
 	void Update_Faces_Combo();
 
 	void Set_Brush_Mode(int Mode, int Dlg_Selection);
@@ -56,14 +55,11 @@ public:
 	bool flag_View_Top_Right;
 	bool flag_View_Bottom_Left;
 
-	bool flag_All_Faces;
-
 	bool flag_TopTabs_Active;
 
 	HWND TopTabs_Dlg_hWnd;
 	HWND TopTabs_Brushes_Dlg_hWnd;
-	HWND TopTabs_Faces_Dlg_hWnd;
-
+	
 private:
 	static LRESULT CALLBACK Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Top_Tabs_Brushes(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -71,9 +67,5 @@ private:
 	void Init_Bmps_Globals(void);
 
 	bool flag_Brush_Scale;
-
-	bool flag_Next_Face;
-	bool flag_Prev_Face;
-
 };
 

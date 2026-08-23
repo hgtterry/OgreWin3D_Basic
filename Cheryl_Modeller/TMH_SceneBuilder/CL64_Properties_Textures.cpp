@@ -252,7 +252,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->CL_Top_Tabs->flag_All_Faces = true;
+				App->CL_Faces_Control->flag_All_Faces = true;
 				App->CL_Doc->SelectAllFacesInBrushes();
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 				return 1;
@@ -260,7 +260,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 			else
 			{
 				App->CL_Doc->ResetAllSelectedFaces();
-				App->CL_Top_Tabs->Select_Face();
+				App->CL_Faces_Control->Select_Face();
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 				return 1;
 			}
@@ -303,13 +303,13 @@ void CL64_Properties_Textures::Update_Texture()
 
 		App->CL_Doc->ResetAllSelectedFaces();
 
-		if (App->CL_Top_Tabs->flag_All_Faces == true)
+		if (App->CL_Faces_Control->flag_All_Faces == true)
 		{
 			App->CL_Doc->SelectAllFacesInBrushes();
 		}
 		else
 		{
-			App->CL_Top_Tabs->Select_Face();
+			App->CL_Faces_Control->Select_Face();
 		}
 
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);

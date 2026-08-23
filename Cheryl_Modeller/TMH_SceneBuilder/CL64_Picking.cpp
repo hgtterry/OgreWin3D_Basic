@@ -386,7 +386,7 @@ int CL64_Picking::Get_Brush_Index()
 
     // Select Face Show Face Panel
     App->CL_X_Face->Selected_Face_Index = m_Main_Face -1;
-    App->CL_Top_Tabs->Select_Face();
+    App->CL_Faces_Control->Select_Face();
 
     // Show Brush Selection and Face Selection Outlines
     App->CL_Ogre->OGL_Listener->Show_Visuals(true);
