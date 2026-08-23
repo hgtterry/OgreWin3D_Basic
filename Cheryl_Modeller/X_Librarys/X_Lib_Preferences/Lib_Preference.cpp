@@ -37,8 +37,8 @@ Lib_Preference::Lib_Preference(void)
 	Wad_File_Name[0] = 0;
 	UserData_Folder[0] = 0;
 
-	Prefs_PathAndFile[0] = 0;
-	Prefs_JustFileName[0] = 0;
+	Prefs_Last_PathAndFile[0] = 0;
+	Prefs_Last_JustFileName[0] = 0;
 
 	flag_OpenLastFile = false;
 	flag_MapEditor = true;
@@ -57,16 +57,17 @@ Lib_Preference::Lib_Preference(void)
 	GD_ProjectFolder = nullptr;
 }
 
+
 Lib_Preference::~Lib_Preference(void)
 {
 }
 
 // *************************************************************************
-// *			GetVersion:- Terry and Hazel Flanigan 2025			 	   *
+// *			GetVersion:- Terry and Hazel Flanigan 2026			 	   *
 // *************************************************************************
 char* Lib_Preference::GetVersion()
 {
-	return (LPSTR)" Lib_Preference [ 13-03-26 ] Build 2 ";
+	return (LPSTR)" Lib_Preference [ 22-08-26 ] Build 2 ";
 }
 
 // *************************************************************************
@@ -117,24 +118,26 @@ void Lib_Preference::Start_Options_Dlg()
 LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	auto& m_Preferences = App->CL_Libs->CL_Preference;
+	auto& m_Font = App->Font_CB15;
+	
 
 	switch (message)
 	{
 
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_OPTIONS_TREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_GB_STARTUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_OPTIONS_TREE, WM_SETFONT, (WPARAM)m_Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_GB_STARTUP, WM_SETFONT, (WPARAM)m_Font, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_CK_LASTFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CK_MAPEDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CK_SCENEEDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_LASTFILE, WM_SETFONT, (WPARAM)m_Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_MAPEDITOR, WM_SETFONT, (WPARAM)m_Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_SCENEEDITOR, WM_SETFONT, (WPARAM)m_Font, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_ST_ZOOM_TEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ED_ZOOMDEFAULT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_ZOOM_TEXT, WM_SETFONT, (WPARAM)m_Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ED_ZOOMDEFAULT, WM_SETFONT, (WPARAM)m_Font, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)m_Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)m_Font, MAKELPARAM(TRUE, 0));
 
 		HWND Temp = GetDlgItem(hDlg, IDC_CK_LASTFILE);
 		SendMessage(Temp, BM_SETCHECK, m_Preferences->flag_OpenLastFile, 0);
@@ -148,10 +151,10 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 		char buf[MAX_PATH];
 		sprintf(buf, "%f", m_Preferences->Defalut_Zoom);
 		SetDlgItemText(hDlg, IDC_ED_ZOOMDEFAULT, (LPTSTR)buf);
-
+		
 		m_Preferences->ListPanel = hDlg;
 		m_Preferences->Init_FileView(m_Preferences->ListPanel);
-
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -209,16 +212,16 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
 		if (some_item->idFrom == IDOK)
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDCANCEL)
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
@@ -286,7 +289,7 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 
 			m_Preferences->Save_Config_File();
 
-			App->CL_Views_Com->Reset_Views_All();
+			//App->CL_Views_Com->Reset_Views_All();
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -294,136 +297,6 @@ LRESULT CALLBACK Lib_Preference::Proc_Options_Dlg(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-	}
-
-	break;
-
-	}
-	return FALSE;
-}
-
-// *************************************************************************
-// *			  Start_Options_Dlg:- Terry and Hazel Flanigan 2025		   *
-// *************************************************************************
-void Lib_Preference::Start_Quick_Options_Dlg()
-{
-	if (flag_Quick_Preffs_Active == true)
-	{
-		return;
-	}
-
-	flag_Quick_Preffs_Active = true;
-
-	Quick_Preffs_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PREFS_QUICK, App->MainHwnd, (DLGPROC)Proc_Quick_Options_Dlg);
-	ShowWindow(Quick_Preffs_hWnd, true);
-}
-
-// *************************************************************************
-// *		Proc_Quick_Options_Dlg:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-LRESULT CALLBACK Lib_Preference::Proc_Quick_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_OPTIONS_TREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ED_MOUSEWHEEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ST_MOUSEWHEEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
-		
-		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		char Num[MAX_PATH];
-
-		_itoa(App->CL_Keyboard->Mouse_Wheel_Zoom, Num, 10);
-
-		SetDlgItemText(hDlg, IDC_ED_MOUSEWHEEL, (LPCTSTR)Num);
-		
-		return TRUE;
-	}
-	case WM_CTLCOLORSTATIC:
-	{
-
-		if (GetDlgItem(hDlg, IDC_ST_MOUSEWHEEL) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		return FALSE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->AppBackground;
-	}
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDOK)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDCANCEL)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		return CDRF_DODEFAULT;
-	}
-
-	case WM_COMMAND:
-	{
-		/*if (LOWORD(wParam) == IDC_CK_LASTFILE)
-		{
-			HWND Temp = GetDlgItem(hDlg, IDC_CK_LASTFILE);
-
-			if (m_Preferences->flag_OpenLastFile == true)
-			{
-				m_Preferences->flag_OpenLastFile = false;
-				SendMessage(Temp, BM_SETCHECK, false, 0);
-			}
-			else
-			{
-				m_Preferences->flag_OpenLastFile = true;
-				SendMessage(Temp, BM_SETCHECK, true, 0);
-			}
-
-			return TRUE;
-		}*/
-
-		
-		if (LOWORD(wParam) == IDOK)
-		{
-			char buff[255];
-			GetDlgItemText(hDlg, IDC_ED_MOUSEWHEEL, (LPTSTR)buff, 255);
-
-			int New_Num = atoi(buff);
-			App->CL_Keyboard->Mouse_Wheel_Zoom = New_Num;
-
-			App->CL_Libs->CL_Preference->flag_Quick_Preffs_Active = false;
-			//EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDCANCEL)
-		{
-			App->CL_Libs->CL_Preference->flag_Quick_Preffs_Active = false;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -443,7 +316,7 @@ void Lib_Preference::Read_Preferences()
 	char chr_Tag1[MAX_PATH];
 	char Preferences_Path[MAX_PATH];
 
-	strcpy(Preferences_Path, App->App_Directory_FullPath);
+	strcpy(Preferences_Path, Prefs_App_Directory_FullPath);
 	strcat(Preferences_Path, "\\Data\\Room_Builder\\Room_Builder.ini");
 
 	auto& Ini_File = App->CL_X_Ini_File; // App->CL_X_Ini_File-> (Pointer)
@@ -471,7 +344,7 @@ bool Lib_Preference::Write_Preferences()
 
 	char Preferences_Path[MAX_PATH];
 
-	strcpy(Preferences_Path, App->App_Directory_FullPath);
+	strcpy(Preferences_Path, Prefs_App_Directory_FullPath);
 	strcat(Preferences_Path, "\\Data\\Room_Builder\\Room_Builder.ini");
 
 	WriteData = fopen(Preferences_Path, "wt");
@@ -521,7 +394,7 @@ void Lib_Preference::Init_Configuration()
 
 		bool checkfile = Check_File_Exist(mCheckFile);
 
-		if (checkfile == 1)
+		if (checkfile == true)
 		{
 
 		}
@@ -576,8 +449,8 @@ void Lib_Preference::Save_Config_File()
 
 	fprintf(WriteRecentFiles, "%s\n", "[Start_Up]");
 	fprintf(WriteRecentFiles, "%s%i\n", "Open_Last_File=", flag_OpenLastFile);
-	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Full=", App->CL_File->MTF_PathAndFile);
-	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Name=", App->CL_File->MTF_Just_FileName);
+	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Full=", Prefs_Last_PathAndFile);
+	fprintf(WriteRecentFiles, "%s%s\n", "Last_File_Name=", Prefs_Last_JustFileName);
 
 	fprintf(WriteRecentFiles, "%s%i\n", "Start_Map_Editor=", flag_MapEditor);
 	fprintf(WriteRecentFiles, "%s%i\n", "Start_Scene_Editor=", flag_SceneEditor);
@@ -605,8 +478,8 @@ void Lib_Preference::Load_Config_File()
 
 	flag_OpenLastFile = Ini_File->GetInt("Start_Up", "Open_Last_File", 0, 10);
 
-	Ini_File->GetString("Start_Up", "Last_File_Full", Prefs_PathAndFile, MAX_PATH);
-	Ini_File->GetString("Start_Up", "Last_File_Name", Prefs_JustFileName, MAX_PATH);
+	Ini_File->GetString("Start_Up", "Last_File_Full", Prefs_Last_PathAndFile, MAX_PATH);
+	Ini_File->GetString("Start_Up", "Last_File_Name", Prefs_Last_JustFileName, MAX_PATH);
 	
 	flag_MapEditor = Ini_File->GetInt("Start_Up", "Start_Map_Editor", 1, 10);
 	flag_SceneEditor = Ini_File->GetInt("Start_Up", "Start_Scene_Editor", 0, 10);

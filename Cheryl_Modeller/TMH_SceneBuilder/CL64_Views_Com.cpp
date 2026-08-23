@@ -1037,7 +1037,7 @@ bool CL64_Views_Com::Context_3D_Command(WPARAM wParam)
 
 	case IDM_3D_CAMERASPEED:
 	{
-		App->CL_Libs->CL_Preference->Start_Quick_Options_Dlg();
+		
 		return TRUE;
 	}
 

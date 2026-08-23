@@ -31,7 +31,7 @@ public:
 
 	void ImGui_Render_Loop(void);
 
-	void Imgui_System_Data(void);
+	void Imgui_System_Dlg(void);
 
 	int Visuals_PosX;
 	int Visuals_PosY;
@@ -65,5 +65,7 @@ private:
 	void Model_Data(void);
 	void Grids_Data(void);
 	void File_Data(void);
+	void Prefs_Data(void);
+
 };
 

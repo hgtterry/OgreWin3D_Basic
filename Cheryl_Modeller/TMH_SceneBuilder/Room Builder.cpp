@@ -76,7 +76,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    
     // Initialize application
     App->InitApp();
-   
+
+    strcpy(App->CL_Libs->CL_Preference->Prefs_App_Directory_FullPath, App->App_Directory_FullPath);
+
     App->CL_Libs->CL_Preference->Read_Preferences();
     App->CL_Libs->CL_Preference->Init_Configuration();
 
@@ -1554,11 +1556,11 @@ void StartOgre()
     if (App->CL_Libs->CL_Preference->flag_OpenLastFile)
     {
         // Compare the last opened file with "New_Room.mtf"
-        if (strcmp(App->CL_Libs->CL_Preference->Prefs_PathAndFile, "New_Room.mtf") != 0)
+        if (strcmp(App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile, "New_Room.mtf") != 0)
         {
             // Copy the path and filename from preferences to the file structure
-            strcpy(App->CL_File->PathFileName_3dt, App->CL_Libs->CL_Preference->Prefs_PathAndFile);
-            strcpy(App->CL_File->FileName_3dt, App->CL_Libs->CL_Preference->Prefs_JustFileName);
+            strcpy(App->CL_File->PathFileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile);
+            strcpy(App->CL_File->FileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_JustFileName);
 
             // Initiate the loading process
             App->CL_File->Start_Load(false);

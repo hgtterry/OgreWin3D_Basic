@@ -627,7 +627,11 @@ void CL64_File::Start_Load(bool useOpenDialog)
 
 		App->CL_Interface->Set_Menu_Items_Design();
 
+		strcpy(App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile, MTF_PathAndFile);
+		strcpy(App->CL_Libs->CL_Preference->Prefs_Last_JustFileName, MTF_Just_FileName);
 		App->CL_Libs->CL_Preference->Save_Config_File();
+
+
 		App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 
 		

@@ -110,7 +110,6 @@
 #define IDD_PROPS_MOTIONS               220
 #define IDB_TB_MODELDATAON              221
 #define IDD_PROPERTIES_TEXTURES_ASSIMP  222
-#define IDD_PREFS_QUICK                 223
 #define IDD_MODEL_TEXTURES_EDITOR       224
 #define IDD_MAP_RENDER_WINDOW1          225
 #define IDD_MAP_RENDER_WIN_TR           225
@@ -572,8 +571,6 @@
 #define IDC_LIST_AT_TEXTURES            1385
 #define IDC_ST_AT_DIMENSIONS            1386
 #define IDC_ST_AT_NUMTEXTUNITS          1388
-#define IDC_ED_MOUSEWHEEL               1389
-#define IDC_ST_MOUSEWHEEL               1390
 #define IDC_SPIN1                       1391
 #define IDC_SLDR_MT_POS_X               1397
 #define IDC_BT_MT_FLIPVERTICAL          1398

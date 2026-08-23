@@ -32,12 +32,13 @@ enum System_Page
 	System_Page_Data = 1,
 	System_Page_Model = 2,
 	System_Page_Grids = 3,
-	System_Page_File = 4
+	System_Page_File = 4,
+	System_Page_Prefs = 5
 };
 
 CL64_ImGui_Editor::CL64_ImGui_Editor()
 {
-	Selected_System_Page = System_Page_File;
+	Selected_System_Page = System_Page_Prefs;
 
 	flag_Block_GUI = false;
 
@@ -94,16 +95,16 @@ void CL64_ImGui_Editor::ImGui_Render_Loop(void)
 	{
 		if (flag_Show_System_Data == true)
 		{
-			Imgui_System_Data();
+			Imgui_System_Dlg();
 		}
 	}
 }
 
 
 // *************************************************************************
-// *			Imgui_System_Data:- Terry and Hazel Flanigan 2026		   *
+// *			Imgui_System_Dlg:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_ImGui_Editor::Imgui_System_Data(void)
+void CL64_ImGui_Editor::Imgui_System_Dlg(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 	ImGui::SetNextWindowSize(ImVec2(550, 620));
@@ -150,6 +151,11 @@ void CL64_ImGui_Editor::Imgui_System_Data(void)
 		if (ImGui::Button(" File ", ImVec2(100, 0)))
 		{
 			Selected_System_Page = System_Page_File;
+		}
+
+		if (ImGui::Button(" Prefs ", ImVec2(100, 0)))
+		{
+			Selected_System_Page = System_Page_Prefs;
 		}
 
 		// Functions
@@ -201,6 +207,16 @@ void CL64_ImGui_Editor::Imgui_System_Data(void)
 			ImGui::Text("File:");
 
 			File_Data();
+		}
+
+		if (Selected_System_Page == System_Page_Prefs)
+		{
+			ImGui::NextColumn();
+			ImGui::AlignTextToFramePadding();
+
+			ImGui::Text("Prefs:");
+
+			Prefs_Data();
 		}
 
 		ImGui::Columns(0);
@@ -468,4 +484,16 @@ void CL64_ImGui_Editor::File_Data(void)
 	ImGui::Text("Path");
 	ImGui::TextWrapped("%s", App->CL_Level->TXL_PathAndFile);
 	
+}
+
+// *************************************************************************
+// *				Prefs_Data:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui_Editor::Prefs_Data(void)
+{
+	ImGui::Text("Lib Version %s", App->CL_Libs->CL_Preference->GetVersion());
+	
+	ImGui::Text(" ");
+	ImGui::TextWrapped("File Path %s", App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile);
+
 }

@@ -32,8 +32,7 @@ public:
 	char* GetVersion();
 
 	void Start_Options_Dlg();
-	void Start_Quick_Options_Dlg();
-
+	
 	void Read_Preferences();
 	bool Write_Preferences();
 
@@ -45,6 +44,11 @@ public:
 	char Wad_File_Name[MAX_PATH];
 	char UserData_Folder[MAX_PATH];
 
+	char Prefs_Last_PathAndFile[MAX_PATH];
+	char Prefs_Last_JustFileName[MAX_PATH];
+
+	char Prefs_App_Directory_FullPath[MAX_PATH];
+
 	int Grid_Fine_Spacing;
 	int Grid_Spacing;
 	float Defalut_Zoom;
@@ -54,12 +58,8 @@ public:
 	bool flag_SceneEditor;
 	bool flag_Quick_Preffs_Active;
 	
-	char Prefs_PathAndFile[MAX_PATH];
-	char Prefs_JustFileName[MAX_PATH];
-
 private:
 	static LRESULT CALLBACK Proc_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Quick_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	FILE* WriteData;
 
