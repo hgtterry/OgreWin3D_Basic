@@ -1083,7 +1083,7 @@ void CL64_Top_Tabs::Reset_Brush_Buttons()
 void CL64_Top_Tabs::Deselect_Faces_Dlg_Buttons()
 {
 	App->CL_Faces_Control->flag_All_Faces = false;
-	App->CL_Faces_Control->flag_Next_Face = false;
+	//App->CL_Faces_Control->flag_Next_Face = false;
 	App->CL_Faces_Control->flag_Prev_Face = false;
 
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();

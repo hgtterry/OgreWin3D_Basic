@@ -135,12 +135,12 @@ void CL64_OGL_Listener::Show_Visuals(bool Show)
 	if (Show == true)
 	{
 		flag_Show_Selected_Brush = true;
-		flag_Show_Selected_Face = true;
+		//flag_Show_Selected_Face = true;
 	}
 	else
 	{
 		flag_Show_Selected_Brush = false;
-		flag_Show_Selected_Face = false;
+		//flag_Show_Selected_Face = false;
 	}
 }
 
