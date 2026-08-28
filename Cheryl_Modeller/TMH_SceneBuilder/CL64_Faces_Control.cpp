@@ -85,67 +85,39 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 		return (LONG)App->AppBackground;
 	}
 
-	//case WM_NCHITTEST:
-	//{
-	//	if (DefWindowProc(hDlg, message, wParam, lParam) == HTCLIENT)
-	//	{
-	//		return HTCAPTION;
-	//	}
-	//	//return 0;
-	//	return DefWindowProc(hDlg, message, wParam, lParam);
-	//}
-
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		if (some_item->idFrom == IDC_BT_FACES_NONE)
+		switch (some_item->idFrom)
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
+		case IDC_BT_FACES_NONE:
+		{
 			App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_No_Faces);
-
-			return CDRF_DODEFAULT;
+			break;
 		}
 
-		if (some_item->idFrom == IDC_BT_TT_FACES_ALL)
+		case IDC_BT_TT_FACES_ALL:
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACES_ALL));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_All_Faces);
-			}
-
-			return CDRF_DODEFAULT;
+			App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_All_Faces);
+			break;
 		}
 
-		if (some_item->idFrom == IDC_BT_TT_FACE_NEXT)
+		case IDC_BT_TT_FACE_NEXT:
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACE_NEXT));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Next_Face);
-			}
-			
-			return CDRF_DODEFAULT;
+			App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Next_Face);
+			break;
 		}
 
-		if (some_item->idFrom == IDC_BT_FACE_SHOWSELECTEDFACE)
+		case IDC_BT_TT_FACE_PREV:
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Prev_Face);
+			break;
+		}
 
+		case IDC_BT_FACE_SHOWSELECTEDFACE:
+		{
 			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FACE_SHOWSELECTEDFACE));
 			if (test == 0)
 			{
@@ -158,24 +130,11 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 					App->Custom_Button_Toggle_Tabs(item, App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face);
 				}
 			}
-			
-			return CDRF_DODEFAULT;
+
+			break;
 		}
 
-		if (some_item->idFrom == IDC_BT_TT_FACE_PREV)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACE_PREV));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Normal(item);
-			}
-
+		default:
 			return CDRF_DODEFAULT;
 		}
 
@@ -218,20 +177,7 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 		if (LOWORD(wParam) == IDC_BT_TT_FACE_PREV)
 		{
-			App->CL_X_Face->Selected_Face_Index--;
-
-			if (App->CL_X_Face->Selected_Face_Index < 0)
-			{
-				App->CL_X_Face->Selected_Face_Index = App->CL_Brush_X->Face_Count - 1;
-			}
-
-			App->CL_Faces_Control->Select_Face();
-
-			if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
-			{
-				App->CL_X_Face_Editor->Change_Selection();
-			}
-
+			p_Faces->Select_Prev_Face();
 			return TRUE;
 		}
 
@@ -281,9 +227,9 @@ void CL64_Faces_Control::Unselect_All_Face()
 	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = false;
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
-	flag_All_Faces = false;
+	Reset_Flags();
 	flag_No_Faces = true;
-	flag_Next_Face = false;
+	
 
 	RedrawWindow(Faces_Control_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -293,12 +239,9 @@ void CL64_Faces_Control::Unselect_All_Face()
 // *************************************************************************
 void CL64_Faces_Control::Select_All_Face()
 {
-	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-
+	Reset_Flags();
 	flag_All_Faces = true;
-	flag_No_Faces = false;
-	flag_Next_Face = false;
-
+	
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 	App->CL_Doc->SelectAllFacesInBrushes();
@@ -317,10 +260,9 @@ void CL64_Faces_Control::Select_All_Face()
 // *************************************************************************
 void CL64_Faces_Control::Select_Next_Face()
 {
+	Reset_Flags();
 	flag_Next_Face = true;
-	flag_All_Faces = false;
-	flag_No_Faces = false;
-
+	
 	App->CL_X_Face->Selected_Face_Index++;
 
 	if (App->CL_X_Face->Selected_Face_Index == App->CL_Brush_X->Face_Count)
@@ -341,13 +283,39 @@ void CL64_Faces_Control::Select_Next_Face()
 }
 
 // *************************************************************************
+// *			Select_Prev_Face:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Faces_Control::Select_Prev_Face()
+{
+	Reset_Flags();
+	flag_Prev_Face = true;
+	
+	App->CL_X_Face->Selected_Face_Index--;
+
+	if (App->CL_X_Face->Selected_Face_Index < 0)
+	{
+		App->CL_X_Face->Selected_Face_Index = App->CL_Brush_X->Face_Count - 1;
+	}
+
+	App->CL_Faces_Control->Select_Face();
+
+	if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
+	{
+		App->CL_X_Face_Editor->Change_Selection();
+	}
+
+	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = true;
+
+	RedrawWindow(Faces_Control_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
 // *			Select_Face:- Terry and Hazel Flanigan 2026				   *
 // *************************************************************************
 void CL64_Faces_Control::Select_Face()
 {
 	if (App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
 	{
-		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 		App->CL_Doc->SelectAllFacesInBrushes();
@@ -355,7 +323,6 @@ void CL64_Faces_Control::Select_Face()
 	}
 	else
 	{
-		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
@@ -368,4 +335,17 @@ void CL64_Faces_Control::Select_Face()
 
 	HWND Temp = GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES);
 	SendMessage(Temp, CB_SETCURSEL, App->CL_X_Face->Selected_Face_Index, 0);
+}
+
+// *************************************************************************
+// *				Reset_Flags:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CL64_Faces_Control::Reset_Flags()
+{
+	flag_No_Faces = false;
+	flag_All_Faces = false;
+	flag_Next_Face = false;
+	flag_Prev_Face = false;
+
+	RedrawWindow(Faces_Control_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

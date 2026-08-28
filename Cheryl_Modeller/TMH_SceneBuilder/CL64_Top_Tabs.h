@@ -35,7 +35,6 @@ public:
 	void Set_View_Buttons(int Selected_View);
 	void Redraw_TopTabs_Dlg();
 
-	void Deselect_Faces_Dlg_Buttons();
 	void Reset_Brush_Buttons();
 
 	void Update_Faces_Combo();

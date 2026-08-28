@@ -34,7 +34,9 @@ public:
 	void Unselect_All_Face();
 	void Select_All_Face();
 	void Select_Next_Face();
+	void Select_Prev_Face();
 	void Select_Face();
+	void Reset_Flags();
 
 	bool flag_No_Faces;
 	bool flag_All_Faces;
@@ -45,8 +47,6 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_Top_Tabs_Faces(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	
 
 };
 

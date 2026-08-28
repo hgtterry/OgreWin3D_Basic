@@ -1012,7 +1012,7 @@ void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
 		flag_Brush_Rotate = 1;
 	}
 	
-	Deselect_Faces_Dlg_Buttons();
+	App->CL_Faces_Control->Reset_Flags();
 
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
@@ -1076,19 +1076,6 @@ void CL64_Top_Tabs::Reset_Brush_Buttons()
 
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 }
-
-// *************************************************************************
-// *	Deselect_Faces_Dlg_Buttons:- Terry Mo and Hazel 2025			   *
-// *************************************************************************
-void CL64_Top_Tabs::Deselect_Faces_Dlg_Buttons()
-{
-	App->CL_Faces_Control->flag_All_Faces = false;
-	//App->CL_Faces_Control->flag_Next_Face = false;
-	App->CL_Faces_Control->flag_Prev_Face = false;
-
-	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-}
-
 
 // *************************************************************************
 // *		Update_Faces_Combo:- Terry Mo and Hazel 2025				   *
