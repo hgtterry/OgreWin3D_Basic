@@ -68,6 +68,8 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_NEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_PREV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BT_FACE_FACEEDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_FACE_SHOWSELECTEDFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_TT_CB_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -135,6 +137,12 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			break;
 		}
 
+		case IDC_BT_FACE_FACEEDITOR:
+		{
+			App->Custom_Button_Normal(item);
+			break;
+		}
+
 		default:
 			return CDRF_DODEFAULT;
 		}
@@ -144,6 +152,21 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_FACE_FACEEDITOR)
+		{
+			int SF = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+			if (SF > 0)
+			{
+				App->CL_X_Face_Editor->Start_FaceDialog();
+			}
+			else
+			{
+				App->Say("No Face Selected");
+			}
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_FACES_NONE)
 		{
 			p_Faces->Unselect_All_Face();
