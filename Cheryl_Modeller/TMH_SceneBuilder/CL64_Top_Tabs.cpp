@@ -1102,7 +1102,7 @@ void CL64_Top_Tabs::Update_Faces_Combo()
 			Count++;
 		}
 
-		SendMessage(Temp, CB_SETCURSEL, App->CL_X_Face->Selected_Face_Index, 0);
+		SendMessage(Temp, CB_SETCURSEL, App->CL_Faces_Control->Selected_Face_Index, 0);
 	}
 
 	//Get_Timer

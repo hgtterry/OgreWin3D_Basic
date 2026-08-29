@@ -106,6 +106,5 @@ public:
 
 	void Face_Set_Direction(Face* f, bool Direction);
 
-	int Selected_Face_Index;
 };
 

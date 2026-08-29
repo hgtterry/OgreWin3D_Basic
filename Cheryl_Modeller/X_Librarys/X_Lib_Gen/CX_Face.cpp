@@ -41,7 +41,7 @@ const T_Vec3 VecOrigin = { 0.0f, 0.0f, 0.0f };
 
 CX_Face::CX_Face(void)
 {
-	Selected_Face_Index = 0;
+	
 }
 
 CX_Face::~CX_Face(void)
@@ -1082,7 +1082,7 @@ void CX_Face::Select_Face_From_Index(int mFace_Index)
 	{
 		Face* pFace;
 
-		if (Selected_Face_Index == 0)
+		if (App->CL_Faces_Control->Selected_Face_Index == 0)
 		{
 			pFace = App->CL_X_Brush->Brush_SelectFirstFace(App->CL_Doc->CurBrush);
 

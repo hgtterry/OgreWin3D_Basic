@@ -38,6 +38,8 @@ public:
 	void Select_Face();
 	void Reset_Flags();
 
+	int Selected_Face_Index;
+
 	bool flag_No_Faces;
 	bool flag_All_Faces;
 	bool flag_Next_Face;

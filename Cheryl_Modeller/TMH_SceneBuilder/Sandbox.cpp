@@ -591,7 +591,6 @@ void Sandbox::Set_OgreWindow()
 	Ogre_MV_SceneMgr->addRenderQueueListener(App->CL_Ogre->mOverlaySystem);
 	vp_ImGui->setOverlaysEnabled(true);
 	
-
 	App->CL_Ogre->Listener_3D->flag_Run_Imgui = false;
 	App->CL_Ogre->vp->setOverlaysEnabled(false);
 

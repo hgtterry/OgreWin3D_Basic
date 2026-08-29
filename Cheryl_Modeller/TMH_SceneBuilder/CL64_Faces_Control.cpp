@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 CL64_Faces_Control::CL64_Faces_Control(void)
 {
+	Selected_Face_Index = 0;
+
 	flag_No_Faces = true;
 	flag_All_Faces = false;
 	flag_Next_Face = false;
@@ -70,10 +72,9 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 		SendDlgItemMessage(hDlg, IDC_TT_CB_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		/*SetWindowLong(hDlg, GWL_EXSTYLE, GetWindowLong(hDlg, GWL_EXSTYLE) | WS_EX_LAYERED);
-
-		COLORREF transparentColor = RGB(213, 222, 242);
-		SetLayeredWindowAttributes(hDlg, transparentColor, 0, LWA_COLORKEY);*/
+		//SetWindowLong(hDlg, GWL_EXSTYLE, GetWindowLong(hDlg, GWL_EXSTYLE) | WS_EX_LAYERED);
+		/*COLORREF transparentColor = RGB(213, 222, 242);
+		SetLayeredWindowAttributes(hDlg, transparentColor, 255, LWA_COLORKEY);*/
 
 		//p_Faces->Unselect_All_Face();
 
@@ -197,8 +198,8 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 				}
 				else
 				{
-					App->CL_X_Face->Selected_Face_Index = Index;
-					App->CL_Faces_Control->Select_Face();
+					p_Faces->Selected_Face_Index = Index;
+					p_Faces->Select_Face();
 
 					if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
 					{
@@ -263,11 +264,11 @@ void CL64_Faces_Control::Select_Next_Face()
 	Reset_Flags();
 	flag_Next_Face = true;
 	
-	App->CL_X_Face->Selected_Face_Index++;
+	Selected_Face_Index++;
 
-	if (App->CL_X_Face->Selected_Face_Index == App->CL_Brush_X->Face_Count)
+	if (Selected_Face_Index == App->CL_Brush_X->Face_Count)
 	{
-		App->CL_X_Face->Selected_Face_Index = 0;
+		Selected_Face_Index = 0;
 	}
 
 	Select_Face();
@@ -290,11 +291,11 @@ void CL64_Faces_Control::Select_Prev_Face()
 	Reset_Flags();
 	flag_Prev_Face = true;
 	
-	App->CL_X_Face->Selected_Face_Index--;
+	Selected_Face_Index--;
 
-	if (App->CL_X_Face->Selected_Face_Index < 0)
+	if (Selected_Face_Index < 0)
 	{
-		App->CL_X_Face->Selected_Face_Index = App->CL_Brush_X->Face_Count - 1;
+		Selected_Face_Index = App->CL_Brush_X->Face_Count - 1;
 	}
 
 	App->CL_Faces_Control->Select_Face();
@@ -319,13 +320,13 @@ void CL64_Faces_Control::Select_Face()
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 		App->CL_Doc->SelectAllFacesInBrushes();
-		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
+		App->CL_X_Face->Select_Face_From_Index(Selected_Face_Index);
 	}
 	else
 	{
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
-		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
+		App->CL_X_Face->Select_Face_From_Index(Selected_Face_Index);
 	}
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -334,7 +335,7 @@ void CL64_Faces_Control::Select_Face()
 	App->CL_Properties_Tabs->Select_Textures_Tab();
 
 	HWND Temp = GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES);
-	SendMessage(Temp, CB_SETCURSEL, App->CL_X_Face->Selected_Face_Index, 0);
+	SendMessage(Temp, CB_SETCURSEL, Selected_Face_Index, 0);
 }
 
 // *************************************************************************

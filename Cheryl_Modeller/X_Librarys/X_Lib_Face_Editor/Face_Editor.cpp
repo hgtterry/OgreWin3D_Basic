@@ -1019,7 +1019,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 				m_FaceEditor->m_Selected_Face_Index = Index;
 				m_FaceEditor->m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, Index);
 
-				App->CL_X_Face->Selected_Face_Index = Index;
+				App->CL_Faces_Control->Selected_Face_Index = Index;
 
 				App->CL_Faces_Control->Select_Face();
 				m_FaceEditor->Change_Selection();
@@ -1311,7 +1311,7 @@ void Face_Editor::Update_Face_Info(HWND hDlg)
 	sprintf(buff, "%s %i", "Main Face:", m_Selected_Face->Real_Brush_Face_Index);
 	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
-	sprintf(buff, "%s %s     %s %i", "Brush Name: ", App->CL_X_Brush->Brush_GetName(pBrush), "Selected Face: ", App->CL_X_Face->Selected_Face_Index + 1);
+	sprintf(buff, "%s %s     %s %i", "Brush Name: ", App->CL_X_Brush->Brush_GetName(pBrush), "Selected Face: ", App->CL_Faces_Control->Selected_Face_Index + 1);
 	SendDlgItemMessage(hDlg, IDC_LST_FACE_INFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	sprintf(buff, "%s %s", "Texture: ", App->CL_X_Face->Face_GetTextureName(m_Selected_Face));
@@ -1351,12 +1351,12 @@ void Face_Editor::Update_Faces()
 		p_Doc->UpdateAllViews(Enums::UpdateViews_3D);
 		App->CL_X_SelFaceList->SelFaceList_RemoveAll(App->CL_Doc->pSelFaces);
 		p_Doc->SelectAllFacesInBrushes();
-		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
+		App->CL_X_Face->Select_Face_From_Index(App->CL_Faces_Control->Selected_Face_Index);
 	}
 
 	App->CL_Ogre->RenderFrame(1);
 
-	App->CL_X_Face_Editor->m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_X_Face->Selected_Face_Index);
+	App->CL_X_Face_Editor->m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_Faces_Control->Selected_Face_Index);
 }
 
 // *************************************************************************
@@ -1433,11 +1433,11 @@ void Face_Editor::Update_Face_List(HWND hDlg)
 			Count++;
 		}
 
-		SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)App->CL_X_Face->Selected_Face_Index, (LPARAM)0);
+		SendDlgItemMessage(hDlg, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)App->CL_Faces_Control->Selected_Face_Index, (LPARAM)0);
 
 	}
 
-	m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_X_Face->Selected_Face_Index);
+	m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_Faces_Control->Selected_Face_Index);
 }
 
 // *************************************************************************
@@ -1505,7 +1505,7 @@ void Face_Editor::Change_Selection()
 	App->CL_X_Face_Editor->Update_Face_Members();
 	App->CL_X_Face_Editor->UpdateDialog(FaceDlg_Hwnd);
 
-	SendDlgItemMessage(FaceDlg_Hwnd, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)App->CL_X_Face->Selected_Face_Index, (LPARAM)0);
+	SendDlgItemMessage(FaceDlg_Hwnd, IDC_LST_FACELIST, LB_SETCURSEL, (WPARAM)App->CL_Faces_Control->Selected_Face_Index, (LPARAM)0);
 }
 
 // *************************************************************************

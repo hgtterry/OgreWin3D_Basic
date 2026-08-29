@@ -385,7 +385,7 @@ int CL64_Picking::Get_Brush_Index()
     App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
 
     // Select Face Show Face Panel
-    App->CL_X_Face->Selected_Face_Index = m_Main_Face -1;
+    App->CL_Faces_Control->Selected_Face_Index = m_Main_Face -1;
     App->CL_Faces_Control->Select_Face();
 
     // Show Brush Selection and Face Selection Outlines
