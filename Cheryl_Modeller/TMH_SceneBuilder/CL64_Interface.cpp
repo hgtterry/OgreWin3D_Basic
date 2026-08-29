@@ -32,6 +32,7 @@ CL64_Interface::CL64_Interface()
 	Materials_Dlg_Active = false;
 	Motions_Dlg_Active = false;
 	Textures_Dlg_Assimp_Active = false;
+	flag_Faces_Con_Dlg_Active = false;
 
 	flag_Tab_Texture = true;
 	flag_Tab_Templates = false;
@@ -433,11 +434,12 @@ void CL64_Interface::Show_TopTabs_Brushes_Panel(bool show)
 }
 
 // *************************************************************************
-// *	Show_TopTabs_Faces_Panel:- Terry and Hazel Flanigan 2026		   *
+// *	Show_Faces_Panel_Control:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Interface::Show_TopTabs_Faces_Panel(bool show)
+void CL64_Interface::Show_Faces_Panel_Control(bool show)
 {
 	ShowWindow(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, show);
+	flag_Faces_Con_Dlg_Active = show;
 }
 
 // *************************************************************************
@@ -454,7 +456,7 @@ void CL64_Interface::Enable_TopTabs_Brushes_Buttons(bool option)
 		IDC_BT_TT_BRUSH_MOVE,
 		IDC_BT_TT_BRUSH_SCALE,
 		IDC_BT_TT_BRUSH_ROTATE,
-		IDC_BT_TT_BRUSH_SHEAR
+		IDC_BT_TT_BRUSH_SHEAR,
 	};
 
 	// Iterate through the button IDs and set their enabled state
@@ -469,6 +471,8 @@ void CL64_Interface::Enable_TopTabs_Brushes_Buttons(bool option)
 // *************************************************************************
 void CL64_Interface::Enable_TopTabs_Faces_Buttons(bool option)
 {
+	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_FACESCON), option);
+
 	auto& Win_hWnd = App->CL_Faces_Control->Faces_Control_Dlg_hWnd;
 
 	// Array of button IDs to enable or disable
@@ -492,6 +496,8 @@ void CL64_Interface::Enable_TopTabs_Faces_Buttons(bool option)
 // *************************************************************************
 void CL64_Interface::Enable_TopTabs_Buttons(bool option)
 {
+	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_FACESCON), option);
+
 	auto& Win_hWnd = App->CL_Faces_Control->Faces_Control_Dlg_hWnd;
 
 	// Array of button IDs to enable or disable
@@ -501,6 +507,7 @@ void CL64_Interface::Enable_TopTabs_Buttons(bool option)
 		IDC_BT_TT_FACE_NEXT,
 		IDC_BT_TT_FACE_PREV,
 		IDC_TT_CB_FACES
+		//IDC_BT_FACESCON
 	};
 
 	// Iterate through the button IDs and set their enabled state
@@ -519,6 +526,7 @@ void CL64_Interface::Enable_TopTabs_Buttons(bool option)
 		IDC_BT_TT_BRUSH_SCALE,
 		IDC_BT_TT_BRUSH_ROTATE,
 		IDC_BT_TT_BRUSH_SHEAR
+		//IDC_BT_FACESCON
 	};
 
 	// Iterate through the button IDs and set their enabled state

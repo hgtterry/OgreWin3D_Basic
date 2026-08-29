@@ -295,6 +295,8 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BT_TOP_RIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BOTTOM_LEFT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_BT_FACESCON, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_3DVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MAPVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -488,6 +490,23 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_FACESCON)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FACESCON));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Interface->flag_Faces_Con_Dlg_Active);
+			}
+
+			return CDRF_DODEFAULT;
+		}
+		
 		/*if (some_item->idFrom == IDC_BT_HELP)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -718,7 +737,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		if (LOWORD(wParam) == IDC_BT_3DVIEW)
 		{
 			App->CL_Interface->Show_TopTabs_Brushes_Panel(false);
-			App->CL_Interface->Show_TopTabs_Faces_Panel(false);
+			App->CL_Interface->Show_Faces_Panel_Control(false);
 			App->CL_Editor_Control->Set_3DEditor_View();
 			return TRUE;
 		}
@@ -772,6 +791,21 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_FACESCON)
+		{
+			if (App->CL_Interface->flag_Faces_Con_Dlg_Active == true)
+			{
+				App->CL_Interface->Show_Faces_Panel_Control(false);
+				App->CL_Interface->flag_Faces_Con_Dlg_Active = false;
+			}
+			else
+			{
+				App->CL_Interface->Show_Faces_Panel_Control(true);
+				App->CL_Interface->flag_Faces_Con_Dlg_Active = true;
+			}
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_HELP)
 		{
 			App->Open_HTML((LPSTR)"Help\\Top_Bar_Map.html");
@@ -910,7 +944,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs_Brushes(HWND hDlg, UINT message, W
 		if (LOWORD(wParam) == IDC_BT_TT_BRUSH_SELECT)
 		{
 			App->CL_Interface->Unselect_Brush_And_Set_Dlgs();
-			App->CL_Interface->Show_TopTabs_Faces_Panel(false);
+			App->CL_Interface->Show_Faces_Panel_Control(false);
 			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 			return TRUE;

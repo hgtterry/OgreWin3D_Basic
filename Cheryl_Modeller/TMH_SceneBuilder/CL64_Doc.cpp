@@ -535,7 +535,7 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 
             // Enable top tabs buttons in the interface
             App->CL_Interface->Enable_TopTabs_Buttons(true);
-            App->CL_Interface->Show_TopTabs_Faces_Panel(true);
+            App->CL_Interface->Show_Faces_Panel_Control(true);
         }
     }
 }

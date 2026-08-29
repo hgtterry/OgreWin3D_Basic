@@ -49,7 +49,7 @@ CL64_Faces_Control::~CL64_Faces_Control(void)
 void CL64_Faces_Control::Start_Faces_Control_Dlg()
 {
 	Faces_Control_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_FACES, App->MainHwnd, (DLGPROC)Proc_Top_Tabs_Faces);
-	App->CL_Interface->Show_TopTabs_Faces_Panel(false);
+	App->CL_Interface->Show_Faces_Panel_Control(false);
 }
 
 // **************************************************************************

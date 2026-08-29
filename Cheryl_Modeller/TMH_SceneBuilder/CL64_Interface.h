@@ -62,7 +62,7 @@ public:
 
 	// Top Tabs brush panel optins
 	void Show_TopTabs_Brushes_Panel(bool Show);
-	void Show_TopTabs_Faces_Panel(bool show);
+	void Show_Faces_Panel_Control(bool show);
 	void Enable_TopTabs_Brushes_Buttons(bool option);
 	void Enable_TopTabs_Faces_Buttons(bool option);
 	void Enable_TopTabs_Buttons(bool option);
@@ -84,5 +84,6 @@ public:
 	bool Motions_Dlg_Active;
 	bool Textures_Dlg_Assimp_Active;
 	bool flag_Grids_Are_Visible;
+	bool flag_Faces_Con_Dlg_Active;
 };
 
