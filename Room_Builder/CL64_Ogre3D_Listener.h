@@ -77,5 +77,6 @@ public:
 
 	bool flag_StopOgre;
 	bool flag_Run_Physics;
+	bool flag_Run_Imgui;
 };
 

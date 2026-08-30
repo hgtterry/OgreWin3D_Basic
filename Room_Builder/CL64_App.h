@@ -128,6 +128,7 @@ THE SOFTWARE.
 #include "CL64_Interface.h"
 
 #include "CL64_Faces_Control.h"
+#include "CL64_ImGui_System_Data.h"
 
 class CL64_App
 {
@@ -189,6 +190,7 @@ public:
 	CL64_ImGui*					CL_ImGui;
 	CL64_ImGui_Dialogs*			CL_ImGui_Dialogs;
 	CL64_ImGui_Editor*			CL_ImGui_Editor;
+	CL64_ImGui_System_Data*		CL_ImGui_System_Data;
 	CL64_TXL_Editor*			CL_TXL_Editor;
 	CL64_Textures*				CL_Textures;
 	CL64_Resources*				CL_Resources;

@@ -53,6 +53,7 @@ CL64_Ogre3D_Listener::CL64_Ogre3D_Listener()
 
 	flag_StopOgre = false;
 	flag_Run_Physics = false;
+	flag_Run_Imgui = true;
 }
 
 CL64_Ogre3D_Listener::~CL64_Ogre3D_Listener()
@@ -74,8 +75,11 @@ bool CL64_Ogre3D_Listener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool CL64_Ogre3D_Listener::frameRenderingQueued(const FrameEvent& evt)
 {
-	Ogre::ImGuiOverlay::NewFrame();
-	App->CL_ImGui->ImGui_Render_Loop();
+	if (flag_Run_Imgui == true)
+	{
+		Ogre::ImGuiOverlay::NewFrame();
+		App->CL_ImGui->ImGui_Render_Loop();
+	}
 
 	
 	if (App->CL_Physics->flag_TriMesh_Created == 1)

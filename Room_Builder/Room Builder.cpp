@@ -185,7 +185,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Parse the menu selections:
             switch (wmId)
             {
-
+            case ID_SYSTEM_DATA:
+            {
+                App->CL_ImGui_System_Data->Start_Ogre_Window();
+                return 1;
+            }
+              
             // ----------------------------- Debug
 			case ID_DEBUG_GENERAL:
 			{ 

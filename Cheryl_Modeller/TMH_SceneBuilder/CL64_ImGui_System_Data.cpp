@@ -691,9 +691,9 @@ void CL64_ImGui_System_Data::Data_File(void)
 	
 }
 
-// *************************************************************************
-// *				Data_Prefs:- Terry and Hazel Flanigan 2026			   *
-// *************************************************************************
+// ************************************************************************
+// *				Data_Prefs:- Terry and Hazel Flanigan 2026			   
+// ************************************************************************
 void CL64_ImGui_System_Data::Data_Prefs(void)
 {
 	ImGui::Text("Lib Version %s", App->CL_Libs->CL_Preference->GetVersion());
@@ -703,9 +703,11 @@ void CL64_ImGui_System_Data::Data_Prefs(void)
 
 }
 
-// *************************************************************************
-// *				Listener:- Terry and Hazel Flanigan 2026			   *
-// *************************************************************************
+// ************************************************************************
+// *
+// *		CL64_ImGui_Sytem_Listener:- Terry and Hazel Flanigan 2026			   
+// *
+// ************************************************************************
 CL64_ImGui_Sytem_Listener::CL64_ImGui_Sytem_Listener(void)
 {
 
@@ -717,7 +719,7 @@ CL64_ImGui_Sytem_Listener::~CL64_ImGui_Sytem_Listener(void)
 }
 
 // *************************************************************************
-// *				frameStarted   Terry Bernie							   *
+// *				frameStarted:- Terry and Hazel Flanigan 2026
 // *************************************************************************
 bool CL64_ImGui_Sytem_Listener::frameStarted(const Ogre::FrameEvent& evt)
 {
@@ -726,7 +728,7 @@ bool CL64_ImGui_Sytem_Listener::frameStarted(const Ogre::FrameEvent& evt)
 
 
 // *************************************************************************
-// *			frameRenderingQueued   Terry Bernie						   *
+// *			frameRenderingQueued:- Terry and Hazel Flanigan 2026
 // *************************************************************************
 bool CL64_ImGui_Sytem_Listener::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
