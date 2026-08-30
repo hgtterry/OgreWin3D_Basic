@@ -393,9 +393,10 @@ void CL64_Doc::Redraw_Grid_Views()
 void CL64_Doc::Update3DView()
 {
     int brushCount = App->CL_X_Brush->Get_Brush_Count();
+
     if (brushCount > 0)
     {
-        App->CL_Mesh_Mgr->Rebuild_3D_Model();
+       App->CL_Mesh_Mgr->Rebuild_3D_Model();
     }
     else
     {

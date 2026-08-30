@@ -66,7 +66,7 @@ private:
 	void Close_OgreWindow(void);
 
 	void Data_Camera(void);
-	void Data_Editor(void);
+	void Data_Player(void);
 	void Data_Model(void);
 	void Data_Grids(void);
 	void Data_File(void);

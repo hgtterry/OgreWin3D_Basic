@@ -207,7 +207,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     App->CL_ImGui_Editor->flag_Show_Visuals = true;
                 }*/
 
-                App->CL_File->Start_Load(true);
+                //App->CL_File->Start_Load(true);
+                App->CL_Com_Player->Delete_Player();
 
 				return 1;
 			}
@@ -301,6 +302,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
             
             // ----------------------------- File
+            case ID_FILE_NEWSCENE:
+            {
+                App->CL_Scene->Clear_Level(false);
+                return 1;
+            }
+
             case ID_FILE_OPEN:
             {
                 App->CL_File->Start_Load(true);

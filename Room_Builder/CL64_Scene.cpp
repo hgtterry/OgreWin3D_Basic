@@ -245,4 +245,25 @@ void CL64_Scene::Clear_Level(bool FromFile)
 		App->CL_Camera->Reset_View_Editor();
 
 	}
+
+	App->CL_Scene->GroupCount = 0;
+
+	if (App->CL_Mesh_Mgr->World_Ent)
+	{
+		App->CL_Mesh_Mgr->World_Node->detachAllObjects();
+
+		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Mesh_Mgr->World_Node);
+
+		App->CL_Ogre->mSceneMgr->destroyEntity(App->CL_Mesh_Mgr->World_Ent);
+
+		App->CL_Mesh_Mgr->World_Node = nullptr;
+		App->CL_Mesh_Mgr->World_Ent = nullptr;
+
+	}
+
+	char DefaultWad[MAX_PATH];
+	strcpy(DefaultWad, App->RB_Directory_FullPath);
+	strcat(DefaultWad, "\\Data\\Room_Builder\\Default.zip");
+	App->CL_Doc->Load_Wad_File(DefaultWad); // Needs Ogre at the Moment
+
 }

@@ -129,6 +129,19 @@ void CL64_Com_Player::Create_New_Player(const char* Name, bool From_File)
 }
 
 // *************************************************************************
+// *		 	Delete_Player:- Terry and Hazel Flanigan 2026			   
+// *************************************************************************
+void CL64_Com_Player::Delete_Player()
+{
+	App->CL_Scene->Player_Count = 0;
+	App->CL_Scene->flag_Player_Added = false;
+
+	delete App->CL_Scene->B_Player[0];
+	App->CL_Scene->B_Player[0] = nullptr;
+	
+}
+
+// *************************************************************************
 // *	  			Initialize:- Terry and Hazel Flanigan 2024			   *
 // *************************************************************************
 void CL64_Com_Player::Initialize(Base_Player* p_Player) const

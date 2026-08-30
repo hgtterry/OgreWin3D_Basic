@@ -560,6 +560,7 @@
 #define ID_OPENEXAMPLES_BIGSCENE        32846
 #define ID_SYSTEM                       32847
 #define ID_SYSTEM_DATA                  32848
+#define ID_FILE_NEWSCENE                32849
 #define ID_GENERALSELECT                32886
 #define ID_TOOLS_TEMPLATE               32910
 #define IDC_STATIC                      -1
@@ -570,7 +571,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        203
-#define _APS_NEXT_COMMAND_VALUE         32849
+#define _APS_NEXT_COMMAND_VALUE         32850
 #define _APS_NEXT_CONTROL_VALUE         1346
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

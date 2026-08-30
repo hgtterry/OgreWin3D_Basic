@@ -30,7 +30,7 @@ THE SOFTWARE.
 enum System_Page
 {
 	System_Page_Camera = 0,
-	System_Page_Data = 1,
+	System_Page_Player = 1,
 	System_Page_Model = 2,
 	System_Page_Grids = 3,
 	System_Page_File = 4,
@@ -39,7 +39,7 @@ enum System_Page
 
 CL64_ImGui_System_Data::CL64_ImGui_System_Data()
 {
-	Selected_System_Page = System_Page_Prefs;
+	Selected_System_Page = System_Page_Player;
 	flag_Dark_Mode = false;
 
 	flag_System_Viewer_Active = false;
@@ -337,9 +337,9 @@ void CL64_ImGui_System_Data::Imgui_System_Dlg(void)
 			Selected_System_Page = System_Page_Camera;
 		}
 
-		if (ImGui::Button(" Editor ", ImVec2(100, 0)))
+		if (ImGui::Button(" Player ", ImVec2(100, 0)))
 		{
-			Selected_System_Page = System_Page_Data;
+			Selected_System_Page = System_Page_Player;
 		}
 
 		if (ImGui::Button(" Model ", ImVec2(100, 0)))
@@ -374,12 +374,12 @@ void CL64_ImGui_System_Data::Imgui_System_Dlg(void)
 			break;
 		}
 
-		case System_Page_Data:
+		case System_Page_Player:
 		{
 			ImGui::NextColumn();
 			ImGui::AlignTextToFramePadding();
 			ImGui::Text("Editor:");
-			Data_Editor();
+			Data_Player();
 			break;
 		}
 
@@ -473,47 +473,51 @@ void CL64_ImGui_System_Data::Data_Camera(void)
 }
 
 // *************************************************************************
-// *				Data_Editor:- Terry and Hazel Flanigan 2026			   *
+// *				Data_Player:- Terry and Hazel Flanigan 2026			   
 // *************************************************************************
-void CL64_ImGui_System_Data::Data_Editor(void)
+void CL64_ImGui_System_Data::Data_Player(void)
 {
 	char Buff[MAX_PATH];
 
-	/*switch (App->CL_Editor_Control->Editor_Mode) 
+	if (App->CL_Scene->flag_Player_Added == true)
 	{
-	case Enums::Editor_Mode_None:
-		strcpy(Buff, "  -- Editor Not Set -- ");
-		break;
-	case Enums::Editor_Mode_Import_Model:
-		strcpy(Buff, "  -- Mode Import Model -- ");
-		break;
-	case Enums::Editor_Mode_Design_Model:
-		strcpy(Buff, "  -- Mode Design Model -- ");
-		break;
-	default:
-		strcpy(Buff, "Unknown Model Mode");
-		break;
-	}*/
-
-	ImGui::Text("Editor Mode %s", Buff);
-
-	ImGui::Text("Dark Mode:");
-	ImGui::SameLine();
-	int test = ImGui::Checkbox("##DarkMode", &flag_Dark_Mode);
-	if (test == 1)
+		strcpy(Buff, "  -- Yes -- ");
+	}
+	else
 	{
-		if (flag_Dark_Mode == true)
-		{
-			//App->CL_Interface->flag_Dark_Mode = true;
-			RedrawWindow(App->MainHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		}
-		else
-		{
-			//App->CL_Interface->flag_Dark_Mode = false;
-			RedrawWindow(App->MainHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		}
+		strcpy(Buff, "  -- No --");
 	}
 
+	ImGui::Text("Player Added %s", Buff);
+
+	ImGui::Text("Player Count %i", App->CL_Scene->Player_Count);
+
+	if (App->CL_Scene->flag_Player_Added == true)
+	{
+		ImGui::Text("Player Name %s", App->CL_Scene->B_Player[0]->Player_Name);
+	}
+
+	ImGui::Text(" ");
+
+	ImGui::Text("Group Count %i", App->CL_Scene->GroupCount);
+
+	ImGui::Text(" ");
+
+	if (App->CL_Mesh_Mgr->World_Ent)
+	{
+		strcpy(Buff, "  -- Loaded -- ");
+	}
+	else
+	{
+		strcpy(Buff, "  -- Nothing --");
+	}
+
+	ImGui::Text("World Entity %s", Buff);
+
+	ImGui::Text(" ");
+	ImGui::TextWrapped("TXL Path %s", App->CL_Level->TXL_PathAndFile);
+
+	//ImGui::Text("Editor Mode %s", Buff);
 }
 
 // *************************************************************************

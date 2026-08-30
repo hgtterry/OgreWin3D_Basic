@@ -325,6 +325,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 		App->CL_Mesh_Mgr->World_Ent = nullptr;
 	}
 
+	
 	if (Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->CL_Ogre->World_Resource_Group))
 	{
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CL_Ogre->World_Resource_Group);
@@ -332,7 +333,7 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CL_Ogre->World_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CL_Ogre->World_Resource_Group);
-
+	
 	Set_World_Paths();
 
 	CreateMaterialFile();
@@ -361,13 +362,13 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 	int FaceCount = 0;
 	int FaceIndex = 0;
 	m_Total_Faces = 0;
-
+	
 	if (App->CL_Scene->GroupCount == 0)
 	{
 		App->Say("No Groups");
 		return;
 	}
-
+	
 	while (Count < GroupCountTotal)
 	{
 		_itoa(Count, MaterialNumber, 10);
@@ -458,10 +459,10 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	char BufPath[MAX_PATH];
 	strcpy(BufPath, App->CL_Level->TXL_PathAndFile);
-	//strcat(BufPath, "\\Data\\Room_Builder\\Default.zip");
-
+	
 	if (App->CL_Mesh_Mgr->World_Ent)
 	{
+		App->Say("1");
 		App->CL_Mesh_Mgr->World_Node->detachAllObjects();
 
 		App->CL_Ogre->mSceneMgr->destroySceneNode(App->CL_Mesh_Mgr->World_Node);
@@ -486,7 +487,6 @@ void CL64_Ogre3D::Convert_ToOgre3D(bool Create)
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(BufPath, "Zip", App->CL_Ogre->World_Resource_Group);
 	}
 
-	
 	App->CL_Mesh_Mgr->World_Ent = App->CL_Ogre->mSceneMgr->createEntity(Name);
 	App->CL_Mesh_Mgr->World_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 

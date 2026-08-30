@@ -33,7 +33,8 @@ public:
 	void Reset_Class(void);
 
 	void Create_New_Player(const char* Name, bool From_File);
-	
+	void Delete_Player();
+
 	void Show_Player_And_Physics(bool Show);
 	void Show_Player_Physics(bool Show);
 	void Adjust_Capsule(void);

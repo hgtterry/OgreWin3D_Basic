@@ -241,7 +241,7 @@ void CL64_Properties_Templates::Insert_Template()
 		{
 			App->CL_Project->flag_Is_New_Project = true;
 			App->CL_Doc->AddBrushToWorld();
-
+			
 			// Create Player if none exists
 			if (App->CL_Scene->Player_Count == 0)
 			{
@@ -275,7 +275,6 @@ void CL64_Properties_Templates::Insert_Template()
 			// Update file view with new names
 			App->CL_FileView->Change_Level_Name();
 			App->CL_FileView->Change_Project_Name();
-
 			App->CL_Editor_Control->Set_Map_Editor_Startup();
 
 			App->CL_Level->flag_File_Been_Saved = false;
@@ -291,17 +290,18 @@ void CL64_Properties_Templates::Insert_Template()
 		}
 	}
 
+	
 	App->CL_Doc->Set_Faces_To_Brush_Name_All();
 	App->CL_X_Brush->Brush_Lock_Textures(App->CL_Doc->CurBrush, true);
-
+	
 	if (FirstRoom == true) // New Scene
 	{
 		Brush* Temp = App->CL_Brush_X->Get_Brush_By_Name(LastCreated_ShapeName);
 		App->CL_Doc->CurBrush = Temp;
 	}
-
+	
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
-
+	
 	App->CL_Doc->Do_General_Select_Dlg(true);
 
 	App->CL_Doc->mCurrentTool = CURTOOL_NONE;

@@ -139,7 +139,6 @@ bool CL64_Mesh_Mgr::update_world(const bool selected)
 	{
 		Brush_Build_List(selected);
 		WE_Convert_All_Texture_Groups();
-
 		if (App->CL_Ogre->OGL_Listener->flag_Render_Groups == 0)
 		{
 			if (App->CL_Scene->GroupCount > 0)
