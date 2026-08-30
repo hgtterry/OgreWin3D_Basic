@@ -90,7 +90,7 @@ public:
 	CL64_File_IO*				CL_File_IO;
 	CL64_ImGui*					CL_ImGui;
 	CL64_ImGui_Dialogs*			CL_ImGui_Dialogs;
-	CL64_ImGui_Editor*			CL_ImGui_Editor;
+	CL64_ImGui_System_Data*		CL_ImGui_System_Data;
 	CL64_TXL_Editor*			CL_TXL_Editor;
 	CL64_Textures*				CL_Textures;
 	CL64_Resources*				CL_Resources;

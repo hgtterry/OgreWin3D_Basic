@@ -23,11 +23,11 @@ THE SOFTWARE.
 */
 
 #pragma once
-class CL64_ImGui_Editor
+class CL64_ImGui_System_Data
 {
 public:
-	CL64_ImGui_Editor();
-	~CL64_ImGui_Editor();
+	CL64_ImGui_System_Data();
+	~CL64_ImGui_System_Data();
 
 	void ImGui_Render_Loop(void);
 

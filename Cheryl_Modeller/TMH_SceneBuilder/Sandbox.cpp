@@ -514,7 +514,7 @@ LRESULT CALLBACK Sandbox::Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam,
 		GetCursorPos(&pos);
 		ScreenToClient(App->CL_Sandbox->Render_hWnd, &pos);
 
-		if (App->CL_ImGui->flag_Imgui_Initialized == true && App->CL_ImGui_Editor->flag_Show_System_Data == true)
+		if (App->CL_ImGui->flag_Imgui_Initialized == true && App->CL_ImGui_System_Data->flag_Show_System_Data == true)
 		{
 			ImGuiIO& io = ImGui::GetIO();
 			io.MousePos.x = static_cast<float>(pos.x);
@@ -599,8 +599,8 @@ void Sandbox::Set_OgreWindow()
 	RenderListener = new Ogre_Win_Render_Listener();
 	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
 
-	App->CL_ImGui_Editor->flag_Loop_Enabled = true;
-	App->CL_ImGui_Editor->flag_Show_System_Data = true;
+	App->CL_ImGui_System_Data->flag_Loop_Enabled = true;
+	App->CL_ImGui_System_Data->flag_Show_System_Data = true;
 
 }
 
@@ -620,8 +620,8 @@ void Sandbox::Close_OgreWindow(void)
 	delete RenderListener;
 	RenderListener = nullptr;
 
-	App->CL_ImGui_Editor->flag_Loop_Enabled = true;
-	App->CL_ImGui_Editor->flag_Show_System_Data = false;
+	App->CL_ImGui_System_Data->flag_Loop_Enabled = true;
+	App->CL_ImGui_System_Data->flag_Show_System_Data = false;
 
 	App->CL_Ogre->vp->setOverlaysEnabled(true);
 	App->CL_Ogre->Listener_3D->flag_Run_Imgui = true;

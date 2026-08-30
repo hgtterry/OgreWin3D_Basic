@@ -175,7 +175,7 @@
     <ClInclude Include="CL64_Gizmos.h" />
     <ClInclude Include="CL64_ImGui.h" />
     <ClInclude Include="CL64_ImGui_Dialogs.h" />
-    <ClInclude Include="CL64_ImGui_Editor.h" />
+    <ClInclude Include="CL64_ImGui_System_Data.h" />
     <ClInclude Include="CL64_Importers.h" />
     <ClInclude Include="CL64_Interface.h" />
     <ClInclude Include="CL64_Keyboard.h" />
@@ -243,7 +243,7 @@
     <ClCompile Include="CL64_Gizmos.cpp" />
     <ClCompile Include="CL64_ImGui.cpp" />
     <ClCompile Include="CL64_ImGui_Dialogs.cpp" />
-    <ClCompile Include="CL64_ImGui_Editor.cpp" />
+    <ClCompile Include="CL64_ImGui_System_Data.cpp" />
     <ClCompile Include="CL64_Importers.cpp" />
     <ClCompile Include="CL64_Interface.cpp" />
     <ClCompile Include="CL64_Keyboard.cpp" />

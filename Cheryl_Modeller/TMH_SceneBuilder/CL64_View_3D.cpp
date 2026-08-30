@@ -226,7 +226,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_3D_Window(HWND hDlg, UINT message, WPARAM wP
 		GetCursorPos(&pos);
 		ScreenToClient(App->CL_View_3D->RenderWin3D_hWnd, &pos);
 
-		if (App->CL_ImGui->flag_Imgui_Initialized == true && App->CL_ImGui_Editor->flag_Show_System_Data == false)
+		if (App->CL_ImGui->flag_Imgui_Initialized == true && App->CL_ImGui_System_Data->flag_Show_System_Data == false)
 		{
 			ImGuiIO& io = ImGui::GetIO();
 			io.MousePos.x = static_cast<float>(pos.x);
@@ -250,7 +250,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_3D_Window(HWND hDlg, UINT message, WPARAM wP
 			p_Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 		}
 
-		if (App->CL_ImGui_Editor->flag_Show_System_Data == false)
+		if (App->CL_ImGui_System_Data->flag_Show_System_Data == false)
 		{
 			ImGuiIO& io = ImGui::GetIO();
 			io.MouseDown[0] = true;
@@ -260,7 +260,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_3D_Window(HWND hDlg, UINT message, WPARAM wP
 		{
 			if (App->flag_Block_Mouse_Buttons == false)
 			{
-				if (App->CL_ImGui_Editor->flag_Show_System_Data == true)
+				if (App->CL_ImGui_System_Data->flag_Show_System_Data == true)
 				{
 					POINT p;
 					GetCursorPos(&p);
@@ -311,7 +311,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_3D_Window(HWND hDlg, UINT message, WPARAM wP
 	// Left Mouse Up
 	case WM_LBUTTONUP:
 	{
-		if (App->CL_ImGui_Editor->flag_Show_System_Data == false)
+		if (App->CL_ImGui_System_Data->flag_Show_System_Data == false)
 		{
 			ImGuiIO& io = ImGui::GetIO();
 			io.MouseDown[0] = false;

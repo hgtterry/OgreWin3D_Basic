@@ -84,7 +84,7 @@ CL64_App::CL64_App(void)
 	CL_File_IO =				nullptr;
 	CL_ImGui =					nullptr;
 	CL_ImGui_Dialogs =			nullptr;
-	CL_ImGui_Editor =			nullptr;
+	CL_ImGui_System_Data =		nullptr;
 	CL_TXL_Editor =				nullptr;
 	CL_Textures =				nullptr;
 	CL_Resources =				nullptr;
@@ -291,7 +291,7 @@ void CL64_App::InitApp(void)
 	CL_File_IO =				new CL64_File_IO();
 	CL_ImGui =					new CL64_ImGui();
 	CL_ImGui_Dialogs =			new CL64_ImGui_Dialogs();
-	CL_ImGui_Editor =			new CL64_ImGui_Editor();
+	CL_ImGui_System_Data =		new CL64_ImGui_System_Data();
 	CL_TXL_Editor =				new CL64_TXL_Editor();
 	CL_Textures =				new CL64_Textures();
 	CL_Resources =				new CL64_Resources();

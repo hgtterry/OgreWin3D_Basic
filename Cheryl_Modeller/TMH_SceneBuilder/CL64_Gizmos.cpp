@@ -624,7 +624,7 @@ void CL64_Gizmos::highlight(Ogre::Entity* entity)
 	}
 
 	App->CL_Props_Dialogs->flag_isHighlighted = true;
-	App->CL_ImGui_Editor->flag_Object_Highlighted = true;
+	App->CL_ImGui_System_Data->flag_Object_Highlighted = true;
 }
 
 // **************************************************************************
@@ -652,7 +652,7 @@ void CL64_Gizmos::unhighlight(Ogre::Entity* entity)
 	}
 
 	App->CL_Props_Dialogs->flag_isHighlighted = false;
-	App->CL_ImGui_Editor->flag_Object_Highlighted = false;
+	App->CL_ImGui_System_Data->flag_Object_Highlighted = false;
 }
 
 // *************************************************************************

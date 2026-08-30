@@ -81,7 +81,7 @@ THE SOFTWARE.
 #include "CL64_File_IO.h"
 #include "CL64_ImGui.h"
 #include "CL64_ImGui_Dialogs.h"
-#include "CL64_ImGui_Editor.h"
+#include "CL64_ImGui_System_Data.h"
 #include "CL64_TXL_Editor.h"
 #include "CL64_Textures.h"
 #include "CL64_Resources.h"

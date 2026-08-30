@@ -138,9 +138,6 @@
     <ClInclude Include="CL64_Editor_Control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_ImGui_Editor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_Render_Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -214,6 +211,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CL64_Brushes_Control.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CL64_ImGui_System_Data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -335,9 +335,6 @@
     <ClCompile Include="CL64_Editor_Control.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CL64_ImGui_Editor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CL64_Render_Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -408,6 +405,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Brushes_Control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_ImGui_System_Data.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

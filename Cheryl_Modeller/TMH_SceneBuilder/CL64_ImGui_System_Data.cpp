@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "pch.h"
 #include "CL64_App.h"
-#include "CL64_ImGui_Editor.h"
+#include "CL64_ImGui_System_Data.h"
 
 enum System_Page
 {
@@ -36,7 +36,7 @@ enum System_Page
 	System_Page_Prefs = 5
 };
 
-CL64_ImGui_Editor::CL64_ImGui_Editor()
+CL64_ImGui_System_Data::CL64_ImGui_System_Data()
 {
 	Selected_System_Page = System_Page_Prefs;
 
@@ -65,14 +65,14 @@ CL64_ImGui_Editor::CL64_ImGui_Editor()
 	flag_Show_System_Data = false;
 }
 
-CL64_ImGui_Editor::~CL64_ImGui_Editor()
+CL64_ImGui_System_Data::~CL64_ImGui_System_Data()
 {
 }
 
 // *************************************************************************
 // *			Selected_Button:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
-void CL64_ImGui_Editor::Selected_Button(bool IsSelected)
+void CL64_ImGui_System_Data::Selected_Button(bool IsSelected)
 {
 	ImGuiStyle* style = &ImGui::GetStyle();
 
@@ -89,7 +89,7 @@ void CL64_ImGui_Editor::Selected_Button(bool IsSelected)
 // **************************************************************************
 // *			ImGui_Render_Loop:- Terry and Hazel Flanigan 2026			*
 // **************************************************************************
-void CL64_ImGui_Editor::ImGui_Render_Loop(void)
+void CL64_ImGui_System_Data::ImGui_Render_Loop(void)
 {
 	if (flag_Loop_Enabled == true)
 	{
@@ -104,7 +104,7 @@ void CL64_ImGui_Editor::ImGui_Render_Loop(void)
 // *************************************************************************
 // *			Imgui_System_Dlg:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_ImGui_Editor::Imgui_System_Dlg(void)
+void CL64_ImGui_System_Data::Imgui_System_Dlg(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 	ImGui::SetNextWindowSize(ImVec2(550, 620));
@@ -234,7 +234,7 @@ void CL64_ImGui_Editor::Imgui_System_Dlg(void)
 // *************************************************************************
 // *				Camera_Data:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_Editor::Camera_Data(void)
+void CL64_ImGui_System_Data::Camera_Data(void)
 {
 	char Buff[MAX_PATH];
 
@@ -270,7 +270,7 @@ void CL64_ImGui_Editor::Camera_Data(void)
 // *************************************************************************
 // *				Editor_Data:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_Editor::Editor_Data(void)
+void CL64_ImGui_System_Data::Editor_Data(void)
 {
 	char Buff[MAX_PATH];
 
@@ -314,7 +314,7 @@ void CL64_ImGui_Editor::Editor_Data(void)
 // *************************************************************************
 // *				Model_Data:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_Editor::Model_Data(void)
+void CL64_ImGui_System_Data::Model_Data(void)
 {
 	char Buff[MAX_PATH];
 	
@@ -403,7 +403,7 @@ void CL64_ImGui_Editor::Model_Data(void)
 // *************************************************************************
 // *				Grids_Data:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_Editor::Grids_Data(void)
+void CL64_ImGui_System_Data::Grids_Data(void)
 {
 	char Buff[MAX_PATH];
 
@@ -462,7 +462,7 @@ void CL64_ImGui_Editor::Grids_Data(void)
 // *************************************************************************
 // *				File_Data:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_Editor::File_Data(void)
+void CL64_ImGui_System_Data::File_Data(void)
 {
 	ImGui::Text("File Version %f", App->CL_Level->Level_Version);
 	ImGui::Text(" ");
@@ -489,7 +489,7 @@ void CL64_ImGui_Editor::File_Data(void)
 // *************************************************************************
 // *				Prefs_Data:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_Editor::Prefs_Data(void)
+void CL64_ImGui_System_Data::Prefs_Data(void)
 {
 	ImGui::Text("Lib Version %s", App->CL_Libs->CL_Preference->GetVersion());
 	
