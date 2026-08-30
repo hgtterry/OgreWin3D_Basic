@@ -36,9 +36,12 @@ public:
 	void Show_Materials_Dialog(bool Show);
 	void Show_TemplatesDialog(bool Show);
 
+	void Show_Faces_Panel_Control(bool show);
+	void Position_Face_Options_Dlg(void);
+
 	bool flag_Tab_Texture;
 	bool flag_Tab_Templates;
 	bool flag_Tab_Group;
-
+	bool flag_Faces_Con_Dlg_Active;
 };
 

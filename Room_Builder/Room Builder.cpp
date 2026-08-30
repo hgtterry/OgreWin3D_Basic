@@ -403,14 +403,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_FILE_CLEAR:
             {
-                /*App->CL_Dialogs->YesNo("Clear Editor", "Are you sure");
+                App->CL_Dialogs->YesNo("Clear Editor", "Are you sure");
 
                 if (App->CL_Dialogs->flag_Dlg_Canceled == true)
                 {
                     return 1;
                 }
 
-                App->CL_Scene->Clear_Level(false);*/
+                App->CL_Scene->Clear_Level(false);
                 return 1;
             }
 

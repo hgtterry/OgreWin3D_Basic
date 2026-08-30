@@ -600,16 +600,12 @@ void CL64_File::Set_Editor()
 	// Enable the select button and disable the insert button in the properties templates
 	App->CL_Top_Tabs->Enable_Select_Button(true, 1);
 	
-	// Deselect any selected face dialog buttons
-	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-
 	// Reset the selected face index and all selections in the document
 	App->CL_Faces_Control->Selected_Face_Index = 0;
 	App->CL_Doc->ResetAllSelections();
 
 	// Disable brush options buttons and select the templates tab
 	App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(false, false);
-	App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
 	App->CL_Properties_Tabs->Select_Templates_Tab();
 
 	// Reset the camera and views

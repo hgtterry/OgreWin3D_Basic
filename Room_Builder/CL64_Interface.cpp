@@ -31,6 +31,7 @@ CL64_Interface::CL64_Interface()
 	flag_Tab_Templates = true;
 	flag_Tab_Templates = false;
 	flag_Tab_Group = false;
+	flag_Faces_Con_Dlg_Active = false;
 }
 
 CL64_Interface::~CL64_Interface()
@@ -128,4 +129,34 @@ void CL64_Interface::Show_Materials_Dialog(bool Show)
 void CL64_Interface::Show_TemplatesDialog(bool Show)
 {
 	ShowWindow(App->CL_Properties_Templates->TemplatesDlg_Hwnd, Show);
+}
+
+// *************************************************************************
+// *	Show_Faces_Panel_Control:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Show_Faces_Panel_Control(bool show)
+{
+	ShowWindow(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, show);
+	flag_Faces_Con_Dlg_Active = show;
+}
+
+// *************************************************************************
+// *		Position_Face_Options_Dlg:- Terry and Hazel Flanigan 2026	   *
+// *************************************************************************
+void CL64_Interface::Position_Face_Options_Dlg(void)
+{
+	RECT rect;
+	GetWindowRect(App->MainHwnd, &rect);
+
+	RECT rect2;
+	GetWindowRect(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, &rect2);
+
+	int widthX = rect2.right - rect2.left;
+
+	int Pos_X = (rect.right / 2);
+
+	SetWindowPos(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, NULL,
+		Pos_X - widthX / 2, 150,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+
 }

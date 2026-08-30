@@ -241,13 +241,13 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 
 				App->CL_Doc->ResetAllSelectedFaces();
 
-				if (App->CL_Top_Tabs->flag_All_Faces == 1)
+				if (App->CL_Faces_Control->flag_All_Faces == true)
 				{
 					App->CL_Doc->SelectAllFacesInBrushes();
 				}
 				else
 				{
-					App->CL_Top_Tabs->Select_Face();
+					App->CL_Faces_Control->Select_Face();
 				}
 				
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);

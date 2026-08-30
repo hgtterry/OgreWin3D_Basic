@@ -49,11 +49,11 @@ CL64_Faces_Control::~CL64_Faces_Control(void)
 void CL64_Faces_Control::Start_Faces_Control_Dlg()
 {
 	Faces_Control_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_FACES, App->MainHwnd, (DLGPROC)Proc_Top_Tabs_Faces);
-	//App->CL_Interface->Show_Faces_Panel_Control(false);
+	App->CL_Interface->Show_Faces_Panel_Control(false);
 }
 
 // **************************************************************************
-// *		Proc_Top_Tabs_Faces:- Terry and Hazel Flanigan 2026			*
+// *		Proc_Top_Tabs_Faces:- Terry and Hazel Flanigan 2026				*
 // **************************************************************************
 LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {

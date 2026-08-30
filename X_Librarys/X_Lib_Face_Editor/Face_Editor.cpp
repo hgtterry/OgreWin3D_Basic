@@ -231,7 +231,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		sprintf(buf, "%i", m_FaceEditor->m_NumberOfFaces);
 		SetDlgItemText(hDlg, IDC_ST_NUM_FACES, (LPCTSTR)buf);
 
-		if (App->CL_Top_Tabs->flag_All_Faces == 0)
+		if (App->CL_Faces_Control->flag_All_Faces == 0)
 		{
 			m_FaceEditor->Update_Face_List(hDlg);
 		}
@@ -253,12 +253,12 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 		m_FaceEditor->Fill_ComboBox_AngleValues(hDlg);
 
-		if (App->CL_Top_Tabs->flag_All_Faces == 0)
+		if (App->CL_Faces_Control->flag_All_Faces == 0)
 		{
 			m_FaceEditor->Update_Face_Info(hDlg);
 		}
 
-		if (App->CL_Top_Tabs->flag_All_Faces == 1)
+		if (App->CL_Faces_Control->flag_All_Faces == true)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ALLFACES);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -691,7 +691,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 				App->CL_Faces_Control->Selected_Face_Index = Index;
 
-				App->CL_Top_Tabs->Select_Face();
+				App->CL_Faces_Control->Select_Face();
 				m_FaceEditor->Change_Selection();
 				m_FaceEditor->Update_Face_Info(hDlg);
 			}
@@ -848,7 +848,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		{
 			float xScale, yScale;
 
-			if (App->CL_Top_Tabs->flag_All_Faces == 1)
+			if (App->CL_Faces_Control->flag_All_Faces == true)
 			{
 				App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipHorizontal, NULL);
 			}
@@ -868,7 +868,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		{
 			float xScale, yScale;
 
-			if (App->CL_Top_Tabs->flag_All_Faces == 1)
+			if (App->CL_Faces_Control->flag_All_Faces == true)
 			{
 				App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipVertical, NULL);
 			}
@@ -1058,7 +1058,7 @@ void Face_Editor::List_Face_Data(HWND List) // TODO: proper name
 // *************************************************************************
 void Face_Editor::Update_Faces()
 {
-	if (App->CL_Top_Tabs->flag_All_Faces == true)
+	if (App->CL_Faces_Control->flag_All_Faces == true)
 	{
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
 		App->CL_Doc->SelectAllFacesInBrushes();

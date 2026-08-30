@@ -331,12 +331,10 @@ void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 		// Enable or disable face buttons based on brush group ID
 		if (b->GroupId == Enums::Brushs_ID_Area)
 		{
-			App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(true);
+			
 		}
 		else
 		{
-			App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
-			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 			App->CL_Properties_Textures->Enable_FaceProps_Button(false);
 		}
 		

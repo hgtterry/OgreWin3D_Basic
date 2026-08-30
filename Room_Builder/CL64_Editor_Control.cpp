@@ -277,7 +277,6 @@ void CL64_Editor_Control::Set_Map_Editor_Select_Dlg()
 		App->CL_Doc->Set_Tool_GeneralSelect();
 
 		App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(false, false);
-		App->CL_Top_Tabs->Enable_TopBar_Face_Buttons(false);
 		App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();

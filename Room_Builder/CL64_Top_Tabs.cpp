@@ -32,15 +32,9 @@ CL64_Top_Tabs::CL64_Top_Tabs(void)
 	TopTabs_Dlg_hWnd = nullptr;
 
 	flag_Brush_Select = true;
-
 	flag_Brush_Move = false;
 	flag_Brush_Rotate = false;
-
 	flag_Brush_Scale = false;
-
-	flag_All_Faces = false;
-	flag_Next_Face = false;
-	flag_Prev_Face = false;
 
 	flag_Full_View_3D = false;
 	flag_View_Top_Left = false;
@@ -60,8 +54,6 @@ CL64_Top_Tabs::~CL64_Top_Tabs(void)
 void CL64_Top_Tabs::Reset_Class()
 {
 	Enable_TopBar_Brush_Buttons(false, false);
-	Enable_TopBar_Face_Buttons(false);
-
 	App->CL_Top_Tabs->flag_Full_View_3D = 0;
 	App->CL_Top_Tabs->flag_View_Top_Left = 0;
 	App->CL_Top_Tabs->flag_View_Top_Right = 0;
@@ -514,8 +506,6 @@ void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
 		flag_Brush_Rotate = 1;
 	}
 	
-	Deselect_Faces_Dlg_Buttons();
-
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
@@ -600,15 +590,6 @@ void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
 }
 
 // *************************************************************************
-// *	Enable_TopBar_Face_Buttons:- Terry and Hazel Flanigan 2025   	   *
-// *************************************************************************
-void CL64_Top_Tabs::Enable_TopBar_Face_Buttons(bool Enable)
-{
-	
-	
-}
-
-// *************************************************************************
 // *		Enable_Select_Button:- Terry and Hazel Flanigan 2025   	  	   *
 // *************************************************************************
 void CL64_Top_Tabs::Enable_Select_Button(bool Enable, bool Active)
@@ -637,49 +618,6 @@ void CL64_Top_Tabs::Reset_Brush_Buttons()
 	flag_Brush_Scale = 0;
 
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-}
-
-// *************************************************************************
-// *	Deselect_Faces_Dlg_Buttons:- Terry and Hazel Flanigan 2025		   *
-// *************************************************************************
-void CL64_Top_Tabs::Deselect_Faces_Dlg_Buttons()
-{
-	flag_All_Faces = 0;
-	flag_Next_Face = 0;
-	flag_Prev_Face = 0;
-
-	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-}
-
-
-// *************************************************************************
-// *			Select_Face:- Terry and Hazel Flanigan 2025				   *
-// *************************************************************************
-void CL64_Top_Tabs::Select_Face()
-{
-	if (App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
-	{
-		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-		App->CL_Top_Tabs->flag_Next_Face = 1;
-		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-
-		App->CL_Doc->SelectAllFacesInBrushes();
-		App->CL_X_Face->Select_Face_From_Index(App->CL_Faces_Control->Selected_Face_Index);
-	}
-	else
-	{
-		App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-		App->CL_Top_Tabs->flag_Next_Face = 1;
-		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-
-		App->CL_X_Face->Select_Face_From_Index(App->CL_Faces_Control->Selected_Face_Index);
-	}
-
-	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-	App->CL_Properties_Textures->Enable_FaceProps_Button(true);
-	App->CL_Properties_Tabs->Select_Textures_Tab();
-
 }
 
 // **************************************************************************
