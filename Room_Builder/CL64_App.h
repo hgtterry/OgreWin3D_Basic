@@ -1,7 +1,7 @@
 /*
-Copyright (c) 2024 - 2025 Inflanite_HGT W.T.Flanigan H.C.Flanigan
+Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-OW3D Scene Builder
+Cheryl 3D Scene Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -127,6 +127,8 @@ THE SOFTWARE.
 #include "Timer_Debug.h"
 #include "CL64_Interface.h"
 
+#include "CL64_Faces_Control.h"
+
 class CL64_App
 {
 public:
@@ -229,6 +231,8 @@ public:
 	CL64_View_Top_Right*		CL_View_Top_Right;
 	CL64_View_Bottom_Left*		CL_View_Bottom_Left;
 	CL64_View_3D*				CL_View_3D;
+
+	CL64_Faces_Control*			CL_Faces_Control;
 
 	void InitApp(void);
 	void Init_Dialogs(void);

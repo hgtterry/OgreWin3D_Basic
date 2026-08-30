@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2024 - 2026 HGT_Software W.T.Flanigan H.C.Flanigan
 
-Cheryl Scene Builder
+Cheryl 3D Scene Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -123,6 +123,8 @@ CL64_App::CL64_App(void)
 	CL_View_Top_Right =			nullptr;
 	CL_View_Bottom_Left =		nullptr;
 	CL_View_3D =				nullptr;
+
+	CL_Faces_Control =			nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -292,6 +294,8 @@ void CL64_App::InitApp(void)
 	CL_View_Top_Right =			new CL64_View_Top_Right();
 	CL_View_Bottom_Left =		new CL64_View_Bottom_Left();
 	CL_View_3D =				new CL64_View_3D();
+
+	CL_Faces_Control =			new CL64_Faces_Control();
 
 	Set_Brushes_Fonts();
 
