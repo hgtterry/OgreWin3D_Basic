@@ -48,6 +48,7 @@ public:
 	bool flag_Brush_Select;
 	bool flag_Brush_Move;
 	bool flag_Brush_Rotate;
+	bool flag_Brush_Scale;
 
 	bool flag_Full_View_3D;
 	bool flag_View_Top_Left;
@@ -57,7 +58,6 @@ public:
 	bool flag_TopTabs_Active;
 
 	HWND TopTabs_Dlg_hWnd;
-	HWND TopTabs_Brushes_Dlg_hWnd;
 	
 private:
 	static LRESULT CALLBACK Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -65,6 +65,5 @@ private:
 	
 	void Init_Bmps_Globals(void);
 
-	bool flag_Brush_Scale;
 };
 

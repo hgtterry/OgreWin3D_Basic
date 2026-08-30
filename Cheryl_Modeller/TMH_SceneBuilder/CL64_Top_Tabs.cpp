@@ -30,8 +30,7 @@ THE SOFTWARE.
 CL64_Top_Tabs::CL64_Top_Tabs(void)
 {
 	TopTabs_Dlg_hWnd = nullptr;
-	TopTabs_Brushes_Dlg_hWnd = nullptr;
-	
+
 	flag_Brush_Select = true;
 
 	flag_Brush_Move = false;
@@ -274,9 +273,10 @@ void CL64_Top_Tabs::Start_Top_Tabs()
 
 	flag_TopTabs_Active = true;
 
-	TopTabs_Brushes_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_BRUSHES, TopTabs_Dlg_hWnd, (DLGPROC)Proc_Top_Tabs_Brushes);
+	//App->CL_Brushes_Control->Brush_Control_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_BRUSHES, TopTabs_Dlg_hWnd, (DLGPROC)Proc_Top_Tabs_Brushes);
 	App->CL_Interface->Show_TopTabs_Brushes_Panel(false);
 
+	App->CL_Brushes_Control->Start_Brushes_Control_Dlg();
 	App->CL_Faces_Control->Start_Faces_Control_Dlg();
 }
 

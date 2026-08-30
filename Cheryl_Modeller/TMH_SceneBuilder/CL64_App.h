@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CX_Cut_Brush.h"
 #include "Timer_Debug.h"
 #include "CL64_Faces_Control.h"
+#include "CL64_Brushes_Control.h"
 
 class CL64_App
 {
@@ -125,6 +126,7 @@ public:
 
 	CX_Cut_Brush*				CL_Cut_Brush;
 	CL64_Faces_Control*			CL_Faces_Control;
+	CL64_Brushes_Control*		CL_Brushes_Control;
 
 	void InitApp(void);
 	void Init_Dialogs(void);
