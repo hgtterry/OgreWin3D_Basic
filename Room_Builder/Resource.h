@@ -82,6 +82,8 @@
 #define IDD_OPTIONS                     196
 #define IDD_BOX_3D                      197
 #define IDB_HELP                        198
+#define IDD_TOP_TABS_BRUSHES            199
+#define IDD_TOP_TABS_FACES              200
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -451,14 +453,20 @@
 #define IDC_BT_HELP                     1331
 #define IDC_BT_FACEDATA                 1331
 #define IDC_BT_LIBRARIES                1331
+#define IDC_BT_FACES_NONE               1331
 #define IDC_CHECK1                      1332
 #define IDC_CK_LASTFILE                 1332
+#define IDC_BT_TT_FACES_ALL             1332
 #define IDC_BUT_AT_WORLDPOS             1333
 #define IDC_CK_SCENEEDITOR              1333
+#define IDC_BT_TT_FACE_NEXT             1333
 #define IDC_ST_STARTMODE                1334
+#define IDC_BT_TT_FACE_PREV             1334
 #define IDC_COMBO1                      1335
 #define IDC_CB_BRUSH_CAT                1335
+#define IDC_BT_FACE_FACEEDITOR          1335
 #define IDC_BT_UPDATE                   1336
+#define IDC_BT_FACE_SHOWSELECTEDFACE    1336
 #define IDC_SLDR_SCALE_X                1337
 #define IDC_ST_WSCALE                   1338
 #define IDC_SLDR_OFFSET_X               1339
@@ -470,6 +478,8 @@
 #define IDC_ST_HSCALE                   1344
 #define IDC_ST_DATETIME                 1344
 #define IDC_ST_HPOS                     1345
+#define IDC_COMBO2                      1345
+#define IDC_TT_CB_FACES                 1345
 #define IDC_ST_HPOS2                    1346
 #define IDC_ST_RANGLE                   1346
 #define ID_DEBUG_GENERAL                32771
@@ -556,9 +566,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        199
+#define _APS_NEXT_RESOURCE_VALUE        201
 #define _APS_NEXT_COMMAND_VALUE         32847
-#define _APS_NEXT_CONTROL_VALUE         1345
+#define _APS_NEXT_CONTROL_VALUE         1346
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

@@ -31,7 +31,7 @@ public:
 
 	void Reset_Class();
 
-	void Start_Headers();
+	void Start_Top_Tabs();
 	void Set_View_Buttons(int Selected_View);
 	void Redraw_TopTabs_Dlg();
 
@@ -65,7 +65,7 @@ public:
 	HWND TopTabs_Dlg_hWnd;
 
 private:
-	static LRESULT CALLBACK Proc_Headers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Init_Bmps_Globals(void);
 

@@ -28,5 +28,27 @@ class CL64_Faces_Control
 public:
 	CL64_Faces_Control(void);
 	~CL64_Faces_Control(void);
+
+	void Start_Faces_Control_Dlg();
+
+	void Unselect_All_Face();
+	void Select_All_Face();
+	void Select_Next_Face();
+	void Select_Prev_Face();
+	void Select_Face();
+	void Reset_Flags();
+
+	int Selected_Face_Index;
+
+	bool flag_No_Faces;
+	bool flag_All_Faces;
+	bool flag_Next_Face;
+	bool flag_Prev_Face;
+
+	HWND Faces_Control_Dlg_hWnd;
+
+private:
+	static LRESULT CALLBACK Proc_Top_Tabs_Faces(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 

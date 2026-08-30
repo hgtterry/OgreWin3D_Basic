@@ -73,20 +73,22 @@ void CL64_Top_Tabs::Reset_Class()
 }
 
 // *************************************************************************
-// *	  		Start_Headers:- Terry and Hazel Flanigan 2025			   *
+// *	  		Start_Top_Tabs():- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
-void CL64_Top_Tabs::Start_Headers()
+void CL64_Top_Tabs::Start_Top_Tabs()
 {
-	TopTabs_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Headers);
+	TopTabs_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Top_Tabs);
 	Update_Faces_Combo();
 
-	flag_TopTabs_Active = 1;
+	flag_TopTabs_Active = true;
+
+	App->CL_Faces_Control->Start_Faces_Control_Dlg();
 }
 
 // *************************************************************************
-// *        	Proc_Headers:- Terry and Hazel Flanigan 2025			   *
+// *        	Proc_Top_Tabs:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-LRESULT CALLBACK CL64_Top_Tabs::Proc_Headers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{

@@ -94,7 +94,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App->CL_Doc->Load_Wad_File(DefaultWad); // Needs Ogre at the Moment
    
     // Start headers and tabs
-    App->CL_Top_Tabs->Start_Headers();
+    App->CL_Top_Tabs->Start_Top_Tabs();
     App->CL_Editor_Scene->Start_Headers_Scene();
 
     App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
