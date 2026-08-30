@@ -24,8 +24,6 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "Ogre_Win_Render_Listener.h"
-
 class Sandbox
 {
 public:
@@ -34,39 +32,20 @@ public:
 
 	void Start_Colour_Mixer();
 	void Duplicate_Brush();
-	void Start_Ogre_Window();
-	void Set_OgreWindow();
-	void Close_OgreWindow(void);
 	void Test();
 
 	int Selected_Item;
 
-	HWND Render_hWnd;
-
-	Ogre_Win_Render_Listener* RenderListener;
-
-	Ogre::RenderWindow* Ogre_MV_Window;
-	Ogre::SceneManager* Ogre_MV_SceneMgr;
-	Ogre::Camera* Ogre_MV_Camera;
-	Ogre::SceneNode* Ogre_MV_CamNode;
-
-	Ogre::Viewport* vp_ImGui;
-
 	bool Colour_Dialog_Active;
-	bool flag_Viewer_Active;
 	HBRUSH Actual_Colour;
 
 
 private:
 	static LRESULT Proc_Colour_Mixer(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	
 	void Set_Sliders(HWND hDlg);
 	void Get_Sliders(HWND hDlg, LPARAM lParam);
 	void Set_ColourBox();
-
-	
 
 	Colour_Int Colour;
 

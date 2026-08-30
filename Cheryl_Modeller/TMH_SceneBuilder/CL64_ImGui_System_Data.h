@@ -23,49 +23,62 @@ THE SOFTWARE.
 */
 
 #pragma once
+
+using namespace Ogre;
+
+class CL64_ImGui_Sytem_Listener : public Ogre::FrameListener
+{
+public:
+	CL64_ImGui_Sytem_Listener(void);
+	~CL64_ImGui_Sytem_Listener(void);
+
+	bool frameStarted(const Ogre::FrameEvent& evt);
+	bool frameRenderingQueued(const Ogre::FrameEvent& evt);
+};
+
 class CL64_ImGui_System_Data
 {
 public:
 	CL64_ImGui_System_Data();
 	~CL64_ImGui_System_Data();
 
+	void Start_Ogre_Window(void);
+
 	void ImGui_Render_Loop(void);
-
-	void Imgui_System_Dlg(void);
-
-	int Visuals_PosX;
-	int Visuals_PosY;
-	bool flag_Show_Visuals;
-
-	int Dimensions_PosX;
-	int Dimensions_PosY;
-	bool flag_Show_Dimensions;
-	bool flag_Show_Position;
-	bool flag_Show_Scale;
-	bool flag_Show_Rotation;
-
-	bool flag_Block_GUI;
-	bool flag_Object_Highlighted;
-	bool flag_Show_Physics_Debug;
-	bool flag_Show_Mesh;
 
 	bool flag_Loop_Enabled;
 	bool flag_Show_System_Data;
-
+	bool flag_System_Viewer_Active;
 	bool flag_Dark_Mode;
 
 	int Selected_System_Page;
 
+	HWND Render_hWnd;
+
 private:
+	static LRESULT CALLBACK Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Selected_Button(bool IsSelected);
 
-	void Camera_Data(void);
-	void Editor_Data(void);
-	void Model_Data(void);
-	void Grids_Data(void);
-	void File_Data(void);
-	void Prefs_Data(void);
+	void Imgui_System_Dlg(void);
+	void Set_OgreWindow(void);
+	void Close_OgreWindow(void);
+
+	void Data_Camera(void);
+	void Data_Editor(void);
+	void Data_Model(void);
+	void Data_Grids(void);
+	void Data_File(void);
+	void Data_Prefs(void);
+
+	CL64_ImGui_Sytem_Listener* RenderListener;
+	Ogre::RenderWindow* Ogre_MV_Window;
+	Ogre::SceneManager* Ogre_MV_SceneMgr;
+	Ogre::Camera* Ogre_MV_Camera;
+	Ogre::SceneNode* Ogre_MV_CamNode;
+	Ogre::Viewport* vp_ImGui;
 
 };
+
 

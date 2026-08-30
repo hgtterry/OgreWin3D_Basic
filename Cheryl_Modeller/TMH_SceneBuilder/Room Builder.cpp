@@ -231,7 +231,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_APPDEBUG:
             {
-                App->CL_Sandbox->Start_Ogre_Window();
+                App->CL_ImGui_System_Data->Start_Ogre_Window();
                 return 1;
             }
 			case ID_DEBUG_GENERAL:

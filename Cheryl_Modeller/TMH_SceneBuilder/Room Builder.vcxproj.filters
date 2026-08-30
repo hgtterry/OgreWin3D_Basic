@@ -156,9 +156,6 @@
     <ClInclude Include="CL64_Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ogre_Win_Render_Listener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -351,9 +348,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Model.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ogre_Win_Render_Listener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Mesh.cpp">

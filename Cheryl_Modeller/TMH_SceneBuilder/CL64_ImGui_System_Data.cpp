@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_ImGui_System_Data.h"
 
@@ -39,34 +40,237 @@ enum System_Page
 CL64_ImGui_System_Data::CL64_ImGui_System_Data()
 {
 	Selected_System_Page = System_Page_Prefs;
-
-	flag_Block_GUI = false;
-
-	Visuals_PosX = 500;
-	Visuals_PosY = 300;
-	flag_Show_Visuals = false;
-
-	Dimensions_PosX = 500;
-	Dimensions_PosY = 300;
-	flag_Show_Dimensions = false;
-	flag_Show_Position = false;
-	flag_Show_Scale = false;
-	flag_Show_Rotation = false;
-
-	flag_Object_Highlighted = false;
-	flag_Show_Physics_Debug = false;
-	flag_Show_Mesh = true;
-
 	flag_Dark_Mode = false;
 
-	// Current 
-
+	flag_System_Viewer_Active = false;
 	flag_Loop_Enabled = false;
 	flag_Show_System_Data = false;
+
+	Render_hWnd = nullptr;
+
+	RenderListener = nullptr;
+	Ogre_MV_Window = nullptr;
+	Ogre_MV_SceneMgr = nullptr;
+	Ogre_MV_Camera = nullptr;
+	Ogre_MV_CamNode = nullptr;
+	vp_ImGui = nullptr;
 }
 
 CL64_ImGui_System_Data::~CL64_ImGui_System_Data()
 {
+}
+
+// *************************************************************************
+// *			Start_Ogre_Window:- Terry Mo and Hazel  2025			   *
+// *************************************************************************
+void CL64_ImGui_System_Data::Start_Ogre_Window()
+{
+	if (flag_System_Viewer_Active == true)
+	{
+		return;
+	}
+
+	CreateDialog(App->hInst, (LPCTSTR)IDD_OGRE_WINDOW, App->MainHwnd, (DLGPROC)Proc_Ogre_Dialog);
+
+	flag_System_Viewer_Active = true;
+}
+
+// *************************************************************************
+// *		  Proc_Ogre_Dialog:- Terry and Hazel Flanigan 2025			   *
+// *************************************************************************
+LRESULT CALLBACK CL64_ImGui_System_Data::Proc_Ogre_Dialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->CL_ImGui_System_Data->Render_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_OGRE_CANVAS, hDlg, (DLGPROC)Proc_Viewer_3D);
+		App->CL_ImGui_System_Data->Set_OgreWindow();
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->BlackBrush;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_ImGui_System_Data->flag_System_Viewer_Active = false;
+			App->CL_ImGui_System_Data->Close_OgreWindow();
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *		Proc_Viewer_3D:- Terry and Hazel Flanigan 2026 				   *
+// *************************************************************************
+LRESULT CALLBACK CL64_ImGui_System_Data::Proc_Viewer_3D(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG: // Bernie as the dialog is created
+	{
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		//if (App->flag_3D_Started == false)
+		{
+			return (LONG)App->BlackBrush;
+		}
+	}
+
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+		POINT pos;
+		GetCursorPos(&pos);
+		ScreenToClient(App->CL_ImGui_System_Data->Render_hWnd, &pos);
+
+		if (App->CL_ImGui->flag_Imgui_Initialized == true && App->CL_ImGui_System_Data->flag_Show_System_Data == true)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			io.MousePos.x = static_cast<float>(pos.x);
+			io.MousePos.y = static_cast<float>(pos.y);
+		}
+
+		SetFocus(App->CL_ImGui_System_Data->Render_hWnd);
+
+		return 1;
+	}
+
+	// Right Mouse Button
+	case WM_RBUTTONDOWN:
+	{
+		return 1;
+	}
+	case WM_RBUTTONUP:
+	{
+		return 1;
+	}
+	// Left Mouse Button
+	case WM_LBUTTONDOWN:
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = true;
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = false;
+
+		return 1;
+	}
+
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
+// *			Set_OgreWindow:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui_System_Data::Set_OgreWindow()
+{
+	Ogre::NameValuePairList options;
+
+	options["externalWindowHandle"] =
+		Ogre::StringConverter::toString((size_t)Render_hWnd);
+
+	Ogre_MV_Window = App->CL_Ogre->mRoot->createRenderWindow("ImGui_Render_Win", 1024, 768, false, &options);
+
+	Ogre_MV_SceneMgr = App->CL_Ogre->mRoot->createSceneManager("DefaultSceneManager", "ImGui_Render_Win");
+
+	Ogre_MV_CamNode = Ogre_MV_SceneMgr->getRootSceneNode()->createChildSceneNode("Camera_Node_ImGui");
+
+	Ogre_MV_Camera = Ogre_MV_SceneMgr->createCamera("Camera_ImGui");
+	Ogre_MV_Camera->setNearClipDistance(0.1);
+	Ogre_MV_Camera->setFarClipDistance(8000);
+
+	Ogre_MV_CamNode->attachObject(Ogre_MV_Camera);
+	Ogre_MV_CamNode->setPosition(Ogre::Vector3(0, 0, 20));
+
+	vp_ImGui = Ogre_MV_Window->addViewport(Ogre_MV_Camera);
+
+	Ogre_MV_Camera->setAspectRatio(Ogre::Real(vp_ImGui->getActualWidth()) / Ogre::Real(vp_ImGui->getActualHeight()));
+	vp_ImGui->setBackgroundColour(ColourValue(0.0, 0.0, 0.0));
+
+	Ogre_MV_SceneMgr->addRenderQueueListener(App->CL_Ogre->mOverlaySystem);
+	vp_ImGui->setOverlaysEnabled(true);
+
+	App->CL_Ogre->Listener_3D->flag_Run_Imgui = false;
+	App->CL_Ogre->vp->setOverlaysEnabled(false);
+
+	RenderListener = new CL64_ImGui_Sytem_Listener();
+	App->CL_Ogre->mRoot->addFrameListener(RenderListener);
+
+	App->CL_ImGui_System_Data->flag_Loop_Enabled = true;
+	App->CL_ImGui_System_Data->flag_Show_System_Data = true;
+
+}
+
+// *************************************************************************
+// *		Close_OgreWindow:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_ImGui_System_Data::Close_OgreWindow(void)
+{
+	App->CL_Ogre->mRoot->detachRenderTarget("ImGui_Render_Win");
+	Ogre_MV_Window->destroy();
+	App->CL_Ogre->mRoot->destroySceneManager(Ogre_MV_SceneMgr);
+
+	App->CL_Ogre->mRoot->removeFrameListener(RenderListener);
+
+	delete RenderListener;
+	RenderListener = nullptr;
+
+	App->CL_ImGui_System_Data->flag_Loop_Enabled = true;
+	App->CL_ImGui_System_Data->flag_Show_System_Data = false;
+
+	App->CL_Ogre->vp->setOverlaysEnabled(true);
+	App->CL_Ogre->Listener_3D->flag_Run_Imgui = true;
 }
 
 // *************************************************************************
@@ -117,7 +321,7 @@ void CL64_ImGui_System_Data::Imgui_System_Dlg(void)
 		ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(239, 239, 239, 255));
 	}
 
-	if (!ImGui::Begin("Ogre Data", &flag_Show_System_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
+	if (!ImGui::Begin("System Data", &flag_Show_System_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
@@ -159,66 +363,67 @@ void CL64_ImGui_System_Data::Imgui_System_Dlg(void)
 		}
 
 		// Functions
-		if (Selected_System_Page == System_Page_Camera)
+		switch (Selected_System_Page) 
+		{
+		case System_Page_Camera:
 		{
 			ImGui::NextColumn();
 			ImGui::AlignTextToFramePadding();
-
 			ImGui::Text("Camera:");
-			
-			Camera_Data();
+			Data_Camera();
+			break;
 		}
 
-		if (Selected_System_Page == System_Page_Data)
+		case System_Page_Data:
 		{
 			ImGui::NextColumn();
 			ImGui::AlignTextToFramePadding();
-
 			ImGui::Text("Editor:");
-
-			Editor_Data();
+			Data_Editor();
+			break;
 		}
 
-		if (Selected_System_Page == System_Page_Model)
+		case System_Page_Model:
 		{
 			ImGui::NextColumn();
 			ImGui::AlignTextToFramePadding();
-
 			ImGui::Text("Model:");
-
-			Model_Data();
+			Data_Model();
+			break;
 		}
 
-		if (Selected_System_Page == System_Page_Grids)
+		case System_Page_Grids:
 		{
 			ImGui::NextColumn();
 			ImGui::AlignTextToFramePadding();
-
 			ImGui::Text("Grids:");
-
-			Grids_Data();
+			Data_Grids();
+			break;
 		}
 
-		if (Selected_System_Page == System_Page_File)
+		case System_Page_File:
 		{
 			ImGui::NextColumn();
 			ImGui::AlignTextToFramePadding();
-
 			ImGui::Text("File:");
-
-			File_Data();
+			Data_File();
+			break;
 		}
 
-		if (Selected_System_Page == System_Page_Prefs)
+		case System_Page_Prefs:
 		{
 			ImGui::NextColumn();
 			ImGui::AlignTextToFramePadding();
-
 			ImGui::Text("Prefs:");
-
-			Prefs_Data();
+			Data_Prefs();
+			break;
 		}
 
+		default:
+			ImGui::Text("Unknown Page");
+			break;
+		}
+		
 		ImGui::Columns(0);
 
 		if (doStyle == true)
@@ -232,9 +437,9 @@ void CL64_ImGui_System_Data::Imgui_System_Dlg(void)
 }
 
 // *************************************************************************
-// *				Camera_Data:- Terry and Hazel Flanigan 2026			   *
+// *				Data_Camera:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_System_Data::Camera_Data(void)
+void CL64_ImGui_System_Data::Data_Camera(void)
 {
 	char Buff[MAX_PATH];
 
@@ -268,9 +473,9 @@ void CL64_ImGui_System_Data::Camera_Data(void)
 }
 
 // *************************************************************************
-// *				Editor_Data:- Terry and Hazel Flanigan 2026			   *
+// *				Data_Editor:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_System_Data::Editor_Data(void)
+void CL64_ImGui_System_Data::Data_Editor(void)
 {
 	char Buff[MAX_PATH];
 
@@ -312,9 +517,9 @@ void CL64_ImGui_System_Data::Editor_Data(void)
 }
 
 // *************************************************************************
-// *				Model_Data:- Terry and Hazel Flanigan 2026			   *
+// *				Data_Model:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_System_Data::Model_Data(void)
+void CL64_ImGui_System_Data::Data_Model(void)
 {
 	char Buff[MAX_PATH];
 	
@@ -401,9 +606,9 @@ void CL64_ImGui_System_Data::Model_Data(void)
 }
 
 // *************************************************************************
-// *				Grids_Data:- Terry and Hazel Flanigan 2026			   *
+// *				Data_Grids:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_System_Data::Grids_Data(void)
+void CL64_ImGui_System_Data::Data_Grids(void)
 {
 	char Buff[MAX_PATH];
 
@@ -460,9 +665,9 @@ void CL64_ImGui_System_Data::Grids_Data(void)
 }
 
 // *************************************************************************
-// *				File_Data:- Terry and Hazel Flanigan 2026			   *
+// *				Data_File:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_System_Data::File_Data(void)
+void CL64_ImGui_System_Data::Data_File(void)
 {
 	ImGui::Text("File Version %f", App->CL_Level->Level_Version);
 	ImGui::Text(" ");
@@ -487,13 +692,46 @@ void CL64_ImGui_System_Data::File_Data(void)
 }
 
 // *************************************************************************
-// *				Prefs_Data:- Terry and Hazel Flanigan 2026			   *
+// *				Data_Prefs:- Terry and Hazel Flanigan 2026			   *
 // *************************************************************************
-void CL64_ImGui_System_Data::Prefs_Data(void)
+void CL64_ImGui_System_Data::Data_Prefs(void)
 {
 	ImGui::Text("Lib Version %s", App->CL_Libs->CL_Preference->GetVersion());
 	
 	ImGui::Text(" ");
 	ImGui::TextWrapped("File Path %s", App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile);
 
+}
+
+// *************************************************************************
+// *				Listener:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+CL64_ImGui_Sytem_Listener::CL64_ImGui_Sytem_Listener(void)
+{
+
+}
+
+CL64_ImGui_Sytem_Listener::~CL64_ImGui_Sytem_Listener(void)
+{
+
+}
+
+// *************************************************************************
+// *				frameStarted   Terry Bernie							   *
+// *************************************************************************
+bool CL64_ImGui_Sytem_Listener::frameStarted(const Ogre::FrameEvent& evt)
+{
+	return true;
+}
+
+
+// *************************************************************************
+// *			frameRenderingQueued   Terry Bernie						   *
+// *************************************************************************
+bool CL64_ImGui_Sytem_Listener::frameRenderingQueued(const Ogre::FrameEvent& evt)
+{
+	Ogre::ImGuiOverlay::NewFrame();
+	App->CL_ImGui_System_Data->ImGui_Render_Loop();
+
+	return true;
 }
