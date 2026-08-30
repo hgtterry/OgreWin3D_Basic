@@ -269,7 +269,7 @@ void CL64_Top_Tabs::Start_Top_Tabs()
 {
 	TopTabs_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Top_Tabs);
 	Init_Bmps_Globals();
-	Update_Faces_Combo();
+	App->CL_Faces_Control->Update_Faces_Combo();
 
 	flag_TopTabs_Active = true;
 
@@ -955,37 +955,6 @@ void CL64_Top_Tabs::Reset_Brush_Buttons()
 	flag_Brush_Scale = 0;
 
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-}
-
-// *************************************************************************
-// *		Update_Faces_Combo:- Terry Mo and Hazel 2025				   *
-// *************************************************************************
-void CL64_Top_Tabs::Update_Faces_Combo()
-{
-	//Do_Timer
-
-	HWND Temp = GetDlgItem(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES);
-	SendMessage(Temp, CB_RESETCONTENT, 0, 0);
-	char buff[MAX_PATH];
-
-	int SB = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-	
-	if (SB > 0)
-	{
-		int Count = 0;
-		int Face_Count = App->CL_Brush_X->Get_Brush_All_Faces_Count();
-
-		while (Count < Face_Count)
-		{
-			sprintf(buff, "%s %i", "Face:-", Count+1);
-			SendMessage(Temp, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buff);
-			Count++;
-		}
-
-		SendMessage(Temp, CB_SETCURSEL, App->CL_Faces_Control->Selected_Face_Index, 0);
-	}
-
-	//Get_Timer
 }
 
 // **************************************************************************

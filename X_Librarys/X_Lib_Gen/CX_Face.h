@@ -102,6 +102,5 @@ public:
 	void Face_SetTextureLock(Face* f, const signed int bState);
 	bool Face_IsTextureLocked(const Face* f);
 
-	int Selected_Face_Index;
 };
 

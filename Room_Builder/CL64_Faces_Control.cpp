@@ -237,6 +237,37 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 }
 
 // *************************************************************************
+// *		Update_Faces_Combo:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Faces_Control::Update_Faces_Combo()
+{
+	//Do_Timer
+
+	HWND Temp = GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES);
+	SendMessage(Temp, CB_RESETCONTENT, 0, 0);
+	char buff[MAX_PATH];
+
+	int SB = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+	if (SB > 0)
+	{
+		int Count = 0;
+		int Face_Count = App->CL_Brush_X->Get_Brush_All_Faces_Count();
+
+		while (Count < Face_Count)
+		{
+			sprintf(buff, "%s %i", "Face:-", Count + 1);
+			SendMessage(Temp, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buff);
+			Count++;
+		}
+
+		SendMessage(Temp, CB_SETCURSEL, Selected_Face_Index, 0);
+	}
+
+	//Get_Timer
+}
+
+// *************************************************************************
 // *			Unselect_All_Face:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Faces_Control::Unselect_All_Face()
@@ -317,7 +348,7 @@ void CL64_Faces_Control::Select_Prev_Face()
 
 	App->CL_Faces_Control->Select_Face();
 
-	if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
+	if (App->CL_X_Face_Editor->flag_FaceDlg_Active == true)
 	{
 		App->CL_X_Face_Editor->Change_Selection();
 	}

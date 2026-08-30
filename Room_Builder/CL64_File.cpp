@@ -604,7 +604,7 @@ void CL64_File::Set_Editor()
 	App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
 
 	// Reset the selected face index and all selections in the document
-	App->CL_X_Face->Selected_Face_Index = 0;
+	App->CL_Faces_Control->Selected_Face_Index = 0;
 	App->CL_Doc->ResetAllSelections();
 
 	// Disable brush options buttons and select the templates tab

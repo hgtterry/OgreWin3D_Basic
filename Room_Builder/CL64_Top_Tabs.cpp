@@ -78,7 +78,7 @@ void CL64_Top_Tabs::Reset_Class()
 void CL64_Top_Tabs::Start_Top_Tabs()
 {
 	TopTabs_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Top_Tabs);
-	Update_Faces_Combo();
+	App->CL_Faces_Control->Update_Faces_Combo();
 
 	flag_TopTabs_Active = true;
 
@@ -111,12 +111,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SHEAR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_ST_HEADER_FACES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_ALLFACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_NEXTFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_PREVFACE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CB_FACELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
 		return TRUE;
 	}
 
@@ -130,14 +124,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_ST_HEADER_FACES) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-		
 		return FALSE;
 	}
 
@@ -306,57 +292,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_ALLFACES)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_ALLFACES));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_All_Faces);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_NEXTFACE)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_NEXTFACE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Next_Face);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_PREVFACE)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PREVFACE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Prev_Face);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
 		return CDRF_DODEFAULT;
 	}
 
@@ -498,91 +433,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_CB_FACELIST)
-		{
-			switch (HIWORD(wParam)) // Find out what message it was
-			{
-			case CBN_DROPDOWN:
-				break;
-			case CBN_CLOSEUP:
-			{
-				HWND temp = GetDlgItem(hDlg, IDC_CB_FACELIST);
-				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-
-				if (Index == -1)
-				{ 
-				}
-				else
-				{
-					App->CL_X_Face->Selected_Face_Index = Index;
-					App->CL_Top_Tabs->Select_Face();
-
-					if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
-					{
-						App->CL_X_Face_Editor->Change_Selection();
-					}
-				}
-			}
-			}
-
-			return true;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_ALLFACES)
-		{
-			App->CL_Top_Tabs->Deselect_Faces_Dlg_Buttons();
-			App->CL_Top_Tabs->flag_All_Faces = 1;
-
-			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-
-			App->CL_Doc->SelectAllFacesInBrushes();
-			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-			App->CL_Properties_Textures->Enable_FaceProps_Button(true);
-			App->CL_Properties_Tabs->Select_Textures_Tab();
-		
-			return TRUE;
-		}
-
-		// ----- Next Face
-		if (LOWORD(wParam) == IDC_BT_NEXTFACE)
-		{
-			App->CL_X_Face->Selected_Face_Index++;
-
-			if (App->CL_X_Face->Selected_Face_Index == App->CL_Brush_X->Face_Count)
-			{
-				App->CL_X_Face->Selected_Face_Index = 0;
-			}
-
-			App->CL_Top_Tabs->Select_Face();
-
-			if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
-			{
-				App->CL_X_Face_Editor->Change_Selection();
-			}
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_PREVFACE)
-		{
-			App->CL_X_Face->Selected_Face_Index--;
-
-			if (App->CL_X_Face->Selected_Face_Index < 0)
-			{
-				App->CL_X_Face->Selected_Face_Index = App->CL_Brush_X->Face_Count - 1;
-			}
-
-			App->CL_Top_Tabs->Select_Face();
-
-			if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
-			{
-				App->CL_X_Face_Editor->Change_Selection();
-			}
-
-			return TRUE;
-		}
-		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
@@ -754,10 +604,7 @@ void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
 // *************************************************************************
 void CL64_Top_Tabs::Enable_TopBar_Face_Buttons(bool Enable)
 {
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_ALLFACES), Enable);
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_NEXTFACE), Enable);
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_PREVFACE), Enable);
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_CB_FACELIST), Enable);
+	
 	
 }
 
@@ -817,7 +664,7 @@ void CL64_Top_Tabs::Select_Face()
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
 		App->CL_Doc->SelectAllFacesInBrushes();
-		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
+		App->CL_X_Face->Select_Face_From_Index(App->CL_Faces_Control->Selected_Face_Index);
 	}
 	else
 	{
@@ -825,7 +672,7 @@ void CL64_Top_Tabs::Select_Face()
 		App->CL_Top_Tabs->flag_Next_Face = 1;
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
-		App->CL_X_Face->Select_Face_From_Index(App->CL_X_Face->Selected_Face_Index);
+		App->CL_X_Face->Select_Face_From_Index(App->CL_Faces_Control->Selected_Face_Index);
 	}
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -833,41 +680,6 @@ void CL64_Top_Tabs::Select_Face()
 	App->CL_Properties_Textures->Enable_FaceProps_Button(true);
 	App->CL_Properties_Tabs->Select_Textures_Tab();
 
-	HWND Temp = GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_CB_FACELIST);
-	SendMessage(Temp, CB_SETCURSEL, App->CL_X_Face->Selected_Face_Index, 0);
-}
-
-// *************************************************************************
-// *		Update_Faces_Combo:- Terry and Hazel Flanigan 2025			   *
-// *************************************************************************
-void CL64_Top_Tabs::Update_Faces_Combo()
-{
-	//App->Flash_Window();
-
-	//Do_Timer
-
-	HWND Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_CB_FACELIST);
-	SendMessage(Temp, CB_RESETCONTENT, 0, 0);
-	char buff[MAX_PATH];
-
-	int SB = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-	
-	if (SB > 0)
-	{
-		int Count = 0;
-		int Face_Count = App->CL_Brush_X->Get_Brush_All_Faces_Count();
-
-		while (Count < Face_Count)
-		{
-			sprintf(buff, "%s %i", "Face:-", Count+1);
-			SendMessage(Temp, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buff);
-			Count++;
-		}
-
-		SendMessage(Temp, CB_SETCURSEL, App->CL_X_Face->Selected_Face_Index, 0);
-	}
-
-	//Get_Timer
 }
 
 // **************************************************************************
