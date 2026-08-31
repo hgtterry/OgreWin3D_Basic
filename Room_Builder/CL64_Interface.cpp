@@ -160,3 +160,34 @@ void CL64_Interface::Position_Face_Options_Dlg(void)
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
 }
+
+// *************************************************************************
+// *	Unselect_Brush_And_Set_Dlgs:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Unselect_Brush_And_Set_Dlgs(void)
+{
+	App->CL_Doc->Set_Tool_GeneralSelect();
+	App->CL_Doc->ResetAllSelections();
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	//App->CL_Doc->UpdateSelected();
+
+	App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
+	
+	App->CL_Faces_Control->Reset_Flags();
+
+	App->CL_Properties_Textures->Enable_FaceProps_Button(false);
+
+	App->CL_Top_Tabs->Reset_Brush_Buttons();
+	App->CL_Top_Tabs->flag_Brush_Select = 1;
+
+	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
+
+	App->CL_Faces_Control->Reset_Flags();
+
+	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+
+	App->CL_Faces_Control->Update_Faces_Dialog();
+
+	//EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
+}

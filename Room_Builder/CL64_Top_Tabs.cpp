@@ -70,7 +70,7 @@ void CL64_Top_Tabs::Reset_Class()
 void CL64_Top_Tabs::Start_Top_Tabs()
 {
 	TopTabs_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOP_TABS_HEADERS, App->MainHwnd, (DLGPROC)Proc_Top_Tabs);
-	App->CL_Faces_Control->Update_Faces_Combo();
+	App->CL_Faces_Control->Update_Faces_Dialog();
 
 	flag_TopTabs_Active = true;
 

@@ -38,6 +38,7 @@ public:
 
 	void Show_Faces_Panel_Control(bool show);
 	void Position_Face_Options_Dlg(void);
+	void Unselect_Brush_And_Set_Dlgs(void);
 
 	bool flag_Tab_Texture;
 	bool flag_Tab_Templates;

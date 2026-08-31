@@ -483,6 +483,14 @@
 #define IDC_TT_CB_FACES                 1345
 #define IDC_ST_HPOS2                    1346
 #define IDC_ST_RANGLE                   1346
+#define IDC_ST_BRUSHNAME                1346
+#define IDC_ST_FACEAMOUNT               1347
+#define IDC_BT_TT_SELECT                1348
+#define IDC_BT_TT_MOVE                  1349
+#define IDC_BT_TT_SCALE                 1350
+#define IDC_BT_TT_ROTATE                1351
+#define IDC_BT_TT_SHEAR                 1352
+#define IDC_BUTTON4                     1353
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -572,7 +580,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        203
 #define _APS_NEXT_COMMAND_VALUE         32850
-#define _APS_NEXT_CONTROL_VALUE         1346
+#define _APS_NEXT_CONTROL_VALUE         1354
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

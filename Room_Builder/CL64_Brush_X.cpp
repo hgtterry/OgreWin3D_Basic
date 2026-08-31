@@ -341,7 +341,7 @@ void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 		// Update brush options and selected brushes count
 		App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
 		App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
-		App->CL_Faces_Control->Update_Faces_Combo();
+		App->CL_Faces_Control->Update_Faces_Dialog();
 
 		// Set the active tab to brushes
 		App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = 1;

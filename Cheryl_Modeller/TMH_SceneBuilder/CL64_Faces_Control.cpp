@@ -266,7 +266,6 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			break;
 		}
 
-		
 		default:
 			return CDRF_DODEFAULT;
 		}
