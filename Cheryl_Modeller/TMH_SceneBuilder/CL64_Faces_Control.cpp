@@ -63,6 +63,16 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_ST_BRUSHNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_BT_TT_SELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TT_MOVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TT_ROTATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TT_SCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TT_SHEAR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_ST_FACEAMOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_FACES_NONE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACES_ALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_NEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -88,6 +98,27 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ST_BRUSHNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_FACEAMOUNT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
@@ -95,6 +126,81 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 		switch (some_item->idFrom)
 		{
+		case IDC_BT_TT_SELECT:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_SELECT));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Select);
+			}
+
+			break;
+		}
+			
+		case IDC_BT_TT_MOVE:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_MOVE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Move);
+			}
+
+			break;
+		}
+
+		case IDC_BT_TT_ROTATE:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_ROTATE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Rotate);
+			}
+			break;
+		}
+
+		case IDC_BT_TT_SCALE:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_SCALE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Scale);
+			}
+
+			break;
+		}
+
+		case IDC_BT_TT_SHEAR:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_SHEAR));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			break;
+		}
+			
+		
 		case IDC_BT_FACES_NONE:
 		{
 			App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_No_Faces);
@@ -152,6 +258,32 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_TT_SELECT)
+		{
+			App->CL_Interface->Unselect_Brush_And_Set_Dlgs();
+			//App->CL_Interface->Show_Faces_Panel_Control(false);
+			//App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+			return TRUE;
+		}
+		
+		if (LOWORD(wParam) == IDC_BT_TT_MOVE)
+		{
+			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 1);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TT_SCALE)
+		{
+			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH, 2);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TT_ROTATE)
+		{
+			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_FACE_FACEEDITOR)
 		{
 			int SF = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
@@ -244,9 +376,9 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 
 // *************************************************************************
-// *		Update_Faces_Combo:- Terry and Hazel Flanigan 2026			   *
+// *		Update_Faces_Dialog:- Terry and Hazel Flanigan 2026			  
 // *************************************************************************
-void CL64_Faces_Control::Update_Faces_Combo()
+void CL64_Faces_Control::Update_Faces_Dialog()
 {
 	//Do_Timer
 
@@ -269,6 +401,20 @@ void CL64_Faces_Control::Update_Faces_Combo()
 		}
 
 		SendMessage(Temp, CB_SETCURSEL, Selected_Face_Index, 0);
+
+		Brush* pBrush;
+		pBrush = App->CL_Doc->CurBrush;
+
+		char Brush_Name[MAX_PATH];
+		strcpy(Brush_Name, "Brush:-  ");
+		strcat(Brush_Name, pBrush->Name);
+		SetDlgItemText(Faces_Control_Dlg_hWnd, IDC_ST_BRUSHNAME, (LPCTSTR)Brush_Name);
+
+		char sFace_Count[MAX_PATH];
+		sprintf(sFace_Count, "%s %i", "Face Count:-", Face_Count);
+		SetDlgItemText(Faces_Control_Dlg_hWnd, IDC_ST_FACEAMOUNT, (LPCTSTR)sFace_Count);
+		
+		
 	}
 
 	//Get_Timer

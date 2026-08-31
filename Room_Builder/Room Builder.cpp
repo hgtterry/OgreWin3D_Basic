@@ -304,6 +304,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // ----------------------------- File
             case ID_FILE_NEWSCENE:
             {
+                if (App->CL_Level->flag_Level_is_Modified == true)
+                {
+                    char Text[MAX_PATH];
+                    strcpy(Text, "Save Changes To ");
+                    strcat(Text, App->CL_Level->MTF_Just_FileName);
+
+                    App->CL_Dialogs->YesNoCancel((LPSTR)"File has been Modified", Text);
+
+                    if (App->CL_Dialogs->YesNoCancel_Result == 1)
+                    {
+                        App->CL_File->Start_Save(true);
+                        App->CL_Scene->Clear_Level(false);
+                        return 1;
+                    }
+
+                    if (App->CL_Dialogs->YesNoCancel_Result == 2)
+                    {
+                        App->CL_Scene->Clear_Level(false);
+                        return 1;
+                    }
+
+                    if (App->CL_Dialogs->YesNoCancel_Result == 3)
+                    {
+                        return 1;
+                    }
+
+                }
+                
                 App->CL_Scene->Clear_Level(false);
                 return 1;
             }
@@ -843,7 +871,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             
                 if (App->CL_Level->flag_Level_is_Modified == true)
                 {
-                    char Text[200];
+                    char Text[MAX_PATH];
                     strcpy(Text, "Save Changes To ");
                     strcat(Text, App->CL_Level->MTF_Just_FileName);
 

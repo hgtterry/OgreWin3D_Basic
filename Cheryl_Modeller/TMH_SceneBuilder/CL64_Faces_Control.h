@@ -31,7 +31,7 @@ public:
 
 	void Start_Faces_Control_Dlg();
 
-	void Update_Faces_Combo();
+	void Update_Faces_Dialog();
 
 	void Unselect_All_Face();
 	void Select_All_Face();

@@ -486,6 +486,7 @@
 #define IDC_BT_MOT_STOP                 1328
 #define IDC_BT_TEST_MINUS               1328
 #define IDC_BT_MATFACESCOLOUR           1328
+#define IDC_BT_TT_SELECT                1328
 #define IDC_TBSHOWGRID                  1329
 #define IDC_BUTTON1                     1331
 #define IDC_BUT_AT_CAMERA               1331
@@ -503,13 +504,16 @@
 #define IDC_CK_LOCKTEXTURES             1332
 #define IDC_BT_AT_GROUPDETAILS          1332
 #define IDC_BT_TT_BRUSH_ROTATE          1332
+#define IDC_BT_TT_ROTATE                1332
 #define IDC_BUT_AT_WORLDPOS             1333
 #define IDC_CK_SCENEEDITOR              1333
 #define IDC_BT_AT_VIEWMAT               1333
 #define IDC_BT_TT_BRUSH_MOVE            1333
+#define IDC_BT_TT_SCALE                 1333
 #define IDC_ST_STARTMODE                1334
 #define IDC_BT_AT_CHANGETEXTURE         1334
 #define IDC_BT_TT_BRUSH_SHEAR           1334
+#define IDC_BT_TT_SHEAR                 1334
 #define IDC_COMBO1                      1335
 #define IDC_CB_BRUSH_CAT                1335
 #define IDC_CB_MOTIONS_SPEED            1335
@@ -604,6 +608,10 @@
 #define IDC_BT_FACE_SHOWSELECTEDFACE    1421
 #define IDC_BT_FACES_NONE               1422
 #define IDC_BT_FACE_FACEEDITOR          1423
+#define IDC_BT_TT_MOVE                  1424
+#define IDC_ST_BRUSHNAME                1425
+#define IDC_ST_BRUSHNAME2               1426
+#define IDC_ST_FACEAMOUNT               1426
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -750,7 +758,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        228
 #define _APS_NEXT_COMMAND_VALUE         32907
-#define _APS_NEXT_CONTROL_VALUE         1424
+#define _APS_NEXT_CONTROL_VALUE         1426
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

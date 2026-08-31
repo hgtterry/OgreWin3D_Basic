@@ -98,7 +98,7 @@ void CL64_Interface::Unselect_Brush_And_Set_Dlgs(void)
 
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 
-	App->CL_Faces_Control->Update_Faces_Combo();
+	App->CL_Faces_Control->Update_Faces_Dialog();
 
 	//EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
 }
