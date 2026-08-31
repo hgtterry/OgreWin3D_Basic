@@ -114,7 +114,6 @@
 #define IDD_MAP_RENDER_WINDOW1          225
 #define IDD_MAP_RENDER_WIN_TR           225
 #define IDD_MESSAGE1                    226
-#define IDD_TOP_TABS_BRUSHES            227
 #define IDD_TOP_TABS_FACES              228
 #define IDD_OBJECT_EXPORT1              229
 #define IDD_EXPORT_BRUSH                229
@@ -503,21 +502,17 @@
 #define IDC_CK_BACKGROUND               1332
 #define IDC_CK_LOCKTEXTURES             1332
 #define IDC_BT_AT_GROUPDETAILS          1332
-#define IDC_BT_TT_BRUSH_ROTATE          1332
 #define IDC_BT_TT_ROTATE                1332
 #define IDC_BUT_AT_WORLDPOS             1333
 #define IDC_CK_SCENEEDITOR              1333
 #define IDC_BT_AT_VIEWMAT               1333
-#define IDC_BT_TT_BRUSH_MOVE            1333
 #define IDC_BT_TT_SCALE                 1333
 #define IDC_ST_STARTMODE                1334
 #define IDC_BT_AT_CHANGETEXTURE         1334
-#define IDC_BT_TT_BRUSH_SHEAR           1334
 #define IDC_BT_TT_SHEAR                 1334
 #define IDC_COMBO1                      1335
 #define IDC_CB_BRUSH_CAT                1335
 #define IDC_CB_MOTIONS_SPEED            1335
-#define IDC_BT_TT_BRUSH_SCALE           1335
 #define IDC_TT_CB_FACES                 1335
 #define IDC_ED_ZOOMDEFAULT              1336
 #define IDC_ST_ZOOM_TEXT                1337
@@ -590,7 +585,6 @@
 #define IDC_BT_FACESCON                 1403
 #define IDC_CB_MOTIONS_JOINTS           1404
 #define IDC_ST_MOT_JOINTS               1405
-#define IDC_BT_TT_BRUSH_SELECT          1406
 #define IDC_BT_TT_FACES_ALL             1407
 #define IDC_BT_TT_FACE_NEXT             1408
 #define IDC_BT_TT_FACE_PREV             1409
@@ -610,7 +604,6 @@
 #define IDC_BT_FACE_FACEEDITOR          1423
 #define IDC_BT_TT_MOVE                  1424
 #define IDC_ST_BRUSHNAME                1425
-#define IDC_ST_BRUSHNAME2               1426
 #define IDC_ST_FACEAMOUNT               1426
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772

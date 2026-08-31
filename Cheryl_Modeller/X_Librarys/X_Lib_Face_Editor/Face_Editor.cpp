@@ -1513,6 +1513,6 @@ void Face_Editor::Change_Selection()
 // *************************************************************************
 void Face_Editor::Close_Faces_Dialog()
 {
-	App->CL_X_Face_Editor->flag_FaceDlg_Active = 0;
+	App->CL_X_Face_Editor->flag_FaceDlg_Active = false;
 	EndDialog(FaceDlg_Hwnd, 0);
 }

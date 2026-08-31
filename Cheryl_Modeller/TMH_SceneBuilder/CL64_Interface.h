@@ -40,8 +40,7 @@ public:
 
 	void Position_Motions_Dlg(void);
 	void Position_Face_Options_Dlg(void);
-	void Position_Brush_Options_Dlg(void);
-
+	
 	bool Resize_FileView(void);
 	void Unselect_Brush_And_Set_Dlgs(void);
 
@@ -61,10 +60,8 @@ public:
 
 	void Show_Grid_Windows(bool Show);
 
-	// Top Tabs brush panel optins
-	void Show_TopTabs_Brushes_Panel(bool Show);
+	// Top Tabs brush panel options
 	void Show_Faces_Panel_Control(bool show);
-	void Enable_TopTabs_Brushes_Buttons(bool option);
 	void Enable_TopTabs_Faces_Buttons(bool option);
 	void Enable_TopTabs_Buttons(bool option);
 

@@ -188,27 +188,6 @@ void CL64_Interface::Position_Face_Options_Dlg(void)
 }
 
 // *************************************************************************
-// *		Position_Brush_Options_Dlg:- Terry and Hazel Flanigan 2026	   *
-// *************************************************************************
-void CL64_Interface::Position_Brush_Options_Dlg(void)
-{
-	RECT rect;
-	GetWindowRect(App->MainHwnd, &rect);
-
-	RECT rect2;
-	GetWindowRect(App->CL_Brushes_Control->Brush_Control_Dlg_hWnd, &rect2);
-
-	int widthX = rect2.right - rect2.left;
-
-	int Pos_X = (rect.right / 2);
-
-	SetWindowPos(App->CL_Brushes_Control->Brush_Control_Dlg_hWnd, NULL,
-		10,150,
-		0, 0, SWP_NOSIZE | SWP_NOZORDER);
-
-}
-
-// *************************************************************************
 // *			Position_Tabs_Dlg:- Terry and Hazel Flanigan 2024		   *
 // *************************************************************************
 void CL64_Interface::Position_Tabs_Dlg(void)
@@ -447,44 +426,12 @@ void CL64_Interface::Show_Grid_Windows(bool Show)
 }
 
 // *************************************************************************
-// *	Show_TopTabs_Brushes_Panel:- Terry and Hazel Flanigan 2026		   *
-// *************************************************************************
-void CL64_Interface::Show_TopTabs_Brushes_Panel(bool show)
-{
-	ShowWindow(App->CL_Brushes_Control->Brush_Control_Dlg_hWnd, show);
-}
-
-// *************************************************************************
 // *	Show_Faces_Panel_Control:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Interface::Show_Faces_Panel_Control(bool show)
 {
 	ShowWindow(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, show);
 	flag_Faces_Con_Dlg_Active = show;
-}
-
-// *************************************************************************
-// *	Enable_TopTabs_Brushes_Buttons:- Terry and Hazel Flanigan 2026	   *
-// *************************************************************************
-void CL64_Interface::Enable_TopTabs_Brushes_Buttons(bool option)
-{
-	auto& Win_hWnd = App->CL_Brushes_Control->Brush_Control_Dlg_hWnd;
-
-	// Array of button IDs to enable or disable
-	const int buttonIDs[] = 
-	{
-		IDC_BT_TT_BRUSH_SELECT,
-		IDC_BT_TT_BRUSH_MOVE,
-		IDC_BT_TT_BRUSH_SCALE,
-		IDC_BT_TT_BRUSH_ROTATE,
-		IDC_BT_TT_BRUSH_SHEAR,
-	};
-
-	// Iterate through the button IDs and set their enabled state
-	for (int id : buttonIDs)
-	{
-		EnableWindow(GetDlgItem(Win_hWnd, id), option);
-	}
 }
 
 // *************************************************************************
@@ -537,24 +484,6 @@ void CL64_Interface::Enable_TopTabs_Buttons(bool option)
 		EnableWindow(GetDlgItem(Win_hWnd, id), option);
 	}
 
-	auto& Win_hWnd2 = App->CL_Brushes_Control->Brush_Control_Dlg_hWnd;
-
-	// Array of button IDs to enable or disable
-	const int buttonID2s[] =
-	{
-		IDC_BT_TT_BRUSH_SELECT,
-		IDC_BT_TT_BRUSH_MOVE,
-		IDC_BT_TT_BRUSH_SCALE,
-		IDC_BT_TT_BRUSH_ROTATE,
-		IDC_BT_TT_BRUSH_SHEAR
-		//IDC_BT_FACESCON
-	};
-
-	// Iterate through the button IDs and set their enabled state
-	for (int id : buttonID2s)
-	{
-		EnableWindow(GetDlgItem(Win_hWnd2, id), option);
-	}
 }
 
 // *************************************************************************

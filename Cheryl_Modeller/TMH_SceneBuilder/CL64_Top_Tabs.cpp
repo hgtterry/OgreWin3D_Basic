@@ -273,10 +273,7 @@ void CL64_Top_Tabs::Start_Top_Tabs()
 
 	flag_TopTabs_Active = true;
 
-	App->CL_Interface->Show_TopTabs_Brushes_Panel(false);
-
 	App->CL_Faces_Control->Start_Faces_Control_Dlg();
-	App->CL_Brushes_Control->Start_Brushes_Control_Dlg();
 }
 
 // *************************************************************************
@@ -735,7 +732,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_3DVIEW)
 		{
-			App->CL_Interface->Show_TopTabs_Brushes_Panel(false);
 			App->CL_Interface->Show_Faces_Panel_Control(false);
 			App->CL_Editor_Control->Set_3DEditor_View();
 			return TRUE;
@@ -745,25 +741,20 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		{
 			if (App->CL_X_Brush->Get_Brush_Count() == 0) // New Scene
 			{
-				App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
 				App->CL_Interface->Enable_TopTabs_Faces_Buttons(false);
 			}
 			else
 			{
 				if (App->CL_Editor_Control->Editor_Mode == Enums::Editor_Mode_Design_Model)
 				{
-					App->CL_Interface->Enable_TopTabs_Brushes_Buttons(true);
 					App->CL_Interface->Enable_TopTabs_Faces_Buttons(true);
 				}
 				else
 				{
-					App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
 					App->CL_Interface->Enable_TopTabs_Faces_Buttons(false);
 				}
 			}
 
-			App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
-			
 			App->CL_Editor_Control->Set_Map_View();
 			
 			return TRUE;

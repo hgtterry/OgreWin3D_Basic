@@ -255,7 +255,6 @@ void CL64_Properties_Templates::Insert_Template()
 			//App->CL_FileView->Change_Level_Name();
 			//App->CL_FileView->Change_Project_Name();
 
-			App->CL_Interface->Enable_TopTabs_Brushes_Buttons(true);
 			App->CL_Interface->Enable_TopTabs_Faces_Buttons(true);
 			App->CL_Interface->Show_Faces_Panel_Control(true);
 

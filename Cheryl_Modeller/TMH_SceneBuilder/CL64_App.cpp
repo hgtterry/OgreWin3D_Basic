@@ -121,7 +121,6 @@ CL64_App::CL64_App(void)
 
 	CL_Cut_Brush =			nullptr;
 	CL_Faces_Control =		nullptr;
-	CL_Brushes_Control =	nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -329,8 +328,7 @@ void CL64_App::InitApp(void)
 	
 	CL_Cut_Brush =				new CX_Cut_Brush();
 	CL_Faces_Control =			new CL64_Faces_Control();
-	CL_Brushes_Control =		new CL64_Brushes_Control();
-
+	
 	Set_Brushes_Fonts();
 
 	char path[MAX_PATH];
@@ -374,8 +372,7 @@ void CL64_App::Init_Dialogs(void)
 	App->CL_Properties_Tabs->Start_Tabs_Control_Dlg();
 
 	CL_Interface->Position_Face_Options_Dlg();
-	CL_Interface->Position_Brush_Options_Dlg();
-
+	
 	/*App->CL_Properties_Textures_Com->Start_Props_Materials_Dlg();
 	CL_Interface->Position_Textures_Dlg();
 

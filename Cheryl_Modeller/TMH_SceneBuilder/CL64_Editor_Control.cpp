@@ -162,12 +162,8 @@ void CL64_Editor_Control::Set_Editor_Design_Model()
 	App->CL_Model->Model_Type = Enums::Model_Type_Brush;
 
 	// Disable brush and face buttons on the top tabs
-	App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
 	App->CL_Interface->Enable_TopTabs_Faces_Buttons(false);
 
-	// Show the brush and face panels
-	App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
-	
 	// Set the map view in the editor
 	Set_Map_View();
 
@@ -199,11 +195,7 @@ void CL64_Editor_Control::Set_Editor_Import_Model()
 	App->CL_Model->Model_Type = Enums::Model_Type_None;
 
 	// Disable brush and face buttons on the top tabs
-	App->CL_Interface->Enable_TopTabs_Brushes_Buttons(false);
 	App->CL_Interface->Enable_TopTabs_Faces_Buttons(false);
-
-	//// Show the brush and face panels
-	App->CL_Interface->Show_TopTabs_Brushes_Panel(true);
 
 	// Set 3D view in the editor
 	Set_3DEditor_View();
