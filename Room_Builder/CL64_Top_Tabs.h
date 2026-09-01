@@ -39,16 +39,9 @@ public:
 	
 	void Enable_Select_Button(bool Enable, bool Active);
 	void Enable_Move_Button(bool Enable, bool Active);
-	void Reset_Brush_Buttons();
-
-	void Set_Brush_Mode(int Mode, int Dlg_Selection);
+	
 	void Show_TopTabs(bool Enable);
 	
-	bool flag_Brush_Select;
-	bool flag_Brush_Move;
-	bool flag_Brush_Rotate;
-	bool flag_Brush_Scale;
-
 	bool flag_Full_View_3D;
 	bool flag_View_Top_Left;
 	bool flag_View_Top_Right;

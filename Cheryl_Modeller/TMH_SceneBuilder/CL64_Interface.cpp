@@ -85,16 +85,16 @@ void CL64_Interface::Unselect_Brush_And_Set_Dlgs(void)
 	App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
 	Enable_TopTabs_Buttons(false);
 	
-	App->CL_Faces_Control->Reset_Flags();
+	App->CL_Faces_Control->Reset_Face_Buttons();
 
 	App->CL_Properties_Textures->Enable_FaceProps_Button(false);
 
-	App->CL_Top_Tabs->Reset_Brush_Buttons();
-	App->CL_Top_Tabs->flag_Brush_Select = 1;
+	App->CL_Faces_Control->Reset_Brush_Buttons();
+	App->CL_Faces_Control->flag_Brush_Select = 1;
 
 	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
 
-	App->CL_Faces_Control->Reset_Flags();
+	App->CL_Faces_Control->Reset_Face_Buttons();
 
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 

@@ -34,22 +34,19 @@ THE SOFTWARE.
 #define IDM_PASTE 5
 #define IDM_GOTO 6
 #define IDM_PREVIEW 7
-#define IDM_MOVE 8
-#define IDM_SCALE 9
-#define IDM_ROTATE 10
-#define IDM_SCENE_EDITOR 11
-#define IDM_SCENE_MAX_VIEW 12
-#define IDM_SCENE_RESTORE_VIEW 13
-#define IDM_SCENE_DESELECT 14
-#define IDM_SCENE_HELP 15
-#define IDM_SCENE_DUPLICATE 16
-#define IDM_Grid_Wheel_Speed1 17
-#define IDM_Grid_Wheel_Speed2 18
-#define IDM_Grid_Wheel_Speed3 19
-#define IDM_CENTRE_SCENE 20
-#define IDM_ZOOM_MODEL 21
-#define IDM_Grid_Wheel_Speed_VS 22
-#define IDM_Grid_Wheel_Speed_S 23
+#define IDM_SCENE_EDITOR 8
+#define IDM_SCENE_MAX_VIEW 9
+#define IDM_SCENE_RESTORE_VIEW 10
+#define IDM_SCENE_DESELECT 11
+#define IDM_SCENE_HELP 12
+#define IDM_SCENE_DUPLICATE 13
+#define IDM_Grid_Wheel_Speed1 14
+#define IDM_Grid_Wheel_Speed2 15
+#define IDM_Grid_Wheel_Speed3 16
+#define IDM_CENTRE_SCENE 17
+#define IDM_ZOOM_MODEL 18
+#define IDM_Grid_Wheel_Speed_VS 19
+#define IDM_Grid_Wheel_Speed_S 20
 
 #define IDM_3D_WIRED 120
 #define IDM_3D_TEXTURED 121
@@ -1433,18 +1430,6 @@ bool CL64_Views_Com::Context_Grids_Command(WPARAM wParam)
 	//	//App->CL_Editor_Control->Start_Preview_Mode();
 	//	return TRUE;
 
-	case IDM_MOVE:
-		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 1);
-		return TRUE;
-
-	case IDM_SCALE:
-		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH, 2);
-		return TRUE;
-
-	case IDM_ROTATE:
-		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
-		return TRUE;
-
 	case IDM_SCENE_DESELECT:
 	{
 		App->CL_Interface->Unselect_Brush_And_Set_Dlgs();
@@ -1519,7 +1504,7 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 
 		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 		{
-			if (App->CL_Top_Tabs->flag_Brush_Move == 1)
+			if (App->CL_Faces_Control->flag_Brush_Move == 1)
 			{
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Doc->MoveSelectedBrushes(&dv);
@@ -1527,7 +1512,7 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 				Draw_Selected_Screen();
 			}
 
-			if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
+			if (App->CL_Faces_Control->flag_Brush_Rotate == 1)
 			{
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Render->Render_ViewDeltaToRotation(Current_View, (float)dx, &dv);
@@ -1575,14 +1560,14 @@ void CL64_Views_Com::On_Left_Button_Up(POINT CursorPosition)
 
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 	{
-		if (App->CL_Top_Tabs->flag_Brush_Move == true)
+		if (App->CL_Faces_Control->flag_Brush_Move == true)
 		{
 			App->CL_Doc->DoneMovingBrushes();
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 			App->CL_Model->flag_Model_is_Modified = true;
 		}
 
-		if (App->CL_Top_Tabs->flag_Brush_Rotate == true)
+		if (App->CL_Faces_Control->flag_Brush_Rotate == true)
 		{
 			App->CL_Doc->UpdateSelected();
 
@@ -1640,7 +1625,7 @@ void CL64_Views_Com::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 	// ---------------------- Move Brush
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
 	{
-		if (App->CL_Top_Tabs->flag_Brush_Move == 1)
+		if (App->CL_Faces_Control->flag_Brush_Move == true)
 		{
 			int CursorSide = 0;
 			App->CL_Doc->sides = SideLookup[CursorSide];
@@ -1649,7 +1634,7 @@ void CL64_Views_Com::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 			App->CL_Doc->TempCopySelectedBrushes();
 		}
 
-		if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
+		if (App->CL_Faces_Control->flag_Brush_Rotate == true)
 		{
 			int CursorSide = 0;
 			App->CL_Doc->sides = SideLookup[CursorSide];

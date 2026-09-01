@@ -34,17 +34,14 @@ THE SOFTWARE.
 #define IDM_PASTE 5
 #define IDM_GOTO 6
 #define IDM_PREVIEW 7
-#define IDM_MOVE 8
-#define IDM_SCALE 9
-#define IDM_ROTATE 10
-#define IDM_SCENE_EDITOR 11
-#define IDM_SCENE_MAX_VIEW 12
-#define IDM_SCENE_RESTORE_VIEW 13
-#define IDM_SCENE_DESELECT 14
-#define IDM_SCENE_HELP 15
-#define IDM_SCENE_DUPLICATE 16
-#define IDM_SCENE_INFO 17
-#define IDM_GOTO_PLAYER 18
+#define IDM_SCENE_EDITOR 8
+#define IDM_SCENE_MAX_VIEW 9
+#define IDM_SCENE_RESTORE_VIEW 10
+#define IDM_SCENE_DESELECT 11
+#define IDM_SCENE_HELP 12
+#define IDM_SCENE_DUPLICATE 13
+#define IDM_SCENE_INFO 14
+#define IDM_GOTO_PLAYER 15
 
 #define IDM_3D_WIRED 20
 #define IDM_3D_TEXTURED 21
@@ -781,38 +778,6 @@ void CL64_Views_Com::Context_Menu(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_GRID_SNAP, L"&Grid Snap");
 	}
 
-	// Move Scale Rotate
-	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-	if (App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes))
-	{
-		// Enabled
-		AppendMenuW(hMenu, MF_STRING, IDM_MOVE, L"&Move Brush");
-		AppendMenuW(hMenu, MF_STRING, IDM_SCALE, L"&Scale Brush");
-		AppendMenuW(hMenu, MF_STRING, IDM_ROTATE, L"&Rotate Brush");
-		AppendMenuW(hMenu, MF_STRING, IDM_SCENE_DESELECT, L"&Deselect   Esc Key");
-
-		// Copy Functions
-		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DUPLICATE, L"&Duplicate");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
-	}
-	else
-	{
-		// Greyed
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_MOVE, L"&Move Brush");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCALE, L"&Scale Brush");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_ROTATE, L"&Rotate Brush");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DESELECT, L"&Deselect   Esc Key");
-
-		// Copy Functions
-		AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_SCENE_DUPLICATE, L"&Duplicate");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-		AppendMenuW(hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
-		
-	}
-
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	AppendMenuW(hMenu, MF_STRING, IDM_GOTO_PLAYER, L"Move Camera to Player");
@@ -989,18 +954,6 @@ bool CL64_Views_Com::Context_Command(WPARAM wParam)
 		App->CL_Editor_Control->Start_Preview_Mode();
 		return TRUE;
 
-	case IDM_MOVE:
-		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 1);
-		return TRUE;
-
-	case IDM_SCALE:
-		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH, 2);
-		return TRUE;
-
-	case IDM_ROTATE:
-		App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
-		return TRUE;
-
 	case IDM_SCENE_EDITOR:
 		App->CL_Editor_Control->Start_Editor_Scene();
 		return TRUE;
@@ -1085,7 +1038,7 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 
 		if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 		{
-			if (App->CL_Top_Tabs->flag_Brush_Move == 1)
+			if (App->CL_Faces_Control->flag_Brush_Move == 1)
 			{
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Doc->MoveSelectedBrushes(&dv);
@@ -1110,7 +1063,7 @@ void CL64_Views_Com::On_Mouse_Move(POINT CursorPosition, HWND hDlg)
 
 			}
 
-			if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
+			if (App->CL_Faces_Control->flag_Brush_Rotate == 1)
 			{
 				App->CL_Doc->LockAxis(&dv);
 				App->CL_Render->Render_ViewDeltaToRotation(Current_View, (float)dx, &dv);
@@ -1188,14 +1141,14 @@ void CL64_Views_Com::On_Left_Button_Up(POINT CursorPosition)
 
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
 	{
-		if (App->CL_Top_Tabs->flag_Brush_Move == true)
+		if (App->CL_Faces_Control->flag_Brush_Move == true)
 		{
 			App->CL_Doc->DoneMovingBrushes();
 			App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
 			App->CL_Level->flag_Level_is_Modified = true;
 		}
 
-		if (App->CL_Top_Tabs->flag_Brush_Rotate == true)
+		if (App->CL_Faces_Control->flag_Brush_Rotate == true)
 		{
 			App->CL_Doc->UpdateSelected();
 
@@ -1253,7 +1206,7 @@ void CL64_Views_Com::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 	// ---------------------- Move Brush
 	if (App->CL_Doc->mModeTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) //|| (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
 	{
-		if (App->CL_Top_Tabs->flag_Brush_Move == 1)
+		if (App->CL_Faces_Control->flag_Brush_Move == 1)
 		{
 			int CursorSide = 0;
 			App->CL_Doc->sides = SideLookup[CursorSide];
@@ -1262,7 +1215,7 @@ void CL64_Views_Com::On_Left_Button_Down(POINT CursorPosition, HWND hDlg)
 			App->CL_Doc->TempCopySelectedBrushes();
 		}
 
-		if (App->CL_Top_Tabs->flag_Brush_Rotate == 1)
+		if (App->CL_Faces_Control->flag_Brush_Rotate == 1)
 		{
 			int CursorSide = 0;
 			App->CL_Doc->sides = SideLookup[CursorSide];

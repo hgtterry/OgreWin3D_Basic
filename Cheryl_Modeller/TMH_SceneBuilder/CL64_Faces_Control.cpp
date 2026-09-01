@@ -31,6 +31,11 @@ CL64_Faces_Control::CL64_Faces_Control(void)
 {
 	Selected_Face_Index = 0;
 
+	flag_Brush_Select = true;
+	flag_Brush_Move = false;
+	flag_Brush_Rotate = false;
+	flag_Brush_Scale = false;
+
 	flag_No_Faces = true;
 	flag_All_Faces = false;
 	flag_Next_Face = false;
@@ -137,7 +142,7 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Select);
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Brush_Select);
 			}
 
 			break;
@@ -152,7 +157,7 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Move);
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Brush_Move);
 			}
 
 			break;
@@ -167,7 +172,7 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Rotate);
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Brush_Rotate);
 			}
 			break;
 		}
@@ -181,7 +186,7 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Scale);
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Brush_Scale);
 			}
 
 			break;
@@ -285,19 +290,19 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 		
 		if (LOWORD(wParam) == IDC_BT_TT_MOVE)
 		{
-			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 1);
+			p_Faces->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 1);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_TT_SCALE)
 		{
-			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH, 2);
+			p_Faces->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH, 2);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_TT_ROTATE)
 		{
-			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
+			p_Faces->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
 			return TRUE;
 		}
 
@@ -476,7 +481,7 @@ void CL64_Faces_Control::Unselect_All_Face()
 	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = false;
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
-	Reset_Flags();
+	Reset_Face_Buttons();
 	flag_No_Faces = true;
 	
 	EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_BT_FACE_FACEEDITOR), false);
@@ -491,7 +496,7 @@ void CL64_Faces_Control::Unselect_All_Face()
 // *************************************************************************
 void CL64_Faces_Control::Select_All_Face()
 {
-	Reset_Flags();
+	Reset_Face_Buttons();
 	flag_All_Faces = true;
 	
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
@@ -515,7 +520,7 @@ void CL64_Faces_Control::Select_All_Face()
 // *************************************************************************
 void CL64_Faces_Control::Select_Next_Face()
 {
-	Reset_Flags();
+	Reset_Face_Buttons();
 	flag_Next_Face = true;
 	
 	Selected_Face_Index++;
@@ -546,7 +551,7 @@ void CL64_Faces_Control::Select_Next_Face()
 // *************************************************************************
 void CL64_Faces_Control::Select_Prev_Face()
 {
-	Reset_Flags();
+	Reset_Face_Buttons();
 	flag_Prev_Face = true;
 	
 	Selected_Face_Index--;
@@ -603,9 +608,9 @@ void CL64_Faces_Control::Select_Face()
 }
 
 // *************************************************************************
-// *				Reset_Flags:- Terry Mo and Hazel 2025				   *
+// *			Reset_Face_Buttons:- Terry Mo and Hazel 2026
 // *************************************************************************
-void CL64_Faces_Control::Reset_Flags()
+void CL64_Faces_Control::Reset_Face_Buttons()
 {
 	// Reset all face-related flags to their default state
 	flag_No_Faces = false;
@@ -615,4 +620,52 @@ void CL64_Faces_Control::Reset_Flags()
 
 	// Redraw the window to reflect the changes in the flags
 	RedrawWindow(Faces_Control_Dlg_hWnd, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *	  	Reset_Brush_Buttons:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CL64_Faces_Control::Reset_Brush_Buttons()
+{
+	App->CL_Faces_Control->flag_Brush_Select = false;
+	App->CL_Faces_Control->flag_Brush_Move = false;
+	App->CL_Faces_Control->flag_Brush_Rotate = false;
+	App->CL_Faces_Control->flag_Brush_Scale = false;
+
+	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+}
+
+// *************************************************************************
+// *			Set_Brush_Mode:- Terry Mo and Hazel 2025				   *
+// *************************************************************************
+void CL64_Faces_Control::Set_Brush_Mode(int Mode, int Dlg_Selection)
+{
+	SetCursor(App->CL_Views_Com->hcBoth);
+
+	App->CL_Doc->ResetAllSelectedFaces();;
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	Reset_Brush_Buttons();
+
+	if (Dlg_Selection == 1)
+	{
+		flag_Brush_Move = 1;
+	}
+
+	if (Dlg_Selection == 2)
+	{
+		flag_Brush_Scale = 1;
+	}
+
+	if (Dlg_Selection == 3)
+	{
+		flag_Brush_Rotate = 1;
+	}
+
+	Reset_Face_Buttons();
+
+	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+
+	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
+	App->CL_Doc->mModeTool = Mode;
 }

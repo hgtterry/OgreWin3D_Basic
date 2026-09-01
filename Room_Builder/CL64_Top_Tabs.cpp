@@ -31,11 +31,6 @@ CL64_Top_Tabs::CL64_Top_Tabs(void)
 {
 	TopTabs_Dlg_hWnd = nullptr;
 
-	flag_Brush_Select = true;
-	flag_Brush_Move = false;
-	flag_Brush_Rotate = false;
-	flag_Brush_Scale = false;
-
 	flag_Full_View_3D = false;
 	flag_View_Top_Left = false;
 	flag_View_Top_Right = false;
@@ -210,7 +205,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Select);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Faces_Control->flag_Brush_Select);
 			}
 
 			return CDRF_DODEFAULT;
@@ -227,7 +222,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Move);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Faces_Control->flag_Brush_Move);
 			}
 
 			return CDRF_DODEFAULT;
@@ -244,7 +239,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Rotate);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Faces_Control->flag_Brush_Rotate);
 			}
 
 			return CDRF_DODEFAULT;
@@ -261,7 +256,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Top_Tabs->flag_Brush_Scale);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Faces_Control->flag_Brush_Scale);
 			}
 
 			return CDRF_DODEFAULT;
@@ -398,33 +393,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 		
-		if (LOWORD(wParam) == IDC_BT_BRUSH_SELECT)
-		{
-			App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
-
-			App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_BRUSH_MOVE)
-		{
-			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH,1);
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_BRUSH_SCALE)
-		{
-			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_SCALEBRUSH, 2);
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_BRUSH_ROTATE)
-		{
-			App->CL_Top_Tabs->Set_Brush_Mode(ID_TOOLS_BRUSH_MOVEROTATEBRUSH, 3);
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
@@ -477,40 +445,6 @@ void CL64_Top_Tabs::Set_View_Buttons(int Selected_View)
 void CL64_Top_Tabs::Redraw_TopTabs_Dlg()
 {
 	RedrawWindow(TopTabs_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-}
-
-// *************************************************************************
-// *			Set_Brush_Mode:- Terry and Hazel Flanigan 2024			   *
-// *************************************************************************
-void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
-{
-	SetCursor(App->CL_Views_Com->hcBoth);
-
-	App->CL_Doc->ResetAllSelectedFaces();;
-	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-	Reset_Brush_Buttons();
-
-	if (Dlg_Selection == 1)
-	{
-		flag_Brush_Move = 1;
-	}
-
-	if (Dlg_Selection == 2)
-	{
-		flag_Brush_Scale = 1;
-	}
-
-	if (Dlg_Selection == 3)
-	{
-		flag_Brush_Rotate = 1;
-	}
-	
-	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-
-	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
-	//App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_SCALEBRUSH;
-	App->CL_Doc->mModeTool = Mode;
 }
 
 //// *************************************************************************
@@ -571,22 +505,22 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
 {
 	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_MOVE), Enable);
-	flag_Brush_Move = Active;
+	App->CL_Faces_Control->flag_Brush_Move = Active;
 
 	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Evirons)
 	{
 		EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SCALE), false);
-		flag_Brush_Scale = false;
+		App->CL_Faces_Control->flag_Brush_Scale = false;
 	}
 	else
 	{
 		EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SCALE), Enable);
-		flag_Brush_Scale = Active;
+		App->CL_Faces_Control->flag_Brush_Scale = Active;
 	}
 
 
 	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_ROTATE), Enable);
-	flag_Brush_Scale = Active;
+	App->CL_Faces_Control->flag_Brush_Scale = Active;
 }
 
 // *************************************************************************
@@ -595,7 +529,7 @@ void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
 void CL64_Top_Tabs::Enable_Select_Button(bool Enable, bool Active)
 {
 	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SELECT), Enable);
-	flag_Brush_Select = Active;
+	App->CL_Faces_Control->flag_Brush_Select = Active;
 }
 
 // *************************************************************************
@@ -604,20 +538,7 @@ void CL64_Top_Tabs::Enable_Select_Button(bool Enable, bool Active)
 void CL64_Top_Tabs::Enable_Move_Button(bool Enable, bool Active)
 {
 	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_MOVE), Enable);
-	flag_Brush_Move = Active;
-}
-
-// *************************************************************************
-// *	  	Reset_Brush_Buttons:- Terry and Hazel Flanigan 2025			   *
-// *************************************************************************
-void CL64_Top_Tabs::Reset_Brush_Buttons()
-{
-	flag_Brush_Select = 0;
-	flag_Brush_Move = 0;
-	flag_Brush_Rotate = 0;
-	flag_Brush_Scale = 0;
-
-	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+	App->CL_Faces_Control->flag_Brush_Move = Active;
 }
 
 // **************************************************************************

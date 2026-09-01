@@ -35,18 +35,10 @@ public:
 	void Set_View_Buttons(int Selected_View);
 	void Redraw_TopTabs_Dlg();
 
-	void Reset_Brush_Buttons();
-
-	void Set_Brush_Mode(int Mode, int Dlg_Selection);
 	void Show_TopTabs(bool Enable);
 	
 	void Reset_Bmps(void);
 	void Set_Texture_Bmp_On(void) const;
-
-	bool flag_Brush_Select;
-	bool flag_Brush_Move;
-	bool flag_Brush_Rotate;
-	bool flag_Brush_Scale;
 
 	bool flag_Full_View_3D;
 	bool flag_View_Top_Left;

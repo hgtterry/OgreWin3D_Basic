@@ -335,7 +335,7 @@ void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 		}
 		else
 		{
-			App->CL_Faces_Control->Reset_Flags();
+			App->CL_Faces_Control->Reset_Face_Buttons();
 			App->CL_Properties_Textures->Enable_FaceProps_Button(false);
 		}
 		

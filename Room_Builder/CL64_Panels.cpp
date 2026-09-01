@@ -51,8 +51,8 @@ void CL64_Panels::Deselect_All_Brushes_Update_Dlgs(void)
 
 	App->CL_Properties_Textures->Enable_FaceProps_Button(false);
 
-	App->CL_Top_Tabs->Reset_Brush_Buttons();
-	App->CL_Top_Tabs->flag_Brush_Select = 1;
+	App->CL_Faces_Control->Reset_Brush_Buttons();
+	App->CL_Faces_Control->flag_Brush_Select = 1;
 
 	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
 

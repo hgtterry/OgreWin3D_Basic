@@ -858,7 +858,7 @@ void CL64_File::Set_Editor()
 	//App->CL_Top_Tabs->Enable_Select_Button(true, 1);
 
 	// Deselect any selected face dialog buttons
-	App->CL_Faces_Control->Reset_Flags();
+	App->CL_Faces_Control->Reset_Face_Buttons();
 
 	// Reset the selected face index and all selections in the document
 	App->CL_Faces_Control->Selected_Face_Index = 0;

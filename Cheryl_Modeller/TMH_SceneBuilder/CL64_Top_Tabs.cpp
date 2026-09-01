@@ -31,13 +31,6 @@ CL64_Top_Tabs::CL64_Top_Tabs(void)
 {
 	TopTabs_Dlg_hWnd = nullptr;
 
-	flag_Brush_Select = true;
-
-	flag_Brush_Move = false;
-	flag_Brush_Rotate = false;
-
-	flag_Brush_Scale = false;
-
 	flag_Full_View_3D = false;
 	flag_View_Top_Left = false;
 	flag_View_Top_Right = false;
@@ -856,42 +849,6 @@ void CL64_Top_Tabs::Redraw_TopTabs_Dlg()
 	RedrawWindow(TopTabs_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
-// *************************************************************************
-// *			Set_Brush_Mode:- Terry Mo and Hazel 2025				   *
-// *************************************************************************
-void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
-{
-	SetCursor(App->CL_Views_Com->hcBoth);
-
-	App->CL_Doc->ResetAllSelectedFaces();;
-	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-	Reset_Brush_Buttons();
-
-	if (Dlg_Selection == 1)
-	{
-		flag_Brush_Move = 1;
-	}
-
-	if (Dlg_Selection == 2)
-	{
-		flag_Brush_Scale = 1;
-	}
-
-	if (Dlg_Selection == 3)
-	{
-		flag_Brush_Rotate = 1;
-	}
-	
-	App->CL_Faces_Control->Reset_Flags();
-
-	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-
-	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
-	//App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_SCALEBRUSH;
-	App->CL_Doc->mModeTool = Mode;
-}
-
 //// *************************************************************************
 //// *			Set_Brush_Move:- Terry Mo and Hazel 2025				   *
 //// *************************************************************************
@@ -934,19 +891,6 @@ void CL64_Top_Tabs::Set_Brush_Mode(int Mode, int Dlg_Selection)
 //	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
 //	App->CL_Doc->mModeTool = ID_TOOLS_BRUSH_SCALEBRUSH;
 //}
-
-// *************************************************************************
-// *	  	Reset_Brush_Buttons:- Terry Mo and Hazel 2025				   *
-// *************************************************************************
-void CL64_Top_Tabs::Reset_Brush_Buttons()
-{
-	flag_Brush_Select = 0;
-	flag_Brush_Move = 0;
-	flag_Brush_Rotate = 0;
-	flag_Brush_Scale = 0;
-
-	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
-}
 
 // **************************************************************************
 // *				Show_TopTabs:- Terry Mo and Hazel 2025					*
