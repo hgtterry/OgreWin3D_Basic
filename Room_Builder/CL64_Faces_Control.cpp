@@ -198,25 +198,61 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 		case IDC_BT_FACES_NONE:
 		{
-			App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_No_Faces);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FACES_NONE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_No_Faces);
+			}
+
 			break;
 		}
 
 		case IDC_BT_TT_FACES_ALL:
 		{
-			App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_All_Faces);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACES_ALL));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_All_Faces);
+			}
+
 			break;
 		}
 
 		case IDC_BT_TT_FACE_NEXT:
 		{
-			App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Next_Face);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACE_NEXT));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Next_Face);
+			}
+
 			break;
 		}
 
 		case IDC_BT_TT_FACE_PREV:
 		{
-			App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Prev_Face);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACE_PREV));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Prev_Face);
+			}
+
 			break;
 		}
 
@@ -240,7 +276,16 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 		case IDC_BT_FACE_FACEEDITOR:
 		{
-			App->Custom_Button_Normal(item);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FACE_FACEEDITOR));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			break;
 		}
 

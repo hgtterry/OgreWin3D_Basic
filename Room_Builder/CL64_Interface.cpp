@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Interface.h"
 
@@ -190,4 +191,22 @@ void CL64_Interface::Unselect_Brush_And_Set_Dlgs(void)
 	App->CL_Faces_Control->Update_Faces_Dialog();
 
 	//EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
+}
+
+// *************************************************************************
+// *		Enable_Face_Buttons:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Interface::Enable_Face_Buttons(bool option)
+{
+	auto& Face_Dlg = App->CL_Faces_Control;
+
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACES_NONE), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACES_ALL), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_PREV), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_NEXT), option);
+	
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACE_FACEEDITOR), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACE_SHOWSELECTEDFACE), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), option);
+
 }

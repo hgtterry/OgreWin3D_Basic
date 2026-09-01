@@ -563,18 +563,27 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 				App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
                 App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
+                if (pMinBrush->GroupId == Enums::Brushs_ID_Area)
+                {
+                    App->CL_Interface->Show_Faces_Panel_Control(true);
+                    App->CL_Interface->Enable_Face_Buttons(true);
+                }
+                else
+                {
+                    App->CL_Interface->Show_Faces_Panel_Control(true);
+                    App->CL_Interface->Enable_Face_Buttons(false);
+                }
+
                 EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_ENABLED);
-                // Entity Selected in OnSelchangeBrushlist
+         
 			}
 
             if (pMinBrush->GroupId == Enums::Brushs_ID_Area)
             {
                 App->CL_Interface->Show_Faces_Panel_Control(true);
+                App->CL_Interface->Enable_Face_Buttons(true);
             }
-            else
-            {
-                App->CL_Interface->Show_Faces_Panel_Control(false);
-            }
+
         } 
     }
     else
