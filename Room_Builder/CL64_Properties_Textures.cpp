@@ -53,7 +53,7 @@ CL64_Properties_Textures::~CL64_Properties_Textures()
 // *************************************************************************
 void CL64_Properties_Textures::Reset_Class()
 {
-	App->CL_Properties_Textures->Enable_FaceProps_Button(false);
+	
 }
 
 // *************************************************************************
@@ -75,8 +75,6 @@ void CL64_Properties_Textures::Start_TextureDialog()
 	Textures_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_TextureDialog);
 
 	Dialog_Created = 1;
-	Fill_ListBox();
-	SelectBitmap();
 }
 
 // *************************************************************************
@@ -89,11 +87,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_GD_TEXTURES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-
-		SendDlgItemMessage(hDlg, IDC_LISTTDTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STWIDTHHEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE2), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 
 		return TRUE;
 	}
@@ -144,16 +138,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_LISTTDTEXTURES)
-		{
-			if (App->CL_Properties_Textures->Dialog_Created == 1)
-			{
-				App->CL_Properties_Textures->List_Selection_Changed();
-			}
-
-			return TRUE;
-		}
-
+		
 		break;
 	}
 	}
@@ -210,99 +195,6 @@ static void TextureBrushList(BrushList* pList, int SelId, char const* Name, WadF
 }
 
 // *************************************************************************
-// *			Apply_Texture:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-void CL64_Properties_Textures::Apply_Texture()
-{
-	int SelectedItem;
-	int		i;
-
-	char TextureName[MAX_PATH]{ 0 };
-
-	SelectedItem = SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-
-	SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETTEXT, (WPARAM)SelectedItem, (LPARAM)TextureName);
-
-	SelectedItem = GetIndexFromTextureName(TextureName);
-	if (SelectedItem == -1)
-	{
-		App->Say("Cant Find Texture");
-		return;
-	}
-
-	SelectedItem = SelectedItem;
-
-	if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-	{
-		return;
-	}
-
-	App->CL_Level->flag_Level_is_Modified = true;
-
-	App->CL_Doc->mAdjustMode = ADJUST_MODE_FACE;
-
-	switch (App->CL_Doc->mAdjustMode)
-	{
-	case ADJUST_MODE_FACE:
-	{
-		int Size;
-
-		Size = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
-		for (i = 0; i < Size; ++i)
-		{
-			Face* pFace;
-			pFace = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, i);
-
-			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
-			TextureFace(pFace, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
-			
-		}
-		
-		int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-		for (i = 0; i < NumSelBrushes; ++i)
-		{
-			Brush* pBrush;
-
-			pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-			App->CL_X_Brush->Brush_UpdateChildFaces(pBrush);
-		}
-		break;
-	}
-
-	case ADJUST_MODE_BRUSH:
-	{
-		if (App->CL_Doc->GetSelState() & MULTIBRUSH)
-		{
-			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-			for (i = 0; i < NumSelBrushes; ++i)
-			{
-				Brush* pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-				
-				WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
-				TextureBrush(pBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
-				
-				App->CL_X_Brush->Brush_UpdateChildFaces(pBrush);
-			}
-		}
-		else
-		{
-			
-			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
-			TextureBrush(App->CL_Doc->CurBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
-			
-			App->CL_X_Brush->Brush_UpdateChildFaces(App->CL_Doc->CurBrush);
-		}
-		break;
-	}
-
-	default:
-		return;
-	}
-
-	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
-}
-
-// *************************************************************************
 // *		 GetIndexFromTextureName:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
 int CL64_Properties_Textures::GetIndexFromTextureName(char* TextureName)
@@ -332,75 +224,6 @@ int CL64_Properties_Textures::GetIndexFromTextureName(char* TextureName)
 
 	// No Texture Found
 	return -1;
-}
-
-// *************************************************************************
-// *	  	List_Selection_Changed:- Terry and Hazel Flanigan 2023		   *
-// *************************************************************************
-void CL64_Properties_Textures::List_Selection_Changed()
-{
-	int Index = SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-	if (Index == LB_ERR)
-	{
-		App->Say("ListBox No Selection Available",(LPSTR)"");
-	}
-	else
-	{
-		char TextureName[MAX_PATH];
-		TextureName[0] = 0;
-
-		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETTEXT, (WPARAM)Index, (LPARAM)TextureName);
-		strcpy(m_CurrentTexture, TextureName);
-		
-		SelectBitmap();
-	}
-
-	char buf[255];
-	sprintf(buf, "Index = %i        %i X %i", Index, BasePicWidth, BasePicHeight);
-	SetDlgItemText(Textures_Dlg_Hwnd, IDC_STWIDTHHEIGHT, (LPCTSTR)buf);
-
-	Selected_Index = Index;
-}
-
-// *************************************************************************
-// *			ViewerBasePic:- Terry and Hazel Flanigan 2025	  		   *
-// *************************************************************************
-bool CALLBACK CL64_Properties_Textures::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	if (msg == WM_PAINT)
-	{
-		PAINTSTRUCT ps;
-		HDC hDC = BeginPaint(hwnd, &ps);
-		RECT clientRect;
-
-		// Get the client rectangle and adjust its dimensions
-		GetClientRect(hwnd, &clientRect);
-		clientRect.left--;
-		clientRect.bottom--;
-
-		// Fill the rectangle with a green brush
-		FillRect(hDC, &clientRect, (HBRUSH)(RGB(0, 255, 0)));
-
-		// Check if a base bitmap is selected
-		if (App->CL_Properties_Textures->Sel_BaseBitmap != nullptr)
-		{
-			RECT sourceRect = { 0, 0, App->CL_Properties_Textures->BasePicWidth, App->CL_Properties_Textures->BasePicHeight };
-			RECT destRect = clientRect;
-
-			// Get the device context and set the stretch mode
-			HDC renderDC = GetDC(hwnd);
-			SetStretchBltMode(renderDC, HALFTONE);
-
-			// Render the texture
-			App->CL_Properties_Textures->RenderTexture_Blit(renderDC, App->CL_Properties_Textures->Sel_BaseBitmap, &sourceRect, &destRect);
-			ReleaseDC(hwnd, renderDC);
-		}
-
-		EndPaint(hwnd, &ps);
-		return 0;
-	}
-
-	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
 // *************************************************************************
@@ -443,92 +266,6 @@ bool CL64_Properties_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RE
 }
 
 // *************************************************************************
-// *			A_SelectBitmap:- Terry and Hazel Flanigan 2025		  	   *
-// *************************************************************************
-bool CL64_Properties_Textures::SelectBitmap()
-{
-	char mTextureName[MAX_PATH];
-	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(m_CurrentTexture);
-	strcpy(mTextureName, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
-	//App->Say(mTextureName);
-
-	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
-	Ogre::FileInfoList::const_iterator i, iend;
-	iend = RFI->end();
-
-	for (i = RFI->begin(); i != iend; ++i)
-	{
-		if (i->filename == mTextureName)
-		{
-			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
-
-			mFileString = ff->getAsString();
-
-			char mFileName[MAX_PATH];
-			strcpy(mFileName, App->RB_Directory_FullPath);
-			strcat(mFileName, "\\Data\\");
-			strcat(mFileName, mTextureName);
-
-			std::ofstream outFile;
-			outFile.open(mFileName, std::ios::binary);
-			outFile << mFileString;
-			outFile.close();
-
-			mFileString.clear();
-
-			Texture_To_HBITMP(mFileName);
-			remove(mFileName);
-			return 1;
-		}
-	}
-
-	return 0;
-}
-
-// *************************************************************************
-// *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2024	 	   *
-// *************************************************************************
-void CL64_Properties_Textures::Texture_To_HBITMP(char* TextureFileName)
-{
-	HWND PreviewWnd = GetDlgItem(Textures_Dlg_Hwnd, IDC_BASETEXTURE2);
-	HDC	hDC = GetDC(PreviewWnd);
-
-	Sel_BaseBitmap = App->CL_Textures->Get_HBITMP(TextureFileName, hDC);
-
-	BasePicWidth = App->CL_Textures->BasePicWidth;
-	BasePicHeight = App->CL_Textures->BasePicHeight;
-	
-	ReleaseDC(PreviewWnd, hDC);
-
-	RedrawWindow(PreviewWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-}
-
-// *************************************************************************
-// *			Fill_ListBox:- Terry and Hazel Flanigan 2025			   *
-// *************************************************************************
-void CL64_Properties_Textures::Fill_ListBox()
-{
-	int LBIndex;
-
-	//if (f_TextureDlg_Active == 1)
-	{
-		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-
-		for (int index = 0; index < App->CL_TXL_Editor->Texture_Count; index++)
-		{
-			char mName[MAX_PATH];
-
-			strcpy(mName, App->CL_TXL_Editor->Texture_List[index]->Name);
-
-			LBIndex = SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
-		}
-
-		SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
-		
-	}
-}
-
-// *************************************************************************
 // *	  	Get_Selected_Face:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Properties_Textures::Get_Selected_Face()
@@ -553,7 +290,6 @@ void CL64_Properties_Textures::Select_With_TextureName(const char* TextureName)
 	SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextureName);
 	
 	strcpy(m_CurrentTexture, TextureName);
-	List_Selection_Changed();
 }
 
 // *************************************************************************
@@ -562,13 +298,5 @@ void CL64_Properties_Textures::Select_With_TextureName(const char* TextureName)
 void CL64_Properties_Textures::Select_With_List_Index(int Index)
 {
 	SendDlgItemMessage(Textures_Dlg_Hwnd, IDC_LISTTDTEXTURES, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
-	List_Selection_Changed();
 }
 
-// *************************************************************************
-// *	Enable_FaceProps_Button:- Terry and Hazel Flanigan 2025			   *
-// *************************************************************************
-void CL64_Properties_Textures::Enable_FaceProps_Button(bool Enable)
-{
-	//EnableWindow(GetDlgItem(Textures_Dlg_Hwnd, IDC_BTTDAPPLY), Enable);
-}

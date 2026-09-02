@@ -33,17 +33,11 @@ public:
 
 	void Show_Textures_Dialog(bool Show);
 	void Start_TextureDialog();
-	void Fill_ListBox();
 	
 	void Select_With_List_Index(int Index);
-	void List_Selection_Changed();
-
+	
 	void Get_Selected_Face();
 	void Select_With_TextureName(const char* TextureName);
-
-	void Enable_FaceProps_Button(bool Enable);
-
-	void Apply_Texture();
 
 	HBITMAP	Sel_BaseBitmap;
 	long BasePicWidth;
@@ -64,14 +58,9 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_TextureDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
+	
 	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
 
-	bool SelectBitmap();
-	void Texture_To_HBITMP(char* TextureFileName);
-
-	
 	int GetIndexFromTextureName(char* TextureName);
 
 };

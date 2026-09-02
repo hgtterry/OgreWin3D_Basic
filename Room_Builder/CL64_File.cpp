@@ -476,7 +476,6 @@ bool CL64_File::Open_3dt_File()
 	//Set_Player();
 
 	App->CL_Properties_Brushes->Fill_ListBox();
-	App->CL_Properties_Textures->Fill_ListBox();
 	App->CL_Ogre->Ogre3D_Listener->CameraMode = Enums::Cam_Mode_Free;
 	App->CL_Doc->Set_Faces_To_Brush_Name_All(); // TODO: Fix up Brush Names and set Indexes
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);

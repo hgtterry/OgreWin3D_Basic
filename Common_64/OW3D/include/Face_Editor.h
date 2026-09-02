@@ -35,6 +35,8 @@ public:
 	void List_Face_Data(HWND List);
 	bool Is_Faces_Dialog_Active();
 
+	void Fill_Textures_ListBox();
+
 	HWND FaceDlg_Hwnd;
 
 	int m_NumberOfFaces;
@@ -58,12 +60,13 @@ private:
 	void Fill_ComboBox_OffSetValues(HWND hDlg);
 
 	// New
-	void Fill_Textures_ListBox();
 	void Get_Selected_Face_Texture();
 	void Select_With_TextureName(const char* TextureName);
 	void List_Selection_Changed();
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
+	void Apply_Texture();
+	int GetIndexFromTextureName(char* TextureName);
 
 
 	static signed int FlipVertical(Face* pFace, void*);
