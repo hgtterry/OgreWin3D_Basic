@@ -493,6 +493,7 @@
 #define IDC_FE_LIST_TEXTURES            1354
 #define IDC_FE_BASETEXTURE2             1355
 #define IDC_BT_FE_APPLY_TEXTURE         1356
+#define IDC_FE_BT_TXL_FILE_EDIT         1357
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -582,7 +583,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        203
 #define _APS_NEXT_COMMAND_VALUE         32850
-#define _APS_NEXT_CONTROL_VALUE         1357
+#define _APS_NEXT_CONTROL_VALUE         1358
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
