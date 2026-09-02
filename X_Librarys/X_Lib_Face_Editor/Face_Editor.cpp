@@ -957,6 +957,45 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_FE_LIST_TEXTURES)
+		{
+			if (m_FaceEditor->flag_FaceDlg_Active == true)
+			{
+				m_FaceEditor->List_Selection_Changed();
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_FE_APPLY_TEXTURE)
+		{
+			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+			if (NumSelBrushes == 0)
+			{
+				App->Say("No Brushes Selected");
+			}
+			else
+			{
+				m_FaceEditor->Apply_Texture();
+
+				App->CL_Doc->ResetAllSelectedFaces();
+
+				if (App->CL_Faces_Control->flag_All_Faces == true)
+				{
+					App->CL_Doc->SelectAllFacesInBrushes();
+				}
+				else
+				{
+					App->CL_Faces_Control->Select_Face();
+				}
+
+				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+			}
+			return TRUE;
+		}
+
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
@@ -1343,6 +1382,182 @@ void Face_Editor::List_Selection_Changed()
 	SetDlgItemText(Textures_Dlg_Hwnd, IDC_STWIDTHHEIGHT, (LPCTSTR)buf);*/
 
 	App->CL_Properties_Textures->Selected_Index = Index;
+}
+
+
+
+static void TextureBrushList(BrushList* pList, int SelId, char const* Name, WadFileEntry* pbmp);
+
+// *************************************************************************
+// *					( Static ) TextureFace							   *
+// *************************************************************************
+static void TextureFace(Face* pFace, int SelId, char const* Name, WadFileEntry* pbmp)
+{
+	App->CL_X_Face->Face_SetTextureDibId(pFace, SelId);
+	App->CL_X_Face->Face_SetTextureName(pFace, Name);
+	App->CL_X_Face->Face_SetTextureSize(pFace, pbmp->Width, pbmp->Height);
+}
+
+// *************************************************************************
+// *					( Static ) TextureBrush							   *
+// *************************************************************************
+static void TextureBrush(Brush* pBrush, int SelId, char const* Name, WadFileEntry* pbmp) // changed QD 12/03)
+{
+	int j;
+
+	if (App->CL_X_Brush->Brush_IsMulti(pBrush))
+	{
+		TextureBrushList((BrushList*)App->CL_X_Brush->Brush_GetBrushList(pBrush), SelId, Name, pbmp);
+	}
+	else
+	{
+		for (j = 0; j < App->CL_X_Brush->Brush_GetNumFaces(pBrush); ++j)
+		{
+			Face* pFace;
+
+			pFace = App->CL_X_Brush->Brush_GetFace(pBrush, j);
+			TextureFace(pFace, SelId, Name, pbmp);
+		}
+	}
+}
+
+// *************************************************************************
+// *					( Static ) TextureBrushList						   *
+// *************************************************************************
+static void TextureBrushList(BrushList* pList, int SelId, char const* Name, WadFileEntry* pbmp)
+{
+	Brush* b;
+	BrushIterator bi;
+
+	for (b = App->CL_X_Brush->BrushList_GetFirst(pList, &bi); b; b = App->CL_X_Brush->BrushList_GetNext(&bi))
+	{
+		TextureBrush(b, SelId, Name, pbmp); // changed QD 12/03
+	}
+}
+
+// *************************************************************************
+// *			Apply_Texture:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void Face_Editor::Apply_Texture()
+{
+	int SelectedItem;
+	int		i;
+
+	char TextureName[MAX_PATH]{ 0 };
+
+	SelectedItem = SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+
+	SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_GETTEXT, (WPARAM)SelectedItem, (LPARAM)TextureName);
+
+	SelectedItem = GetIndexFromTextureName(TextureName);
+	if (SelectedItem == -1)
+	{
+		App->Say("Cant Find Texture");
+		return;
+	}
+
+	SelectedItem = SelectedItem;
+
+	if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
+	{
+		return;
+	}
+
+	App->CL_Level->flag_Level_is_Modified = true;
+
+	App->CL_Doc->mAdjustMode = ADJUST_MODE_FACE;
+
+	switch (App->CL_Doc->mAdjustMode)
+	{
+	case ADJUST_MODE_FACE:
+	{
+		int Size;
+
+		Size = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+		for (i = 0; i < Size; ++i)
+		{
+			Face* pFace;
+			pFace = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, i);
+
+			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(App->CL_Properties_Textures->m_CurrentTexture);
+			TextureFace(pFace, SelectedItem, (LPCSTR)App->CL_Properties_Textures->m_CurrentTexture, BitmapPtr);
+
+		}
+
+		int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+		for (i = 0; i < NumSelBrushes; ++i)
+		{
+			Brush* pBrush;
+
+			pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+			App->CL_X_Brush->Brush_UpdateChildFaces(pBrush);
+		}
+		break;
+	}
+
+	case ADJUST_MODE_BRUSH:
+	{
+		if (App->CL_Doc->GetSelState() & MULTIBRUSH)
+		{
+			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+			for (i = 0; i < NumSelBrushes; ++i)
+			{
+				Brush* pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
+
+				WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(App->CL_Properties_Textures->m_CurrentTexture);
+				TextureBrush(pBrush, SelectedItem, (LPCSTR)App->CL_Properties_Textures->m_CurrentTexture, BitmapPtr);
+
+				App->CL_X_Brush->Brush_UpdateChildFaces(pBrush);
+			}
+		}
+		else
+		{
+
+			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(App->CL_Properties_Textures->m_CurrentTexture);
+			TextureBrush(App->CL_Doc->CurBrush, SelectedItem, (LPCSTR)App->CL_Properties_Textures->m_CurrentTexture, BitmapPtr);
+
+			App->CL_X_Brush->Brush_UpdateChildFaces(App->CL_Doc->CurBrush);
+		}
+		break;
+	}
+
+	default:
+		return;
+	}
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+}
+
+// *************************************************************************
+// *		 GetIndexFromTextureName:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+int Face_Editor::GetIndexFromTextureName(char* TextureName)
+{
+	CL64_WadFile* pWad = App->CL_Level->Level_GetWad_Class();
+
+	// Check 
+	if (pWad == nullptr)
+	{
+		App->Say("Error Getting Wad Class");
+		return -1;
+	}
+
+	// Search Textures
+	for (int index = 0; index < pWad->mBitmapCount; index++)
+	{
+		char mName[MAX_PATH];
+		strcpy(mName, pWad->mBitmaps[index].Name);
+
+		bool test = strcmp(mName, TextureName);
+		if (test == 0)
+		{
+			// Found return texture index
+			return index;
+		}
+	}
+
+	// No Texture Found
+	return -1;
 }
 
 // *************************************************************************

@@ -43,6 +43,8 @@ public:
 
 	void Enable_FaceProps_Button(bool Enable);
 
+	void Apply_Texture();
+
 	HBITMAP	Sel_BaseBitmap;
 	long BasePicWidth;
 	long BasePicHeight;
@@ -69,7 +71,7 @@ private:
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
 
-	void Apply_Texture();
+	
 	int GetIndexFromTextureName(char* TextureName);
 
 };

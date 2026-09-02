@@ -64,6 +64,8 @@ private:
 	void List_Selection_Changed();
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
+	void Apply_Texture();
+	int GetIndexFromTextureName(char* TextureName);
 
 
 	static signed int FlipVertical(Face* pFace, void*);
