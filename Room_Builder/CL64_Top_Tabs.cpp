@@ -48,7 +48,6 @@ CL64_Top_Tabs::~CL64_Top_Tabs(void)
 // *************************************************************************
 void CL64_Top_Tabs::Reset_Class()
 {
-	Enable_TopBar_Brush_Buttons(false, false);
 	App->CL_Top_Tabs->flag_Full_View_3D = 0;
 	App->CL_Top_Tabs->flag_View_Top_Left = 0;
 	App->CL_Top_Tabs->flag_View_Top_Right = 0;
@@ -497,30 +496,6 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 {
 	HWND Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_TOP_RIGHT);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TR_Off_Bmp);
-}
-
-// *************************************************************************
-// *	Enable_TopBar_Brush_Buttons:- Terry and Hazel Flanigan 2025   	   *
-// *************************************************************************
-void CL64_Top_Tabs::Enable_TopBar_Brush_Buttons(bool Enable, bool Active)
-{
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_MOVE), Enable);
-	App->CL_Faces_Control->flag_Brush_Move = Active;
-
-	if (App->CL_Doc->CurBrush->GroupId == Enums::Brushs_ID_Evirons)
-	{
-		EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SCALE), false);
-		App->CL_Faces_Control->flag_Brush_Scale = false;
-	}
-	else
-	{
-		EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SCALE), Enable);
-		App->CL_Faces_Control->flag_Brush_Scale = Active;
-	}
-
-
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_ROTATE), Enable);
-	App->CL_Faces_Control->flag_Brush_Scale = Active;
 }
 
 // *************************************************************************

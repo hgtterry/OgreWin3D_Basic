@@ -68,7 +68,7 @@ CL64_Doc::CL64_Doc(void)
 	SelectLock = FALSE;
 	TempEnt = FALSE;
     mCurrentTool = CURTOOL_NONE;
-    mCurrentGroup = 0;
+    mCurrentGroup = Enums::Brushs_ID_Area;
 
     flag_IsNewDocument = 0;
     flag_Track_Camera = 1;
@@ -524,10 +524,12 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
         {
             // Reset selections so we pick new selection
              // if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
-            ResetAllSelections();
-
+           
             // Select the brush and show visuals
-            App->CL_Brush_X->Select_Brush_Editor(pMinBrush);
+            App->CL_Faces_Control->Select_Brush_Faces(pMinBrush);
+
+
+
             App->CL_Ogre->OGL_Listener->Show_Visuals(true);
 
             // Enable the delete menu item
@@ -535,7 +537,6 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 
             // Enable top tabs buttons in the interface
             App->CL_Interface->Enable_TopTabs_Buttons(true);
-            App->CL_Interface->Show_Faces_Panel_Control(true);
         }
     }
 }

@@ -421,7 +421,7 @@ void CL64_Properties_Brushes::Select_From_List(int index)
 void CL64_Properties_Brushes::OnSelchangeBrushlist(int index, bool clear)
 {
 	int brushCount = App->CL_X_Brush->Get_Brush_Count();
-	bool hasChanged = false;
+	bool Selection_Changed = false;
 
 	if (brushCount > 0)
 	{
@@ -455,10 +455,10 @@ void CL64_Properties_Brushes::OnSelchangeBrushlist(int index, bool clear)
 			// App->CLSB_TopTabs->Update_Dlg_Controls(); // Uncomment if needed
 		}
 
-		hasChanged = true;
+		Selection_Changed = true;
 	}
 
-	if (hasChanged)
+	if (Selection_Changed)
 	{
 		App->CL_Doc->UpdateSelected();
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);

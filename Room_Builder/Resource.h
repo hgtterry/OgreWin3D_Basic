@@ -490,7 +490,8 @@
 #define IDC_BT_TT_SCALE                 1350
 #define IDC_BT_TT_ROTATE                1351
 #define IDC_BT_TT_SHEAR                 1352
-#define IDC_BUTTON4                     1353
+#define IDC_FE_LIST_TEXTURES            1354
+#define IDC_FE_BASETEXTURE2             1355
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -580,7 +581,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        203
 #define _APS_NEXT_COMMAND_VALUE         32850
-#define _APS_NEXT_CONTROL_VALUE         1354
+#define _APS_NEXT_CONTROL_VALUE         1356
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

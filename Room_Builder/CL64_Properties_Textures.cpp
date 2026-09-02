@@ -72,7 +72,7 @@ void CL64_Properties_Textures::Show_Textures_Dialog(bool Show)
 // *************************************************************************
 void CL64_Properties_Textures::Start_TextureDialog()
 {
-	Textures_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_TextureDialog);
+	Textures_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->MainHwnd, (DLGPROC)Proc_TextureDialog);
 
 	Dialog_Created = 1;
 	Fill_ListBox();
@@ -95,8 +95,6 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 		SendDlgItemMessage(hDlg, IDC_BT_TXL_FILE_EDIT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TEXTURE_FACE_PROPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STWIDTHHEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		//App->CLSB_TextureDialog->f_TextureDlg_Active = 1;
 
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE2), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 

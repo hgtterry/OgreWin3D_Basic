@@ -35,8 +35,6 @@ public:
 	void Set_View_Buttons(int Selected_View);
 	void Redraw_TopTabs_Dlg();
 
-	void Enable_TopBar_Brush_Buttons(bool Enable, bool Active);
-	
 	void Enable_Select_Button(bool Enable, bool Active);
 	void Enable_Move_Button(bool Enable, bool Active);
 	

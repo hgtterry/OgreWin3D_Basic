@@ -58,13 +58,14 @@ public:
 
 	Face* mSelected_Face;
 
+	Ogre::String mFileString;
+
 private:
 	static LRESULT CALLBACK Proc_TextureDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
 
-	Ogre::String mFileString;
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
 

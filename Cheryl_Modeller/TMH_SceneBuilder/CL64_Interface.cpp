@@ -439,8 +439,6 @@ void CL64_Interface::Show_Faces_Panel_Control(bool show)
 // *************************************************************************
 void CL64_Interface::Enable_TopTabs_Faces_Buttons(bool option)
 {
-	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_FACESCON), option);
-
 	auto& Win_hWnd = App->CL_Faces_Control->Faces_Control_Dlg_hWnd;
 
 	// Array of button IDs to enable or disable
@@ -464,8 +462,6 @@ void CL64_Interface::Enable_TopTabs_Faces_Buttons(bool option)
 // *************************************************************************
 void CL64_Interface::Enable_TopTabs_Buttons(bool option)
 {
-	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_FACESCON), option);
-
 	auto& Win_hWnd = App->CL_Faces_Control->Faces_Control_Dlg_hWnd;
 
 	// Array of button IDs to enable or disable
@@ -475,7 +471,6 @@ void CL64_Interface::Enable_TopTabs_Buttons(bool option)
 		IDC_BT_TT_FACE_NEXT,
 		IDC_BT_TT_FACE_PREV,
 		IDC_TT_CB_FACES
-		//IDC_BT_FACESCON
 	};
 
 	// Iterate through the button IDs and set their enabled state

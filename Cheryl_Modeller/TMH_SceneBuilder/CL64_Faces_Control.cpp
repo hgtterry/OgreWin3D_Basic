@@ -207,7 +207,8 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			break;
 		}
 			
-		
+		// -------------------------------------------- Faces
+
 		case IDC_BT_FACES_NONE:
 		{
 			App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_No_Faces);
@@ -668,4 +669,42 @@ void CL64_Faces_Control::Set_Brush_Mode(int Mode, int Dlg_Selection)
 
 	App->CL_Doc->mCurrentTool = CURTOOL_NONE;
 	App->CL_Doc->mModeTool = Mode;
+}
+
+// *************************************************************************
+// *			Select_Brush_Faces:- Terry Mo and Hazel 2026			   
+// *************************************************************************
+void CL64_Faces_Control::Select_Brush_Faces(Brush* b)
+{
+	App->CL_Doc->CurBrush = b;
+
+	App->CL_Doc->ResetAllSelections();
+
+	// Check if there are any brushes available
+	int Bnum = App->CL_X_Brush->Get_Brush_Count();
+	if (Bnum > 0)
+	{
+		// Perform brush selection and update views
+		App->CL_Doc->DoBrushSelection(b, brushSelToggle);
+		App->CL_Doc->UpdateSelected();
+		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+		// Update the brush list dialog with the current brush
+		App->CL_Properties_Brushes->Select_in_BrushList_Dlg(App->CL_Doc->CurBrush);
+
+
+		// Enable or disable face buttons based on brush group ID
+		if (b->GroupId == Enums::Brushs_ID_Area)
+		{
+			// Update brush options and selected brushes count
+			App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(true);
+			App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
+			Update_Faces_Dialog();
+
+			// Set the active tab to brushes
+			App->CL_Properties_Tabs->Select_Brushes_Tab();
+
+			App->CL_Interface->Show_Faces_Panel_Control(true);
+		}
+	}
 }

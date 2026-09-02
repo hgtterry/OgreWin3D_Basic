@@ -169,7 +169,10 @@ void Face_Editor::Start_FaceDialog()
 	if (flag_FaceDlg_Active == 0)
 	{
 		FaceDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_FACES, App->MainHwnd, (DLGPROC)Proc_FaceDialog);
-		flag_FaceDlg_Active = 1;
+		
+		flag_FaceDlg_Active = true;
+
+		Fill_Textures_ListBox();	
 	}
 }
 
@@ -220,7 +223,8 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_CK_ALLFACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BT_FACEDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_FE_LIST_TEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -303,6 +307,9 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETPAGESIZE, 0, 1);
 		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETTICFREQ, 1, 0);
 		SendMessageW(m_FaceEditor->Slider_Rotation_hWnd, TBM_SETPOS, true, m_FaceEditor->m_TextureAngle);
+
+
+		SetWindowLongPtr(GetDlgItem(hDlg, IDC_FE_BASETEXTURE2), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 
 		return TRUE;
 	}
@@ -1255,4 +1262,226 @@ void Face_Editor::Close_Faces_Dialog()
 bool Face_Editor::Is_Faces_Dialog_Active()
 {
 	return flag_FaceDlg_Active;
+}
+
+
+// *************************************************************************
+// *			Fill_Textures_ListBox:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void Face_Editor::Fill_Textures_ListBox()
+{
+	int LBIndex;
+
+	if (flag_FaceDlg_Active == true)
+	{
+		SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		for (int index = 0; index < App->CL_TXL_Editor->Texture_Count; index++)
+		{
+			char mName[MAX_PATH];
+
+			strcpy(mName, App->CL_TXL_Editor->Texture_List[index]->Name);
+
+			LBIndex = SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
+		}
+
+		Get_Selected_Face_Texture();
+	}
+}
+
+// *************************************************************************
+// *	  	Get_Selected_Face_Texture:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void Face_Editor::Get_Selected_Face_Texture()
+{
+	App->CL_Properties_Textures->mSelected_Face = NULL;
+
+	int NumberOfFaces = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+
+	if (NumberOfFaces > 0)
+	{
+		App->CL_Properties_Textures->mSelected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
+
+		Select_With_TextureName(App->CL_X_Face->Face_GetTextureName(App->CL_Properties_Textures->mSelected_Face));
+	}
+}
+
+// *************************************************************************
+// *	  	Select_With_TextureName:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void Face_Editor::Select_With_TextureName(const char* TextureName)
+{
+	SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextureName);
+
+	strcpy(App->CL_Properties_Textures->m_CurrentTexture, TextureName);
+	List_Selection_Changed();
+}
+
+// *************************************************************************
+// *	  	List_Selection_Changed:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void Face_Editor::List_Selection_Changed()
+{
+	int Index = SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	if (Index == LB_ERR)
+	{
+		App->Say("ListBox No Selection Available", (LPSTR)"");
+	}
+	else
+	{
+		char TextureName[MAX_PATH];
+		TextureName[0] = 0;
+
+		SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_GETTEXT, (WPARAM)Index, (LPARAM)TextureName);
+		strcpy(App->CL_Properties_Textures->m_CurrentTexture, TextureName);
+
+		SelectBitmap();
+	}
+
+	/*char buf[255];
+	sprintf(buf, "Index = %i        %i X %i", Index, BasePicWidth, BasePicHeight);
+	SetDlgItemText(Textures_Dlg_Hwnd, IDC_STWIDTHHEIGHT, (LPCTSTR)buf);*/
+
+	App->CL_Properties_Textures->Selected_Index = Index;
+}
+
+// *************************************************************************
+// *			A_SelectBitmap:- Terry and Hazel Flanigan 2025		  	   *
+// *************************************************************************
+bool Face_Editor::SelectBitmap()
+{
+	char mTextureName[MAX_PATH];
+	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(App->CL_Properties_Textures->m_CurrentTexture);
+	strcpy(mTextureName, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
+	//App->Say(mTextureName);
+
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
+
+	for (i = RFI->begin(); i != iend; ++i)
+	{
+		if (i->filename == mTextureName)
+		{
+			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+
+			App->CL_Properties_Textures->mFileString = ff->getAsString();
+
+			char mFileName[MAX_PATH];
+			strcpy(mFileName, App->RB_Directory_FullPath);
+			strcat(mFileName, "\\Data\\");
+			strcat(mFileName, mTextureName);
+
+			std::ofstream outFile;
+			outFile.open(mFileName, std::ios::binary);
+			outFile << App->CL_Properties_Textures->mFileString;
+			outFile.close();
+
+			App->CL_Properties_Textures->mFileString.clear();
+
+			Texture_To_HBITMP(mFileName);
+			remove(mFileName);
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
+// *************************************************************************
+// *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void Face_Editor::Texture_To_HBITMP(char* TextureFileName)
+{
+	HWND PreviewWnd = GetDlgItem(FaceDlg_Hwnd, IDC_FE_BASETEXTURE2);
+	HDC	hDC = GetDC(PreviewWnd);
+
+	App->CL_Properties_Textures->Sel_BaseBitmap = App->CL_Textures->Get_HBITMP(TextureFileName, hDC);
+
+	App->CL_Properties_Textures->BasePicWidth = App->CL_Textures->BasePicWidth;
+	App->CL_Properties_Textures->BasePicHeight = App->CL_Textures->BasePicHeight;
+
+	ReleaseDC(PreviewWnd, hDC);
+
+	RedrawWindow(PreviewWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *			ViewerBasePic:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+bool CALLBACK Face_Editor::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	if (msg == WM_PAINT)
+	{
+		PAINTSTRUCT ps;
+		HDC hDC = BeginPaint(hwnd, &ps);
+		RECT clientRect;
+
+		// Get the client rectangle and adjust its dimensions
+		GetClientRect(hwnd, &clientRect);
+		clientRect.left--;
+		clientRect.bottom--;
+
+		// Fill the rectangle with a green brush
+		FillRect(hDC, &clientRect, (HBRUSH)(RGB(0, 255, 0)));
+
+		// Check if a base bitmap is selected
+		if (App->CL_Properties_Textures->Sel_BaseBitmap != nullptr)
+		{
+			RECT sourceRect = { 0, 0, App->CL_Properties_Textures->BasePicWidth, App->CL_Properties_Textures->BasePicHeight };
+			RECT destRect = clientRect;
+
+			// Get the device context and set the stretch mode
+			HDC renderDC = GetDC(hwnd);
+			SetStretchBltMode(renderDC, HALFTONE);
+
+			// Render the texture
+			App->CL_X_Face_Editor->RenderTexture_Blit(renderDC, App->CL_Properties_Textures->Sel_BaseBitmap, &sourceRect, &destRect);
+			ReleaseDC(hwnd, renderDC);
+		}
+
+		EndPaint(hwnd, &ps);
+		return 0;
+	}
+
+	return DefWindowProc(hwnd, msg, wParam, lParam);
+}
+
+// *************************************************************************
+// *		RenderTexture_Blit:- Terry and Hazel Flanigan 202
+// *************************************************************************
+bool Face_Editor::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
+{
+	HDC MemDC = CreateCompatibleDC(hDC);
+	if (MemDC == NULL)
+	{
+		return FALSE;
+	}
+
+	// Check if the bitmap is valid
+	if (Bmp)
+	{
+		SelectObject(MemDC, Bmp);
+
+		int SourceWidth = SourceRect->right - SourceRect->left;
+		int SourceHeight = SourceRect->bottom - SourceRect->top;
+		int DestWidth = DestRect->right - DestRect->left;
+		int DestHeight = DestRect->bottom - DestRect->top;
+		SetStretchBltMode(hDC, COLORONCOLOR);
+		StretchBlt(hDC,
+			DestRect->left,
+			DestRect->top,
+			DestHeight,
+			DestHeight,
+			MemDC,
+			SourceRect->left,
+			SourceRect->top,
+			SourceWidth,
+			SourceHeight,
+			SRCCOPY);
+	}
+
+	DeleteDC(MemDC);
+
+	return TRUE;
 }

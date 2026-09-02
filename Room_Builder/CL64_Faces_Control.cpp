@@ -494,7 +494,7 @@ void CL64_Faces_Control::Unselect_All_Face()
 	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = false;
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
-	Reset_Flags();
+	Reset_Face_Buttons();
 	flag_No_Faces = true;
 
 	EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_BT_FACE_FACEEDITOR), false);
@@ -509,7 +509,7 @@ void CL64_Faces_Control::Unselect_All_Face()
 // *************************************************************************
 void CL64_Faces_Control::Select_All_Face()
 {
-	Reset_Flags();
+	Reset_Face_Buttons();
 	flag_All_Faces = true;
 
 	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
@@ -533,7 +533,7 @@ void CL64_Faces_Control::Select_All_Face()
 // *************************************************************************
 void CL64_Faces_Control::Select_Next_Face()
 {
-	Reset_Flags();
+	Reset_Face_Buttons();
 	flag_Next_Face = true;
 
 	Selected_Face_Index++;
@@ -564,7 +564,7 @@ void CL64_Faces_Control::Select_Next_Face()
 // *************************************************************************
 void CL64_Faces_Control::Select_Prev_Face()
 {
-	Reset_Flags();
+	Reset_Face_Buttons();
 	flag_Prev_Face = true;
 
 	Selected_Face_Index--;
@@ -621,9 +621,9 @@ void CL64_Faces_Control::Select_Face()
 }
 
 // *************************************************************************
-// *				Reset_Flags:- Terry Mo and Hazel 2025				   *
+// *				Reset_Face_Buttons:- Terry Mo and Hazel 2026
 // *************************************************************************
-void CL64_Faces_Control::Reset_Flags()
+void CL64_Faces_Control::Reset_Face_Buttons()
 {
 	// Reset all face-related flags to their default state
 	flag_No_Faces = false;

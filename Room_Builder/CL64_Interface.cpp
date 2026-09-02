@@ -175,7 +175,7 @@ void CL64_Interface::Unselect_Brush_And_Set_Dlgs(void)
 
 	App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
 	
-	App->CL_Faces_Control->Reset_Flags();
+	App->CL_Faces_Control->Reset_Face_Buttons();
 
 	App->CL_Properties_Textures->Enable_FaceProps_Button(false);
 
@@ -184,7 +184,7 @@ void CL64_Interface::Unselect_Brush_And_Set_Dlgs(void)
 
 	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
 
-	App->CL_Faces_Control->Reset_Flags();
+	App->CL_Faces_Control->Reset_Face_Buttons();
 
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 

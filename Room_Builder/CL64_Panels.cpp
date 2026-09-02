@@ -47,8 +47,6 @@ void CL64_Panels::Deselect_All_Brushes_Update_Dlgs(void)
 	//App->CL_Doc->UpdateSelected();
 
 	App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
-	App->CL_Top_Tabs->Enable_TopBar_Brush_Buttons(false, false);
-
 	App->CL_Properties_Textures->Enable_FaceProps_Button(false);
 
 	App->CL_Faces_Control->Reset_Brush_Buttons();

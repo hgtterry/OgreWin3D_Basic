@@ -41,7 +41,7 @@ public:
 
 	void Reset_Brush_Buttons();
 
-	void Reset_Flags();
+	void Reset_Face_Buttons();
 
 	int Selected_Face_Index;
 

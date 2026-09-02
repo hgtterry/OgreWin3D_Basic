@@ -346,16 +346,6 @@ void CL64_Brush_X::Select_Brush_Editor(Brush* b)
 
 		// Set the active tab to brushes
 		App->CL_Properties_Tabs->Select_Brushes_Tab();
-
-		// Check a Real Ogre Object and Select in Scene Editor
-		/*if (b->GroupId == Enums::Brushs_ID_Evirons)
-		{
-			int Index = App->CL_Entities->GetIndex_By_Name(b->Name);
-			if (Index > -1)
-			{
-				App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
-			}
-		}*/
 	}
 }
 
