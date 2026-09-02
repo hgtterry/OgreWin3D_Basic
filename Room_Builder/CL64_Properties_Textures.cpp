@@ -72,7 +72,7 @@ void CL64_Properties_Textures::Show_Textures_Dialog(bool Show)
 // *************************************************************************
 void CL64_Properties_Textures::Start_TextureDialog()
 {
-	Textures_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->MainHwnd, (DLGPROC)Proc_TextureDialog);
+	Textures_Dlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_TextureDialog);
 
 	Dialog_Created = 1;
 	Fill_ListBox();
@@ -91,9 +91,6 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 		SendDlgItemMessage(hDlg, IDC_ST_GD_TEXTURES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_LISTTDTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BTTDAPPLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TXL_FILE_EDIT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TEXTURE_FACE_PROPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STWIDTHHEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_BASETEXTURE2), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
@@ -135,46 +132,6 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BTTDAPPLY)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BTTDAPPLY));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Normal(item);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_TXL_FILE_EDIT)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_TEXTURE_FACE_PROPS)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TEXTURE_FACE_PROPS));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Normal(item);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
 		if (some_item->idFrom == IDC_BT_GL)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -187,34 +144,6 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_BT_TEXTURE_FACE_PROPS)
-		{
-			int SF = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
-			if (SF > 0)
-			{
-				App->CL_X_Face_Editor->Start_FaceDialog();
-			}
-			else
-			{
-				App->Say("No Face Selected");
-			}
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_TXL_FILE_EDIT)
-		{
-			App->CL_TXL_Editor->Selected_Texure_Index = App->CL_Properties_Textures->Selected_Index;
-			App->CL_TXL_Editor->Start_Texl_Dialog();
-
-			//App->CL_Level->Level_SetWadPath(App->CLSB_Doc->pLevel, Level_GetWadPath(App->CLSB_Doc->pLevel));
-			//App->CL_World->Set_Current_TxlPath();
-			//App->CL_Doc->UpdateAfterWadChange();
-			//App->CL_Properties_Textures->Fill_ListBox();
-
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_LISTTDTEXTURES)
 		{
 			if (App->CL_Properties_Textures->Dialog_Created == 1)
@@ -222,35 +151,6 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_TextureDialog(HWND hDlg, UINT me
 				App->CL_Properties_Textures->List_Selection_Changed();
 			}
 
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BTTDAPPLY)
-		{
-			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-
-			if (NumSelBrushes == 0)
-			{
-				App->Say("No Brushes Selected");
-			}
-			else
-			{
-				App->CL_Properties_Textures->Apply_Texture();
-
-				App->CL_Doc->ResetAllSelectedFaces();
-
-				if (App->CL_Faces_Control->flag_All_Faces == true)
-				{
-					App->CL_Doc->SelectAllFacesInBrushes();
-				}
-				else
-				{
-					App->CL_Faces_Control->Select_Face();
-				}
-				
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-			}
 			return TRUE;
 		}
 
@@ -670,6 +570,5 @@ void CL64_Properties_Textures::Select_With_List_Index(int Index)
 // *************************************************************************
 void CL64_Properties_Textures::Enable_FaceProps_Button(bool Enable)
 {
-	EnableWindow(GetDlgItem(Textures_Dlg_Hwnd, IDC_BT_TEXTURE_FACE_PROPS), Enable);
-	EnableWindow(GetDlgItem(Textures_Dlg_Hwnd, IDC_BTTDAPPLY), Enable);
+	//EnableWindow(GetDlgItem(Textures_Dlg_Hwnd, IDC_BTTDAPPLY), Enable);
 }
