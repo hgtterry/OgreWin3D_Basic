@@ -241,7 +241,7 @@ void CL64_Properties_Tabs::Select_Textures_Tab()
 		}
 		else
 		{
-			App->CL_Properties_Textures->Get_Selected_Face();
+			
 		}
 	}
 }

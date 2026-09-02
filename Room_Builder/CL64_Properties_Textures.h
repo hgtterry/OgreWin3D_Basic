@@ -34,11 +34,6 @@ public:
 	void Show_Textures_Dialog(bool Show);
 	void Start_TextureDialog();
 	
-	void Select_With_List_Index(int Index);
-	
-	void Get_Selected_Face();
-	void Select_With_TextureName(const char* TextureName);
-
 	HBITMAP	Sel_BaseBitmap;
 	long BasePicWidth;
 	long BasePicHeight;
@@ -60,8 +55,5 @@ private:
 	static LRESULT CALLBACK Proc_TextureDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	
 	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
-
-	int GetIndexFromTextureName(char* TextureName);
-
 };
 

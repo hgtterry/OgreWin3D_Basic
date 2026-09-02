@@ -138,6 +138,9 @@ CL64_App::CL64_App(void)
 	CursorPosY = 500;
 
 	AppBackground = 0;
+	Red_Background_Color = 193;
+	Green_Background_Color = 202;
+	Blue_Background_Color = 222;
 
 	Brush_But_Pressed = 0;
 	Brush_But_Normal = 0;
@@ -346,8 +349,13 @@ void CL64_App::Init_Dialogs(void)
 // *************************************************************************
 void CL64_App::Set_Brushes_Fonts(void)
 {
+	
 	// Initialize brushes
-	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
+	//AppBackground = CreateSolidBrush(RGB(203, 212, 232));
+
+	AppBackground = CreateSolidBrush(RGB(Red_Background_Color, Green_Background_Color, Blue_Background_Color));
+
+
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
@@ -452,7 +460,7 @@ bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 	old_brush = SelectObject(item->hdc, old_brush);
 
 	// Draw the rounded rectangle
-	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
 
 	// Clean up
 	SelectObject(item->hdc, old_pen);
@@ -545,7 +553,7 @@ bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 
 			if (Toggle == 1)
 			{
-				hotbrush = hotbrush = CreateSolidBrush(RGB(0, 255, 0));
+				hotbrush = hotbrush = CreateSolidBrush(RGB(154, 255, 154));
 			}
 			else
 			{
@@ -558,7 +566,7 @@ bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
 
 			SelectObject(item->hdc, old_pen);
 			SelectObject(item->hdc, old_brush);
@@ -571,7 +579,7 @@ bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 
 		if (Toggle == 1)
 		{
-			defaultbrush = CreateSolidBrush(RGB(154, 255, 154));
+			defaultbrush = CreateSolidBrush(RGB(134, 235, 134));
 		}
 		else
 		{
@@ -583,7 +591,7 @@ bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
 
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
 
 		SelectObject(item->hdc, old_pen);
 		SelectObject(item->hdc, old_brush);

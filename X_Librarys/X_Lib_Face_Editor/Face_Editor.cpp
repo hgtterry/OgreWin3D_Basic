@@ -217,9 +217,10 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_CBANGLE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_FE_LIST_TEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_FE_APPLY_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_FE_BT_TXL_FILE_EDIT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_FE_BT_TXL_FILE_EDIT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -1547,6 +1548,14 @@ int Face_Editor::GetIndexFromTextureName(char* TextureName)
 }
 
 // *************************************************************************
+// *		Select_With_List_Index:- Terry and Hazel Flanigan 2025         *
+// *************************************************************************
+void Face_Editor::Select_With_List_Index(int Index)
+{
+	SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
+}
+
+// *************************************************************************
 // *			A_SelectBitmap:- Terry and Hazel Flanigan 2025		  	   *
 // *************************************************************************
 bool Face_Editor::SelectBitmap()
@@ -1686,3 +1695,4 @@ bool Face_Editor::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRec
 
 	return TRUE;
 }
+

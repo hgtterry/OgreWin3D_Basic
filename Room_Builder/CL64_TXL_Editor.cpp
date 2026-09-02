@@ -199,13 +199,6 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 		//-------------------Click in Texture List Box ----------------
 		if (LOWORD(wParam) == IDC_TEXTURELIST2)
 		{
-			App->CL_TXL_Editor->SelectBitmap();
-
-			int TrueIndex = App->CL_TXL_Editor->GetIndex_From_FileName(App->CL_TXL_Editor->m_Selected_TextureName);
-			App->CL_TXL_Editor->Update_Texture_Info(TrueIndex);
-
-			App->CL_Properties_Textures->Select_With_List_Index(App->CL_TXL_Editor->Selected_Texure_Index);
-
 			return TRUE;
 		}
 
@@ -256,7 +249,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 				App->CL_Doc->UpdateAfterWadChange();
 
 				App->CL_TXL_Editor->Select_From_TextureName(App->CL_File_IO->s_Just_FileName.c_str());
-				App->CL_Properties_Textures->Select_With_List_Index(App->CL_TXL_Editor->Selected_Texure_Index);
+				App->CL_X_Face_Editor->Select_With_List_Index(App->CL_TXL_Editor->Selected_Texure_Index);
 			}
 			
 			return TRUE;

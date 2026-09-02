@@ -36,6 +36,10 @@ public:
 	bool Is_Faces_Dialog_Active();
 
 	void Fill_Textures_ListBox();
+	void Select_With_TextureName(const char* TextureName);
+
+	void Select_With_List_Index(int Index);
+
 
 	HWND FaceDlg_Hwnd;
 
@@ -61,7 +65,7 @@ private:
 
 	// New
 	void Get_Selected_Face_Texture();
-	void Select_With_TextureName(const char* TextureName);
+	
 	void List_Selection_Changed();
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);

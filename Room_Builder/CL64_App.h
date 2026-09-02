@@ -261,7 +261,11 @@ public:
 
 	HINSTANCE hInst;
 	HWND MainHwnd;
+
 	HBRUSH AppBackground;
+	int Red_Background_Color;
+	int Green_Background_Color;
+	int Blue_Background_Color;
 	
 	HWND ViewPLeaseWait;
 
