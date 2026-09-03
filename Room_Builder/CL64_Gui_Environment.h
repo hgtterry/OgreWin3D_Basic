@@ -37,6 +37,7 @@ public:
 
 	void SetSky(bool Enable);
 	bool EnableFog(bool SetFog);
+	void Clear_Sky();
 
 	bool flag_Show_PropertyEditor;
 	int PropertyEditor_Page;

@@ -64,12 +64,12 @@ void CL64_Panels::Move_FileView_Window(void)
 {
 	POINT p = { 0 };
 
-	int Diff = MapWindowPoints(App->ViewGLhWnd, NULL, &p, 1);
+	int Diff = MapWindowPoints(App->MainHwnd, NULL, &p, 1);
 
 	int PosX = p.x;
 	int PosY = p.y;
 
-	SetWindowPos(App->ListPanel, NULL, PosX + 0, PosY + 5,0, 0, SWP_NOSIZE | SWP_NOZORDER);
+	SetWindowPos(App->ListPanel, NULL, PosX + 7, PosY + 75, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
 }
 
@@ -147,7 +147,7 @@ void CL64_Panels::Enable_Scene_Editor_Dialogs(bool Enable)
 	{
 		EnableWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, true);
 		EnableWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, true);
-		EnableWindow(App->ListPanel, true);
+		//EnableWindow(App->ListPanel, true);
 
 		HMENU Hmenu = GetMenu(App->MainHwnd);
 
@@ -165,7 +165,7 @@ void CL64_Panels::Enable_Scene_Editor_Dialogs(bool Enable)
 	{
 		EnableWindow(App->CL_Editor_Scene->Scene_Headers_hWnd, false);
 		EnableWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, false);
-		EnableWindow(App->ListPanel, false);
+		//EnableWindow(App->ListPanel, false);
 
 		EnableMenuItem(GetSystemMenu(App->MainHwnd, FALSE), SC_CLOSE,MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 		

@@ -294,14 +294,14 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		int test = ImGui::Checkbox("##Play", &flag_ClickOnPlay);
 		if (test == 1)
 		{
-			if (flag_ClickOnPlay == 1)
+			if (flag_ClickOnPlay == true)
 			{
-				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 1;
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = true;
 				App->CL_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 			}
 			else
 			{
-				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = 0;
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Play = false;
 				App->CL_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
 			}
 
@@ -345,12 +345,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			if (flag_ClickOnFogVisible == 1)
 			{
-				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 1;
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = true;
 				EnableFog(true);
 			}
 			else
 			{
-				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 0;
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = false;
 				EnableFog(false);
 			}
 
@@ -432,12 +432,12 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		{
 			if (flag_ClickOnSkyEnabled == 1)
 			{
-				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 1;
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = true;
 				SetSky(true);
 			}
 			else
 			{
-				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = 0;
+				App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled = false;
 				SetSky(false);
 			}
 
@@ -450,7 +450,7 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 
 		if (ImGui::InputFloat("##5", &App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->Tiling, 0.5, 0, "%.3f"))
 		{
-			if (App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled == 1)
+			if (App->CL_Scene->B_Object[Eviron_Index]->S_Environ[0]->flag_Enabled == true)
 			{
 				SetSky(true);
 			}
@@ -557,13 +557,28 @@ void CL64_Gui_Environment::SetSky(bool Enable)
 {
 	int Index = App->CL_Properties_Scene->Current_Selected_Object;
 
-	App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Scene->B_Object[Index]->S_Environ[0]->Curvature, App->CL_Scene->B_Object[Index]->S_Environ[0]->Tiling, App->CL_Scene->B_Object[Index]->S_Environ[0]->Distance);
+	if (App->CL_Scene->B_Object[Index]->S_Environ[0])
+	{
+		App->CL_Ogre->mSceneMgr->setSkyDome(Enable, "OW3D/CloudySky", App->CL_Scene->B_Object[Index]->S_Environ[0]->Curvature, App->CL_Scene->B_Object[Index]->S_Environ[0]->Tiling, App->CL_Scene->B_Object[Index]->S_Environ[0]->Distance);
+	}
+	else
+	{
+		
+	}
 
 	/*App->CL_Ogre->mSceneMgr->setSkyDome(Enable,
 		App->CL_Scene->B_Object[Index]->S_Environ[0]->Material,
 		App->CL_Scene->B_Object[Index]->S_Environ[0]->Curvature,
 		App->CL_Scene->B_Object[Index]->S_Environ[0]->Tiling,
 		App->CL_Scene->B_Object[Index]->S_Environ[0]->Distance);*/
+}
+
+// *************************************************************************
+// *	  		Clear_Sky:- Terry and Hazel Flanigan 2026				   *
+// *************************************************************************
+void CL64_Gui_Environment::Clear_Sky()
+{
+	App->CL_Ogre->mSceneMgr->setSkyDome(false, "OW3D/CloudySky");
 }
 
 // *************************************************************************

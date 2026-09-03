@@ -124,6 +124,7 @@ void CL64_FileView::Reset_Class()
 void CL64_FileView::Start_FileView(void)
 {
 	App->ListPanel = CreateDialog(App->hInst, (LPCTSTR)IDD_LISTSCENE, App->MainHwnd, (DLGPROC)Proc_ListPanel);
+	App->CL_Panels->Move_FileView_Window();
 }
 
 // *************************************************************************
@@ -531,13 +532,13 @@ void CL64_FileView::Show_FileView(bool Enable)
 {
 	if (Enable == 1)
 	{
-		App->CL_FileView->flag_FileView_Active = 1;
-		ShowWindow(App->ListPanel, 1);
+		App->CL_FileView->flag_FileView_Active = true;
+		ShowWindow(App->ListPanel, true);
 	}
 	else
 	{
-		App->CL_FileView->flag_FileView_Active = 0;
-		ShowWindow(App->ListPanel, 0);
+		App->CL_FileView->flag_FileView_Active = true;
+		ShowWindow(App->ListPanel, true);
 	}
 }
 

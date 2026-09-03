@@ -88,7 +88,7 @@ bool CL64_Com_Environments::Add_New_Environ_Entity(bool isFirstEntity)
 	App->CL_Scene->B_Object[index]->FileViewItem = tempItem;
 
 	// Mark the object as altered
-	App->CL_Scene->B_Object[index]->flag_Altered = 1;
+	App->CL_Scene->B_Object[index]->flag_Altered = true;
 
 	// Update the file view
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Evirons_Folder);
