@@ -34,6 +34,8 @@ public:
 	void Insert_Template();
 	void Enable_Shape_Buttons(bool Enable);
 
+	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
+
 	char LastCreated_ShapeName[20];
 
 	HWND TemplatesDlg_Hwnd;
@@ -45,5 +47,8 @@ private:
 	void Set_Icons();
 	
 	bool flag_Insert_Enabled;
+
+	HBRUSH Brush_But_Normal;
+	HBRUSH Brush_But_Hover;
 };
 

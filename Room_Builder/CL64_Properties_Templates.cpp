@@ -32,6 +32,9 @@ CL64_Properties_Templates::CL64_Properties_Templates()
 	TemplatesDlg_Hwnd = nullptr;
 
 	flag_Insert_Enabled = 0;
+
+	Brush_But_Normal = CreateSolidBrush(RGB(149, 200, 216));
+	Brush_But_Hover = CreateSolidBrush(RGB(137, 207, 239));
 }
 
 CL64_Properties_Templates::~CL64_Properties_Templates()
@@ -132,9 +135,11 @@ void CL64_Properties_Templates::Start_TemplatesDialog()
 // *************************************************************************
 LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	auto& p_Properties = App->CL_Properties_Templates;
 
 	switch (message)
 	{
+		
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
@@ -145,6 +150,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 		SendDlgItemMessage(hDlg, IDC_BRUSH_STAIRCASE_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BRUSH_ARCH_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		
+
 		return TRUE;
 	}
 
@@ -176,7 +182,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				p_Properties->Custom_Button_Normal(item);
 			}
 
 			break;
@@ -191,7 +197,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				p_Properties->Custom_Button_Normal(item);
 			}
 
 			break;
@@ -206,7 +212,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				p_Properties->Custom_Button_Normal(item);
 			}
 
 			break;
@@ -221,7 +227,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				p_Properties->Custom_Button_Normal(item);
 			}
 
 			break;
@@ -236,7 +242,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				p_Properties->Custom_Button_Normal(item);
 			}
 
 			break;
@@ -467,5 +473,46 @@ void CL64_Properties_Templates::Enable_Shape_Buttons(bool Enable)
 	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_SPHEROID_PRIMITIVE), Enable);
 	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_STAIRCASE_PRIMITIVE), Enable);
 	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_ARCH_PRIMITIVE), Enable);
+}
+
+// *************************************************************************
+// *		Custom_Button_Normal:- Terry and Hazel Flanigan 2025   	  	   *
+// *************************************************************************
+bool CL64_Properties_Templates::Custom_Button_Normal(LPNMCUSTOMDRAW item)
+{
+	// Determine the pen color and brush based on the button state
+	COLORREF penColor = RGB(0, 0, 0); // Default to black for idle state
+	HGDIOBJ old_pen, old_brush;
+
+	// Set pen color and brush based on the button state
+	if (item->uItemState & CDIS_SELECTED) // Button is pressed
+	{
+		penColor = RGB(0, 0, 0); // Black for pressed state
+		old_brush = App->Brush_But_Pressed;
+	}
+	else if (item->uItemState & CDIS_HOT) // Mouse is over the button
+	{
+		penColor = RGB(0, 255, 0); // Green for hover state
+		old_brush = Brush_But_Hover; // This Class
+	}
+	else // Idle state
+	{
+		old_brush = Brush_But_Normal; // This Class
+	}
+
+	// Create pen for button border
+	HPEN pen = CreatePen(PS_INSIDEFRAME, 0, penColor);
+	old_pen = SelectObject(item->hdc, pen);
+	old_brush = SelectObject(item->hdc, old_brush);
+
+	// Draw the rounded rectangle
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+	// Clean up
+	SelectObject(item->hdc, old_pen);
+	SelectObject(item->hdc, old_brush);
+	DeleteObject(pen);
+
+	return CDRF_DODEFAULT;
 }
 
