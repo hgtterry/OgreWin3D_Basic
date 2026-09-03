@@ -95,7 +95,7 @@ bool CL64_Panels::Place_Properties_Dlg(void)
 
 	hdwp = BeginDeferWindowPos(2);
 
-	DeferWindowPos(hdwp, App->CL_Properties_Scene->Properties_Dlg_hWnd, NULL, 10, 150,
+	DeferWindowPos(hdwp, App->CL_Properties_Scene->Properties_Dlg_hWnd, NULL, 7, 650,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
 	return EndDeferWindowPos(hdwp);
