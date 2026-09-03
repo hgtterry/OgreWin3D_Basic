@@ -138,6 +138,10 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_TEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BRUSH_CUBE_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BRUSH_CYCLINDER_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BRUSH_CONE_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -153,7 +157,63 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 
 		return FALSE;
 	}
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
+		switch (some_item->idFrom)
+		{
+		case IDC_BRUSH_CUBE_PRIMITIVE:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BRUSH_CUBE_PRIMITIVE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			break;
+		}
+
+		case IDC_BRUSH_CYCLINDER_PRIMITIVE:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BRUSH_CYCLINDER_PRIMITIVE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			break;
+		}
+
+		case IDC_BRUSH_CONE_PRIMITIVE:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BRUSH_CONE_PRIMITIVE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			break;
+		}
+
+		
+		return CDRF_DODEFAULT;
+		}
+
+	}
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->AppBackground;
@@ -162,13 +222,6 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 	case WM_CTLCOLORBTN:
 	{
 		return (LRESULT)App->AppBackground;
-	}
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
@@ -354,11 +407,11 @@ void CL64_Properties_Templates::Set_Icons()
 // *************************************************************************
 void CL64_Properties_Templates::Enable_Shape_Buttons(bool Enable)
 {
-	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CYCLINDER_PRIMITIVE), Enable);
+	/*ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CYCLINDER_PRIMITIVE), Enable);
 	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CONE_PRIMITIVE), Enable);
 	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_SPHEROID_PRIMITIVE), Enable);
 	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_STAIRCASE_PRIMITIVE), Enable);
-	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_ARCH_PRIMITIVE), Enable);
+	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_ARCH_PRIMITIVE), Enable);*/
 
 	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CYCLINDER_PRIMITIVE), Enable);
 	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CONE_PRIMITIVE), Enable);

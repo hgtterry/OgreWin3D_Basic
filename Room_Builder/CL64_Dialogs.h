@@ -32,7 +32,7 @@ public:
 	CL64_Dialogs(void);
 	~CL64_Dialogs(void);
 
-	void YesNoCancel(char* Text, char* Text2);
+	int YesNoCancel(char* Text, char* Text2);
 	void YesNo(const char* Text, const char* Text2);
 	void Message(char* pString, char* pString2);
 	void PleaseWait();

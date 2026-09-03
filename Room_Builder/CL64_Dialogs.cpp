@@ -61,7 +61,7 @@ CL64_Dialogs::~CL64_Dialogs(void)
 // *************************************************************************
 // *	  		YesNoCancel:- Terry and Hazel Flanigan 2025				   *
 // *************************************************************************
-void CL64_Dialogs::YesNoCancel(char* Text, char* Text2)
+int CL64_Dialogs::YesNoCancel(char* Text, char* Text2)
 {
 	App->CL_Dialogs->YesNoCancel_Result = 0;
 
@@ -72,6 +72,8 @@ void CL64_Dialogs::YesNoCancel(char* Text, char* Text2)
 	strcpy(MessageString2, Text2);
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_YESNOCANCEL, App->MainHwnd, (DLGPROC)Proc_YesNoCancel);
+
+	return YesNoCancel_Result;
 }
 
 // *************************************************************************
@@ -156,21 +158,21 @@ LRESULT CALLBACK CL64_Dialogs::Proc_YesNoCancel(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDOK) // Yes
 		{
-			App->CL_Dialogs->YesNoCancel_Result = 1;
+			App->CL_Dialogs->YesNoCancel_Result = Return_Ok;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_NONO) // No
 		{
-			App->CL_Dialogs->YesNoCancel_Result = 2;
+			App->CL_Dialogs->YesNoCancel_Result = Return_No;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL) // Cancel
 		{
-			App->CL_Dialogs->YesNoCancel_Result = 3;
+			App->CL_Dialogs->YesNoCancel_Result = Return_Cancel;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

@@ -43,6 +43,10 @@
 
 #define KEYDOWN(key) (GetAsyncKeyState(key) & 0x8000 ? 1 : 0)
 
+#define Return_Ok 1
+#define Return_No 2
+#define Return_Cancel 3
+
 namespace Enums
 {
 	enum Tab_ID

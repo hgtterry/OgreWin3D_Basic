@@ -40,11 +40,16 @@ public:
 	void Unselect_Brush_And_Set_Dlgs(void);
 	void Enable_Face_Buttons(bool option);
 
-	// Also Sets the Visability Flag 
+	// Sets Flag 
 	void Show_FileView(bool show);
 
-	// Also Sets the Visability Flag 
+	void Enable_Top_Tabs_Buttons(bool Enable);
+
+	// Sets Flag 
 	void Show_Properties_Object_Dlg(bool show);
+
+	// Sets Flag 
+	void Show_Top_Header_MAP_Mode(bool Enable);
 
 
 	bool flag_Tab_Texture;
@@ -54,5 +59,7 @@ public:
 
 	bool flag_FileView_Active;
 	bool flag_Properties_Object_Dlg_Active;
+	bool flag_Header_MAP_Mode_Visible;
+
 };
 

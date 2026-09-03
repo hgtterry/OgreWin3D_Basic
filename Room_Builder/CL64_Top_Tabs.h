@@ -35,8 +35,6 @@ public:
 	void Set_View_Buttons(int Selected_View);
 	void Redraw_TopTabs_Dlg();
 
-	void Show_TopTabs(bool Enable);
-	
 	bool flag_Full_View_3D;
 	bool flag_View_Top_Left;
 	bool flag_View_Top_Right;

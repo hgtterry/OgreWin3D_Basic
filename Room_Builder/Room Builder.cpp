@@ -443,14 +443,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             case ID_FILE_CLEAR:
             {
-                App->CL_Dialogs->YesNo("Clear Editor", "Are you sure");
-
-                if (App->CL_Dialogs->flag_Dlg_Canceled == true)
+                if (App->CL_Level->flag_Level_is_Modified == true)
                 {
-                    return 1;
+                    char Text[MAX_PATH];
+                    strcpy(Text, "Save Changes To ");
+                    strcat(Text, App->CL_Level->MTF_Just_FileName);
+
+                    int userResponse = App->CL_Dialogs->YesNoCancel((LPSTR)"File has been Modified", Text);
+
+                    switch (userResponse) 
+                    {
+                    case Return_Ok:
+                        App->CL_File->Start_Save(true);
+                        break;
+
+                    case Return_No:
+                        break;
+
+                    case Return_Cancel:
+                        return 1;
+
+                    default:
+                        App->Say("Handle unexpected responses");
+                        break;
+                    }
                 }
 
                 App->CL_Scene->Clear_Level(false);
+
                 return 1;
             }
 
@@ -1060,7 +1080,7 @@ void StartOgre()
 {
     KillTimer(App->MainHwnd, 1);
 
-    Sleep(500);
+    Sleep(100);
 
     App->flag_3D_Started = true;
 

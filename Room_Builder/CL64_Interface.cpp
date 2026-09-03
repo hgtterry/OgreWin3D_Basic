@@ -36,6 +36,7 @@ CL64_Interface::CL64_Interface()
 
 	flag_FileView_Active = false;
 	flag_Properties_Object_Dlg_Active = false;
+	flag_Header_MAP_Mode_Visible = false;
 }
 
 CL64_Interface::~CL64_Interface()
@@ -162,6 +163,11 @@ void CL64_Interface::Position_Face_Options_Dlg(void)
 // *************************************************************************
 void CL64_Interface::Unselect_Brush_And_Set_Dlgs(void)
 {
+	if (App->CL_X_Face_Editor->flag_FaceDlg_Active == true)
+	{
+		App->CL_X_Face_Editor->Close_Faces_Dialog();
+	}
+
 	App->CL_Doc->Set_Tool_GeneralSelect();
 	App->CL_Doc->ResetAllSelections();
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -240,4 +246,32 @@ void CL64_Interface::Show_Properties_Object_Dlg(bool show)
 	}
 
 	RedrawWindow(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *	  	Enable_Top_Tabs_Buttons:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void CL64_Interface::Enable_Top_Tabs_Buttons(bool Enable)
+{
+	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_HD_PREVIEW), Enable);
+	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_HD_SCENEEDITOR), Enable);
+	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_TT_FILEVIEW), Enable);
+	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_TT_OBJ_DATA), Enable);
+}
+
+// **************************************************************************
+// *		Show_Top_Header_MAP_Mode:- Terry and Hazel Flanigan 2024		*
+// **************************************************************************
+void CL64_Interface::Show_Top_Header_MAP_Mode(bool Enable)
+{
+	if (Enable == 1)
+	{
+		flag_Header_MAP_Mode_Visible = true;
+		ShowWindow(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, true);
+	}
+	else
+	{
+		flag_Header_MAP_Mode_Visible = false;
+		ShowWindow(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, false);
+	}
 }

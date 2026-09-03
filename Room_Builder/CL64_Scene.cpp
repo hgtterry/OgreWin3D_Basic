@@ -171,7 +171,9 @@ void CL64_Scene::Create_Location_Base(int Index)
 void CL64_Scene::Clear_Level(bool FromFile)
 {
 	App->CL_Gui_Environment->Clear_Sky();
+
 	App->CL_Interface->Show_FileView(false);
+	App->CL_Interface->Show_Properties_Object_Dlg(false);
 
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 
@@ -268,4 +270,5 @@ void CL64_Scene::Clear_Level(bool FromFile)
 	strcat(DefaultWad, "\\Data\\Room_Builder\\Default.zip");
 	App->CL_Doc->Load_Wad_File(DefaultWad); // Needs Ogre at the Moment
 
+	App->CL_Level->flag_Level_is_Modified = false;
 }

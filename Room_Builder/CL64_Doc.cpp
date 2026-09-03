@@ -572,20 +572,21 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 			}
         } 
     }
-    else
-    {
-        if (App->CL_X_Face_Editor->flag_FaceDlg_Active == true)
-        {
-            App->CL_X_Face_Editor->Close_Faces_Dialog();
-        }
+    // TODO Clean Up
+    //else 
+    //{
+    //    if (App->CL_X_Face_Editor->flag_FaceDlg_Active == true)
+    //    {
+    //        App->CL_X_Face_Editor->Close_Faces_Dialog();
+    //    }
 
-        App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
-        App->CL_Faces_Control->Update_Faces_Dialog();
-        //App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-        EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
+    //    App->CL_Panels->Deselect_All_Brushes_Update_Dlgs();
+    //    App->CL_Faces_Control->Update_Faces_Dialog();
+    //    //App->CL_Ogre->OGL_Listener->Show_Visuals(false);
+    //    EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
 
-        App->CL_Interface->Show_Faces_Panel_Control(false);
-    }
+    //    App->CL_Interface->Show_Faces_Panel_Control(false);
+    //}
 
 }
 

@@ -183,7 +183,7 @@ void CL64_Editor_Control::Return_To_Map_Editor(void)
 
 	// Show top tabs and configure editor map
 	App->CL_Editor_Scene->Show_Headers(false);
-	App->CL_Top_Tabs->Show_TopTabs(true);
+	App->CL_Interface->Show_Top_Header_MAP_Mode(true);
 	App->CL_Views_Com->Set_Splitter_WidthDepth(App->CL_Views_Com->Copy_Spliter_Width, App->CL_Views_Com->Copy_Spliter_Depth);
 	App->CL_Views_Com->Resize_Windows(App->CL_Views_Com->Main_View_Dlg_Hwnd, App->CL_Views_Com->nleftWnd_width, App->CL_Views_Com->nleftWnd_Depth);
 
@@ -244,14 +244,14 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	
 	// Hide visuals and tabs
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
-	topTabs->Show_TopTabs(false);
+	App->CL_Interface->Show_Top_Header_MAP_Mode(false);
 	App->CL_Properties_Tabs->Show_Tabs_Control_Dlg(false);
 	App->CL_Properties_Tabs->flag_Tabs_Dlg_Active = false;
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 	
 	// Show headers and file view
 	App->CL_Editor_Scene->Show_Headers(true);
-	App->CL_Interface->Show_FileView(true);
+	App->CL_Interface->Show_FileView(false);
 	App->CL_Panels->Move_FileView_Window();
 	App->CL_Panels->Resize_FileView();
 	App->CL_Panels->Place_Properties_Dlg();

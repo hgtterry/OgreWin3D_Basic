@@ -490,6 +490,11 @@ void CL64_Faces_Control::Update_Faces_Dialog()
 // *************************************************************************
 void CL64_Faces_Control::Unselect_All_Face()
 {
+	if (App->CL_X_Face_Editor->flag_FaceDlg_Active == true)
+	{
+		App->CL_X_Face_Editor->Close_Faces_Dialog();
+	}
+
 	App->CL_Doc->ResetAllSelectedFaces();
 	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = false;
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -519,7 +524,7 @@ void CL64_Faces_Control::Select_All_Face()
 
 	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = true;
 
-	EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_BT_FACE_FACEEDITOR), false);
+	EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_BT_FACE_FACEEDITOR), true);
 	EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_BT_FACE_SHOWSELECTEDFACE), true);
 
 	RedrawWindow(Faces_Control_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

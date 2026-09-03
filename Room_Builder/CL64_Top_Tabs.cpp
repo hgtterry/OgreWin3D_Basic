@@ -442,19 +442,3 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TR_Off_Bmp);
 }
 
-// **************************************************************************
-// *				Show_TopTabs:- Terry and Hazel Flanigan 2024			*
-// **************************************************************************
-void CL64_Top_Tabs::Show_TopTabs(bool Enable)
-{
-	if (Enable == 1)
-	{
-		flag_TopTabs_Active = 1;
-		ShowWindow(TopTabs_Dlg_hWnd, 1);
-	}
-	else
-	{
-		flag_TopTabs_Active = 0;
-		ShowWindow(TopTabs_Dlg_hWnd, 0);
-	}
-}

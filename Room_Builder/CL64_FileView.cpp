@@ -123,7 +123,7 @@ void CL64_FileView::Start_FileView(void)
 {
 	App->ListPanel = CreateDialog(App->hInst, (LPCTSTR)IDD_LISTSCENE, App->MainHwnd, (DLGPROC)Proc_ListPanel);
 	App->CL_Panels->Move_FileView_Window();
-	App->CL_Interface->Show_FileView(true);
+	App->CL_Interface->Show_FileView(false);
 }
 
 // *************************************************************************
