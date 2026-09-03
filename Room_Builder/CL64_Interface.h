@@ -40,9 +40,19 @@ public:
 	void Unselect_Brush_And_Set_Dlgs(void);
 	void Enable_Face_Buttons(bool option);
 
+	// Also Sets the Visability Flag 
+	void Show_FileView(bool show);
+
+	// Also Sets the Visability Flag 
+	void Show_Properties_Object_Dlg(bool show);
+
+
 	bool flag_Tab_Texture;
 	bool flag_Tab_Templates;
 	bool flag_Tab_Group;
 	bool flag_Faces_Con_Dlg_Active;
+
+	bool flag_FileView_Active;
+	bool flag_Properties_Object_Dlg_Active;
 };
 

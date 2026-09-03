@@ -31,7 +31,6 @@ public:
 
 	void Start_Properties(void);
 	void Create_Properties_hLV(void);
-	void Show_Properties_Scene(bool Enable);
 
 	bool Update_ListView_Player();
 	bool Update_ListView_Environs();
@@ -54,7 +53,6 @@ public:
 	int Current_Selected_Object;
 	int Last_Selected_Object;
 
-	bool flag_Properties_Dlg_Active;
 	bool flag_Edit_Physics;
 
 private:

@@ -33,7 +33,7 @@ public:
 
 	void Start_FileView(void);
 	void Init_FileView(void);
-	void Show_FileView(bool Enable);
+	
 	HTREEITEM Add_Item(HTREEITEM Folder, char* SFileName, int Index, bool NewItem);
 	
 	void DeleteItem();
@@ -106,8 +106,6 @@ private:
 	
 	HIMAGELIST hImageList;
 	HBITMAP hBitMap;
-
-	bool flag_FileView_Active;
 
 	char FileView_Folder[MAX_PATH];
 	char FileView_File[MAX_PATH];

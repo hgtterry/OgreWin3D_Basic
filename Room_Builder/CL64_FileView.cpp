@@ -67,8 +67,6 @@ CL64_FileView::CL64_FileView()
 	FV_Areas_Folder = nullptr;
 	FV_Locations_Folder = nullptr;
 
-	flag_FileView_Active = 0;
-
 	FileView_Folder[0] = 0;
 	FileView_File[0] = 0;
 
@@ -125,6 +123,7 @@ void CL64_FileView::Start_FileView(void)
 {
 	App->ListPanel = CreateDialog(App->hInst, (LPCTSTR)IDD_LISTSCENE, App->MainHwnd, (DLGPROC)Proc_ListPanel);
 	App->CL_Panels->Move_FileView_Window();
+	App->CL_Interface->Show_FileView(true);
 }
 
 // *************************************************************************
@@ -137,8 +136,6 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 
 	case WM_INITDIALOG:
 	{
-		App->CL_FileView->flag_FileView_Active = 1;
-
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_MAINENVIRONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -276,7 +273,7 @@ LRESULT CALLBACK CL64_FileView::Proc_ListPanel(HWND hDlg, UINT message, WPARAM w
 		ShowWindow(App->ListPanel, 0);
 
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);*/
-
+		App->CL_Interface->Show_FileView(false);
 		return TRUE;
 	}
 
@@ -523,23 +520,6 @@ void CL64_FileView::ExpandRoot(void)
 	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, FV_LevelFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, FV_EntitiesFolder, TVE_EXPAND);
-}
-
-// **************************************************************************
-// *			Show_FileView:- Terry and Hazel Flanigan 2024				*
-// **************************************************************************
-void CL64_FileView::Show_FileView(bool Enable)
-{
-	if (Enable == 1)
-	{
-		App->CL_FileView->flag_FileView_Active = true;
-		ShowWindow(App->ListPanel, true);
-	}
-	else
-	{
-		App->CL_FileView->flag_FileView_Active = true;
-		ShowWindow(App->ListPanel, true);
-	}
 }
 
 // *************************************************************************

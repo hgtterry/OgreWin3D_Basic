@@ -6,9 +6,9 @@
 // Define ogre version
 #define OGRE_VERSION_MAJOR 14
 #define OGRE_VERSION_MINOR 5
-#define OGRE_VERSION_PATCH 0
+#define OGRE_VERSION_PATCH 2
 #define OGRE_VERSION_SUFFIX ""
-#define OGRE_VERSION_NAME "Tsathoggua"
+#define OGRE_VERSION_NAME "Tsathoggua ( - Cheryl_3D -)"
 
 /* #undef OGRE_STATIC_LIB */
 #define OGRE_DEBUG_MODE 0

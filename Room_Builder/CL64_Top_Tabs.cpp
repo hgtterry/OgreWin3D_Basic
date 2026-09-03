@@ -89,6 +89,9 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BT_HD_SCENEEDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_HD_PREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_BT_TT_FILEVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TT_OBJ_DATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -105,45 +108,37 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		if (some_item->idFrom == IDC_BT_FULL_3D)
+		switch (some_item->idFrom)
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		case IDC_BT_FULL_3D:
+		{
 			App->Custom_Button_Toggle(item, App->CL_Top_Tabs->flag_Full_View_3D);
-			
-			return CDRF_DODEFAULT;
+			break;
 		}
 
-		if (some_item->idFrom == IDC_BT_TOP_LEFT)
+		case IDC_BT_TOP_LEFT:
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Top_Tabs->flag_View_Top_Left);
-
-			return CDRF_DODEFAULT;
+			break;
 		}
 
-		if (some_item->idFrom == IDC_BT_TOP_RIGHT)
+		case IDC_BT_TOP_RIGHT:
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item,App->CL_Top_Tabs->flag_View_Top_Right);
-
-			return CDRF_DODEFAULT;
+			App->Custom_Button_Toggle(item, App->CL_Top_Tabs->flag_View_Top_Right);
+			break;
 		}
 
-		if (some_item->idFrom == IDC_BT_BOTTOM_LEFT)
+		case IDC_BT_BOTTOM_LEFT:
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Top_Tabs->flag_View_Bottom_Left);
-
-			return CDRF_DODEFAULT;
+			break;
 		}
 
-		if (some_item->idFrom == IDC_BT_HD_SCENEEDITOR)
+		case IDC_BT_HD_SCENEEDITOR:
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_HD_SCENEEDITOR));
-			if (test == 0)
+			if (IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_HD_SCENEEDITOR)) == false)
 			{
 				App->Custom_Button_Greyed(item);
 			}
@@ -151,16 +146,12 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			{
 				App->Custom_Button_Normal(item);// , App->CL_Top_Tabs->flag_View_Bottom_Left);
 			}
-
-			return CDRF_DODEFAULT;
+			break;
 		}
 
-		if (some_item->idFrom == IDC_BT_HD_PREVIEW)
+		case IDC_BT_HD_PREVIEW:
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_HD_PREVIEW));
-			if (test == 0)
+			if (IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_HD_PREVIEW)) == false)
 			{
 				App->Custom_Button_Greyed(item);
 			}
@@ -168,10 +159,41 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			{
 				App->Custom_Button_Normal(item);// , App->CL_Top_Tabs->flag_View_Bottom_Left);
 			}
-
-			return CDRF_DODEFAULT;
+			break;
 		}
 		
+		case IDC_BT_TT_FILEVIEW:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FILEVIEW));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_Interface->flag_FileView_Active);
+			}
+			break;
+		}
+
+		case IDC_BT_TT_OBJ_DATA:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_OBJ_DATA));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CL_Interface->flag_Properties_Object_Dlg_Active);
+			}
+			break;
+		}
+
+		default:
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -283,6 +305,34 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		if (LOWORD(wParam) == IDC_BT_HD_PREVIEW)
 		{
 			App->CL_Editor_Control->Start_Preview_Mode();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TT_FILEVIEW)
+		{
+			if (App->CL_Interface->flag_FileView_Active == true)
+			{
+				App->CL_Interface->Show_FileView(false);
+			}
+			else
+			{
+				App->CL_Interface->Show_FileView(true);
+			}
+
+			return TRUE;
+		}
+		
+		if (LOWORD(wParam) == IDC_BT_TT_OBJ_DATA)
+		{
+			if (App->CL_Interface->flag_Properties_Object_Dlg_Active == true)
+			{
+				App->CL_Interface->Show_Properties_Object_Dlg(false);
+			}
+			else
+			{
+				App->CL_Interface->Show_Properties_Object_Dlg(true);
+			}
+
 			return TRUE;
 		}
 		

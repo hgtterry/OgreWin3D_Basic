@@ -251,11 +251,10 @@ void CL64_Editor_Control::Start_Editor_Scene()
 	
 	// Show headers and file view
 	App->CL_Editor_Scene->Show_Headers(true);
-	App->CL_FileView->Show_FileView(true);
+	App->CL_Interface->Show_FileView(true);
 	App->CL_Panels->Move_FileView_Window();
 	App->CL_Panels->Resize_FileView();
 	App->CL_Panels->Place_Properties_Dlg();
-	App->CL_Properties_Scene->Show_Properties_Scene(true);
 	
 	// Set menu
 	SetMenu(App->MainHwnd, App->Menu_Scene);

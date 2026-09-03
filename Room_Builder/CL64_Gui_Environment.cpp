@@ -156,7 +156,7 @@ void CL64_Gui_Environment::Start_Environment_Editor(int index, bool isTeleport) 
 	flag_ClickOnPlay = environment->flag_Play;
 	flag_ClickOnLoop = environment->flag_Loop;
 
-	App->CL_FileView->Show_FileView(false);
+	App->CL_Interface->Show_FileView(false);
 	App->CL_Panels->Enable_Scene_Editor_Dialogs(false);
 
 	App->CL_SoundMgr->SoundEngine->stopAllSounds();
@@ -520,7 +520,7 @@ void CL64_Gui_Environment::Close_Environment_Editor()
 	/*App->Disable_Panels(false);
 	App->Show_Panels(true);*/
 
-	App->CL_FileView->Show_FileView(true);
+	App->CL_Interface->Show_FileView(true);
 	/*int Index = App->CL_Properties->Current_Selected_Object;
 	App->CL_Com_Environments->Set_Environment_By_Index(0, Index);*/
 

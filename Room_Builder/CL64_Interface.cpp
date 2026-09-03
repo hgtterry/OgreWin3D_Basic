@@ -33,6 +33,9 @@ CL64_Interface::CL64_Interface()
 	flag_Tab_Templates = false;
 	flag_Tab_Group = false;
 	flag_Faces_Con_Dlg_Active = false;
+
+	flag_FileView_Active = false;
+	flag_Properties_Object_Dlg_Active = false;
 }
 
 CL64_Interface::~CL64_Interface()
@@ -199,4 +202,42 @@ void CL64_Interface::Enable_Face_Buttons(bool option)
 	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACE_SHOWSELECTEDFACE), option);
 	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), option);
 
+}
+
+// **************************************************************************
+// *			Show_FileView:- Terry and Hazel Flanigan 2024				*
+// **************************************************************************
+void CL64_Interface::Show_FileView(bool show)
+{
+	if (show == true)
+	{
+		flag_FileView_Active = true;
+		ShowWindow(App->ListPanel, true);
+	}
+	else
+	{
+		flag_FileView_Active = false;
+		ShowWindow(App->ListPanel, false);
+	}
+
+	RedrawWindow(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// **************************************************************************
+// *		Show_Properties_Object_Dlg:- Terry and Hazel Flanigan 2026
+// **************************************************************************
+void CL64_Interface::Show_Properties_Object_Dlg(bool show)
+{
+	if (show == true)
+	{
+		flag_Properties_Object_Dlg_Active = true;
+		ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, true);
+	}
+	else
+	{
+		flag_Properties_Object_Dlg_Active = false;
+		ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, false);
+	}
+
+	RedrawWindow(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

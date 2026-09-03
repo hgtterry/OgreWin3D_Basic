@@ -645,6 +645,8 @@ void CL64_File::Set_Editor()
 	App->CL_Editor_Control->Set_Map_Editor_Startup();
 
 	App->CL_Properties_Templates->Enable_Shape_Buttons(true);
+	App->CL_Interface->Show_FileView(true);
+	App->CL_Interface->Show_Properties_Object_Dlg(true);
 
 	App->CL_Ogre->RenderFrame(7);
 }

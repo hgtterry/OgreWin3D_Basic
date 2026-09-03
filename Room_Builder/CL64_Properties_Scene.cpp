@@ -32,7 +32,6 @@ CL64_Properties_Scene::CL64_Properties_Scene()
 	Properties_Dlg_hWnd = nullptr;
 	Properties_hLV = nullptr;
 
-	flag_Properties_Dlg_Active = 0;
 	flag_Edit_Physics = 0;
 
 	Edit_Category = Enums::Edit_Object;
@@ -50,18 +49,8 @@ CL64_Properties_Scene::~CL64_Properties_Scene()
 // *************************************************************************
 void CL64_Properties_Scene::Start_Properties(void)
 {
-	if (flag_Properties_Dlg_Active == 1)
-	{
-		return;
-	}
-
-	flag_Properties_Dlg_Active = 1;
-
 	Properties_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES_SCENE, App->MainHwnd, (DLGPROC)Proc_Properties);
-	Show_Properties_Scene(true);
-
-	//HMENU mMenu = GetMenu(App->MainHwnd);
-	//CheckMenuItem(mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
+	App->CL_Interface->Show_Properties_Object_Dlg(false);
 
 	Create_Properties_hLV();
 
@@ -102,13 +91,7 @@ LRESULT CALLBACK CL64_Properties_Scene::Proc_Properties(HWND hDlg, UINT message,
 
 	case WM_CLOSE:
 	{
-		App->CL_Properties_Scene->flag_Properties_Dlg_Active = 0;
-
-		HMENU mMenu = GetMenu(App->MainHwnd);
-		//CheckMenuItem(mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
-
-		ShowWindow(App->CL_Properties_Scene->Properties_Dlg_hWnd, 0);
-
+		App->CL_Interface->Show_Properties_Object_Dlg(false);
 		break;
 	}
 
@@ -199,23 +182,6 @@ void CL64_Properties_Scene::Create_Properties_hLV(void)
 	SendMessage(Properties_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 	return;
-}
-
-// **************************************************************************
-// *		Show_Properties_Scene:- Terry and Hazel Flanigan 2024			*
-// **************************************************************************
-void CL64_Properties_Scene::Show_Properties_Scene(bool Enable)
-{
-	if (Enable == 1)
-	{
-		flag_Properties_Dlg_Active = 1;
-		ShowWindow(Properties_Dlg_hWnd, 1);
-	}
-	else
-	{
-		flag_Properties_Dlg_Active = 0;
-		ShowWindow(Properties_Dlg_hWnd, 0);
-	}
 }
 
 // *************************************************************************

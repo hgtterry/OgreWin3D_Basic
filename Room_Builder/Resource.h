@@ -456,6 +456,7 @@
 #define IDC_BT_FACEDATA                 1331
 #define IDC_BT_LIBRARIES                1331
 #define IDC_BT_FACES_NONE               1331
+#define IDC_BT_TT_FILEVIEW              1331
 #define IDC_CHECK1                      1332
 #define IDC_CK_LASTFILE                 1332
 #define IDC_BT_TT_FACES_ALL             1332
@@ -494,6 +495,7 @@
 #define IDC_FE_BASETEXTURE2             1355
 #define IDC_BT_FE_APPLY_TEXTURE         1356
 #define IDC_FE_BT_TXL_FILE_EDIT         1357
+#define IDC_BT_TT_OBJ_DATA              1358
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -583,7 +585,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        203
 #define _APS_NEXT_COMMAND_VALUE         32850
-#define _APS_NEXT_CONTROL_VALUE         1358
+#define _APS_NEXT_CONTROL_VALUE         1359
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
