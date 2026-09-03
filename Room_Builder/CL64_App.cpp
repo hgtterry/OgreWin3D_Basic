@@ -458,7 +458,7 @@ bool CL64_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 	old_brush = SelectObject(item->hdc, old_brush);
 
 	// Draw the rounded rectangle
-	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 	// Clean up
 	SelectObject(item->hdc, old_pen);
@@ -564,7 +564,7 @@ bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
 
 			SelectObject(item->hdc, old_pen);
 			SelectObject(item->hdc, old_brush);
@@ -589,7 +589,7 @@ bool CL64_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
 
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
 
 		SelectObject(item->hdc, old_pen);
 		SelectObject(item->hdc, old_brush);

@@ -141,6 +141,9 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 		SendDlgItemMessage(hDlg, IDC_BRUSH_CUBE_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BRUSH_CYCLINDER_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BRUSH_CONE_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BRUSH_SPHEROID_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BRUSH_STAIRCASE_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BRUSH_ARCH_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -209,8 +212,54 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			break;
 		}
 
+		case IDC_BRUSH_SPHEROID_PRIMITIVE:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BRUSH_SPHEROID_PRIMITIVE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			break;
+		}
+
+		case IDC_BRUSH_STAIRCASE_PRIMITIVE:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BRUSH_STAIRCASE_PRIMITIVE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			break;
+		}
+
+		case IDC_BRUSH_ARCH_PRIMITIVE:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BRUSH_STAIRCASE_PRIMITIVE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			break;
+		}
+
 		
 		return CDRF_DODEFAULT;
+
 		}
 
 	}
