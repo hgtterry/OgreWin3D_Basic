@@ -35,7 +35,6 @@ public:
 	void Start_Tabs_Control_Dlg();
 
 	void Select_Brushes_Tab();
-	void Select_Textures_Tab();
 	void Select_Templates_Tab();
 
 	void Enable_Tabs_Dlg(bool Enable);

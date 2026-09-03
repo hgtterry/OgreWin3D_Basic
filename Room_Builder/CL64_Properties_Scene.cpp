@@ -58,7 +58,7 @@ void CL64_Properties_Scene::Start_Properties(void)
 	flag_Properties_Dlg_Active = 1;
 
 	Properties_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPERTIES_SCENE, App->MainHwnd, (DLGPROC)Proc_Properties);
-	Show_Properties_Scene(false);
+	Show_Properties_Scene(true);
 
 	//HMENU mMenu = GetMenu(App->MainHwnd);
 	//CheckMenuItem(mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);

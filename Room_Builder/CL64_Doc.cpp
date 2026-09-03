@@ -147,7 +147,6 @@ void CL64_Doc::Editor_Set_Dlgs(int Set_State)
 {
     if (Set_State == Enums::Editor_Dlgs_First_Brush)
     {
-        App->CL_Top_Tabs->Enable_Select_Button(true, true);
         App->CL_Properties_Tabs->Enable_Tabs(true);
     }
 }
@@ -326,8 +325,6 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
         {
             Set_Tool_GeneralSelect();
 
-            App->CL_Top_Tabs->Enable_Select_Button(true, true);
-
             App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 
             return;
@@ -337,8 +334,6 @@ void CL64_Doc::Do_General_Select_Dlg(bool from_Insert)
     if (CL_Brush->Get_Brush_Count() > 0)
     {
         Set_Tool_GeneralSelect();
-
-        App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
         App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
     }
@@ -413,7 +408,7 @@ void CL64_Doc::SetDefaultBrushTexInfo(Brush* b)
     const char* TexName;
     BrushTexSetData CallbackData;
 
-    TexName = App->CL_Properties_Textures->m_CurrentTexture;
+    TexName = App->CL_X_Face_Editor->m_CurrentTexture;
     CallbackData.pDoc = this;
     CallbackData.TexName = TexName;
 

@@ -32,7 +32,6 @@ public:
 	void Select_Tab(int Tab_ID);
 	void Hide_Tab_Dialogs();
 	void Show_Brushes_Dialog(bool Show);
-	void Show_Textures_Dialog(bool Show);
 	void Show_Materials_Dialog(bool Show);
 	void Show_TemplatesDialog(bool Show);
 

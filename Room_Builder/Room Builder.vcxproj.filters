@@ -54,9 +54,6 @@
     <ClInclude Include="CL64_Properties_Brushes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CL64_Properties_Textures.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CL64_Ogre.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -273,9 +270,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Properties_Brushes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CL64_Properties_Textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_Ogre.cpp">

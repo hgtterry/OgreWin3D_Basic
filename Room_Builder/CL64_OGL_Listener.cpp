@@ -220,7 +220,7 @@ void CL64_OGL_Listener::Render_Loop()
 	{
 		glDisable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glLineWidth(2);
+		glLineWidth(5);
 		Render_Selected_Face();
 	}
 	

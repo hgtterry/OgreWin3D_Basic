@@ -67,9 +67,6 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 	App->CL_Properties_Brushes->Start_Brush_Tabs_Dialog();
 	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
 
-	App->CL_Properties_Textures->Start_TextureDialog();
-	App->CL_Properties_Textures->Show_Textures_Dialog(false);
-
 	App->CL_Properties_Templates->Start_TemplatesDialog();
 	App->CL_Properties_Templates->Show_TemplatesDialog(true);
 
@@ -89,7 +86,6 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_TBTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBTEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -116,22 +112,6 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_TBTEXTURES)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_TBTEXTURES));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Interface->flag_Tab_Texture);
-			}
-
-			return CDRF_DODEFAULT;
-		}
 
 		if (some_item->idFrom == IDC_TBTEMPLATES)
 		{
@@ -161,12 +141,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_TBTEXTURES)
-		{
-			App->CL_Interface->Select_Tab(Enums::Tab_ID_TEXTURES);
-			return TRUE;
-		}
-
+		
 		if (LOWORD(wParam) == IDC_TBTEMPLATES)
 		{
 			App->CL_Interface->Select_Tab(Enums::Tab_ID_TEMPLATES);
@@ -225,28 +200,6 @@ void CL64_Properties_Tabs::Select_Brushes_Tab()
 }
 
 // *************************************************************************
-// *	  	Select_Textures_Tab:- Terry and Hazel Flanigan 2025			   *
-// *************************************************************************
-void CL64_Properties_Tabs::Select_Textures_Tab()
-{
-	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
-	{
-		if (App->CL_Interface->flag_Tab_Texture == false)
-		{
-			App->CL_Interface->Hide_Tab_Dialogs();
-			App->CL_Properties_Textures->Show_Textures_Dialog(true);
-			App->CL_Interface->flag_Tab_Texture = true;
-
-			RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		}
-		else
-		{
-			
-		}
-	}
-}
-
-// *************************************************************************
 // *	  	Select_Templates_Tab:- Terry and Hazel Flanigan 2025			   *
 // *************************************************************************
 void CL64_Properties_Tabs::Select_Templates_Tab()
@@ -274,9 +227,7 @@ void CL64_Properties_Tabs::Enable_Tabs_Dlg(bool Enable)
 // *************************************************************************
 void CL64_Properties_Tabs::Enable_Tabs(bool Enable)
 {
-	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_TBTEXTURES), Enable);
 	EnableWindow(GetDlgItem(Tabs_Control_Hwnd, IDC_TBGROUPS), Enable);
-	
 	
 	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_HD_PREVIEW), Enable);
 	EnableWindow(GetDlgItem(App->CL_Top_Tabs->TopTabs_Dlg_hWnd, IDC_BT_HD_SCENEEDITOR), Enable);

@@ -181,7 +181,6 @@ void CL64_Scene::Clear_Level(bool FromFile)
 	App->CL_Doc->DeleteCurrentThing();
 	App->CL_Ogre->Camera_Reset_Zero();
 	
-	App->CL_Properties_Textures->Reset_Class();
 	App->CL_Properties_Brushes->Reset_Class();
 	App->CL_Properties_Tabs->Reset_Class();
 	App->CL_Top_Tabs->Reset_Class();

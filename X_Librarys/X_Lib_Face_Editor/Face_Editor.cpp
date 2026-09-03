@@ -66,6 +66,22 @@ Face_Editor::Face_Editor(void)
 	m_Selected_Face_Index = 0;
 
 	flag_FaceDlg_Active = 0;
+
+	// New
+	Textures_Dlg_Hwnd = nullptr;
+	strcpy(m_CurrentTexture, "stfloor1");
+
+	Dialog_Created = 0;
+	Dialog_Textures_Visible = 0;
+
+	mFileString.clear();
+	Selected_Index = 0;
+	Sel_BaseBitmap = NULL;
+	BasePicWidth = NULL;
+	BasePicHeight = NULL;
+
+	mSelected_Face = NULL;
+
 }
 
 Face_Editor::~Face_Editor(void)
@@ -972,7 +988,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_FE_BT_TXL_FILE_EDIT)
 		{
-			App->CL_TXL_Editor->Selected_Texure_Index = App->CL_Properties_Textures->Selected_Index;
+			App->CL_TXL_Editor->Selected_Texure_Index = m_FaceEditor->Selected_Index;
 			App->CL_TXL_Editor->Start_Texl_Dialog();
 
 			//App->CL_Level->Level_SetWadPath(App->CLSB_Doc->pLevel, Level_GetWadPath(App->CLSB_Doc->pLevel));
@@ -1320,15 +1336,15 @@ void Face_Editor::Fill_Textures_ListBox()
 // *************************************************************************
 void Face_Editor::Get_Selected_Face_Texture()
 {
-	App->CL_Properties_Textures->mSelected_Face = NULL;
+	mSelected_Face = NULL;
 
 	int NumberOfFaces = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 
 	if (NumberOfFaces > 0)
 	{
-		App->CL_Properties_Textures->mSelected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
+		mSelected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
 
-		Select_With_TextureName(App->CL_X_Face->Face_GetTextureName(App->CL_Properties_Textures->mSelected_Face));
+		Select_With_TextureName(App->CL_X_Face->Face_GetTextureName(mSelected_Face));
 	}
 }
 
@@ -1339,7 +1355,7 @@ void Face_Editor::Select_With_TextureName(const char* TextureName)
 {
 	SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextureName);
 
-	strcpy(App->CL_Properties_Textures->m_CurrentTexture, TextureName);
+	strcpy(m_CurrentTexture, TextureName);
 	List_Selection_Changed();
 }
 
@@ -1359,7 +1375,7 @@ void Face_Editor::List_Selection_Changed()
 		TextureName[0] = 0;
 
 		SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_GETTEXT, (WPARAM)Index, (LPARAM)TextureName);
-		strcpy(App->CL_Properties_Textures->m_CurrentTexture, TextureName);
+		strcpy(m_CurrentTexture, TextureName);
 
 		SelectBitmap();
 	}
@@ -1368,7 +1384,7 @@ void Face_Editor::List_Selection_Changed()
 	sprintf(buf, "Index = %i        %i X %i", Index, BasePicWidth, BasePicHeight);
 	SetDlgItemText(Textures_Dlg_Hwnd, IDC_STWIDTHHEIGHT, (LPCTSTR)buf);*/
 
-	App->CL_Properties_Textures->Selected_Index = Index;
+	Selected_Index = Index;
 }
 
 
@@ -1466,8 +1482,8 @@ void Face_Editor::Apply_Texture()
 			Face* pFace;
 			pFace = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, i);
 
-			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(App->CL_Properties_Textures->m_CurrentTexture);
-			TextureFace(pFace, SelectedItem, (LPCSTR)App->CL_Properties_Textures->m_CurrentTexture, BitmapPtr);
+			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
+			TextureFace(pFace, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
 
 		}
 
@@ -1491,8 +1507,8 @@ void Face_Editor::Apply_Texture()
 			{
 				Brush* pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
 
-				WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(App->CL_Properties_Textures->m_CurrentTexture);
-				TextureBrush(pBrush, SelectedItem, (LPCSTR)App->CL_Properties_Textures->m_CurrentTexture, BitmapPtr);
+				WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
+				TextureBrush(pBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
 
 				App->CL_X_Brush->Brush_UpdateChildFaces(pBrush);
 			}
@@ -1500,8 +1516,8 @@ void Face_Editor::Apply_Texture()
 		else
 		{
 
-			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(App->CL_Properties_Textures->m_CurrentTexture);
-			TextureBrush(App->CL_Doc->CurBrush, SelectedItem, (LPCSTR)App->CL_Properties_Textures->m_CurrentTexture, BitmapPtr);
+			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
+			TextureBrush(App->CL_Doc->CurBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
 
 			App->CL_X_Brush->Brush_UpdateChildFaces(App->CL_Doc->CurBrush);
 		}
@@ -1561,7 +1577,7 @@ void Face_Editor::Select_With_List_Index(int Index)
 bool Face_Editor::SelectBitmap()
 {
 	char mTextureName[MAX_PATH];
-	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(App->CL_Properties_Textures->m_CurrentTexture);
+	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(m_CurrentTexture);
 	strcpy(mTextureName, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
 	//App->Say(mTextureName);
 
@@ -1575,7 +1591,7 @@ bool Face_Editor::SelectBitmap()
 		{
 			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
 
-			App->CL_Properties_Textures->mFileString = ff->getAsString();
+			mFileString = ff->getAsString();
 
 			char mFileName[MAX_PATH];
 			strcpy(mFileName, App->RB_Directory_FullPath);
@@ -1584,10 +1600,10 @@ bool Face_Editor::SelectBitmap()
 
 			std::ofstream outFile;
 			outFile.open(mFileName, std::ios::binary);
-			outFile << App->CL_Properties_Textures->mFileString;
+			outFile << mFileString;
 			outFile.close();
 
-			App->CL_Properties_Textures->mFileString.clear();
+			mFileString.clear();
 
 			Texture_To_HBITMP(mFileName);
 			remove(mFileName);
@@ -1606,10 +1622,10 @@ void Face_Editor::Texture_To_HBITMP(char* TextureFileName)
 	HWND PreviewWnd = GetDlgItem(FaceDlg_Hwnd, IDC_FE_BASETEXTURE2);
 	HDC	hDC = GetDC(PreviewWnd);
 
-	App->CL_Properties_Textures->Sel_BaseBitmap = App->CL_Textures->Get_HBITMP(TextureFileName, hDC);
+	Sel_BaseBitmap = App->CL_Textures->Get_HBITMP(TextureFileName, hDC);
 
-	App->CL_Properties_Textures->BasePicWidth = App->CL_Textures->BasePicWidth;
-	App->CL_Properties_Textures->BasePicHeight = App->CL_Textures->BasePicHeight;
+	BasePicWidth = App->CL_Textures->BasePicWidth;
+	BasePicHeight = App->CL_Textures->BasePicHeight;
 
 	ReleaseDC(PreviewWnd, hDC);
 
@@ -1636,9 +1652,9 @@ bool CALLBACK Face_Editor::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPA
 		FillRect(hDC, &clientRect, (HBRUSH)(RGB(0, 255, 0)));
 
 		// Check if a base bitmap is selected
-		if (App->CL_Properties_Textures->Sel_BaseBitmap != nullptr)
+		if (App->CL_X_Face_Editor->Sel_BaseBitmap != nullptr)
 		{
-			RECT sourceRect = { 0, 0, App->CL_Properties_Textures->BasePicWidth, App->CL_Properties_Textures->BasePicHeight };
+			RECT sourceRect = { 0, 0, App->CL_X_Face_Editor->BasePicWidth, App->CL_X_Face_Editor->BasePicHeight };
 			RECT destRect = clientRect;
 
 			// Get the device context and set the stretch mode
@@ -1646,7 +1662,7 @@ bool CALLBACK Face_Editor::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPA
 			SetStretchBltMode(renderDC, HALFTONE);
 
 			// Render the texture
-			App->CL_X_Face_Editor->RenderTexture_Blit(renderDC, App->CL_Properties_Textures->Sel_BaseBitmap, &sourceRect, &destRect);
+			App->CL_X_Face_Editor->RenderTexture_Blit(renderDC, App->CL_X_Face_Editor->Sel_BaseBitmap, &sourceRect, &destRect);
 			ReleaseDC(hwnd, renderDC);
 		}
 
@@ -1658,7 +1674,7 @@ bool CALLBACK Face_Editor::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPA
 }
 
 // *************************************************************************
-// *		RenderTexture_Blit:- Terry and Hazel Flanigan 202
+// *		RenderTexture_Blit:- Terry and Hazel Flanigan 2026
 // *************************************************************************
 bool Face_Editor::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
 {

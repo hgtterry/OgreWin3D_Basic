@@ -52,7 +52,7 @@ void CL64_Interface::Select_Tab(int Tab_ID)
 		flag_Tab_Texture = true;
 		//if (App->CL_Model->Editor_Setup_Mode == Enums::Editor_Setup_Mode_Create_Model)
 		{
-			Show_Textures_Dialog(true);
+			//Show_Textures_Dialog(true);
 		}
 		/*else
 		{
@@ -91,7 +91,6 @@ void CL64_Interface::Hide_Tab_Dialogs()
 	flag_Tab_Templates = false;
 	
 	// Hide the respective dialogs for textures, brushes, and templates
-	App->CL_Interface->Show_Textures_Dialog(false);
 	App->CL_Interface->Show_Materials_Dialog(false);
 	App->CL_Interface->Show_Brushes_Dialog(false);
 	App->CL_Interface->Show_TemplatesDialog(false);
@@ -108,13 +107,6 @@ void CL64_Interface::Show_Brushes_Dialog(bool Show)
 	ShowWindow(App->CL_Properties_Brushes->BrushesDlg_Hwnd, Show);
 }
 
-// *************************************************************************
-// *	  	Show_Textures_Dialog:- Terry Mo and Hazel 2026				   *
-// *************************************************************************
-void CL64_Interface::Show_Textures_Dialog(bool Show)
-{
-	ShowWindow(App->CL_Properties_Textures->Textures_Dlg_Hwnd, Show);
-}
 
 // *************************************************************************
 // *	  	Show_Materials_Dialog:- Terry and Hazel Flanigan 2026		   *

@@ -169,7 +169,7 @@ void CL64_Editor_Control::Return_To_Map_Editor(void)
 
 	// Turn off Editor Dialogs and Gizmos
 	App->CL_FileView->Show_FileView(false);
-	App->CL_Properties_Scene->Show_Properties_Scene(false);
+	//App->CL_Properties_Scene->Show_Properties_Scene(false);
 	App->CL_Gui_Environment->PropertyEditor_Page = false;
 	App->CL_Gui_Environment->flag_Show_PropertyEditor = false;
 	App->CL_Gizmos->Show_MarkerBox(false);
@@ -275,8 +275,6 @@ void CL64_Editor_Control::Set_Map_Editor_Select_Dlg()
 	//if (App->CL_Brush->Get_Brush_Count() > 0)
 	{
 		App->CL_Doc->Set_Tool_GeneralSelect();
-
-		App->CL_Top_Tabs->Enable_Select_Button(true, true);
 
 		App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
 

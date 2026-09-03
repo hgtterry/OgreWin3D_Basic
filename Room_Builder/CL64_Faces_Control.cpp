@@ -517,8 +517,6 @@ void CL64_Faces_Control::Select_All_Face()
 	App->CL_Doc->SelectAllFacesInBrushes();
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
-	App->CL_Properties_Tabs->Select_Textures_Tab();
-
 	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = true;
 
 	EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_BT_FACE_FACEEDITOR), false);
@@ -609,9 +607,6 @@ void CL64_Faces_Control::Select_Face()
 
 	// Update all views to reflect changes
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-	// Enable the face properties button and select the textures tab
-	App->CL_Properties_Tabs->Select_Textures_Tab();
 
 	// Set the current selection in the combo box
 	HWND Temp = GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES);

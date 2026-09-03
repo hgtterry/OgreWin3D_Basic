@@ -58,7 +58,6 @@ THE SOFTWARE.
 #include "CL64_Properties_Tabs.h"
 #include "CL64_Properties_Templates.h"
 #include "CL64_Properties_Brushes.h"
-#include "CL64_Properties_Textures.h"
 
 #include "Face_Editor.h"
 
@@ -171,8 +170,7 @@ public:
 	CL64_Properties_Tabs*		CL_Properties_Tabs;
 	CL64_Properties_Templates*	CL_Properties_Templates;
 	CL64_Properties_Brushes*	CL_Properties_Brushes;
-	CL64_Properties_Textures*	CL_Properties_Textures;
-
+	
 	Face_Editor*				CL_X_Face_Editor;			// Library
 
 	CL64_Ogre*					CL_Ogre;

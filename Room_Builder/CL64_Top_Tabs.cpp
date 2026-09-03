@@ -81,9 +81,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_ST_HEADER_BRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
 		SendDlgItemMessage(hDlg, IDC_BT_FULL_3D, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TOP_LEFT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TOP_RIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -92,25 +89,7 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BT_HD_SCENEEDITOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_HD_PREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_MOVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_ROTATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_BRUSH_SHEAR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
 		return TRUE;
-	}
-
-	case WM_CTLCOLORSTATIC:
-	{
-		if (GetDlgItem(hDlg, IDC_ST_HEADER_BRUSHES) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		return FALSE;
 	}
 
 	case WM_CTLCOLORDLG:
@@ -193,91 +172,6 @@ LRESULT CALLBACK CL64_Top_Tabs::Proc_Top_Tabs(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 		
-		if (some_item->idFrom == IDC_BT_BRUSH_SELECT)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_SELECT));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Faces_Control->flag_Brush_Select);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_BRUSH_MOVE)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_MOVE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Faces_Control->flag_Brush_Move);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_BRUSH_ROTATE)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_ROTATE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Faces_Control->flag_Brush_Rotate);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-		
-		if (some_item->idFrom == IDC_BT_BRUSH_SCALE)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_SCALE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, App->CL_Faces_Control->flag_Brush_Scale);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_BRUSH_SHEAR)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_BRUSH_SHEAR));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Normal(item);
-			}
-
-			return CDRF_DODEFAULT;
-		}
-
 		return CDRF_DODEFAULT;
 	}
 
@@ -496,24 +390,6 @@ void CL64_Top_Tabs::Init_Bmps_Globals(void)
 {
 	HWND Temp = GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_TOP_RIGHT);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TR_Off_Bmp);
-}
-
-// *************************************************************************
-// *		Enable_Select_Button:- Terry and Hazel Flanigan 2025   	  	   *
-// *************************************************************************
-void CL64_Top_Tabs::Enable_Select_Button(bool Enable, bool Active)
-{
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_SELECT), Enable);
-	App->CL_Faces_Control->flag_Brush_Select = Active;
-}
-
-// *************************************************************************
-// *		Enable_Move_Button:- Terry and Hazel Flanigan 2025   	  	   *
-// *************************************************************************
-void CL64_Top_Tabs::Enable_Move_Button(bool Enable, bool Active)
-{
-	EnableWindow(GetDlgItem(TopTabs_Dlg_hWnd, IDC_BT_BRUSH_MOVE), Enable);
-	App->CL_Faces_Control->flag_Brush_Move = Active;
 }
 
 // **************************************************************************
