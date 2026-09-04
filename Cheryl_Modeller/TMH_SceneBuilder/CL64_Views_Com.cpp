@@ -1798,5 +1798,31 @@ void CL64_Views_Com::Set_3D_FullView()
 		nleftWnd_Depth);
 }
 
+// *************************************************************************
+// *				Show_Grids:- Terry and Hazel Flanigan 2026			   *
+// *************************************************************************
+void CL64_Views_Com::Show_Grids(bool Show)
+{
+	if (Show == true)
+	{
+		ShowWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, true);
+		ShowWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd, true);
+		ShowWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd, true);
+		ShowWindow(App->CL_View_3D->Bottom_Right_Window_Hwnd, true);
+
+		//flag_Grids_Are_Visible = true;
+	}
+	else
+	{
+		ShowWindow(App->CL_View_Top_Left->Top_Left_Window_Hwnd, false);
+		ShowWindow(App->CL_View_Top_Right->Top_Right_Window_Hwnd, false);
+		ShowWindow(App->CL_View_Bottom_Left->Bottom_Left_Window_Hwnd, false);
+		ShowWindow(App->CL_View_3D->Bottom_Right_Window_Hwnd, false);
+
+		//flag_Grids_Are_Visible = false;
+	}
+}
+
+
 
 

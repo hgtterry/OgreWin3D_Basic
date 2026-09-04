@@ -140,6 +140,7 @@ void CL64_Editor_Control::Set_Map_Editor_Startup()
 // *************************************************************************
 void CL64_Editor_Control::Set_3DEditor_View()
 {
+	return;
 	auto& Views_Com = App->CL_Views_Com;
 
 	App->CL_Top_Tabs->Set_View_Buttons(Enums::Selected_Map_View_3D);
@@ -198,7 +199,7 @@ void CL64_Editor_Control::Set_Editor_Import_Model()
 	App->CL_Interface->Enable_TopTabs_Faces_Buttons(false);
 
 	// Set 3D view in the editor
-	Set_3DEditor_View();
+	//Set_3DEditor_View();
 
 	// Enable the templates tab and disable textures and groups tabs
 	EnableWindow(GetDlgItem(App->CL_Properties_Tabs->Tabs_Control_Hwnd, IDC_TBTEMPLATES), false);
@@ -248,4 +249,66 @@ void CL64_Editor_Control::Set_Map_View()
 		App->CL_View_Bottom_Left->Zoom_To_Model();
 		flag_Just_Loaded = true;
 	}
+}
+
+// *************************************************************************
+// *		Set_Map_Editor_New:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void CL64_Editor_Control::Set_Map_Editor_New()
+{
+	//App->CL_Interface->Enable_Top_Tabs_Buttons(false);
+
+	flag_Map_Editor_Active = true;
+
+	App->CL_Views_Com->Current_View = App->CL_View_3D->VCam_3D;
+
+	if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
+	{
+		App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
+	}
+
+	App->CL_Doc->mModeTool = NULL;
+
+	App->CL_Gizmos->Reset_Grid_And_Hair();
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	App->CL_Views_Com->Show_Grids(true);
+
+	RedrawWindow(App->MainHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	App->CL_Ogre->RenderFrame(7);
+
+	//App->CL_Interface->Enable_Properties_Tabs(false);
+
+	int Result = App->CL_Dialogs->Start_Start_Screen_Dlg(); // DialogBox so waits
+	switch (Result)
+	{
+	case Enums::Start_Screen_NewScene:
+	{
+		break;
+	}
+
+	case Enums::Start_Screen_LastFile:
+	{
+		// Compare the last opened file with "New_Room.mtf"
+		//if (strcmp(App->CL_Libs->CL_Preference->Prefs_PathAndFile, "New_Room.mtf") != 0)
+		{
+			// Copy the path and filename from preferences to the file structure
+			strcpy(App->CL_File->PathFileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile);
+			strcpy(App->CL_File->FileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_JustFileName);
+
+			// Initiate the loading process
+			App->CL_File->Start_Load(false);
+			App->CL_Editor_Control->Set_Map_Editor_Startup();
+			App->CL_Views_Com->Show_Grids(true);
+		}
+		break;
+	}
+
+	default:
+		return;
+	}
+
+	//App->CL_Interface->Enable_Properties_Tabs(true);
+
 }

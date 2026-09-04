@@ -72,6 +72,8 @@ public:
 	void On_Left_Button_Up(POINT CursorPosition);
 	void On_Left_Button_Down(POINT CursorPosition, HWND hDlg);
 
+	void Show_Grids(bool Show);
+
 	HWND Main_View_Dlg_Hwnd; // Background of MDI
 
 	float GridSize, GridSnapSize;

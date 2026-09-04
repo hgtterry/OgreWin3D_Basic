@@ -39,7 +39,7 @@ public:
 
 	void Set_Editor_Design_Model();
 	void Set_Editor_Import_Model();
-
+	void Set_Map_Editor_New();
 
 	int Editor_Mode;
 

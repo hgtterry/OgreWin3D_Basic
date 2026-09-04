@@ -55,16 +55,156 @@ CL64_Dialogs::CL64_Dialogs(void)
 	FileViewer_Dlg_Hwnd = nullptr;
 
 	YesNoCancel_Result = false;
+	Start_Screen_Result = Enums::Start_Screen_None;
 
 	flag_Dlg_Canceled = false;
 	flag_boolBrush_Properties_Dialog_Active = false;
 
 	flag_FileViewer_Active = false;
 	flag_General_ListBox_Active = false;
+
+	flag_Dlg_NewScene = true;
+	flag_Dlg_LastFile = false;
 }
 
 CL64_Dialogs::~CL64_Dialogs(void)
 {
+}
+
+// *************************************************************************
+// *	  		Start_Start_Screen_Dlg:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+int CL64_Dialogs::Start_Start_Screen_Dlg()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_START_SCREEN, App->MainHwnd, (DLGPROC)Proc_Start_Screen);
+
+	return Start_Screen_Result;
+}
+
+// **************************************************************************
+// *			Proc_Start_Screen:- Terry and Hazel Flanigan 2026
+// **************************************************************************
+LRESULT CALLBACK CL64_Dialogs::Proc_Start_Screen(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	auto& p_Dialogs_Class = App->CL_Dialogs; // Pointer to App->CL_Dialogs
+
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_SS_NEWSCENE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_SS_LASTSCENE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_SS_LASTFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_ST_SS_LASTFILE, (LPCTSTR)App->CL_Libs->CL_Preference->Prefs_Last_JustFileName);
+
+		p_Dialogs_Class->Start_Screen_Result = Enums::Start_Screen_NewScene;
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ST_SS_LASTFILE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+		switch (some_item->idFrom)
+		{
+		case IDC_BT_SS_NEWSCENE:
+		{
+			App->Custom_Button_Toggle(item, p_Dialogs_Class->flag_Dlg_NewScene);
+			break;
+		}
+
+		case IDC_BT_SS_LASTSCENE:
+		{
+			App->Custom_Button_Toggle(item, p_Dialogs_Class->flag_Dlg_LastFile);
+			break;
+		}
+
+		case IDOK:
+		{
+			App->Custom_Button_Normal(item);
+			break;
+		}
+
+		case IDCANCEL:
+		{
+			App->Custom_Button_Normal(item);
+			break;
+		}
+
+		default:
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_SS_NEWSCENE)
+		{
+			p_Dialogs_Class->flag_Dlg_NewScene = true;
+			p_Dialogs_Class->flag_Dlg_LastFile = false;
+
+			p_Dialogs_Class->Start_Screen_Result = Enums::Start_Screen_NewScene;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_SS_LASTSCENE)
+		{
+			p_Dialogs_Class->flag_Dlg_NewScene = false;
+			p_Dialogs_Class->flag_Dlg_LastFile = true;
+
+			p_Dialogs_Class->Start_Screen_Result = Enums::Start_Screen_LastFile;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			/*App->CL_Properties_Tabs->Enable_Tabs_Dlg(true);
+			App->CL_Dialogs->flag_Dlg_Canceled = 1;*/
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+	return FALSE;
 }
 
 // *************************************************************************

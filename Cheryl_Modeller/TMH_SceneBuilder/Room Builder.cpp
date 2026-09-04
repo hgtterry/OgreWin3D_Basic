@@ -131,8 +131,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    
     App->CL_Ogre->Init_3D();
 
-    App->CL_Editor_Control->Set_Map_Editor_Startup();
-    App->CL_Editor_Control->Set_3DEditor_View();
     App->CL_Ogre->mWindow->windowMovedOrResized();
     App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 
@@ -1565,32 +1563,15 @@ void StartOgre()
 
             // Initiate the loading process
             App->CL_File->Start_Load(false);
+            App->CL_Editor_Control->Set_Map_Editor_Startup();
+            App->CL_Views_Com->Show_Grids(true);
         }
     }
-  
-    bool loadtestfile = false;
-    if (loadtestfile == true)
+    else
     {
-        strcpy(App->CL_File->Loaded_FileName, "chapel-10-C.ms3d");
-
-        strcpy(App->CL_File->Loaded_PathFileName, App->App_Directory_FullPath);
-        strcat(App->CL_File->Loaded_PathFileName, "\\Models\\Milkshape_Models\\Chaple\\chapel-10-C.ms3d");
-
-        App->CL_Assimp->Options.SelectedPreset = aiProcess_Triangulate |
-            aiProcess_FlipUVs |
-            aiProcess_GenSmoothNormals |
-            aiProcess_PreTransformVertices;
-
-        App->CL_Assimp->Options.Model_Type = Enums::Model_Type_Assimp;
-
-        bool test = App->CL_Importers->Assimp_Loader(false);
+        App->CL_Editor_Control->Set_Map_Editor_Startup();
+        App->CL_Editor_Control->Set_Map_Editor_New();
     }
-
-	if (App->CL_Libs->CL_Preference->flag_SceneEditor == true)
-	{
-		App->CL_Editor_Control->Start_Editor_Scene();
-	}
-
 
     ShowWindow(App->CL_View_3D->Bottom_Right_Window_Hwnd, SW_SHOWNORMAL);
     App->CL_Editor_Control->flag_Scene_Editor_Active = true;
