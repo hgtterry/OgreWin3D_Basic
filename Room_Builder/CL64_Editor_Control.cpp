@@ -299,3 +299,31 @@ void CL64_Editor_Control::Set_Map_Editor_Startup()
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 }
+
+// *************************************************************************
+// *		Set_Map_Editor_New:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void CL64_Editor_Control::Set_Map_Editor_New()
+{
+	App->CL_Interface->Enable_Top_Tabs_Buttons(false);
+
+	flag_Map_Editor_Active = true;
+
+	App->CL_Views_Com->Current_View = App->CL_View_3D->VCam_3D;
+
+	if (App->CL_Views_Com->Selected_Window != Enums::Selected_Map_View_3D)
+	{
+		App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
+	}
+
+	App->CL_Gizmos->Reset_Grid_And_Hair();
+
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	App->CL_Views_Com->Show_Grids(true);
+
+	RedrawWindow(App->MainHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	App->CL_Ogre->RenderFrame(7);
+
+	App->Say("Empty Project");
+}

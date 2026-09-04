@@ -33,8 +33,13 @@ CL64_Properties_Templates::CL64_Properties_Templates()
 
 	flag_Insert_Enabled = 0;
 
-	Brush_But_Normal = CreateSolidBrush(RGB(149, 200, 216));
-	Brush_But_Hover = CreateSolidBrush(RGB(137, 207, 239));
+	LastCreated_ShapeName[0] = 0;
+
+	//Brush_But_Normal = CreateSolidBrush(RGB(149, 200, 216));
+	//Brush_But_Hover = CreateSolidBrush(RGB(137, 207, 239));
+
+	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 180));
+	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 230));
 }
 
 CL64_Properties_Templates::~CL64_Properties_Templates()
@@ -150,7 +155,6 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 		SendDlgItemMessage(hDlg, IDC_BRUSH_STAIRCASE_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BRUSH_ARCH_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		
-
 		return TRUE;
 	}
 

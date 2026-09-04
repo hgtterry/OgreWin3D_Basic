@@ -1099,17 +1099,14 @@ void StartOgre()
 
             // Initiate the loading process
             App->CL_File->Start_Load(false);
+            App->CL_Editor_Control->Set_Map_Editor_Startup();
+            App->CL_Views_Com->Show_Grids(true);
         }
     }
-
-	if (App->CL_X_Preference->flag_SceneEditor == true)
-	{
-		App->CL_Editor_Control->Start_Editor_Scene();
-	}
-
-	App->CL_Editor_Control->Set_Map_Editor_Startup();
-
-    App->CL_Views_Com->Show_Grids(true);
+    else
+    {
+        App->CL_Editor_Control->Set_Map_Editor_New();
+    }
 
 	App->CL_Ogre->Ogre_Render_Loop();
 

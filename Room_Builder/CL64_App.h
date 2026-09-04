@@ -261,6 +261,7 @@ public:
 	HWND MainHwnd;
 
 	HBRUSH AppBackground;
+	HBRUSH AppBackground_DM;
 	int Red_Background_Color;
 	int Green_Background_Color;
 	int Blue_Background_Color;

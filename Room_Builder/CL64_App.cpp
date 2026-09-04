@@ -137,6 +137,7 @@ CL64_App::CL64_App(void)
 	CursorPosY = 500;
 
 	AppBackground = 0;
+	AppBackground_DM = 0;
 	Red_Background_Color = 193;
 	Green_Background_Color = 202;
 	Blue_Background_Color = 222;
@@ -352,8 +353,7 @@ void CL64_App::Set_Brushes_Fonts(void)
 	//AppBackground = CreateSolidBrush(RGB(203, 212, 232));
 
 	AppBackground = CreateSolidBrush(RGB(Red_Background_Color, Green_Background_Color, Blue_Background_Color));
-
-
+	AppBackground_DM = CreateSolidBrush(RGB(0, 0, 0));
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
