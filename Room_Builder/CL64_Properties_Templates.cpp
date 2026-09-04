@@ -392,6 +392,9 @@ void CL64_Properties_Templates::Insert_Template()
 			App->CL_Level->flag_File_Been_Saved = false;
 
 			Enable_Shape_Buttons(true);
+			
+			App->CL_Interface->Show_Faces_Panel_Control(true);
+			App->CL_Interface->Enable_Face_Buttons(true);
 
 			FirstRoom = true;
 		}
@@ -399,6 +402,9 @@ void CL64_Properties_Templates::Insert_Template()
 		{
 			App->CL_Doc->AddBrushToWorld();
 			App->CL_Level->flag_Level_is_Modified = true;
+
+			App->CL_Interface->Show_Faces_Panel_Control(true);
+			App->CL_Interface->Enable_Face_Buttons(true);
 		}
 	}
 
@@ -462,19 +468,13 @@ void CL64_Properties_Templates::Set_Icons()
 }
 
 // *************************************************************************
-// *	  	Enable_Shape_Buttons:- Terry Mo and Hazel 2025				   *
+// *	  	Enable_Shape_Buttons:- Terry Mo and Hazel 2026
 // *************************************************************************
 void CL64_Properties_Templates::Enable_Shape_Buttons(bool Enable)
 {
-	/*ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CYCLINDER_PRIMITIVE), Enable);
-	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CONE_PRIMITIVE), Enable);
-	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_SPHEROID_PRIMITIVE), Enable);
-	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_STAIRCASE_PRIMITIVE), Enable);
-	ShowWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_ARCH_PRIMITIVE), Enable);*/
-
 	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CYCLINDER_PRIMITIVE), Enable);
 	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_CONE_PRIMITIVE), Enable);
-	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_SPHEROID_PRIMITIVE), Enable);
+	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_SPHEROID_PRIMITIVE), false);
 	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_STAIRCASE_PRIMITIVE), Enable);
 	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd, IDC_BRUSH_ARCH_PRIMITIVE), Enable);
 }

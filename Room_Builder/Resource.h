@@ -86,6 +86,8 @@
 #define IDD_TOP_TABS_FACES              200
 #define IDD_OGRE_WINDOW                 201
 #define IDD_OGRE_CANVAS                 202
+#define IDD_DIALOG1                     203
+#define IDD_START_SCREEN                203
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -457,6 +459,7 @@
 #define IDC_BT_LIBRARIES                1331
 #define IDC_BT_FACES_NONE               1331
 #define IDC_BT_TT_FILEVIEW              1331
+#define IDC_BT_SS_NEWSCENE              1331
 #define IDC_CHECK1                      1332
 #define IDC_CK_LASTFILE                 1332
 #define IDC_BT_TT_FACES_ALL             1332
@@ -496,6 +499,7 @@
 #define IDC_BT_FE_APPLY_TEXTURE         1356
 #define IDC_FE_BT_TXL_FILE_EDIT         1357
 #define IDC_BT_TT_OBJ_DATA              1358
+#define IDC_BT_SS_LASTSCENE             1359
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -583,9 +587,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        203
+#define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32850
-#define _APS_NEXT_CONTROL_VALUE         1359
+#define _APS_NEXT_CONTROL_VALUE         1360
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

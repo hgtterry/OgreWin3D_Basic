@@ -316,6 +316,8 @@ void CL64_Editor_Control::Set_Map_Editor_New()
 		App->CL_Views_Com->Set_Selected_View(Enums::Selected_Map_View_3D);
 	}
 
+	App->CL_Doc->mModeTool = NULL;
+
 	App->CL_Gizmos->Reset_Grid_And_Hair();
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -325,5 +327,33 @@ void CL64_Editor_Control::Set_Map_Editor_New()
 	RedrawWindow(App->MainHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	App->CL_Ogre->RenderFrame(7);
 
-	App->Say("Empty Project");
+	int Result = App->CL_Dialogs->Start_Start_Screen_Dlg();
+	switch (Result)
+	{
+	case Enums::Start_Screen_NewScene:
+	{
+		break;
+	}
+
+	case Enums::Start_Screen_LastFile:
+	{
+		// Compare the last opened file with "New_Room.mtf"
+		if (strcmp(App->CL_X_Preference->Prefs_PathAndFile, "New_Room.mtf") != 0)
+		{
+			// Copy the path and filename from preferences to the file structure
+			strcpy(App->CL_File->PathFileName_3dt, App->CL_X_Preference->Prefs_PathAndFile);
+			strcpy(App->CL_File->FileName_3dt, App->CL_X_Preference->Prefs_JustFileName);
+
+			// Initiate the loading process
+			App->CL_File->Start_Load(false);
+			App->CL_Editor_Control->Set_Map_Editor_Startup();
+			App->CL_Views_Com->Show_Grids(true);
+		}
+		break;
+	}
+
+	default:
+		return;
+	}
+
 }

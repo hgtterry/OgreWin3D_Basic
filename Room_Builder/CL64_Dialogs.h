@@ -32,6 +32,8 @@ public:
 	CL64_Dialogs(void);
 	~CL64_Dialogs(void);
 
+	int Start_Start_Screen_Dlg();
+
 	int YesNoCancel(char* Text, char* Text2);
 	void YesNo(const char* Text, const char* Text2);
 	void Message(char* pString, char* pString2);
@@ -50,13 +52,19 @@ public:
 	char MessageString3[MAX_PATH];
 
 	int YesNoCancel_Result;
+	int Start_Screen_Result;
 	bool flag_Dlg_Canceled;
+
+	bool flag_Dlg_NewScene;
+	bool flag_Dlg_LastFile;
 
 	HWND TextureView_Hwnd;
 
 	HBITMAP	Sel_BaseBitmap;
 
 private:
+
+	static LRESULT CALLBACK Proc_Start_Screen(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Proc_YesNoCancel(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Message(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

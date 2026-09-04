@@ -49,6 +49,12 @@
 
 namespace Enums
 {
+	enum Start_Screen_Results
+	{
+		Start_Screen_None = -1,
+		Start_Screen_NewScene = 0,
+		Start_Screen_LastFile = 1
+	};
 	enum Tab_ID
 	{
 		Tab_ID_None = 0,
