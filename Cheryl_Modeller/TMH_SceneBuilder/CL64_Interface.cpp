@@ -458,6 +458,28 @@ void CL64_Interface::Enable_TopTabs_Faces_Buttons(bool option)
 }
 
 // *************************************************************************
+// *		Enable_All_Face_Buttons:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Interface::Enable_All_Face_Buttons(bool option)
+{
+	auto& Face_Dlg = App->CL_Faces_Control;
+
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_MOVE), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_SCALE), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_ROTATE), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_SHEAR), false);
+
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACES_NONE), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACES_ALL), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_PREV), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_NEXT), option);
+
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACE_FACEEDITOR), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACE_SHOWSELECTEDFACE), option);
+	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), option);
+
+}
+// *************************************************************************
 // *		Enable_TopTabs_Buttons:- Terry and Hazel Flanigan 2026		   *
 // *************************************************************************
 void CL64_Interface::Enable_TopTabs_Buttons(bool option)

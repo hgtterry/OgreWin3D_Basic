@@ -117,6 +117,7 @@
 #define IDD_TOP_TABS_FACES              228
 #define IDD_OBJECT_EXPORT1              229
 #define IDD_EXPORT_BRUSH                229
+#define IDD_START_SCREEN                230
 #define IDC_BANNER                      1000
 #define IDC_STTEXT                      1001
 #define IDC_STMESSAGE                   1002
@@ -503,6 +504,8 @@
 #define IDC_CK_LOCKTEXTURES             1332
 #define IDC_BT_AT_GROUPDETAILS          1332
 #define IDC_BT_TT_ROTATE                1332
+#define IDC_BUTTON5                     1332
+#define IDC_BT_SS_LASTSCENE             1332
 #define IDC_BUT_AT_WORLDPOS             1333
 #define IDC_CK_SCENEEDITOR              1333
 #define IDC_BT_AT_VIEWMAT               1333
@@ -582,7 +585,6 @@
 #define IDC_BT_MOT_TEXTURES             1403
 #define IDC_BT_ALL_GROUPS               1403
 #define IDC_BT_HIDEGROUP                1403
-#define IDC_BT_FACESCON                 1403
 #define IDC_CB_MOTIONS_JOINTS           1404
 #define IDC_ST_MOT_JOINTS               1405
 #define IDC_BT_TT_FACES_ALL             1407
@@ -605,6 +607,8 @@
 #define IDC_BT_TT_MOVE                  1424
 #define IDC_ST_BRUSHNAME                1425
 #define IDC_ST_FACEAMOUNT               1426
+#define IDC_BT_SS_NEWSCENE              1426
+#define IDC_ST_SS_LASTFILE              1427
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -749,9 +753,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        228
+#define _APS_NEXT_RESOURCE_VALUE        231
 #define _APS_NEXT_COMMAND_VALUE         32907
-#define _APS_NEXT_CONTROL_VALUE         1426
+#define _APS_NEXT_CONTROL_VALUE         1428
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

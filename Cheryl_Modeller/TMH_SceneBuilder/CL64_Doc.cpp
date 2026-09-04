@@ -536,7 +536,9 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
             EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_ENABLED);
 
             // Enable top tabs buttons in the interface
+            App->CL_Interface->Enable_All_Face_Buttons(true);
             App->CL_Interface->Enable_TopTabs_Buttons(true);
+           
         }
     }
 }

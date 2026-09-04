@@ -63,7 +63,9 @@ public:
 	// Top Tabs brush panel options
 	void Show_Faces_Panel_Control(bool show);
 	void Enable_TopTabs_Faces_Buttons(bool option);
+
 	void Enable_TopTabs_Buttons(bool option);
+	void Enable_All_Face_Buttons(bool option);
 
 	void Select_Tab(int Tab_ID);
 	void Hide_Tab_Dialogs();
