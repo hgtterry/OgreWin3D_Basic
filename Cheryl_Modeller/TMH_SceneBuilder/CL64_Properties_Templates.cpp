@@ -156,6 +156,7 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 
 		return FALSE;
 	}
+
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
@@ -253,11 +254,11 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			break;
 		}
 
-
-		return CDRF_DODEFAULT;
-
+		default:
+			return CDRF_DODEFAULT;
 		}
 
+		return CDRF_DODEFAULT;
 	}
 
 	case WM_CTLCOLORDLG:

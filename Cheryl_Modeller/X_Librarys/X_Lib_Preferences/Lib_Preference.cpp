@@ -71,7 +71,7 @@ Lib_Preference::~Lib_Preference(void)
 // *************************************************************************
 char* Lib_Preference::GetVersion()
 {
-	return (LPSTR)" Lib_Preference [ 22-08-26 ] Build 2 ";
+	return (LPSTR)" Lib_Preference [ 04-09-26 ] Build 2 ";
 }
 
 // *************************************************************************

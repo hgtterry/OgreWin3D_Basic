@@ -296,7 +296,7 @@ void Lib_Preference::Init_Configuration()
 	char DirCheck[MAX_PATH];
 	strcpy(DirCheck, UserData_Folder);
 	strcat(DirCheck, "\\");
-	strcat(DirCheck, "OW3D_Dir");
+	strcat(DirCheck, "Cheryl_3D_Builder");
 
 	bool check = 0;
 	check = Search_For_Folder(DirCheck);
@@ -312,7 +312,7 @@ void Lib_Preference::Init_Configuration()
 	{
 		char mCheckFile[MAX_PATH];
 		strcpy(mCheckFile, DirCheck);
-		strcat(mCheckFile, "\\OW3D_MeshBuilder.cfg");
+		strcat(mCheckFile, "\\Cheryl_3D_Builder.cfg");
 
 		bool checkfile = Check_File_Exist(mCheckFile);
 
@@ -355,7 +355,7 @@ void Lib_Preference::Save_Config_File()
 
 	char buf[MAX_PATH];
 	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\OW3D_Dir\\OW3D_MeshBuilder.cfg");
+	strcat(buf, "\\Cheryl_3D_Builder\\Cheryl_3D_Builder.cfg");
 
 	WriteRecentFiles = std::fopen(buf, "wt");
 
@@ -389,7 +389,7 @@ void Lib_Preference::Load_Config_File()
 	char buf[MAX_PATH];
 
 	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\OW3D_Dir\\OW3D_MeshBuilder.cfg");
+	strcat(buf, "\\Cheryl_3D_Builder\\Cheryl_3D_Builder.cfg");
 
 	auto& Ini_File = App->CL_X_Ini_File; // App->CL_X_Ini_File-> (Pointer)
 
