@@ -327,7 +327,9 @@ void CL64_Editor_Control::Set_Map_Editor_New()
 	RedrawWindow(App->MainHwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	App->CL_Ogre->RenderFrame(7);
 
-	int Result = App->CL_Dialogs->Start_Start_Screen_Dlg();
+	App->CL_Interface->Enable_Properties_Tabs(false);
+	
+	int Result = App->CL_Dialogs->Start_Start_Screen_Dlg(); // DialogBox so waits
 	switch (Result)
 	{
 	case Enums::Start_Screen_NewScene:
@@ -355,5 +357,7 @@ void CL64_Editor_Control::Set_Map_Editor_New()
 	default:
 		return;
 	}
+
+	App->CL_Interface->Enable_Properties_Tabs(true);
 
 }

@@ -312,6 +312,8 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 		if (LOWORD(wParam) == IDC_BT_TT_SELECT)
 		{
 			App->CL_Interface->Unselect_Brush_And_Set_Dlgs();
+			App->CL_Interface->Enable_All_Face_Buttons(false);
+
 			return TRUE;
 		}
 

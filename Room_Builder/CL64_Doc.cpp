@@ -558,11 +558,13 @@ void CL64_Doc::SelectOrtho(POINT point, ViewVars* v)
 
                 if (pMinBrush->GroupId == Enums::Brushs_ID_Area)
                 {
+                    App->CL_Interface->Enable_All_Face_Buttons(true);
                     App->CL_Interface->Show_Faces_Panel_Control(true);
                     App->CL_Interface->Enable_Face_Buttons(true);
                 }
                 else
                 {
+                    App->CL_Interface->Enable_All_Face_Buttons(true);
                     App->CL_Interface->Show_Faces_Panel_Control(true);
                     App->CL_Interface->Enable_Face_Buttons(false);
                 }

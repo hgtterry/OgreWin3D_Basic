@@ -38,7 +38,11 @@ public:
 	void Show_Faces_Panel_Control(bool show);
 	void Position_Face_Options_Dlg(void);
 	void Unselect_Brush_And_Set_Dlgs(void);
+
 	void Enable_Face_Buttons(bool option);
+	void Enable_All_Face_Buttons(bool option);
+
+	void Enable_Properties_Tabs(bool Enable);
 
 	// Sets Flag 
 	void Show_FileView(bool show);

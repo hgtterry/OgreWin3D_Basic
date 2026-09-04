@@ -86,10 +86,12 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Start_Screen(HWND hDlg, UINT message, WPARAM
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_SS_NEWSCENE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_SS_LASTSCENE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_ST_SS_LASTFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_ST_SS_LASTFILE, (LPCTSTR)App->CL_X_Preference->Prefs_JustFileName);
 
 		p_Dialogs_Class->Start_Screen_Result = Enums::Start_Screen_NewScene;
 
@@ -98,13 +100,13 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Start_Screen(HWND hDlg, UINT message, WPARAM
 
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_ST_SS_LASTFILE) == (HWND)lParam)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
 		return FALSE;
 	}
 
