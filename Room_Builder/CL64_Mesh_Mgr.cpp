@@ -143,14 +143,14 @@ bool CL64_Mesh_Mgr::update_world(const bool selected)
 		{
 			if (App->CL_Scene->GroupCount > 0)
 			{
-				if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+				//if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
 				{
 					App->CL_Ogre3D->Convert_ToOgre3D(true); // Will Set Node Visible
 				}
-				else
+				/*else
 				{
 					App->Say("Erro -> No Brushes to Convert");
-				}
+				}*/
 			}
 			else
 			{

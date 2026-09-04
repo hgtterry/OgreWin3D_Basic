@@ -54,7 +54,7 @@ CL64_Dialogs::CL64_Dialogs(void)
 	flag_Dlg_Canceled = false;
 	flag_boolBrush_Properties_Dialog_Active = false;
 
-	flag_Dlg_NewScene = true;
+	flag_Dlg_NewScene = false;
 	flag_Dlg_LastFile = false;
 }
 
@@ -157,23 +157,25 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Start_Screen(HWND hDlg, UINT message, WPARAM
 	{
 		if (LOWORD(wParam) == IDC_BT_SS_NEWSCENE)
 		{
-			p_Dialogs_Class->flag_Dlg_NewScene = true;
-			p_Dialogs_Class->flag_Dlg_LastFile = false;
+			//p_Dialogs_Class->flag_Dlg_NewScene = true;
+			//p_Dialogs_Class->flag_Dlg_LastFile = false;
 
 			p_Dialogs_Class->Start_Screen_Result = Enums::Start_Screen_NewScene;
 
-			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			EndDialog(hDlg, LOWORD(wParam));
+			
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_SS_LASTSCENE)
 		{
-			p_Dialogs_Class->flag_Dlg_NewScene = false;
-			p_Dialogs_Class->flag_Dlg_LastFile = true;
+			//p_Dialogs_Class->flag_Dlg_NewScene = false;
+			//p_Dialogs_Class->flag_Dlg_LastFile = true;
 
 			p_Dialogs_Class->Start_Screen_Result = Enums::Start_Screen_LastFile;
 
-			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			EndDialog(hDlg, LOWORD(wParam));
+			
 			return TRUE;
 		}
 
