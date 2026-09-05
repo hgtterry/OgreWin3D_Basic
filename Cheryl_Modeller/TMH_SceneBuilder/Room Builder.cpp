@@ -478,16 +478,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 App->CL_Model->Clear_Model();
 
-                // Load Default Texture Zip File
-                char pathAndFile[MAX_PATH];
-                strcpy(pathAndFile, App->App_Directory_FullPath);
-                strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
-                App->CL_TXL_Editor->Load_Zipped_TXL_File(pathAndFile);
-                App->CL_Doc->UpdateAfterWadChange();
-                App->CL_Properties_Textures->Fill_ListBox();
-                App->CL_Properties_Textures->List_Selection_Changed();
-
-
+                App->CL_TXL_Editor->Load_Default_Zip();
+              
                 App->CL_Editor_Control->Set_Editor_Design_Model();
 
                 return 1;
@@ -1542,7 +1534,7 @@ void StartOgre()
 
    // App->CL_Ogre->Init_Ogre();
 
-    Sleep(200);
+    Sleep(100);
 
     EndDialog(App->ViewPLeaseWait, LOWORD(0));
 

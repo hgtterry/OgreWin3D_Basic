@@ -153,7 +153,7 @@ void CL64_Interface::Position_Face_Options_Dlg(void)
 	int Pos_X = (rect.right / 2);
 
 	SetWindowPos(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, NULL,
-		Pos_X - widthX / 2, 150,
+		Pos_X - widthX / 2, 120,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
 }

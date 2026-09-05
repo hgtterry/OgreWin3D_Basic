@@ -51,6 +51,8 @@ public:
 	int GetIndex_From_Name(const char* Name);
 	void Select_From_TextureName(const char* TextureName);
 	
+	void Load_Default_Zip();
+
 	bool flag_Texl_Dialog_Active;
 
 	int Texture_Count;

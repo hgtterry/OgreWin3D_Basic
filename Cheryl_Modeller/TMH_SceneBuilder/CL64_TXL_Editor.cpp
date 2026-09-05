@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-*/
 
 #include "pch.h"
 #include "resource.h"
@@ -849,6 +848,23 @@ void CL64_TXL_Editor::Load_Zipped_TXL_File(char* TXL_File)
 	{
 		App->Say_Win("Cannot create class");
 	}
+}
+
+// *************************************************************************
+// *		   Load_Default_Zip:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void CL64_TXL_Editor::Load_Default_Zip()
+{
+	// Load Default Texture Zip File
+	char pathAndFile[MAX_PATH];
+	strcpy(pathAndFile, App->App_Directory_FullPath);
+	strcat(pathAndFile, "\\Data\\Room_Builder\\Default.zip");
+	Load_Zipped_TXL_File(pathAndFile);
+
+	App->CL_Doc->UpdateAfterWadChange();
+
+	App->CL_Properties_Textures->Fill_ListBox();
+	App->CL_Properties_Textures->List_Selection_Changed();
 }
 
 

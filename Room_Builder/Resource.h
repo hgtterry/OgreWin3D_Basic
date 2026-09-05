@@ -500,6 +500,8 @@
 #define IDC_BT_TT_OBJ_DATA              1358
 #define IDC_BT_SS_LASTSCENE             1359
 #define IDC_ST_SS_LASTFILE              1360
+#define IDC_BT_SS_EXIT                  1361
+#define IDC_ST_SS_CHERYL3D              1362
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -589,7 +591,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32850
-#define _APS_NEXT_CONTROL_VALUE         1361
+#define _APS_NEXT_CONTROL_VALUE         1363
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
