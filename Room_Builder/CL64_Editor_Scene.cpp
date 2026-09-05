@@ -161,7 +161,7 @@ LRESULT CALLBACK CL64_Editor_Scene::Proc_Headers_Scene(HWND hDlg, UINT message, 
 
 		if (LOWORD(wParam) == IDC_BT_SCENE_RESET)
 		{
-			App->CL_Physics->Reset_Scene(false);
+			App->CL_Physics->Reset_Physics_MAP(false);
 			return TRUE;
 		}
 		

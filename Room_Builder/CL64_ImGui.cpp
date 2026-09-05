@@ -335,7 +335,7 @@ void CL64_ImGui::Preview_Options_GUI(void)
 		if (ImGui::Button("Level Start", ImVec2(150, 100)))
 		{
 			App->CL_Physics->Reset_Physics();
-			App->CL_Physics->Reset_Scene(true);
+			App->CL_Physics->Reset_Physics_MAP(true);
 
 			App->CL_Camera->SetCameraMode_FirstPerson();
 		

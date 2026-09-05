@@ -371,7 +371,7 @@ void CL64_Physics::Reset_Player(void)
 // *************************************************************************
 // *	  		Reset_Scene:- Terry and Hazel Flanigan 2024				   *
 // *************************************************************************
-void CL64_Physics::Reset_Scene(bool resetPlayer)
+void CL64_Physics::Reset_Physics_MAP(bool resetPlayer)
 {
 	// Reset player settings if required
 	if (resetPlayer)

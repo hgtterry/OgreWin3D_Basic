@@ -60,7 +60,7 @@ public:
 
 	void Set_View();
 	void Reset_Views_All();
-	void Reset_To_Camera();
+	void Reset_To_Camera(bool Reset_Zoom);
 	
 	void Resize_Windows(HWND hDlg, int newWidth, int newDepth);
 

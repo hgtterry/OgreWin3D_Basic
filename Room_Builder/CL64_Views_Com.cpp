@@ -209,9 +209,9 @@ void CL64_Views_Com::Reset_Views_All()
 }
 
 // *************************************************************************
-// *	  	Reset_To_Camera:- Terry and Hazel Flanigan 2024				   *
+// *	  	Reset_To_Camera:- Terry and Hazel Flanigan 2026
 // *************************************************************************
-void CL64_Views_Com::Reset_To_Camera()
+void CL64_Views_Com::Reset_To_Camera(bool Reset_Zoom)
 {
 	RECT		Rect;
 	GetClientRect(Current_View->hDlg, &Rect);
@@ -226,7 +226,10 @@ void CL64_Views_Com::Reset_To_Camera()
 	Current_View->CamPos.y = Pos.y;
 	Current_View->CamPos.z = Pos.z;
 
-	Current_View->ZoomFactor = 0.3;
+	if (Reset_Zoom == true)
+	{
+		Current_View->ZoomFactor = 0.3;
+	}
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
@@ -783,13 +786,14 @@ void CL64_Views_Com::Context_Menu(HWND hDlg)
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
+	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Move View to Camera");
+
 	AppendMenuW(hMenu, MF_STRING, IDM_GOTO_PLAYER, L"Move Camera to Player");
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	AppendMenuW(hMenu, MF_STRING, IDM_RESET_VIEW, L"&Reset View");
-	AppendMenuW(hMenu, MF_STRING, IDM_CENTRE_ONCAMERA, L"&Centre On Camera");
-	
+
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Zoom Ctrl+Right Mouse Button");
 	AppendMenuW(hMenu, MF_STRING | MF_GRAYED, NULL, L"&Pan Ctrl+Left Mouse Button");
@@ -848,7 +852,9 @@ void CL64_Views_Com::Context_Menu_3D(HWND hDlg)
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
-	AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_RESETVIEW, L"&Reset Scene");
+	AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_RESETVIEW, L"&Reset Physics");
+
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 	
 	// Render Textured
 	if (App->CL_Ogre->OGL_Listener->flag_Render_Ogre == 0)
@@ -934,7 +940,7 @@ bool CL64_Views_Com::Context_Command_3D(WPARAM wParam)
 		return TRUE;
 
 	case IDM_3D_RESETVIEW:
-		App->CL_Physics->Reset_Scene(false);
+		App->CL_Physics->Reset_Physics_MAP(false);
 		return TRUE;
 
 	case IDM_3D_WIRED:
@@ -996,7 +1002,7 @@ bool CL64_Views_Com::Context_Command(WPARAM wParam)
 		return TRUE;
 
 	case IDM_CENTRE_ONCAMERA:
-		Reset_To_Camera();
+		Reset_To_Camera(false);
 		return TRUE;
 
 	case IDM_PREVIEW:

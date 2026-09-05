@@ -39,7 +39,7 @@ public:
 	bool Create_New_Trimesh(Ogre::Entity* Entity, Ogre::SceneNode* Node);
 	void Reset_Physics(void);
 	void Reset_Player(void);
-	void Reset_Scene(bool resetPlayer);
+	void Reset_Physics_MAP(bool resetPlayer);
 	void Update_Object_Physics(int Object_Index);
 
 	btDefaultCollisionConfiguration* collisionConfiguration;
