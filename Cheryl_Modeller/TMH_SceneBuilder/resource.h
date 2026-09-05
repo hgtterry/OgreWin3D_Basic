@@ -609,6 +609,10 @@
 #define IDC_ST_FACEAMOUNT               1426
 #define IDC_BT_SS_NEWSCENE              1426
 #define IDC_ST_SS_LASTFILE              1427
+#define IDC_BT_SS_EXIT                  1428
+#define IDC_ST_SS_CHERYL3D              1429
+#define IDC_ST_SS_SCENEBUILDER          1430
+#define IDC_ST_SS_APPNAME               1430
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -755,7 +759,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        231
 #define _APS_NEXT_COMMAND_VALUE         32907
-#define _APS_NEXT_CONTROL_VALUE         1428
+#define _APS_NEXT_CONTROL_VALUE         1431
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

@@ -502,6 +502,8 @@
 #define IDC_ST_SS_LASTFILE              1360
 #define IDC_BT_SS_EXIT                  1361
 #define IDC_ST_SS_CHERYL3D              1362
+#define IDC_ST_SS_SCENEBUILDER          1363
+#define IDC_ST_SS_APPNAME               1363
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773

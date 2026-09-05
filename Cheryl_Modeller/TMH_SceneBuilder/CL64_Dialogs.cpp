@@ -93,11 +93,15 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Start_Screen(HWND hDlg, UINT message, WPARAM
 
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_ST_SS_CHERYL3D, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_SS_APPNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_BT_SS_NEWSCENE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_SS_LASTSCENE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_SS_LASTFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_SS_EXIT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_ST_SS_LASTFILE, (LPCTSTR)App->CL_Libs->CL_Preference->Prefs_Last_JustFileName);
@@ -121,6 +125,22 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Start_Screen(HWND hDlg, UINT message, WPARAM
 
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_ST_SS_CHERYL3D) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_SS_APPNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		if (GetDlgItem(hDlg, IDC_ST_SS_LASTFILE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
@@ -155,13 +175,13 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Start_Screen(HWND hDlg, UINT message, WPARAM
 			break;
 		}
 
-		case IDOK:
+		case IDCANCEL:
 		{
 			App->Custom_Button_Normal(item);
 			break;
 		}
 
-		case IDCANCEL:
+		case IDC_BT_SS_EXIT:
 		{
 			App->Custom_Button_Normal(item);
 			break;
@@ -199,8 +219,17 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Start_Screen(HWND hDlg, UINT message, WPARAM
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDOK)
+		if (LOWORD(wParam) == IDC_BT_SS_EXIT)
 		{
+			App->CL_ImGui_Dialogs->Close_All_Dialogs();
+
+			if (App->CL_Ogre->Listener_3D->flag_StopOgre == false)
+			{
+				App->CL_Ogre->Listener_3D->flag_StopOgre = true;
+			}
+
+			PostQuitMessage(0);
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
