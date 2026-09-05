@@ -48,6 +48,8 @@ THE SOFTWARE.
 #define IDM_3D_PREVIEW 22
 #define IDM_3D_SCENE_EDITOR 23
 #define IDM_3D_ENVIRONMENT 24
+#define IDM_3D_CAM_FIRSTPERSON 25
+#define IDM_3D_CAM_FREE 26
 
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
@@ -811,9 +813,9 @@ void CL64_Views_Com::Context_Menu(HWND hDlg)
 }
 
 // *************************************************************************
-// *			Context_Menu_Ogre:- Terry and Hazel Flanigan 2024	 	   *
+// *			Context_Menu_3D:- Terry and Hazel Flanigan 2026
 // *************************************************************************
-void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
+void CL64_Views_Com::Context_Menu_3D(HWND hDlg)
 {
 	RECT rcTree;
 	POINT pt;
@@ -824,6 +826,29 @@ void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
 	long yPos = pt.y - rcTree.top;
 
 	HMENU hMenu = CreatePopupMenu();
+
+	if (App->CL_Camera->flag_First_Person == true)
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_CAM_FIRSTPERSON, L"&Camera Mode First Person");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_CAM_FIRSTPERSON, L"&Camera Mode First Person");
+	}
+
+
+
+
+	if (App->CL_Camera->flag_Free == true)
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_CAM_FREE, L"&Camera Mode Free");
+	}
+	else
+	{
+		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_CAM_FREE, L"&Camera Mode Free");
+	}
+
+	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
 	// Render Textured
 	if (App->CL_Ogre->OGL_Listener->flag_Render_Ogre == 0)
@@ -878,12 +903,36 @@ void CL64_Views_Com::Context_Menu_Ogre(HWND hDlg)
 }
 
 // *************************************************************************
-// *		Context_Command_Ogre:- Terry and Hazel Flanigan 2024		   *
+// *		Context_Command_3D:- Terry and Hazel Flanigan 2026
 // *************************************************************************
-bool CL64_Views_Com::Context_Command_Ogre(WPARAM wParam)
+bool CL64_Views_Com::Context_Command_3D(WPARAM wParam)
 {
 	switch (LOWORD(wParam))
 	{
+
+	case IDM_3D_CAM_FIRSTPERSON:
+	{
+		// Handle physics and trimesh
+		if (App->CL_Physics->flag_TriMesh_Created)
+		{
+			App->CL_Physics->Clear_Trimesh();
+		}
+
+		if (App->CL_Mesh_Mgr->World_Ent && App->CL_Mesh_Mgr->World_Node)
+		{
+			App->CL_Physics->Create_New_Trimesh(App->CL_Mesh_Mgr->World_Ent,
+				App->CL_Mesh_Mgr->World_Node);
+			App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = true;
+		}
+
+		App->CL_Camera->SetCameraMode_FirstPerson();
+	}
+		return TRUE;
+
+	case IDM_3D_CAM_FREE:
+		App->CL_Camera->SetCameraMode_Free();
+		return TRUE;
+
 	case IDM_3D_TEXTURED:
 		App->CL_Camera->Camera_Textured();
 		return TRUE;

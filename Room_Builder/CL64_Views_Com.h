@@ -53,7 +53,10 @@ public:
 	void Render_RenderBrushSelFacesOrtho(ViewVars* Cam, Brush* b, HDC ViewDC);
 	
 	bool Context_Command(WPARAM wParam);
-	bool Context_Command_Ogre(WPARAM wParam);
+	bool Context_Command_3D(WPARAM wParam);
+
+	void Context_Menu(HWND hDlg);
+	void Context_Menu_3D(HWND hDlg);
 
 	void Set_View();
 	void Reset_Views_All();
@@ -63,9 +66,6 @@ public:
 
 	void Set_Splitter_WidthDepth(int Width, int Depth);
 	void Save_Splitter_Width_Depth();
-
-	void Context_Menu(HWND hDlg);
-	void Context_Menu_Ogre(HWND hDlg);
 
 	void Set_3D_FullView();
 	void Set_Selected_View(int Selected_View);
