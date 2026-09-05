@@ -1555,7 +1555,7 @@ void StartOgre()
 	if (App->CL_Libs->CL_Preference->flag_OpenLastFile)
 	{
 		// Compare the last opened file with "New_Room.mtf"
-		if (strcmp(App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile, "New_Room.mtf") != 0)
+		if (strcmp(App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile, "None") != 0)
 		{
 			strcpy(App->CL_File->PathFileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile);
 			strcpy(App->CL_File->FileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_JustFileName);

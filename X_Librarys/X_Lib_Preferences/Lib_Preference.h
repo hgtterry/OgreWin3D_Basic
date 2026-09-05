@@ -49,8 +49,8 @@ public:
 	bool flag_MapEditor;
 	bool flag_SceneEditor;
 
-	char Prefs_PathAndFile[MAX_PATH];
-	char Prefs_JustFileName[MAX_PATH];
+	char Prefs_Last_PathAndFile[MAX_PATH];
+	char Prefs_Last_JustFileName[MAX_PATH];
 
 private:
 	static LRESULT CALLBACK Proc_Options_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

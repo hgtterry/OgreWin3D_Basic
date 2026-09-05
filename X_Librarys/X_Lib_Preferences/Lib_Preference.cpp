@@ -35,8 +35,8 @@ Lib_Preference::Lib_Preference(void)
 	Wad_File_Name[0] = 0;
 	UserData_Folder[0] = 0;
 
-	Prefs_PathAndFile[0] = 0;
-	Prefs_JustFileName[0] = 0;
+	Prefs_Last_PathAndFile[0] = 0;
+	Prefs_Last_JustFileName[0] = 0;
 
 	flag_OpenLastFile = false;
 	flag_MapEditor = true;
@@ -341,8 +341,8 @@ void Lib_Preference::Config_SetDefaults()
 	strcpy(App->CL_Level->MTF_PathAndFile, "None");
 	strcpy(App->CL_Level->MTF_PathAndFile, "None");
 
-	strcpy(Prefs_PathAndFile, "None");
-	strcpy(Prefs_JustFileName, "None");
+	strcpy(Prefs_Last_PathAndFile, "None");
+	strcpy(Prefs_Last_JustFileName, "None");
 
 	flag_OpenLastFile = false;
 	flag_MapEditor = true;
@@ -402,8 +402,8 @@ void Lib_Preference::Load_Config_File()
 
 	flag_OpenLastFile = Ini_File->GetInt("Start_Up", "Open_Last_File", 0, 10);
 
-	Ini_File->GetString("Start_Up", "Last_File_Full", Prefs_PathAndFile, MAX_PATH);
-	Ini_File->GetString("Start_Up", "Last_File_Name", Prefs_JustFileName, MAX_PATH);
+	Ini_File->GetString("Start_Up", "Last_File_Full", Prefs_Last_PathAndFile, MAX_PATH);
+	Ini_File->GetString("Start_Up", "Last_File_Name", Prefs_Last_JustFileName, MAX_PATH);
 	
 	flag_MapEditor = Ini_File->GetInt("Start_Up", "Start_Map_Editor", 1, 10);
 	flag_SceneEditor = Ini_File->GetInt("Start_Up", "Start_Scene_Editor", 0, 10);

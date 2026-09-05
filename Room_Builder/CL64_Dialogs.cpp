@@ -91,11 +91,11 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Start_Screen(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SetDlgItemText(hDlg, IDC_ST_SS_LASTFILE, (LPCTSTR)App->CL_Libs->CL_Preference->Prefs_JustFileName);
+		SetDlgItemText(hDlg, IDC_ST_SS_LASTFILE, (LPCTSTR)App->CL_Libs->CL_Preference->Prefs_Last_JustFileName);
 
 		// Check we have a valid file for Last file if not disable
 		int Result = 0;
-		Result = strcmp(App->CL_Libs->CL_Preference->Prefs_PathAndFile, "None");
+		Result = strcmp(App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile, "None");
 		if (Result == 0) // Match
 		{
 			EnableWindow(GetDlgItem(hDlg, IDC_BT_SS_LASTSCENE), false);

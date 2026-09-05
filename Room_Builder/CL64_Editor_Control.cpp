@@ -340,7 +340,7 @@ void CL64_Editor_Control::Set_Map_Editor_New()
 	case Enums::Start_Screen_LastFile:
 	{
 		int Result = 0;
-		Result = strcmp(App->CL_Libs->CL_Preference->Prefs_PathAndFile, "None");
+		Result = strcmp(App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile, "None");
 		if (Result == 0) // Match
 		{
 			App->CL_Editor_Control->Set_Map_Editor_Startup();
@@ -349,8 +349,8 @@ void CL64_Editor_Control::Set_Map_Editor_New()
 		else
 		{
 			// Copy the path and filename from preferences to the file structure
-			strcpy(App->CL_File->PathFileName_3dt, App->CL_Libs->CL_Preference->Prefs_PathAndFile);
-			strcpy(App->CL_File->FileName_3dt, App->CL_Libs->CL_Preference->Prefs_JustFileName);
+			strcpy(App->CL_File->PathFileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile);
+			strcpy(App->CL_File->FileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_JustFileName);
 
 			// Initiate the loading process
 			App->CL_File->Start_Load(false);
