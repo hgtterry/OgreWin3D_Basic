@@ -420,8 +420,11 @@ void Lib_Preference::Init_Configuration()
 // *************************************************************************
 void Lib_Preference::Config_SetDefaults()
 {
-	strcpy(App->CL_File->MTF_PathAndFile, "");
-	strcpy(App->CL_File->MTF_PathAndFile, "");
+	strcpy(App->CL_File->MTF_PathAndFile, "None");
+	strcpy(App->CL_File->MTF_PathAndFile, "None");
+
+	strcpy(Prefs_Last_PathAndFile, "None");
+	strcpy(Prefs_Last_JustFileName, "None");
 
 	flag_OpenLastFile = false;
 	flag_MapEditor = true;

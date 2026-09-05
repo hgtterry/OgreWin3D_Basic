@@ -1552,21 +1552,21 @@ void StartOgre()
    
     App->CL_Ogre->RenderFrame(5);
    
-    if (App->CL_Libs->CL_Preference->flag_OpenLastFile)
-    {
-        // Compare the last opened file with "New_Room.mtf"
-        if (strcmp(App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile, "New_Room.mtf") != 0)
-        {
-            // Copy the path and filename from preferences to the file structure
-            strcpy(App->CL_File->PathFileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile);
-            strcpy(App->CL_File->FileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_JustFileName);
+	if (App->CL_Libs->CL_Preference->flag_OpenLastFile)
+	{
+		// Compare the last opened file with "New_Room.mtf"
+		if (strcmp(App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile, "New_Room.mtf") != 0)
+		{
+			strcpy(App->CL_File->PathFileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile);
+			strcpy(App->CL_File->FileName_3dt, App->CL_Libs->CL_Preference->Prefs_Last_JustFileName);
 
-            // Initiate the loading process
-            App->CL_File->Start_Load(false);
-            App->CL_Editor_Control->Set_Map_Editor_Startup();
-            App->CL_Views_Com->Show_Grids(true);
-        }
-    }
+			// Initiate the loading process
+			App->CL_File->Start_Load(false);
+			App->CL_Editor_Control->Set_Map_Editor_Startup();
+			App->CL_Views_Com->Show_Grids(true);
+
+		}
+	}
     else
     {
         App->CL_Editor_Control->Set_Map_Editor_Startup();

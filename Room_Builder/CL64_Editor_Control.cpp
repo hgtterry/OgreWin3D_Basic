@@ -339,18 +339,25 @@ void CL64_Editor_Control::Set_Map_Editor_New()
 
 	case Enums::Start_Screen_LastFile:
 	{
-		// Compare the last opened file with "New_Room.mtf"
-		if (strcmp(App->CL_X_Preference->Prefs_PathAndFile, "New_Room.mtf") != 0)
+		int Result = 0;
+		Result = strcmp(App->CL_Libs->CL_Preference->Prefs_PathAndFile, "None");
+		if (Result == 0) // Match
+		{
+			App->CL_Editor_Control->Set_Map_Editor_Startup();
+			App->CL_Views_Com->Show_Grids(true);
+		}
+		else
 		{
 			// Copy the path and filename from preferences to the file structure
-			strcpy(App->CL_File->PathFileName_3dt, App->CL_X_Preference->Prefs_PathAndFile);
-			strcpy(App->CL_File->FileName_3dt, App->CL_X_Preference->Prefs_JustFileName);
+			strcpy(App->CL_File->PathFileName_3dt, App->CL_Libs->CL_Preference->Prefs_PathAndFile);
+			strcpy(App->CL_File->FileName_3dt, App->CL_Libs->CL_Preference->Prefs_JustFileName);
 
 			// Initiate the loading process
 			App->CL_File->Start_Load(false);
 			App->CL_Editor_Control->Set_Map_Editor_Startup();
 			App->CL_Views_Com->Show_Grids(true);
 		}
+
 		break;
 	}
 

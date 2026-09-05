@@ -144,8 +144,6 @@ public:
 	CL64_Render_Map*			CL_Render;
 	CL64_Level*					CL_Level;
 
-	Lib_Preference*				CL_X_Preference; // Preference Library
-	
 	Lib_Ini_File*				CL_X_Ini_File;	 // Ini_File Library
 
 	CL64_Doc*					CL_Doc;

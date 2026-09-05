@@ -102,6 +102,18 @@ LRESULT CALLBACK CL64_Dialogs::Proc_Start_Screen(HWND hDlg, UINT message, WPARAM
 
 		SetDlgItemText(hDlg, IDC_ST_SS_LASTFILE, (LPCTSTR)App->CL_Libs->CL_Preference->Prefs_Last_JustFileName);
 
+		// Check we have a valid file for Last file if not disable
+		int Result = 0;
+		Result = strcmp(App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile, "None");
+		if (Result == 0) // Match
+		{
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_SS_LASTSCENE), false);
+		}
+		else
+		{
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_SS_LASTSCENE), true);
+		}
+
 		p_Dialogs_Class->Start_Screen_Result = Enums::Start_Screen_NewScene;
 
 		return TRUE;

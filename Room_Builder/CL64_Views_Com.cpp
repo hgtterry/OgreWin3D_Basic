@@ -172,7 +172,7 @@ void CL64_Views_Com::Reset_Views_All()
 	Cam_TL->CamPos.y = 0;
 	Cam_TL->CamPos.z = 0;
 
-	Cam_TL->ZoomFactor = App->CL_X_Preference->Defalut_Zoom;
+	Cam_TL->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
 
 	//------------------------ Top Right
 	auto& Cam_TR = App->CL_View_Top_Right->VCam_TR;
@@ -186,7 +186,7 @@ void CL64_Views_Com::Reset_Views_All()
 	Cam_TR->CamPos.y = 0;
 	Cam_TR->CamPos.z = 0;
 
-	Cam_TR->ZoomFactor = App->CL_X_Preference->Defalut_Zoom;
+	Cam_TR->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
 
 	//------------------------ Bottom Left
 	auto& Cam_BL = App->CL_View_Bottom_Left->VCam_BL;
@@ -200,7 +200,7 @@ void CL64_Views_Com::Reset_Views_All()
 	Cam_BL->CamPos.y = 0;
 	Cam_BL->CamPos.z = 0;
 
-	Cam_BL->ZoomFactor = App->CL_X_Preference->Defalut_Zoom;
+	Cam_BL->ZoomFactor = App->CL_Libs->CL_Preference->Defalut_Zoom;
 
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 }

@@ -34,7 +34,7 @@ Init_Libs::Init_Libs(void)
 	CL_CreateArch =			nullptr;
 	CL_CreateStaircase =	nullptr;
 
-	CL_Preference =		nullptr;
+	CL_Preference =			nullptr;
 }
 
 Init_Libs::~Init_Libs(void)
@@ -60,7 +60,7 @@ void Init_Libs::Start_Libraries()
 // *************************************************************************
 char* Init_Libs::GetVersion()
 {
-	return (LPSTR)" Init_Libs [ 04-09-26 ] Build T ";
+	return (LPSTR)" Init_Libs [ 05-09-26 ] Build T ";
 }
 
 // *************************************************************************

@@ -41,7 +41,7 @@ public:
 	CreateArchDialog*		CL_CreateArch;
 	CreateStaircaseDialog*	CL_CreateStaircase;
 
-	Lib_Preference*		CL_Preference;
+	Lib_Preference*			CL_Preference;
 
 };
 
