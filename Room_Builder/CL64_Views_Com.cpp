@@ -50,6 +50,7 @@ THE SOFTWARE.
 #define IDM_3D_ENVIRONMENT 24
 #define IDM_3D_CAM_FIRSTPERSON 25
 #define IDM_3D_CAM_FREE 26
+#define IDM_3D_RESETVIEW 27
 
 #define	M_PI		((float)3.14159265358979323846f)
 #define	TOP_POS					8
@@ -836,9 +837,6 @@ void CL64_Views_Com::Context_Menu_3D(HWND hDlg)
 		AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_CAM_FIRSTPERSON, L"&Camera Mode First Person");
 	}
 
-
-
-
 	if (App->CL_Camera->flag_Free == true)
 	{
 		AppendMenuW(hMenu, MF_STRING | MF_CHECKED, IDM_3D_CAM_FREE, L"&Camera Mode Free");
@@ -850,6 +848,8 @@ void CL64_Views_Com::Context_Menu_3D(HWND hDlg)
 
 	AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
 
+	AppendMenuW(hMenu, MF_STRING | MF_UNCHECKED, IDM_3D_RESETVIEW, L"&Reset Scene");
+	
 	// Render Textured
 	if (App->CL_Ogre->OGL_Listener->flag_Render_Ogre == 0)
 	{
@@ -933,8 +933,8 @@ bool CL64_Views_Com::Context_Command_3D(WPARAM wParam)
 		App->CL_Camera->SetCameraMode_Free();
 		return TRUE;
 
-	case IDM_3D_TEXTURED:
-		App->CL_Camera->Camera_Textured();
+	case IDM_3D_RESETVIEW:
+		App->CL_Physics->Reset_Scene(false);
 		return TRUE;
 
 	case IDM_3D_WIRED:
