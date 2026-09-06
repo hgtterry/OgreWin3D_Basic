@@ -526,6 +526,8 @@ void CL64_Com_Player::Check_Collisions(void)
 
 		if (Col_Player_Index == Enums::Obj_Usage_Player && Col_Object_Index > -1)
 		{
+			App->CL_Scene->B_Player[0]->flag_In_Collision = true;
+
 			if (Col_Usage_Index == 123)// && App->SBC_Scene->B_Object[Last_Message_Index]->Triggered == 1)
 			{
 				if (App->CL_Scene->Object_Count > 0)
@@ -583,7 +585,7 @@ void CL64_Com_Player::Check_Collisions(void)
 
 						if (Round < 0)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 0)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == false)
 							{
 								App->CL_Collision->Play_Sound(Col_Object_Index);
 								//Last_ColisionIndex = Col_Object_Index;
@@ -591,9 +593,9 @@ void CL64_Com_Player::Check_Collisions(void)
 						}
 						else if (Life_Time < 10)
 						{
-							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == 1)
+							if (App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered == true)
 							{
-								App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered = 0;
+								App->CL_Scene->B_Object[Col_Object_Index]->flag_Triggered = false;
 							}
 						}
 					}
@@ -701,6 +703,10 @@ void CL64_Com_Player::Check_Collisions(void)
 				}
 
 			}
+		}
+		else
+		{
+			App->CL_Scene->B_Player[0]->flag_In_Collision = false;
 		}
 	}
 }

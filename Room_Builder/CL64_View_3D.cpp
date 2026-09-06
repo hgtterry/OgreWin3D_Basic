@@ -223,7 +223,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 		GetCursorPos(&pos);
 		ScreenToClient(App->ViewGLhWnd, &pos);
 
-		if (App->CL_ImGui->flag_Imgui_Initialized == 1)
+		if (App->CL_ImGui->flag_Imgui_Initialized == true)
 		{
 			ImGuiIO& io = ImGui::GetIO();
 			io.MousePos.x = static_cast<float>(pos.x);
@@ -248,10 +248,32 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseDown[0] = true;
 
-		if (App->flag_3D_Started == 1)
+		if (App->flag_3D_Started == true)
 		{
 			if (App->flag_Block_Mouse_Buttons == false)
 			{
+				if (App->CL_ImGui_System_Data->flag_Show_System_Data == true)
+				{
+					POINT p;
+					GetCursorPos(&p);
+					App->CL_Views_Com->mStartPoint = p;
+
+					GetCursorPos(&p);
+					App->CursorPosX = p.x;
+					App->CursorPosY = p.y;
+					App->CL_Ogre->Ogre3D_Listener->Pl_Cent500X = p.x;
+					App->CL_Ogre->Ogre3D_Listener->Pl_Cent500Y = p.y;
+
+					SetCapture(App->CL_View_3D->RenderWin3D_hWnd);
+					SetCursorPos(App->CursorPosX, App->CursorPosY);
+					App->CL_Ogre->Ogre3D_Listener->flag_LeftMouseDown = true;
+					App->CUR = SetCursor(NULL);
+
+					App->CL_Camera->Camera_Save_Location();
+
+					return 1;
+				}
+
 				if (!ImGui::GetIO().WantCaptureMouse)
 				{
 					POINT p;
@@ -285,8 +307,11 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 	// Left Mouse Up
 	case WM_LBUTTONUP:
 	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[0] = false;
+		if (App->CL_ImGui_System_Data->flag_Show_System_Data == false)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			io.MouseDown[0] = false;
+		}
 
 		if (App->flag_3D_Started == 1)
 		{

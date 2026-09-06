@@ -127,10 +127,13 @@ bool CL64_Com_Sounds::Create_Sound_Entity(int Index)
 	startTransform.setOrigin(initialPosition);
 
 	Ogre::Vector3 Size = App->CL_Com_Objects->GetMeshBoundingBoxSize(New_Sound_Object->Object_Node);
-	New_Sound_Object->Physics_Size = Size * 0.5f; // Halve the size for physics
-	
+
+	New_Sound_Object->Physics_Size.x = Size.x / 2;
+	New_Sound_Object->Physics_Size.y = Size.y / 2;
+	New_Sound_Object->Physics_Size.z = Size.z / 2;
+
 	// Create collision shape
-	btCollisionShape* newRigidShape = new btBoxShape(btVector3(Size.x, Size.y, Size.z));
+	btCollisionShape* newRigidShape = new btBoxShape(btVector3(Size.x /2 , Size.y /2, Size.z /2));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 	App->CL_Physics->collisionShapes.push_back(newRigidShape);
 

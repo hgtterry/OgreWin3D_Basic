@@ -46,6 +46,7 @@ CL64_ImGui_System_Data::CL64_ImGui_System_Data()
 	flag_System_Viewer_Active = false;
 	flag_Loop_Enabled = false;
 	flag_Show_System_Data = false;
+	flag_Show_Physics = false;
 
 	Render_hWnd = nullptr;
 
@@ -752,6 +753,32 @@ void CL64_ImGui_System_Data::Data_Entity(void)
 	ImGui::Text("Physics Position  X %.3f  Y %.3f  Z %.3f", Selected_Entity->Physics_Pos.x, Selected_Entity->Physics_Pos.y, Selected_Entity->Physics_Pos.z);
 	ImGui::Text("Physics Scale  X %.3f  Y %.3f  Z %.3f", Selected_Entity->Physics_Scale.x, Selected_Entity->Physics_Scale.y, Selected_Entity->Physics_Scale.z);
 	ImGui::Text("Physics Size  X %.3f  Y %.3f  Z %.3f", Selected_Entity->Physics_Size.x, Selected_Entity->Physics_Size.y, Selected_Entity->Physics_Size.z);
+	
+	ImGui::Text("");
+	int test = ImGui::Checkbox("##ShowPhysics", &flag_Show_Physics);
+	if (test == 0)
+	{
+		App->CL_Ogre->Bullet_Debug_Listener->flag_Render_Debug_Flag = true;
+		int collisionFlags = Selected_Entity->Phys_Body->getCollisionFlags();
+
+		if (flag_Show_Physics == true)
+		{
+			Selected_Entity->flag_Physics_Debug_On = true;
+			Selected_Entity->Phys_Body->setCollisionFlags(collisionFlags & (~(1 << 5))); // Enable debug
+		}
+		else
+		{
+			Selected_Entity->Phys_Body->setCollisionFlags(collisionFlags | (1 << 5)); // Disable debug
+			Selected_Entity->flag_Physics_Debug_On = false;
+		}
+	}
+
+	ImGui::Text("");
+
+	ImGui::Text("Collision  - %i -", Selected_Entity->Collision);
+	ImGui::Text("Triggered  - %i -", Selected_Entity->flag_Triggered);
+	ImGui::Text("Player  - %i -", App->CL_Scene->B_Player[0]->flag_In_Collision);
+	
 }
 
 

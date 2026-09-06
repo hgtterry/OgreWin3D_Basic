@@ -50,6 +50,7 @@ public:
 	bool flag_Show_System_Data;
 	bool flag_System_Viewer_Active;
 	bool flag_Dark_Mode;
+	bool flag_Show_Physics;
 
 	int Selected_System_Page;
 

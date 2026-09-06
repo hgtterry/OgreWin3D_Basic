@@ -169,13 +169,13 @@ void CL64_Bullet_Debug::Render_Debug_Bullet()
 // *************************************************************************
 bool CL64_Bullet_Debug::Render_Debug(void)
 {
-	if (flag_Render_Debug_Flag == 1)
+	if (flag_Render_Debug_Flag == true)
 	{
 		if (V_Count > 0)
 		{
-			if (App->CL_MeshViewer->flag_MeshViewer_Running == 1 && App->CL_MeshViewer->Ogre_MV_Phys_Body)
+			if (App->CL_MeshViewer->flag_MeshViewer_Running == true && App->CL_MeshViewer->Ogre_MV_Phys_Body)
 			{
-				if (App->CL_MeshViewer->flag_MV_Render_Debug == 1)
+				if (App->CL_MeshViewer->flag_MV_Render_Debug == true)
 				{
 					App->CL_MeshViewer->MV_btDebug_Manual->beginUpdate(0);
 

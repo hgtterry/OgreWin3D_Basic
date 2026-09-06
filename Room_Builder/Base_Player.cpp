@@ -68,11 +68,12 @@ Base_Player::Base_Player()
 
 	Compenstate = 100;
 
-	flag_mOnGround = 1;
-	flag_IsMOving = 0;
-	flag_IsMOving_Back = 0;
-	flag_IsMOving_Right = 0;
-	flag_IsMOving_Left = 0;
+	flag_mOnGround = true;
+	flag_IsMOving = false;
+	flag_IsMOving_Back = false;
+	flag_IsMOving_Right = false;
+	flag_IsMOving_Left = false;
+	flag_In_Collision = false;
 
 	Selected_Entity_Index = 0;
 	Selected_Object_Name[0] = 0;

@@ -78,6 +78,7 @@ public:
 	bool flag_IsMOving_Right;
 	bool flag_IsMOving_Left;
 	bool flag_Physics_Debug_On;
+	bool flag_In_Collision;
 
 	HTREEITEM FileViewItem;
 
