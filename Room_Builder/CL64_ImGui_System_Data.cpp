@@ -34,12 +34,13 @@ enum System_Page
 	System_Page_Model = 2,
 	System_Page_Grids = 3,
 	System_Page_File = 4,
-	System_Page_Prefs = 5
+	System_Page_Prefs = 5,
+	System_Page_Entities = 6
 };
 
 CL64_ImGui_System_Data::CL64_ImGui_System_Data()
 {
-	Selected_System_Page = System_Page_Player;
+	Selected_System_Page = System_Page_Entities;
 	flag_Dark_Mode = false;
 
 	flag_System_Viewer_Active = false;
@@ -362,6 +363,11 @@ void CL64_ImGui_System_Data::Imgui_System_Dlg(void)
 			Selected_System_Page = System_Page_Prefs;
 		}
 
+		if (ImGui::Button(" Entity ", ImVec2(100, 0)))
+		{
+			Selected_System_Page = System_Page_Entities;
+		}
+
 		// Functions
 		switch (Selected_System_Page) 
 		{
@@ -416,6 +422,15 @@ void CL64_ImGui_System_Data::Imgui_System_Dlg(void)
 			ImGui::AlignTextToFramePadding();
 			ImGui::Text("Prefs:");
 			Data_Prefs();
+			break;
+		}
+
+		case System_Page_Entities:
+		{
+			ImGui::NextColumn();
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Entities:");
+			Data_Entity();
 			break;
 		}
 
@@ -706,6 +721,38 @@ void CL64_ImGui_System_Data::Data_Prefs(void)
 	ImGui::TextWrapped("File Path %s", App->CL_Libs->CL_Preference->Prefs_Last_PathAndFile);*/
 
 }
+
+// ************************************************************************
+// *				Data_Entity:- Terry and Hazel Flanigan 2026			   
+// ************************************************************************
+void CL64_ImGui_System_Data::Data_Entity(void)
+{
+	int Index = App->CL_Properties_Scene->Current_Selected_Object;
+
+	auto& Selected_Entity = App->CL_Scene->B_Object[Index];  // Pointer to Entity
+	
+	ImGui::Text("Total Entities  %i", App->CL_Scene->Object_Count);
+
+	ImGui::Text("");
+
+	ImGui::Text("Entity");
+	ImGui::Text("Selected Entity Index %i", App->CL_Properties_Scene->Current_Selected_Object);
+	ImGui::Text("Entity Name  - %s -", Selected_Entity->Object_Name);
+	ImGui::Text("Entity Type  - %s -", Selected_Entity->Entity_Type_Name);
+	
+	ImGui::Text("");
+	ImGui::Text("Mesh");
+	ImGui::Text("Mesh Filename  - %s -", Selected_Entity->Mesh_FileName);
+	ImGui::Text("Mesh Position  X %.3f  Y %.3f  Z %.3f", Selected_Entity->Mesh_Pos.x, Selected_Entity->Mesh_Pos.y, Selected_Entity->Mesh_Pos.z);
+	ImGui::Text("Mesh Scale  X %.3f  Y %.3f  Z %.3f", Selected_Entity->Mesh_Scale.x, Selected_Entity->Mesh_Scale.y, Selected_Entity->Mesh_Scale.z);
+
+	ImGui::Text("");
+	ImGui::Text("Physics");
+	ImGui::Text("Physics Position  X %.3f  Y %.3f  Z %.3f", Selected_Entity->Physics_Pos.x, Selected_Entity->Physics_Pos.y, Selected_Entity->Physics_Pos.z);
+	ImGui::Text("Physics Scale  X %.3f  Y %.3f  Z %.3f", Selected_Entity->Physics_Scale.x, Selected_Entity->Physics_Scale.y, Selected_Entity->Physics_Scale.z);
+	ImGui::Text("Physics Size  X %.3f  Y %.3f  Z %.3f", Selected_Entity->Physics_Size.x, Selected_Entity->Physics_Size.y, Selected_Entity->Physics_Size.z);
+}
+
 
 // ************************************************************************
 // *

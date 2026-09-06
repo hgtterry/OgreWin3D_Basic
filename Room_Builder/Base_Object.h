@@ -155,6 +155,7 @@ public:
 	btRigidBody			*Phys_Body;
 	btCollisionShape	*Phys_Shape;
 
+	char Entity_Type_Name[MAX_PATH];	// Name of Object/Entity Set By User
 	char Object_Name[MAX_PATH];	// Name of Object/Entity Set By User
 
 	char Mesh_FileName[MAX_PATH]; // Acctual Mesh File name as in .mesh

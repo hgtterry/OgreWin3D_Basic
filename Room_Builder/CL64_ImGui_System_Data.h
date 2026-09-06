@@ -71,6 +71,7 @@ private:
 	void Data_Grids(void);
 	void Data_File(void);
 	void Data_Prefs(void);
+	void Data_Entity(void);
 
 	CL64_ImGui_Sytem_Listener* RenderListener;
 	Ogre::RenderWindow* Ogre_MV_Window;

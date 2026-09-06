@@ -35,53 +35,52 @@ CL64_Com_Sounds::~CL64_Com_Sounds(void)
 }
 
 // *************************************************************************
-// *				Add_New_Sound:- Terry and Hazel Flanigan 2024		   *
+// *				Add_New_Sound:- Terry and Hazel Flanigan 2026
 // *************************************************************************
 bool CL64_Com_Sounds::Add_New_Sound()
 {
-	char B_Name[MAX_PATH];
-	char ConNum[MAX_PATH];
+	int New_Object_Index = App->CL_Scene->Object_Count;
 
-	int Index = App->CL_Scene->Object_Count;
+	App->CL_Scene->B_Object[New_Object_Index] = new Base_Object();
 
-	App->CL_Scene->B_Object[Index] = new Base_Object();
+	auto& New_Sound_Object = App->CL_Scene->B_Object[New_Object_Index];  // Pointer to New Object
 
 	// Set sound file and path
-	strcpy(App->CL_Scene->B_Object[Index]->Sound_File, "Welcome.ogg");
-	strcpy(App->CL_Scene->B_Object[Index]->Sound_Path, App->CL_SoundMgr->Default_Folder);
-	strcat(App->CL_Scene->B_Object[Index]->Sound_Path, "\\Media\\Sounds\\Welcome.ogg");
+	strcpy(New_Sound_Object->Sound_File, "Welcome.ogg");
+	strcpy(New_Sound_Object->Sound_Path, App->CL_SoundMgr->Default_Folder);
+	strcat(New_Sound_Object->Sound_Path, "\\Media\\Sounds\\Welcome.ogg");
 	
 	// Set flags and types
-	App->CL_Scene->B_Object[Index]->flag_HasSound = true;
-	App->CL_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->CL_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->CL_Scene->B_Object[Index]->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
+	New_Sound_Object->flag_HasSound = true;
+	New_Sound_Object->Type = Enums::Bullet_Type_Static;
+	New_Sound_Object->Shape = Enums::Shape_Box;
+	New_Sound_Object->This_Object_UniqueID = App->CL_Scene->UniqueID_Object_Counter; // Unique ID
 
 	// Set mesh file name
-	strcpy(App->CL_Scene->B_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
+	strcpy(New_Sound_Object->Mesh_FileName, "SoundEntity_GD.mesh");
 
 	// Generate a unique object name
-	strcpy_s(B_Name, "Sound_");
-	_itoa(Index, ConNum, 10);
-	strcat(B_Name, ConNum);
-	strcpy(App->CL_Scene->B_Object[Index]->Object_Name, B_Name);
+	char B_Name[MAX_PATH];
+	sprintf(B_Name, "%s%i", "Sound_", New_Object_Index);
+	strcpy(New_Sound_Object->Object_Name, B_Name);
 
 	// Set the position of the sound object
-	App->CL_Scene->B_Object[Index]->Mesh_Pos = App->CL_Com_Objects->GetPlacement(-50);
+	New_Sound_Object->Mesh_Pos = App->CL_Com_Objects->GetPlacement(-50);
 
 	// Create sound entity and brush
-	Create_Sound_Entity(Index);
-	App->CL_Entities->Create_Entity_Brush(Index);
-	App->CL_Brush_X->Move_Brush_By_Name((LPSTR)B_Name, Index);
+	Create_Sound_Entity(New_Object_Index);
+	App->CL_Entities->Create_Entity_Brush(New_Object_Index);
+	App->CL_Brush_X->Move_Brush_By_Name((LPSTR)B_Name, New_Object_Index);
 
 	// Add item to file view and select it
-	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, App->CL_Scene->B_Object[Index]->Object_Name, Index, true);
-	App->CL_Scene->B_Object[Index]->FileViewItem = Temp;
-	App->CL_FileView->SelectItem(App->CL_Scene->B_Object[Index]->FileViewItem);
+	HTREEITEM Temp = App->CL_FileView->Add_Item(App->CL_FileView->FV_Sounds_Folder, New_Sound_Object->Object_Name, New_Object_Index, true);
+	New_Sound_Object->FileViewItem = Temp;
+	App->CL_FileView->SelectItem(New_Sound_Object->FileViewItem);
 
 	// Update counters and flags
 	App->CL_Scene->UniqueID_Object_Counter++;
 	App->CL_Scene->Object_Count++;
+
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->FV_Sounds_Folder);
 	App->CL_Level->flag_Level_is_Modified = true;
 
@@ -89,88 +88,72 @@ bool CL64_Com_Sounds::Add_New_Sound()
 }
 
 // *************************************************************************
-// *			Create_Sound_Entity:- Terry and Hazel Flanigan 2024		   *
+// *			Create_Sound_Entity:- Terry and Hazel Flanigan 2026
 // *************************************************************************
 bool CL64_Com_Sounds::Create_Sound_Entity(int Index)
 {
-	char Mesh_File[255];
-	char ConNum[256];
-	char Ogre_Name[256];
+	char Mesh_File[MAX_PATH];
+	char Ogre_Name[MAX_PATH];
 
-	Base_Object* Object = App->CL_Scene->B_Object[Index];
-
-	// ----------------- Mesh
-
-	strcpy_s(Ogre_Name, "GDEnt_");
-	_itoa(Index, ConNum, 10);
-	strcat(Ogre_Name, ConNum);
-
-	strcpy(Mesh_File, Object->Mesh_FileName);
-
-	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
-	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Object->Object_Node->attachObject(Object->Object_Ent);
-
-	Object->Object_Node->setVisible(true);
-
-	Object->Object_Node->setOrientation(Object->Mesh_Quat);
-	Object->Object_Node->setPosition(Object->Mesh_Pos);
-
-	strcpy(Object->Material_File, "Internal");
+	auto& New_Sound_Object = App->CL_Scene->B_Object[Index]; // Pointer to New Object
 	
-	// ----------------- Physics
+	strcpy(New_Sound_Object->Entity_Type_Name, "Sound Entity");
 
-	Ogre::Vector3 Centre = App->CL_Scene->B_Object[Index]->Object_Ent->getWorldBoundingBox(true).getCenter();
-	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+	// Construct Ogre name
+	snprintf(Ogre_Name, sizeof(Ogre_Name), "GDEnt_%d", Index);
+	strcpy(Mesh_File, New_Sound_Object->Mesh_FileName);
+
+	// Create entity and attach to scene node
+	New_Sound_Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
+	New_Sound_Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	New_Sound_Object->Object_Node->attachObject(New_Sound_Object->Object_Ent);
+	New_Sound_Object->Object_Node->setVisible(true);
+	New_Sound_Object->Object_Node->setOrientation(New_Sound_Object->Mesh_Quat);
+	New_Sound_Object->Object_Node->setPosition(New_Sound_Object->Mesh_Pos);
+	strcpy(New_Sound_Object->Material_File, "Internal");
+	
+	// Physics setup
+	Ogre::Vector3 Centre = New_Sound_Object->Object_Ent->getWorldBoundingBox(true).getCenter();
+	New_Sound_Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
 	startTransform.setIdentity();
 	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
 
-	btScalar mass;
-	mass = 0.0f;
-
+	btScalar mass = 0.0f;
 	btVector3 localInertia(0, 0, 0);
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->CL_Com_Objects->GetMeshBoundingBoxSize(Object->Object_Node);
-	float sx = Size.x / 2;
-	float sy = Size.y / 2;
-	float sz = Size.z / 2;
-
-	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
-
-	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	Ogre::Vector3 Size = App->CL_Com_Objects->GetMeshBoundingBoxSize(New_Sound_Object->Object_Node);
+	New_Sound_Object->Physics_Size = Size * 0.5f; // Halve the size for physics
+	
+	// Create collision shape
+	btCollisionShape* newRigidShape = new btBoxShape(btVector3(Size.x, Size.y, Size.z));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
-
 	App->CL_Physics->collisionShapes.push_back(newRigidShape);
 
+	// Create motion state and rigid body
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+	New_Sound_Object->Phys_Body = new btRigidBody(rbInfo);
+	New_Sound_Object->Phys_Body->setRestitution(1.0);
+	New_Sound_Object->Phys_Body->setFriction(1.5);
+	New_Sound_Object->Phys_Body->setUserPointer(New_Sound_Object->Object_Node);
+	New_Sound_Object->Phys_Body->setWorldTransform(startTransform);
+	New_Sound_Object->Usage = Enums::Obj_Usage_Sound;
+	New_Sound_Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Sound);
+	New_Sound_Object->Phys_Body->setUserIndex2(Index);
 
-	Object->Phys_Body = new btRigidBody(rbInfo);
-	Object->Phys_Body->setRestitution(1.0);
-	Object->Phys_Body->setFriction(1.5);
-	Object->Phys_Body->setUserPointer(Object->Object_Node);
-	Object->Phys_Body->setWorldTransform(startTransform);
-
-	Object->Usage = Enums::Obj_Usage_Sound;
-	Object->Phys_Body->setUserIndex(Enums::Obj_Usage_Sound);
-	Object->Phys_Body->setUserIndex2(Index);
-
-
-	int f = Object->Phys_Body->getCollisionFlags();
-	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT
+	// Set collision flags
+	int f = New_Sound_Object->Phys_Body->getCollisionFlags();
+	New_Sound_Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT
 		| btCollisionObject::CF_KINEMATIC_OBJECT
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
-
-	App->CL_Physics->dynamicsWorld->addRigidBody(Object->Phys_Body);
-
-	App->CL_Scene->B_Object[Index]->flag_Physics_Valid = 1;
-
+	// Add rigid body to dynamics world
+	App->CL_Physics->dynamicsWorld->addRigidBody(New_Sound_Object->Phys_Body);
+	New_Sound_Object->flag_Physics_Valid = true;
 	App->CL_Physics->Update_Object_Physics(Index);
 
 	return 1;

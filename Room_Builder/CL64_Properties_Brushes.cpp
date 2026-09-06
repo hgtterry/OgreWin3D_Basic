@@ -441,7 +441,8 @@ void CL64_Properties_Brushes::OnSelchangeBrushlist(int index, bool clear)
 
 			if (m_Object == -1)
 			{
-				App->Say("No Object to Select");
+				// TODO App->Say("No Object to Select");
+				//App->Say("No Object to Select");
 			}
 			else
 			{

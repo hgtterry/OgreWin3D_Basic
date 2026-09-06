@@ -41,7 +41,7 @@ bool Base_Object::Init_Object(void)
 	Object_Brush = nullptr;
 	Brus_BoxTemplate = { 0 };
 
-
+	strcpy(Entity_Type_Name, "None");
 	strcpy(Object_Name, "None");
 	strcpy(Mesh_FileName, "None");
 	Mesh_Resource_Path[0] = 0;

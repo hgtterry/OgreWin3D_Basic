@@ -154,6 +154,8 @@ bool CL64_Com_Environments::Create_Environ_Entity(int index)
 
 	Base_Object* object = App->CL_Scene->B_Object[index];
 
+	strcpy(object->Entity_Type_Name, "Environment Entity");
+
 	// Generate Ogre Name
 	snprintf(ogreName, sizeof(ogreName), "GDEnt_%d", index);
 	strcpy(meshFile, object->Mesh_FileName);
