@@ -142,6 +142,8 @@ bool CL64_Teleporters::Create_Teleport_Entity(int Index)
 	// Create Pointer
 	auto& newObject = App->CL_Scene->B_Object[Index];
 	
+	strcpy(newObject->Entity_Type_Name, "Teleport Entity");
+
 	// Generate unique Ogre name
 	std::string Ogre_Name = "GDEnt_" + std::to_string(Index);
 	std::string Mesh_File = newObject->Mesh_FileName;

@@ -736,7 +736,7 @@ void CL64_ImGui_System_Data::Data_Entity(void)
 	ImGui::Text("");
 
 	ImGui::Text("Entity");
-	ImGui::Text("Selected Entity Index %i", App->CL_Properties_Scene->Current_Selected_Object);
+	ImGui::Text("Selected Entity Index %i", App->CL_Properties_Scene->Current_Selected_Object + 1);
 	ImGui::Text("Entity Name  - %s -", Selected_Entity->Object_Name);
 	ImGui::Text("Entity Type  - %s -", Selected_Entity->Entity_Type_Name);
 	

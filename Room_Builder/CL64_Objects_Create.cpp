@@ -110,6 +110,7 @@ bool CL64_Objects_Create::Add_New_Object(int Index, bool From_MeshViewer)
 
 	Base_Object* Object = App->CL_Scene->B_Object[Index];
 
+	strcpy(Object->Entity_Type_Name, "Object Entity");
 
 	strcpy_s(Ogre_Name, "GDEnt_");
 	_itoa(Index, ConNum, 10);
