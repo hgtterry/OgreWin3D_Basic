@@ -154,6 +154,8 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 		SendDlgItemMessage(hDlg, IDC_BRUSH_SPHEROID_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BRUSH_STAIRCASE_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BRUSH_ARCH_PRIMITIVE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_ENTITIES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_ADDSOUNDENTITY, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -168,6 +170,14 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_ENTITIES) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 	case WM_NOTIFY:
@@ -267,7 +277,21 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 			break;
 		}
 
-		
+		case IDC_BT_ADDSOUNDENTITY:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_ADDSOUNDENTITY));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			break;
+		}
+
 		return CDRF_DODEFAULT;
 
 		}
@@ -285,6 +309,17 @@ LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT messa
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_ADDSOUNDENTITY)
+		{
+			App->CL_Dialogs->YesNo((LPSTR)"Add Sound Entity", (LPSTR)"Do you want to add a new Sound Entity");
+
+			if (App->CL_Dialogs->flag_Dlg_Canceled == false)
+			{
+				App->CL_Com_Sounds->Add_New_Sound();
+			}
+			return 1;
+		}
+		
 		if (LOWORD(wParam) == IDC_BRUSH_CUBE_PRIMITIVE)
 		{
 			App->CL_Libs->CL_CreateBox->Start_CreateBox_Dlg();

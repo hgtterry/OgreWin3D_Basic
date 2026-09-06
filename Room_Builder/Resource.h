@@ -202,6 +202,8 @@
 #define IDC_BT_CYL_RING                 1116
 #define IDC_ST_TEMPLATES                1117
 #define IDC_BT_CONE_DEFAULTS            1118
+#define IDC_ST_TEMPLATES2               1118
+#define IDC_ST_ENTITIES                 1118
 #define IDC_ED_CONE_1                   1119
 #define IDC_ED_CONE_2                   1120
 #define IDC_ED_CONE_3                   1121
@@ -504,6 +506,7 @@
 #define IDC_ST_SS_CHERYL3D              1362
 #define IDC_ST_SS_APPNAME               1363
 #define IDC_ST_RIGHTCLCK                1363
+#define IDC_BT_ADDSOUNDENTITY           1364
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -593,7 +596,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32850
-#define _APS_NEXT_CONTROL_VALUE         1364
+#define _APS_NEXT_CONTROL_VALUE         1365
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
