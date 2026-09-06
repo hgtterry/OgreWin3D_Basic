@@ -1293,34 +1293,34 @@ bool CL64_Project::Save_Objects_Data()
 			if (App->CL_Scene->B_Object[Count]->Usage == Enums::Obj_Usage_Teleport)
 			{
 				fprintf(WriteFile, "%s\n", "-- Teleport");
-				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->Location_Name);
+				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->CL_Scene->B_Object[Count]->S_Teleport->Location_Name);
 
-				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->Location_ID);
+				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->CL_Scene->B_Object[Count]->S_Teleport->Location_ID);
 
-				fprintf(WriteFile, "%s%s\n", "Tele_Sound=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Tele_Volume=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->SndVolume);
-				fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->flag_Play);
+				fprintf(WriteFile, "%s%s\n", "Tele_Sound=", App->CL_Scene->B_Object[Count]->S_Teleport->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Tele_Volume=", App->CL_Scene->B_Object[Count]->S_Teleport->SndVolume);
+				fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->CL_Scene->B_Object[Count]->S_Teleport->flag_Play);
 
-				x = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.x;
-				y = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.y;
-				z = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.z;
+				x = App->CL_Scene->B_Object[Count]->S_Teleport->Player_Position.x;
+				y = App->CL_Scene->B_Object[Count]->S_Teleport->Player_Position.y;
+				z = App->CL_Scene->B_Object[Count]->S_Teleport->Player_Position.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Mesh_Position=", x, y, z);
 
-				x = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getX();
-				y = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getY();
-				z = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getZ();
+				x = App->CL_Scene->B_Object[Count]->S_Teleport->Physics_Position.getX();
+				y = App->CL_Scene->B_Object[Count]->S_Teleport->Physics_Position.getY();
+				z = App->CL_Scene->B_Object[Count]->S_Teleport->Physics_Position.getZ();
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Physics_Position=", x, y, z);
 
-				w = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getW();
-				x = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getX();
-				y = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getY();
-				z = App->CL_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getZ();
+				w = App->CL_Scene->B_Object[Count]->S_Teleport->Physics_Rotation.getW();
+				x = App->CL_Scene->B_Object[Count]->S_Teleport->Physics_Rotation.getX();
+				y = App->CL_Scene->B_Object[Count]->S_Teleport->Physics_Rotation.getY();
+				z = App->CL_Scene->B_Object[Count]->S_Teleport->Physics_Rotation.getZ();
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Tele_Physics_Rotation=", w, x, y, z);
 
 				// Teleport Counter
-				fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->CL_Scene->B_Object[Count]->S_Teleport[0]->flag_Counter_Disabled);
+				fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->CL_Scene->B_Object[Count]->S_Teleport->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->CL_Scene->B_Object[Count]->S_Teleport->Trigger_Value);
+				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->CL_Scene->B_Object[Count]->S_Teleport->flag_Counter_Disabled);
 
 				//--------------- Environment
 				fprintf(WriteFile, "%s\n", "------------------------------------------------------------------------------ Teleporter Environ");
@@ -2500,7 +2500,7 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 
 	Base_Object* B_Object = App->CL_Scene->B_Object[Index];
 
-	B_Object->S_Teleport[0] = new Teleport_type;
+	B_Object->S_Teleport = new Teleport_type;
 	App->CL_Teleporters->Set_Teleports_Defaults(Index);
 
 	B_Object->S_Environ[0] = new Environ_type;
@@ -2509,45 +2509,45 @@ bool CL64_Project::Read_Teleport(int Index, char* Section)
 	auto& Ini_File = App->CL_X_Ini_File; // App->CL_X_Ini_File-> (Pointer)
 
 	Ini_File->GetString(Section, "Tele_Goto", chr_Tag1, MAX_PATH);
-	strcpy(B_Object->S_Teleport[0]->Location_Name, chr_Tag1);
+	strcpy(B_Object->S_Teleport->Location_Name, chr_Tag1);
 
-	B_Object->S_Teleport[0]->Location_ID = Ini_File->GetInt(Section, "Tele_ID", 0, 10);
+	B_Object->S_Teleport->Location_ID = Ini_File->GetInt(Section, "Tele_ID", 0, 10);
 
 	// Sound
-	Ini_File->GetString(Section, "Tele_Sound", B_Object->S_Teleport[0]->Sound_File, MAX_PATH);
+	Ini_File->GetString(Section, "Tele_Sound", B_Object->S_Teleport->Sound_File, MAX_PATH);
 
 	Ini_File->GetString(Section, "Tele_Volume", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f", &V4.x);
-	B_Object->S_Teleport[0]->SndVolume = V4.x;
+	B_Object->S_Teleport->SndVolume = V4.x;
 
-	B_Object->S_Teleport[0]->flag_Play = Ini_File->GetInt(Section, "Tele_Play", 0, 10);
+	B_Object->S_Teleport->flag_Play = Ini_File->GetInt(Section, "Tele_Play", 0, 10);
 
 	// Mesh_Pos
 	Ini_File->GetString(Section, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
-	B_Object->S_Teleport[0]->Player_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
+	B_Object->S_Teleport->Player_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	//Player_Pos
 	Ini_File->GetString(Section, "Tele_Physics_Position", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
 
-	B_Object->S_Teleport[0]->Physics_Position.setX(V4.x);
-	B_Object->S_Teleport[0]->Physics_Position.setY(V4.y);
-	B_Object->S_Teleport[0]->Physics_Position.setZ(V4.z);
+	B_Object->S_Teleport->Physics_Position.setX(V4.x);
+	B_Object->S_Teleport->Physics_Position.setY(V4.y);
+	B_Object->S_Teleport->Physics_Position.setZ(V4.z);
 
 	//Player_Rotation
 	Ini_File->GetString(Section, "Tele_Physics_Rotation", chr_Tag1, MAX_PATH);
 	(void)sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.w, &V4.x, &V4.y, &V4.z);
 
-	B_Object->S_Teleport[0]->Physics_Rotation.setW(V4.w);
-	B_Object->S_Teleport[0]->Physics_Rotation.setX(V4.x);
-	B_Object->S_Teleport[0]->Physics_Rotation.setY(V4.y);
-	B_Object->S_Teleport[0]->Physics_Rotation.setZ(V4.z);
+	B_Object->S_Teleport->Physics_Rotation.setW(V4.w);
+	B_Object->S_Teleport->Physics_Rotation.setX(V4.x);
+	B_Object->S_Teleport->Physics_Rotation.setY(V4.y);
+	B_Object->S_Teleport->Physics_Rotation.setZ(V4.z);
 
 	// Teleport Counter
-	B_Object->S_Teleport[0]->Counter_ID = Ini_File->GetInt(Section, "Tele_Counter_ID", 0, 10);
-	B_Object->S_Teleport[0]->Trigger_Value = Ini_File->GetInt(Section, "Tele_Trigger_Value", 0, 10);
-	B_Object->S_Teleport[0]->flag_Counter_Disabled = Ini_File->GetInt(Section, "Tele_Counter_Disabled", 1, 10);
+	B_Object->S_Teleport->Counter_ID = Ini_File->GetInt(Section, "Tele_Counter_ID", 0, 10);
+	B_Object->S_Teleport->Trigger_Value = Ini_File->GetInt(Section, "Tele_Trigger_Value", 0, 10);
+	B_Object->S_Teleport->flag_Counter_Disabled = Ini_File->GetInt(Section, "Tele_Counter_Disabled", 1, 10);
 
 	// Environment
 	Int_Tag = Ini_File->GetInt(Section, "Environ_Enabled", 0, 10);

@@ -52,21 +52,21 @@ CL64_Collision::~CL64_Collision(void)
 // *************************************************************************
 bool CL64_Collision::Do_Teleport(int Index)
 {
-	if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Counter_Disabled == true || App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == true)
+	if (App->CL_Scene->B_Object[Index]->S_Teleport->flag_Counter_Disabled == true || App->CL_Scene->B_Object[Index]->flag_OverRide_Counter == true)
 	{
-		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
-		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Index]->S_Teleport->Physics_Position);
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Index]->S_Teleport->Physics_Rotation);
 
-		if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play == true)
+		if (App->CL_Scene->B_Object[Index]->S_Teleport->flag_Play == true)
 		{
 			char Sound[MAX_PATH];
 			strcpy(Sound, App->CL_SoundMgr->Default_Folder);
 			strcat(Sound, "\\Media\\Sounds\\");
-			strcat(Sound, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
+			strcat(Sound, App->CL_Scene->B_Object[Index]->S_Teleport->Sound_File);
 
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Snd_Engine = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Snd_Engine->setVolume(App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Snd_Engine->setIsPaused(false);
+			App->CL_Scene->B_Object[Index]->S_Teleport->Snd_Engine = App->CL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+			App->CL_Scene->B_Object[Index]->S_Teleport->Snd_Engine->setVolume(App->CL_Scene->B_Object[Index]->S_Teleport->SndVolume);
+			App->CL_Scene->B_Object[Index]->S_Teleport->Snd_Engine->setIsPaused(false);
 
 			// Environment
 			/*if (App->CL_Editor_Com->flag_GameMode_Running == 1)
@@ -89,15 +89,15 @@ bool CL64_Collision::Do_Teleport(int Index)
 	}
 
 	
-	int Trigger_Value = App->CL_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value;
-	int CounterIndex = App->CL_Scene->B_Object[Index]->S_Teleport[0]->Counter_ID;
+	int Trigger_Value = App->CL_Scene->B_Object[Index]->S_Teleport->Trigger_Value;
+	int CounterIndex = App->CL_Scene->B_Object[Index]->S_Teleport->Counter_ID;
 
 	//if (App->CL_Scene->B_Counter[CounterIndex]->Counter >= Trigger_Value)
 	{
-		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
-		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Index]->S_Teleport->Physics_Position);
+		App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Index]->S_Teleport->Physics_Rotation);
 
-		if (App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play == true)
+		if (App->CL_Scene->B_Object[Index]->S_Teleport->flag_Play == true)
 		{
 			/*char Sound[MAX_PATH];
 			strcpy(Sound, App->CL_SoundMgr->Default_Folder);

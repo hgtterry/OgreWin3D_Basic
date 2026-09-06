@@ -43,6 +43,7 @@ bool CL64_Com_Sounds::Add_New_Sound()
 
 	App->CL_Scene->B_Object[New_Object_Index] = new Base_Object();
 
+	// Get Pointer to New Object
 	auto& New_Sound_Object = App->CL_Scene->B_Object[New_Object_Index];  // Pointer to New Object
 
 	// Set sound file and path
@@ -97,7 +98,7 @@ bool CL64_Com_Sounds::Create_Sound_Entity(int Index)
 
 	auto& New_Sound_Object = App->CL_Scene->B_Object[Index]; // Pointer to New Object
 	
-	strcpy(New_Sound_Object->Entity_Type_Name, "Sound Entity");
+	strcpy(New_Sound_Object->Entity_Type_Name, "Sound");
 
 	// Construct Ogre name
 	snprintf(Ogre_Name, sizeof(Ogre_Name), "GDEnt_%d", Index);

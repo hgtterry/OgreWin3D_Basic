@@ -494,8 +494,8 @@ void CL64_Gui_Environment::Environ_PropertyEditor()
 		ImGui::SameLine();
 		if (ImGui::Button("Goto Location", ImVec2(120, 0)))
 		{
-			App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Eviron_Index]->S_Teleport[0]->Physics_Position);
-			App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Eviron_Index]->S_Teleport[0]->Physics_Rotation);
+			App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->CL_Scene->B_Object[Eviron_Index]->S_Teleport->Physics_Position);
+			App->CL_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CL_Scene->B_Object[Eviron_Index]->S_Teleport->Physics_Rotation);
 			Set_To_PlayerView();
 		}
 

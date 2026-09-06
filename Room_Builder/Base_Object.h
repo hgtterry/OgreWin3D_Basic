@@ -220,7 +220,7 @@ public:
 	Ogre::Real SndVolume;
 
 	Move_Type* S_MoveType[1];
-	Teleport_type* S_Teleport[1];
+	Teleport_type* S_Teleport;
 	Collectable_type* S_Collectable[1];
 	Message_type*	S_Message[1];
 	Environ_type*	S_Environ[1];

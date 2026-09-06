@@ -59,7 +59,7 @@ void CL64_Teleporters::Set_Teleports_Defaults(int index)
 {
 	// Initialize Pointers
 	auto& m_Object = App->CL_Scene->B_Object[index];
-	auto& m_Teleport = m_Object->S_Teleport[0];
+	auto& m_Teleport = m_Object->S_Teleport;
 
 	m_Teleport->Location_ID = 0;
 	strcpy(m_Teleport->Location_Name, "Start_Location");
@@ -92,7 +92,7 @@ bool CL64_Teleporters::Add_New_Teleporter()
 	Set_Objects_Defaults(index);
 
 	// Initialize Teleport
-	newObject->S_Teleport[0] = new Teleport_type;
+	newObject->S_Teleport = new Teleport_type;
 	Set_Teleports_Defaults(index);
 	
 	// Initialize Environment
@@ -142,7 +142,7 @@ bool CL64_Teleporters::Create_Teleport_Entity(int Index)
 	// Create Pointer
 	auto& newObject = App->CL_Scene->B_Object[Index];
 	
-	strcpy(newObject->Entity_Type_Name, "Teleport Entity");
+	strcpy(newObject->Entity_Type_Name, "Teleport");
 
 	// Generate unique Ogre name
 	std::string Ogre_Name = "GDEnt_" + std::to_string(Index);

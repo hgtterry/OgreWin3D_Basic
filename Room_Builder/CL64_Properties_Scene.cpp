@@ -582,7 +582,7 @@ void CL64_Properties_Scene::Update_ListView_Teleport()
 
 	// new sound
 	char chr_Play[100];
-	if (m_Object->S_Teleport[0]->flag_Play == 1)
+	if (m_Object->S_Teleport->flag_Play == 1)
 	{
 		strcpy(chr_Play, "Yes");
 	}
@@ -593,17 +593,17 @@ void CL64_Properties_Scene::Update_ListView_Teleport()
 
 
 	char chr_Goto_Location[100];
-	int Goto_ID = m_Object->S_Teleport[0]->Location_ID;
+	int Goto_ID = m_Object->S_Teleport->Location_ID;
 	strcpy(chr_Goto_Location, App->CL_Locations->B_Location[Goto_ID]->Location_Name);
 
 	char chr_Volume[100];
-	float sum2 = m_Object->S_Teleport[0]->SndVolume;
+	float sum2 = m_Object->S_Teleport->SndVolume;
 	int Percent = int(sum2 * 100);
 	_itoa(Percent, chr_Volume, 10);
 
 
 	char chr_Counter_Disabled[20];
-	if (m_Object->S_Teleport[0]->flag_Counter_Disabled == 1)
+	if (m_Object->S_Teleport->flag_Counter_Disabled == 1)
 	{
 		strcpy(chr_Counter_Disabled, "Disabled");
 	}
@@ -626,7 +626,7 @@ void CL64_Properties_Scene::Update_ListView_Teleport()
 
 	// Environ
 	char Chr_Counter_Index[100];
-	_itoa(m_Object->S_Teleport[0]->Counter_ID, Chr_Counter_Index, 10);
+	_itoa(m_Object->S_Teleport->Counter_ID, Chr_Counter_Index, 10);
 
 
 	if (m_Object->S_Environ[0]->flag_Environ_Enabled == true)
@@ -642,12 +642,12 @@ void CL64_Properties_Scene::Update_ListView_Teleport()
 		grid[0][0] = "Name",	grid[1][0] = m_Object->Object_Name;
 		grid[0][1] = " ",		grid[1][1] = " ";
 		grid[0][2] = "Goto",	grid[1][2] = chr_Goto_Location;
-		grid[0][3] = "Sound",	grid[1][3] = m_Object->S_Teleport[0]->Sound_File;
+		grid[0][3] = "Sound",	grid[1][3] = m_Object->S_Teleport->Sound_File;
 		grid[0][4] = "Volume",	grid[1][4] = chr_Volume;
 		grid[0][5] = "Play",	grid[1][5] = chr_Play;
 		grid[0][6] = " ",		grid[1][6] = " ";
 		grid[0][7] = "Counter", grid[1][7] = chr_Counter_Disabled;
-		grid[0][8] = "Count_Name",	 grid[1][8] = m_Object->S_Teleport[0]->Counter_Name;
+		grid[0][8] = "Count_Name",	 grid[1][8] = m_Object->S_Teleport->Counter_Name;
 		grid[0][9] = "Count_Index",		grid[1][9] = Chr_Counter_Index;
 		grid[0][10] = " ",				grid[1][10] = " ";
 		grid[0][11] = "Environment",	grid[1][11] = chr_Environ_Disabled;
@@ -680,7 +680,7 @@ void CL64_Properties_Scene::Update_ListView_Teleport()
 		grid[0][0] = "Name",		grid[1][0] = m_Object->Object_Name;
 		grid[0][1] = " ",			grid[1][1] = " ";
 		grid[0][2] = "Goto",		grid[1][2] = chr_Goto_Location;
-		grid[0][3] = "Sound",		grid[1][3] = m_Object->S_Teleport[0]->Sound_File;
+		grid[0][3] = "Sound",		grid[1][3] = m_Object->S_Teleport->Sound_File;
 		grid[0][4] = "Volume",		grid[1][4] = chr_Volume;
 		grid[0][5] = "Play",		grid[1][5] = chr_Play;
 		grid[0][6] = " ",			grid[1][6] = " ";
@@ -1242,7 +1242,7 @@ void CL64_Properties_Scene::Edit_Teleport_Entity(LPARAM lParam)
 
 		App->CL_ImGui_Dialogs->List_Strings.resize(App->CL_Locations->Location_Count);
 		App->CL_ImGui_Dialogs->List_Count = App->CL_Locations->Location_Count;
-		App->CL_ImGui_Dialogs->List_Index = App->CL_Scene->B_Object[Index]->S_Teleport[0]->Location_ID;
+		App->CL_ImGui_Dialogs->List_Index = App->CL_Scene->B_Object[Index]->S_Teleport->Location_ID;
 
 		int Count = 0;
 		while (Count < App->CL_Locations->Location_Count)
@@ -1271,17 +1271,17 @@ void CL64_Properties_Scene::Edit_Teleport_Entity(LPARAM lParam)
 		{
 			int LocationIndex = App->CL_ImGui_Dialogs->List_Index;
 
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Location_ID = LocationIndex;
+			App->CL_Scene->B_Object[Index]->S_Teleport->Location_ID = LocationIndex;
 
-			strcpy(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Location_Name, App->CL_Locations->B_Location[LocationIndex]->Location_Name);
+			strcpy(App->CL_Scene->B_Object[Index]->S_Teleport->Location_Name, App->CL_Locations->B_Location[LocationIndex]->Location_Name);
 
 			//App->CL_Scene->B_Object[Index]->S_Teleport[0]->Player_Position = App->CL_Locations->B_Location[LocationIndex]->Current_Position;
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position.setX(App->CL_Locations->B_Location[LocationIndex]->Physics_Pos.x);
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position.setY(App->CL_Locations->B_Location[LocationIndex]->Physics_Pos.y);
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position.setZ(App->CL_Locations->B_Location[LocationIndex]->Physics_Pos.z);
+			App->CL_Scene->B_Object[Index]->S_Teleport->Physics_Position.setX(App->CL_Locations->B_Location[LocationIndex]->Physics_Pos.x);
+			App->CL_Scene->B_Object[Index]->S_Teleport->Physics_Position.setY(App->CL_Locations->B_Location[LocationIndex]->Physics_Pos.y);
+			App->CL_Scene->B_Object[Index]->S_Teleport->Physics_Position.setZ(App->CL_Locations->B_Location[LocationIndex]->Physics_Pos.z);
 			
 			
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation = App->CL_Locations->B_Location[LocationIndex]->Physics_Quat;
+			App->CL_Scene->B_Object[Index]->S_Teleport->Physics_Rotation = App->CL_Locations->B_Location[LocationIndex]->Physics_Quat;
 
 			Update_ListView_Teleport();
 		}
@@ -1293,13 +1293,13 @@ void CL64_Properties_Scene::Edit_Teleport_Entity(LPARAM lParam)
 	if (result == 0)
 	{
 		App->CL_SoundMgr->flag_Accessed = 1; // For Sound Manager Dlg
-		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
+		strcpy(App->CL_SoundMgr->Access_File, App->CL_Scene->B_Object[Index]->S_Teleport->Sound_File);
 
 		App->CL_SoundMgr->Show_Sound_Player();
 
-		strcpy(App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, App->CL_SoundMgr->Access_File);
+		strcpy(App->CL_Scene->B_Object[Index]->S_Teleport->Sound_File, App->CL_SoundMgr->Access_File);
 
-		App->CL_Scene->B_Object[Index]->S_Teleport[0]->SndVolume = App->CL_SoundMgr->SndVolume;
+		App->CL_Scene->B_Object[Index]->S_Teleport->SndVolume = App->CL_SoundMgr->SndVolume;
 
 		//Mark_As_Altered(Index);
 
@@ -1329,15 +1329,15 @@ void CL64_Properties_Scene::Edit_Teleport_Entity(LPARAM lParam)
 	result = strcmp(btext, "Play");
 	if (result == 0)
 	{
-		App->CL_Dialogs->YesNo((LPSTR)"Play Sound", App->CL_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
+		App->CL_Dialogs->YesNo((LPSTR)"Play Sound", App->CL_Scene->B_Object[Index]->S_Teleport->Sound_File);
 
 		if (App->CL_Dialogs->flag_Dlg_Canceled == false)
 		{
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play = 1;
+			App->CL_Scene->B_Object[Index]->S_Teleport->flag_Play = 1;
 		}
 		else
 		{
-			App->CL_Scene->B_Object[Index]->S_Teleport[0]->flag_Play = 0;
+			App->CL_Scene->B_Object[Index]->S_Teleport->flag_Play = 0;
 		}
 
 		Update_ListView_Teleport();
