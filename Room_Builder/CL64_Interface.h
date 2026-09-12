@@ -33,6 +33,7 @@ public:
 	void Hide_Tab_Dialogs();
 	void Show_Brushes_Dialog(bool Show);
 	void Show_Materials_Dialog(bool Show);
+	void Show_Textures_Dialog(bool Show);
 	void Show_TemplatesDialog(bool Show);
 
 	void Show_Faces_Panel_Control(bool show);

@@ -54,7 +54,7 @@ void CL64_Interface::Select_Tab(int Tab_ID)
 	{
 	case Enums::Tab_ID_TEXTURES:
 		flag_Tab_Texture = true;
-		//Show_Textures_Dialog(true);
+		Show_Textures_Dialog(true);
 		break;
 
 	case Enums::Tab_ID_TEMPLATES:
@@ -88,9 +88,10 @@ void CL64_Interface::Hide_Tab_Dialogs()
 	flag_Tab_Templates = false;
 	
 	// Hide the respective dialogs for textures, brushes, and templates
-	App->CL_Interface->Show_Materials_Dialog(false);
-	App->CL_Interface->Show_Brushes_Dialog(false);
-	App->CL_Interface->Show_TemplatesDialog(false);
+	Show_Materials_Dialog(false);
+	Show_Brushes_Dialog(false);
+	Show_TemplatesDialog(false);
+	Show_Textures_Dialog(false);
 
 	// Redraw
 	RedrawWindow(App->CL_Properties_Tabs->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -104,6 +105,13 @@ void CL64_Interface::Show_Brushes_Dialog(bool Show)
 	ShowWindow(App->CL_Properties_Brushes->BrushesDlg_Hwnd, Show);
 }
 
+// *************************************************************************
+// *	  	Show_Textures_Dialog:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void CL64_Interface::Show_Textures_Dialog(bool Show)
+{
+	ShowWindow(App->CL_Properties_Textures->TexturesDlg_Hwnd, Show);
+}
 
 // *************************************************************************
 // *	  	Show_Materials_Dialog:- Terry and Hazel Flanigan 2026		   *

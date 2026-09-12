@@ -23,11 +23,13 @@ THE SOFTWARE.
 */
 
 #include "pch.h"
+#include "resource.h"
 #include "CL64_App.h"
 #include "CL64_Properties_Textures.h"
 
 CL64_Properties_Textures::CL64_Properties_Textures(void)
 {
+	TexturesDlg_Hwnd = nullptr;
 }
 
 CL64_Properties_Textures::~CL64_Properties_Textures(void)
@@ -39,10 +41,7 @@ CL64_Properties_Textures::~CL64_Properties_Textures(void)
 // *************************************************************************
 void CL64_Properties_Textures::Start_Tabs_Textures_Dlg()
 {
-	/*flag_Dlg_Canceled = 0;
-	Check_What = What_Check;
-	App->CL_Properties_Tabs->Enable_Tabs_Dlg(false);
-	DialogBox(App->hInst, (LPCTSTR)IDD_TEXT_DIALOG, App->MainHwnd, (DLGPROC)Proc_Tabs_Textures_Dlg);*/
+	TexturesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Tabs_Textures_Dlg);
 }
 
 // **************************************************************************

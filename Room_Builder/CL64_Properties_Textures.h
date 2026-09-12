@@ -31,6 +31,8 @@ public:
 
 	void Start_Tabs_Textures_Dlg();
 
+	HWND TexturesDlg_Hwnd;
+
 private:
 	static LRESULT CALLBACK Proc_Tabs_Textures_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 

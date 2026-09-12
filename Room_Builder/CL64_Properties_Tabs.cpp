@@ -61,19 +61,23 @@ void CL64_Properties_Tabs::Show_Tabs_Control_Dlg(bool Show)
 void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 {
 	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TABS, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
-
-	flag_Tabs_Dlg_Active = true;
 	
+	App->CL_Panels->Position_Tabs_Dlg();
+	
+	// Start the Brushes dialog
 	App->CL_Properties_Brushes->Start_Tabs_Brushes_Dlg();
 	App->CL_Interface->Show_Brushes_Dialog(false);
 
+	// Start the Templates dialog
 	App->CL_Properties_Templates->Start_Tabs_Templates_Dlg();
 	App->CL_Interface->Show_TemplatesDialog(true);
 
+	// Start the Textures dialog
 	App->CL_Properties_Textures->Start_Tabs_Textures_Dlg();
+	App->CL_Interface->Show_Textures_Dialog(false);
 
-	App->CL_Panels->Position_Tabs_Dlg();
 	ShowWindow(Tabs_Control_Hwnd, true);
+	flag_Tabs_Dlg_Active = true;
 
 	CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
 }
