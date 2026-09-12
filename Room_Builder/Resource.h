@@ -465,14 +465,17 @@
 #define IDC_CHECK1                      1332
 #define IDC_CK_LASTFILE                 1332
 #define IDC_BT_TT_FACES_ALL             1332
+#define IDC_BT_FACES_NONE2              1332
 #define IDC_BUT_AT_WORLDPOS             1333
 #define IDC_CK_SCENEEDITOR              1333
 #define IDC_BT_TT_FACE_NEXT             1333
+#define IDC_BT_TT_FACES_ALL2            1333
 #define IDC_ST_STARTMODE                1334
 #define IDC_BT_TT_FACE_PREV             1334
 #define IDC_COMBO1                      1335
 #define IDC_CB_BRUSH_CAT                1335
 #define IDC_BT_FACE_FACEEDITOR          1335
+#define IDC_BT_TT_FACE_NEXT2            1335
 #define IDC_BT_UPDATE                   1336
 #define IDC_BT_FACE_SHOWSELECTEDFACE    1336
 #define IDC_SLDR_SCALE_X                1337
@@ -508,6 +511,7 @@
 #define IDC_ST_SS_APPNAME               1363
 #define IDC_ST_RIGHTCLCK                1363
 #define IDC_BT_ADDSOUNDENTITY           1364
+#define IDC_BT_TT_FACE_PREV2            1365
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -597,7 +601,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32850
-#define _APS_NEXT_CONTROL_VALUE         1365
+#define _APS_NEXT_CONTROL_VALUE         1366
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

@@ -49,19 +49,18 @@ void CL64_Properties_Textures::Start_Tabs_Textures_Dlg()
 // **************************************************************************
 LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	auto& p_Faces = App->CL_Faces_Control; // Pointer to Faces Control
+
 	switch (message)
 	{
 
 	case WM_INITDIALOG:
 	{
-		/*SendDlgItemMessage(hDlg, IDC_EDITTEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->CL_Dialogs->btext);
-
-		SetDlgItemText(hDlg, IDC_EDITTEXT, (LPCTSTR)App->CL_Dialogs->Chr_Text);*/
-
+		SendDlgItemMessage(hDlg, IDC_BT_FACES_NONE2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TT_FACES_ALL2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_NEXT2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_PREV2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -85,35 +84,102 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 
-		if (some_item->idFrom == IDOK)
+		switch (some_item->idFrom)
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
+		
+		case IDC_BT_FACES_NONE2:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FACES_NONE2));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_No_Faces);
+			}
+
+			break;
 		}
 
-		if (some_item->idFrom == IDCANCEL)
+		case IDC_BT_TT_FACES_ALL2:
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACES_ALL2));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_All_Faces);
+			}
+
+			break;
+		}
+
+		case IDC_BT_TT_FACE_NEXT2:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACE_NEXT2));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Next_Face);
+			}
+
+			break;
+		}
+
+		case IDC_BT_TT_FACE_PREV2:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACE_PREV2));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Prev_Face);
+			}
+
+			break;
+		}
+
+		default:
 			return CDRF_DODEFAULT;
 		}
+		
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDOK)
+		if (LOWORD(wParam) == IDC_BT_FACES_NONE2)
 		{
-			EndDialog(hDlg, LOWORD(wParam));
+			p_Faces->Unselect_All_Face();
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDCANCEL)
+		if (LOWORD(wParam) == IDC_BT_TT_FACES_ALL2)
 		{
-			EndDialog(hDlg, LOWORD(wParam));
+			p_Faces->Select_All_Face();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TT_FACE_NEXT2)
+		{
+			p_Faces->Select_Next_Face();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TT_FACE_PREV2)
+		{
+			p_Faces->Select_Prev_Face();
 			return TRUE;
 		}
 	}
