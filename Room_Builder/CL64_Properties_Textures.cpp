@@ -30,6 +30,17 @@ THE SOFTWARE.
 CL64_Properties_Textures::CL64_Properties_Textures(void)
 {
 	TexturesDlg_Hwnd = nullptr;
+	flag_Textures_Dlg_Created = false;
+
+	Sel_BaseBitmap = NULL;
+	BasePicWidth = NULL;
+	BasePicHeight = NULL;
+
+	Selected_Index = 0;
+	m_CurrentTexture[0] = 0;
+	mSelected_Face = NULL;
+
+	mFileString.clear();
 }
 
 CL64_Properties_Textures::~CL64_Properties_Textures(void)
@@ -42,6 +53,9 @@ CL64_Properties_Textures::~CL64_Properties_Textures(void)
 void CL64_Properties_Textures::Start_Tabs_Textures_Dlg()
 {
 	TexturesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Tabs_Textures_Dlg);
+	flag_Textures_Dlg_Created = true;
+
+	Fill_Textures_ListBox();
 }
 
 // **************************************************************************
@@ -61,18 +75,17 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_NEXT2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_PREV2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_BT_FACE_SHOWSELECTEDFACE2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_FE_LIST_TEXTURES2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetWindowLongPtr(GetDlgItem(hDlg, IDC_FE_BASETEXTURE2), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
+
 		return TRUE;
 	}
 
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}*/
 		return FALSE;
 	}
 
@@ -149,6 +162,24 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 			break;
 		}
 
+		case IDC_BT_FACE_SHOWSELECTEDFACE2:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FACE_SHOWSELECTEDFACE2));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				if (App->flag_3D_Started == true)
+				{
+					App->Custom_Button_Toggle_Tabs(item, App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face);
+				}
+			}
+
+			break;
+		}
+
 		default:
 			return CDRF_DODEFAULT;
 		}
@@ -182,10 +213,257 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 			p_Faces->Select_Prev_Face();
 			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_FACE_SHOWSELECTEDFACE2)
+		{
+			if (App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face == true)
+			{
+				App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = false;
+			}
+			else
+			{
+				App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = true;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_FE_LIST_TEXTURES2)
+		{
+			if (App->CL_Interface->flag_Tab_Texture == true)
+			{
+				App->CL_Properties_Textures->List_Selection_Changed();
+			}
+
+			return TRUE;
+		}
 	}
 
 	break;
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Fill_Textures_ListBox:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void CL64_Properties_Textures::Fill_Textures_ListBox()
+{
+	int LBIndex;
+
+	if (flag_Textures_Dlg_Created == true)
+	{
+		SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		for (int index = 0; index < App->CL_TXL_Editor->Texture_Count; index++)
+		{
+			char mName[MAX_PATH];
+
+			strcpy(mName, App->CL_TXL_Editor->Texture_List[index]->Name);
+
+			LBIndex = SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
+		}
+
+		SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2 ,LB_SETCURSEL, 0, 0);
+		
+		Get_Selected_Face_Texture();
+	}
+}
+
+// *************************************************************************
+// *	  	Get_Selected_Face_Texture:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void CL64_Properties_Textures::Get_Selected_Face_Texture()
+{
+	mSelected_Face = NULL;
+
+	int NumberOfFaces = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+
+	if (NumberOfFaces > 0)
+	{
+		mSelected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
+
+		Select_With_TextureName(App->CL_X_Face->Face_GetTextureName(mSelected_Face));
+	}
+}
+
+// *************************************************************************
+// *	  	Select_With_TextureName:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void CL64_Properties_Textures::Select_With_TextureName(const char* TextureName)
+{
+	SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextureName);
+
+	strcpy(m_CurrentTexture, TextureName);
+	List_Selection_Changed();
+}
+
+// *************************************************************************
+// *	  	List_Selection_Changed:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void CL64_Properties_Textures::List_Selection_Changed()
+{
+	int Index = SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	if (Index == LB_ERR)
+	{
+		App->Say("ListBox No Selection Available", (LPSTR)"");
+	}
+	else
+	{
+		char TextureName[MAX_PATH];
+		TextureName[0] = 0;
+
+		SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2, LB_GETTEXT, (WPARAM)Index, (LPARAM)TextureName);
+		strcpy(m_CurrentTexture, TextureName);
+
+		SelectBitmap();
+	}
+
+	/*char buf[255];
+	sprintf(buf, "Index = %i        %i X %i", Index, BasePicWidth, BasePicHeight);
+	SetDlgItemText(Textures_Dlg_Hwnd, IDC_STWIDTHHEIGHT, (LPCTSTR)buf);*/
+
+	Selected_Index = Index;
+}
+
+// *************************************************************************
+// *			A_SelectBitmap:- Terry and Hazel Flanigan 2025		  	   *
+// *************************************************************************
+bool CL64_Properties_Textures::SelectBitmap()
+{
+	char mTextureName[MAX_PATH];
+	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(m_CurrentTexture);
+	strcpy(mTextureName, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
+	//App->Say(mTextureName);
+
+	Ogre::FileInfoListPtr RFI = ResourceGroupManager::getSingleton().listResourceFileInfo(App->CL_Ogre->Texture_Resource_Group, false);
+	Ogre::FileInfoList::const_iterator i, iend;
+	iend = RFI->end();
+
+	for (i = RFI->begin(); i != iend; ++i)
+	{
+		if (i->filename == mTextureName)
+		{
+			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
+
+			mFileString = ff->getAsString();
+
+			char mFileName[MAX_PATH];
+			strcpy(mFileName, App->RB_Directory_FullPath);
+			strcat(mFileName, "\\Data\\");
+			strcat(mFileName, mTextureName);
+
+			std::ofstream outFile;
+			outFile.open(mFileName, std::ios::binary);
+			outFile << mFileString;
+			outFile.close();
+
+			mFileString.clear();
+
+			Texture_To_HBITMP(mFileName);
+			remove(mFileName);
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
+// *************************************************************************
+// *			 Texture_To_HBITMP:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void CL64_Properties_Textures::Texture_To_HBITMP(char* TextureFileName)
+{
+	HWND PreviewWnd = GetDlgItem(TexturesDlg_Hwnd, IDC_FE_BASETEXTURE2);
+	HDC	hDC = GetDC(PreviewWnd);
+
+	Sel_BaseBitmap = App->CL_Textures->Get_HBITMP(TextureFileName, hDC);
+
+	BasePicWidth = App->CL_Textures->BasePicWidth;
+	BasePicHeight = App->CL_Textures->BasePicHeight;
+
+	ReleaseDC(PreviewWnd, hDC);
+
+	RedrawWindow(PreviewWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *			ViewerBasePic:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+bool CALLBACK CL64_Properties_Textures::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	if (msg == WM_PAINT)
+	{
+		PAINTSTRUCT ps;
+		HDC hDC = BeginPaint(hwnd, &ps);
+		RECT clientRect;
+
+		// Get the client rectangle and adjust its dimensions
+		GetClientRect(hwnd, &clientRect);
+		clientRect.left--;
+		clientRect.bottom--;
+
+		// Fill the rectangle with a green brush
+		FillRect(hDC, &clientRect, (HBRUSH)(RGB(0, 255, 0)));
+
+		// Check if a base bitmap is selected
+		if (App->CL_Properties_Textures->Sel_BaseBitmap != nullptr)
+		{
+			RECT sourceRect = { 0, 0, App->CL_Properties_Textures->BasePicWidth, App->CL_Properties_Textures->BasePicHeight };
+			RECT destRect = clientRect;
+
+			// Get the device context and set the stretch mode
+			HDC renderDC = GetDC(hwnd);
+			SetStretchBltMode(renderDC, HALFTONE);
+
+			// Render the texture
+			App->CL_Properties_Textures->RenderTexture_Blit(renderDC, App->CL_Properties_Textures->Sel_BaseBitmap, &sourceRect, &destRect);
+			ReleaseDC(hwnd, renderDC);
+		}
+
+		EndPaint(hwnd, &ps);
+		return 0;
+	}
+
+	return DefWindowProc(hwnd, msg, wParam, lParam);
+}
+
+// *************************************************************************
+// *		RenderTexture_Blit:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+bool CL64_Properties_Textures::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect)
+{
+	HDC MemDC = CreateCompatibleDC(hDC);
+	if (MemDC == NULL)
+	{
+		return FALSE;
+	}
+
+	// Check if the bitmap is valid
+	if (Bmp)
+	{
+		SelectObject(MemDC, Bmp);
+
+		int SourceWidth = SourceRect->right - SourceRect->left;
+		int SourceHeight = SourceRect->bottom - SourceRect->top;
+		int DestWidth = DestRect->right - DestRect->left;
+		int DestHeight = DestRect->bottom - DestRect->top;
+		SetStretchBltMode(hDC, COLORONCOLOR);
+		StretchBlt(hDC,
+			DestRect->left,
+			DestRect->top,
+			DestHeight,
+			DestHeight,
+			MemDC,
+			SourceRect->left,
+			SourceRect->top,
+			SourceWidth,
+			SourceHeight,
+			SRCCOPY);
+	}
+
+	DeleteDC(MemDC);
+
+	return TRUE;
 }

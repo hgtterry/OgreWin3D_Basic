@@ -512,6 +512,8 @@
 #define IDC_ST_RIGHTCLCK                1363
 #define IDC_BT_ADDSOUNDENTITY           1364
 #define IDC_BT_TT_FACE_PREV2            1365
+#define IDC_BT_FACE_SHOWSELECTEDFACE2   1366
+#define IDC_FE_LIST_TEXTURES2           1367
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -601,7 +603,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32850
-#define _APS_NEXT_CONTROL_VALUE         1366
+#define _APS_NEXT_CONTROL_VALUE         1368
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

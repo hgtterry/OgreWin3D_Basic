@@ -30,12 +30,32 @@ public:
 	~CL64_Properties_Textures(void);
 
 	void Start_Tabs_Textures_Dlg();
+	void Fill_Textures_ListBox();
+	void Get_Selected_Face_Texture();
+	void Select_With_TextureName(const char* TextureName);
+	void List_Selection_Changed();
+
+	bool SelectBitmap();
+	void Texture_To_HBITMP(char* TextureFileName);
+
+	bool flag_Textures_Dlg_Created;
+
+	int Selected_Index;
+	char m_CurrentTexture[MAX_PATH];
+	Face* mSelected_Face;
+
+	HBITMAP	Sel_BaseBitmap;
+	long BasePicWidth;
+	long BasePicHeight;
+
+	Ogre::String mFileString;
 
 	HWND TexturesDlg_Hwnd;
 
 private:
 	static LRESULT CALLBACK Proc_Tabs_Textures_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-
+	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
 };
 
