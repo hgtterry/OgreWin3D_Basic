@@ -29,8 +29,7 @@ public:
 	CL64_Properties_Templates();
 	~CL64_Properties_Templates();
 
-	void Start_TemplatesDialog();
-	void Show_TemplatesDialog(bool Show);
+	void Start_Tabs_Templates_Dlg();
 	void Insert_Template();
 	void Enable_Shape_Buttons(bool Enable);
 
@@ -41,7 +40,7 @@ public:
 	HWND TemplatesDlg_Hwnd;
 
 private:
-	static LRESULT CALLBACK Proc_Templates(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Tabs_Templates_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Init_Bmps_Globals(void);
 	void Set_Icons();

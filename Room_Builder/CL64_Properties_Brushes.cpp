@@ -75,14 +75,6 @@ void CL64_Properties_Brushes::Reset_Class()
 }
 
 // *************************************************************************
-// *	  	Show_Brushes_Dialog:- Terry and Hazel Flanigan 2025			   *
-// *************************************************************************
-void CL64_Properties_Brushes::Show_Brushes_Dialog(bool Show)
-{
-	ShowWindow(BrushesDlg_Hwnd, Show);
-}
-
-// *************************************************************************
 // *		 Set_Dlg_Options_Buttons:- Terry and Hazel Flanigan 2025	   *
 // *************************************************************************
 void CL64_Properties_Brushes::Set_Dlg_Brush_Options_Buttons(bool Enable)
@@ -94,11 +86,11 @@ void CL64_Properties_Brushes::Set_Dlg_Brush_Options_Buttons(bool Enable)
 }
 
 // *************************************************************************
-// *	  	Start_Brush_Tabs_Dialog:- Terry and Hazel Flanigan 2025		   *
+// *	  	Start_Tabs_Brushes_Dlg:- Terry and Hazel Flanigan 2026
 // *************************************************************************
-void CL64_Properties_Brushes::Start_Brush_Tabs_Dialog()
+void CL64_Properties_Brushes::Start_Tabs_Brushes_Dlg()
 {
-	BrushesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_BRUSHES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Brush_Dlg);
+	BrushesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_BRUSHES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Tabs_Brushes_Dlg);
 
 	flag_Brushes_Dlg_Created = 1;
 
@@ -107,9 +99,9 @@ void CL64_Properties_Brushes::Start_Brush_Tabs_Dialog()
 }
 
 // *************************************************************************
-// *			 Proc_Brush_Tabs:- Terry and Hazel Flanigan 2025		   *
+// *		Proc_Tabs_Brushes_Dlg:- Terry and Hazel Flanigan 2026
 // *************************************************************************
-LRESULT CALLBACK CL64_Properties_Brushes::Proc_Brush_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Properties_Brushes::Proc_Tabs_Brushes_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)

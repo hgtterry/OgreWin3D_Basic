@@ -240,6 +240,9 @@
     <ClInclude Include="CL64_ImGui_System_Data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CL64_Properties_Textures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Room Builder.cpp">
@@ -459,6 +462,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CL64_ImGui_System_Data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CL64_Properties_Textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

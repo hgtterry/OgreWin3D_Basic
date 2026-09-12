@@ -20,7 +20,7 @@
 #define IDD_MAP_BOTTOM_RIGHT            133
 #define IDD_MAPEDITOR                   134
 #define IDD_MESSAGE                     135
-#define IDD_SB_TABSDIALOG               136
+#define IDD_PROPS_TABS                  136
 #define IDD_PROPS_TEMPLATES             137
 #define IDD_PROPS_BRUSHES               138
 #define IDD_PROPS_TEXTURES              139
@@ -461,6 +461,7 @@
 #define IDC_BT_FACES_NONE               1331
 #define IDC_BT_TT_FILEVIEW              1331
 #define IDC_BT_SS_NEWSCENE              1331
+#define IDC_BT_PT_TEXTURES              1331
 #define IDC_CHECK1                      1332
 #define IDC_CK_LASTFILE                 1332
 #define IDC_BT_TT_FACES_ALL             1332

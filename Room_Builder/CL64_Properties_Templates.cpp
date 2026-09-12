@@ -47,14 +47,6 @@ CL64_Properties_Templates::~CL64_Properties_Templates()
 }
 
 // *************************************************************************
-// *	  	Show_TemplatesDialog:- Terry and Hazel Flanigan 2025		   *
-// *************************************************************************
-void CL64_Properties_Templates::Show_TemplatesDialog(bool Show)
-{
-	ShowWindow(TemplatesDlg_Hwnd, Show);
-}
-
-// *************************************************************************
 // *			Init_Bmps_Globals:- Terry Mo and Hazel 2025				   *
 // *************************************************************************
 void CL64_Properties_Templates::Init_Bmps_Globals(void)
@@ -125,20 +117,20 @@ void CL64_Properties_Templates::Init_Bmps_Globals(void)
 }
 
 // *************************************************************************
-// *	  	Start_TemplatesDialog:- Terry and Hazel Flanigan 2025		   *
+// *	  	Start_TemplatesDialog:- Terry and Hazel Flanigan 2026
 // *************************************************************************
-void CL64_Properties_Templates::Start_TemplatesDialog()
+void CL64_Properties_Templates::Start_Tabs_Templates_Dlg()
 {
-	TemplatesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEMPLATES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Templates);
+	TemplatesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEMPLATES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Tabs_Templates_Dlg);
 	
 	Set_Icons();
 	Init_Bmps_Globals();
 }
 
 // *************************************************************************
-// *        TemplatesDialog_Proc:- Terry and Hazel Flanigan 2025		   *
+// *        Proc_Tabs_Templates_Dlg:- Terry and Hazel Flanigan 2026
 // *************************************************************************
-LRESULT CALLBACK CL64_Properties_Templates::Proc_Templates(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CL64_Properties_Templates::Proc_Tabs_Templates_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	auto& p_Properties = App->CL_Properties_Templates;
 
@@ -472,6 +464,7 @@ void CL64_Properties_Templates::Insert_Template()
 	App->CL_Doc->SelectAllFacesInBrushes();
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
+	RedrawWindow(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	/*HWND temp = GetDlgItem(App->CL_Properties_Textures->Textures_Dlg_Hwnd, IDC_CK_FACESALL);
 	int test = SendMessage(temp, BM_SETCHECK, true, 0);*/
 

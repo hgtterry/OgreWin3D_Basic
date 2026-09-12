@@ -60,15 +60,17 @@ void CL64_Properties_Tabs::Show_Tabs_Control_Dlg(bool Show)
 // *************************************************************************
 void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 {
-	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSDIALOG, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
+	Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TABS, App->MainHwnd, (DLGPROC)Proc_Tabs_Control);
 
-	flag_Tabs_Dlg_Active = 1;
+	flag_Tabs_Dlg_Active = true;
 	
-	App->CL_Properties_Brushes->Start_Brush_Tabs_Dialog();
-	App->CL_Properties_Brushes->Show_Brushes_Dialog(false);
+	App->CL_Properties_Brushes->Start_Tabs_Brushes_Dlg();
+	App->CL_Interface->Show_Brushes_Dialog(false);
 
-	App->CL_Properties_Templates->Start_TemplatesDialog();
-	App->CL_Properties_Templates->Show_TemplatesDialog(true);
+	App->CL_Properties_Templates->Start_Tabs_Templates_Dlg();
+	App->CL_Interface->Show_TemplatesDialog(true);
+
+	App->CL_Properties_Textures->Start_Tabs_Textures_Dlg();
 
 	App->CL_Panels->Position_Tabs_Dlg();
 	ShowWindow(Tabs_Control_Hwnd, true);
@@ -88,6 +90,7 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 	{
 		SendDlgItemMessage(hDlg, IDC_TBTEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_PT_TEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		//SetWindowLong(hDlg, GWL_EXSTYLE, GetWindowLong(hDlg, GWL_EXSTYLE) | WS_EX_LAYERED);
 		//SetLayeredWindowAttributes(hDlg, RGB(213, 222, 242), 230, LWA_ALPHA);
@@ -136,6 +139,22 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_PT_TEXTURES)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PT_TEXTURES));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Interface->flag_Tab_Texture);
+			}
+
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -148,6 +167,12 @@ LRESULT CALLBACK CL64_Properties_Tabs::Proc_Tabs_Control(HWND hDlg, UINT message
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_PT_TEXTURES)
+		{
+			App->CL_Interface->Select_Tab(Enums::Tab_ID_TEXTURES);
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_TBGROUPS)
 		{
 			App->CL_Interface->Select_Tab(Enums::Tab_ID_GROUPS);
@@ -191,7 +216,7 @@ void CL64_Properties_Tabs::Select_Brushes_Tab()
 		App->CL_Interface->Hide_Tab_Dialogs();
 
 		// Show the brushes dialog
-		App->CL_Properties_Brushes->Show_Brushes_Dialog(true);
+		App->CL_Interface->Show_Brushes_Dialog(true);
 		App->CL_Interface->flag_Tab_Group = true;
 
 		// Redraw
@@ -207,7 +232,7 @@ void CL64_Properties_Tabs::Select_Templates_Tab()
 	if (Tabs_Control_Hwnd && flag_Tabs_Dlg_Active == 1)
 	{
 		App->CL_Interface->Hide_Tab_Dialogs();
-		App->CL_Properties_Templates->Show_TemplatesDialog(true);
+		App->CL_Interface->Show_TemplatesDialog(true);
 		App->CL_Interface->flag_Tab_Templates = true;
 
 		RedrawWindow(Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

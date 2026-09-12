@@ -124,6 +124,7 @@ CL64_App::CL64_App(void)
 	CL_View_3D =				nullptr;
 
 	CL_Faces_Control =			nullptr;
+	CL_Properties_Textures =	nullptr;
 
 	CUR = 0;
 	Menu_Map = 0;
@@ -299,6 +300,7 @@ void CL64_App::InitApp(void)
 	CL_View_3D =				new CL64_View_3D();
 
 	CL_Faces_Control =			new CL64_Faces_Control();
+	CL_Properties_Textures =	new CL64_Properties_Textures();
 
 	Set_Brushes_Fonts();
 

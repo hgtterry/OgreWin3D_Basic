@@ -31,10 +31,9 @@ public:
 
 	void Reset_Class();
 
-	void Show_Brushes_Dialog(bool Show);
 	void Set_Dlg_Brush_Options_Buttons(bool Enable);
 
-	void Start_Brush_Tabs_Dialog();
+	void Start_Tabs_Brushes_Dlg();
 	void Fill_ListBox();
 	void Select_From_List(int index);
 	int Select_in_BrushList_Dlg(const Brush* b);
@@ -53,7 +52,7 @@ public:
 	HWND BrushesDlg_Hwnd;
 
 private:
-	static LRESULT CALLBACK Proc_Brush_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Proc_Tabs_Brushes_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Proc_Dimensions_Dlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void StartDimensionsDialog();

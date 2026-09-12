@@ -128,6 +128,7 @@ THE SOFTWARE.
 
 #include "CL64_Faces_Control.h"
 #include "CL64_ImGui_System_Data.h"
+#include "CL64_Properties_Textures.h"
 
 class CL64_App
 {
@@ -231,6 +232,7 @@ public:
 	CL64_View_3D*				CL_View_3D;
 
 	CL64_Faces_Control*			CL_Faces_Control;
+	CL64_Properties_Textures*	CL_Properties_Textures;
 
 	void InitApp(void);
 	void Init_Dialogs(void);
