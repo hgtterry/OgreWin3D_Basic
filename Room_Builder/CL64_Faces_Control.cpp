@@ -78,8 +78,6 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 		SendDlgItemMessage(hDlg, IDC_ST_FACEAMOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_BT_FACES_NONE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_TT_FACES_ALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_NEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_PREV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -201,36 +199,6 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			break;
 		}
 
-		case IDC_BT_FACES_NONE:
-		{
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FACES_NONE));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_No_Faces);
-			}
-
-			break;
-		}
-
-		case IDC_BT_TT_FACES_ALL:
-		{
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACES_ALL));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_All_Faces);
-			}
-
-			break;
-		}
-
 		case IDC_BT_TT_FACE_NEXT:
 		{
 			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_FACE_NEXT));
@@ -347,12 +315,6 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 				App->Say("No Face Selected");
 			}
 
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_FACES_NONE)
-		{
-			p_Faces->Unselect_All_Face();
 			return TRUE;
 		}
 

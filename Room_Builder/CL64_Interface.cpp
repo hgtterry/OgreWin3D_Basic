@@ -200,8 +200,8 @@ void CL64_Interface::Enable_Face_Buttons(bool option)
 {
 	auto& Face_Dlg = App->CL_Faces_Control;
 
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACES_NONE), option);
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACES_ALL), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACES_NONE2), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_TT_FACES_ALL2), option);
 	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_PREV), option);
 	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_NEXT), option);
 	
@@ -223,8 +223,8 @@ void CL64_Interface::Enable_All_Face_Buttons(bool option)
 	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_ROTATE), option);
 	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_SHEAR), false);
 	
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACES_NONE), option);
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACES_ALL), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACES_NONE2), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_TT_FACES_ALL2), option);
 	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_PREV), option);
 	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_NEXT), option);
 

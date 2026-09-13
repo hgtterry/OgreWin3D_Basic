@@ -47,23 +47,11 @@ public:
 
 	bool flag_FaceDlg_Active;
 
-	// New
-	HBITMAP	Sel_BaseBitmap;
-	long BasePicWidth;
-	long BasePicHeight;
-
-	int Selected_Index;
-
 	bool Dialog_Created;
 	bool Dialog_Textures_Visible;
 
-	char m_CurrentTexture[MAX_PATH];
-
 	HWND Textures_Dlg_Hwnd;
 
-	Face* mSelected_Face;
-
-	Ogre::String mFileString;
 
 private:
 	static LRESULT CALLBACK Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -87,7 +75,6 @@ private:
 	void List_Selection_Changed();
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
-	void Apply_Texture();
 	int GetIndexFromTextureName(char* TextureName);
 
 

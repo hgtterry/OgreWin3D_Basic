@@ -340,8 +340,8 @@
 #define IDC_ST_Y                        1224
 #define IDC_FLIPHORIZONTAL              1225
 #define IDC_FLIPVERTICAL                1226
-#define IDC_CBANGLE                     1227
 #define IDC_RADIO1                      1227
+#define IDC_CBANGLE                     1227
 #define IDC_RADIO2                      1228
 #define IDC_RADIO4                      1229
 #define IDC_RADIO8                      1230
@@ -486,13 +486,13 @@
 #define IDC_SLIDER5                     1342
 #define IDC_SLDR_ROTATION               1342
 #define IDC_ST_WPOS                     1343
-#define IDC_ST_HSCALE                   1344
 #define IDC_ST_DATETIME                 1344
-#define IDC_ST_HPOS                     1345
+#define IDC_ST_HSCALE                   1344
 #define IDC_TT_CB_FACES                 1345
+#define IDC_ST_HPOS                     1345
 #define IDC_ST_HPOS2                    1346
-#define IDC_ST_RANGLE                   1346
 #define IDC_ST_BRUSHNAME                1346
+#define IDC_ST_RANGLE                   1346
 #define IDC_ST_FACEAMOUNT               1347
 #define IDC_BT_TT_SELECT                1348
 #define IDC_BT_TT_MOVE                  1349
@@ -501,7 +501,6 @@
 #define IDC_BT_TT_SHEAR                 1352
 #define IDC_FE_LIST_TEXTURES            1354
 #define IDC_FE_BASETEXTURE2             1355
-#define IDC_BT_FE_APPLY_TEXTURE         1356
 #define IDC_FE_BT_TXL_FILE_EDIT         1357
 #define IDC_BT_TT_OBJ_DATA              1358
 #define IDC_BT_SS_LASTSCENE             1359
@@ -514,6 +513,8 @@
 #define IDC_BT_TT_FACE_PREV2            1365
 #define IDC_BT_FACE_SHOWSELECTEDFACE2   1366
 #define IDC_FE_LIST_TEXTURES2           1367
+#define IDC_BT_PF_CHANGETEXTURE         1368
+#define IDC_LIST1                       1369
 #define ID_DEBUG_GENERAL                32771
 #define ID_TEMPLATES_INSERT             32772
 #define ID_BRUSH_SELECT                 32773
@@ -603,7 +604,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32850
-#define _APS_NEXT_CONTROL_VALUE         1368
+#define _APS_NEXT_CONTROL_VALUE         1370
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

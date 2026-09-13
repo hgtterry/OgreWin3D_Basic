@@ -52,7 +52,6 @@ void Init_Libs::Start_Libraries()
 	CL_CreateArch =			new CreateArchDialog();
 	CL_CreateStaircase =	new CreateStaircaseDialog();
 
-	//CL_Preference =		new Lib_Preference();
 }
 
 // *************************************************************************
@@ -60,7 +59,7 @@ void Init_Libs::Start_Libraries()
 // *************************************************************************
 char* Init_Libs::GetVersion()
 {
-	return (LPSTR)" Init_Libs [ 12-09-26 ] Build T ";
+	return (LPSTR)" Init_Libs [ 13-09-26 ] Build T ";
 }
 
 // *************************************************************************

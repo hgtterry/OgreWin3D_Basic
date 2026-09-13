@@ -37,8 +37,18 @@ public:
 
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
+	void Apply_Texture();
+	int GetIndexFromTextureName(char* TextureName);
+
+	void Reset_Face_Buttons();
+	void Unselect_All_Face();
+	void Select_All_Face();
+	
 
 	bool flag_Textures_Dlg_Created;
+
+	bool flag_No_Faces;
+	bool flag_All_Faces;
 
 	int Selected_Index;
 	char m_CurrentTexture[MAX_PATH];

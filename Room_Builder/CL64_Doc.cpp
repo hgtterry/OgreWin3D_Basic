@@ -408,7 +408,7 @@ void CL64_Doc::SetDefaultBrushTexInfo(Brush* b)
     const char* TexName;
     BrushTexSetData CallbackData;
 
-    TexName = App->CL_X_Face_Editor->m_CurrentTexture;
+    TexName = App->CL_Properties_Textures->m_CurrentTexture;
     CallbackData.pDoc = this;
     CallbackData.TexName = TexName;
 

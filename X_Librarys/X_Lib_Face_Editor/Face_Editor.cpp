@@ -69,19 +69,9 @@ Face_Editor::Face_Editor(void)
 
 	// New
 	Textures_Dlg_Hwnd = nullptr;
-	strcpy(m_CurrentTexture, "stfloor1");
-
+	
 	Dialog_Created = 0;
 	Dialog_Textures_Visible = 0;
-
-	mFileString.clear();
-	Selected_Index = 0;
-	Sel_BaseBitmap = NULL;
-	BasePicWidth = NULL;
-	BasePicHeight = NULL;
-
-	mSelected_Face = NULL;
-
 }
 
 Face_Editor::~Face_Editor(void)
@@ -234,7 +224,6 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 		SendDlgItemMessage(hDlg, IDC_FE_LIST_TEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_BT_FE_APPLY_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_FE_BT_TXL_FILE_EDIT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		
@@ -510,13 +499,6 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		}
 
 		if (some_item->idFrom == IDC_FLIPVERTICAL)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_FE_APPLY_TEXTURE)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -957,38 +939,9 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_FE_APPLY_TEXTURE)
-		{
-			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-
-			if (NumSelBrushes == 0)
-			{
-				App->Say("No Brushes Selected");
-			}
-			else
-			{
-				m_FaceEditor->Apply_Texture();
-
-				App->CL_Doc->ResetAllSelectedFaces();
-
-				if (App->CL_Faces_Control->flag_All_Faces == true)
-				{
-					App->CL_Doc->SelectAllFacesInBrushes();
-				}
-				else
-				{
-					App->CL_Faces_Control->Select_Face();
-				}
-
-				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
-
-			}
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_FE_BT_TXL_FILE_EDIT)
 		{
-			App->CL_TXL_Editor->Selected_Texure_Index = m_FaceEditor->Selected_Index;
+			App->CL_TXL_Editor->Selected_Texure_Index = App->CL_Properties_Textures->Selected_Index;
 			App->CL_TXL_Editor->Start_Texl_Dialog();
 
 			//App->CL_Level->Level_SetWadPath(App->CLSB_Doc->pLevel, Level_GetWadPath(App->CLSB_Doc->pLevel));
@@ -1336,15 +1289,15 @@ void Face_Editor::Fill_Textures_ListBox()
 // *************************************************************************
 void Face_Editor::Get_Selected_Face_Texture()
 {
-	mSelected_Face = NULL;
+	App->CL_Properties_Textures->mSelected_Face = NULL;
 
 	int NumberOfFaces = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
 
 	if (NumberOfFaces > 0)
 	{
-		mSelected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
+		App->CL_Properties_Textures->mSelected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
 
-		Select_With_TextureName(App->CL_X_Face->Face_GetTextureName(mSelected_Face));
+		Select_With_TextureName(App->CL_X_Face->Face_GetTextureName(App->CL_Properties_Textures->mSelected_Face));
 	}
 }
 
@@ -1355,7 +1308,7 @@ void Face_Editor::Select_With_TextureName(const char* TextureName)
 {
 	SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextureName);
 
-	strcpy(m_CurrentTexture, TextureName);
+	strcpy(App->CL_Properties_Textures->m_CurrentTexture, TextureName);
 	List_Selection_Changed();
 }
 
@@ -1375,7 +1328,7 @@ void Face_Editor::List_Selection_Changed()
 		TextureName[0] = 0;
 
 		SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_GETTEXT, (WPARAM)Index, (LPARAM)TextureName);
-		strcpy(m_CurrentTexture, TextureName);
+		strcpy(App->CL_Properties_Textures->m_CurrentTexture, TextureName);
 
 		SelectBitmap();
 	}
@@ -1384,151 +1337,7 @@ void Face_Editor::List_Selection_Changed()
 	sprintf(buf, "Index = %i        %i X %i", Index, BasePicWidth, BasePicHeight);
 	SetDlgItemText(Textures_Dlg_Hwnd, IDC_STWIDTHHEIGHT, (LPCTSTR)buf);*/
 
-	Selected_Index = Index;
-}
-
-
-
-static void TextureBrushList(BrushList* pList, int SelId, char const* Name, WadFileEntry* pbmp);
-
-// *************************************************************************
-// *					( Static ) TextureFace							   *
-// *************************************************************************
-static void TextureFace(Face* pFace, int SelId, char const* Name, WadFileEntry* pbmp)
-{
-	App->CL_X_Face->Face_SetTextureDibId(pFace, SelId);
-	App->CL_X_Face->Face_SetTextureName(pFace, Name);
-	App->CL_X_Face->Face_SetTextureSize(pFace, pbmp->Width, pbmp->Height);
-}
-
-// *************************************************************************
-// *					( Static ) TextureBrush							   *
-// *************************************************************************
-static void TextureBrush(Brush* pBrush, int SelId, char const* Name, WadFileEntry* pbmp) // changed QD 12/03)
-{
-	int j;
-
-	if (App->CL_X_Brush->Brush_IsMulti(pBrush))
-	{
-		TextureBrushList((BrushList*)App->CL_X_Brush->Brush_GetBrushList(pBrush), SelId, Name, pbmp);
-	}
-	else
-	{
-		for (j = 0; j < App->CL_X_Brush->Brush_GetNumFaces(pBrush); ++j)
-		{
-			Face* pFace;
-
-			pFace = App->CL_X_Brush->Brush_GetFace(pBrush, j);
-			TextureFace(pFace, SelId, Name, pbmp);
-		}
-	}
-}
-
-// *************************************************************************
-// *					( Static ) TextureBrushList						   *
-// *************************************************************************
-static void TextureBrushList(BrushList* pList, int SelId, char const* Name, WadFileEntry* pbmp)
-{
-	Brush* b;
-	BrushIterator bi;
-
-	for (b = App->CL_X_Brush->BrushList_GetFirst(pList, &bi); b; b = App->CL_X_Brush->BrushList_GetNext(&bi))
-	{
-		TextureBrush(b, SelId, Name, pbmp); // changed QD 12/03
-	}
-}
-
-// *************************************************************************
-// *			Apply_Texture:- Terry and Hazel Flanigan 2026
-// *************************************************************************
-void Face_Editor::Apply_Texture()
-{
-	int SelectedItem;
-	int		i;
-
-	char TextureName[MAX_PATH]{ 0 };
-
-	SelectedItem = SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-
-	SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_GETTEXT, (WPARAM)SelectedItem, (LPARAM)TextureName);
-
-	SelectedItem = GetIndexFromTextureName(TextureName);
-	if (SelectedItem == -1)
-	{
-		App->Say("Cant Find Texture");
-		return;
-	}
-
-	SelectedItem = SelectedItem;
-
-	if (App->CL_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-	{
-		return;
-	}
-
-	App->CL_Level->flag_Level_is_Modified = true;
-
-	App->CL_Doc->mAdjustMode = ADJUST_MODE_FACE;
-
-	switch (App->CL_Doc->mAdjustMode)
-	{
-	case ADJUST_MODE_FACE:
-	{
-		int Size;
-
-		Size = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
-		for (i = 0; i < Size; ++i)
-		{
-			Face* pFace;
-			pFace = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, i);
-
-			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
-			TextureFace(pFace, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
-
-		}
-
-		int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-		for (i = 0; i < NumSelBrushes; ++i)
-		{
-			Brush* pBrush;
-
-			pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-			App->CL_X_Brush->Brush_UpdateChildFaces(pBrush);
-		}
-		break;
-	}
-
-	case ADJUST_MODE_BRUSH:
-	{
-		if (App->CL_Doc->GetSelState() & MULTIBRUSH)
-		{
-			int NumSelBrushes = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-			for (i = 0; i < NumSelBrushes; ++i)
-			{
-				Brush* pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, i);
-
-				WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
-				TextureBrush(pBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
-
-				App->CL_X_Brush->Brush_UpdateChildFaces(pBrush);
-			}
-		}
-		else
-		{
-
-			WadFileEntry* BitmapPtr = App->CL_Doc->GetDibBitmap(m_CurrentTexture);
-			TextureBrush(App->CL_Doc->CurBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
-
-			App->CL_X_Brush->Brush_UpdateChildFaces(App->CL_Doc->CurBrush);
-		}
-		break;
-	}
-
-	default:
-		return;
-	}
-
-	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_All);
+	App->CL_Properties_Textures->Selected_Index = Index;
 }
 
 // *************************************************************************
@@ -1577,7 +1386,7 @@ void Face_Editor::Select_With_List_Index(int Index)
 bool Face_Editor::SelectBitmap()
 {
 	char mTextureName[MAX_PATH];
-	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(m_CurrentTexture);
+	int TrueIndex = App->CL_TXL_Editor->GetIndex_From_Name(App->CL_Properties_Textures->m_CurrentTexture);
 	strcpy(mTextureName, App->CL_TXL_Editor->Texture_List[TrueIndex]->FileName);
 	//App->Say(mTextureName);
 
@@ -1591,7 +1400,7 @@ bool Face_Editor::SelectBitmap()
 		{
 			Ogre::DataStreamPtr ff = i->archive->open(i->filename);
 
-			mFileString = ff->getAsString();
+			App->CL_Properties_Textures->mFileString = ff->getAsString();
 
 			char mFileName[MAX_PATH];
 			strcpy(mFileName, App->RB_Directory_FullPath);
@@ -1600,10 +1409,10 @@ bool Face_Editor::SelectBitmap()
 
 			std::ofstream outFile;
 			outFile.open(mFileName, std::ios::binary);
-			outFile << mFileString;
+			outFile << App->CL_Properties_Textures->mFileString;
 			outFile.close();
 
-			mFileString.clear();
+			App->CL_Properties_Textures->mFileString.clear();
 
 			Texture_To_HBITMP(mFileName);
 			remove(mFileName);
@@ -1622,10 +1431,10 @@ void Face_Editor::Texture_To_HBITMP(char* TextureFileName)
 	HWND PreviewWnd = GetDlgItem(FaceDlg_Hwnd, IDC_FE_BASETEXTURE2);
 	HDC	hDC = GetDC(PreviewWnd);
 
-	Sel_BaseBitmap = App->CL_Textures->Get_HBITMP(TextureFileName, hDC);
+	App->CL_Properties_Textures->Sel_BaseBitmap = App->CL_Textures->Get_HBITMP(TextureFileName, hDC);
 
-	BasePicWidth = App->CL_Textures->BasePicWidth;
-	BasePicHeight = App->CL_Textures->BasePicHeight;
+	App->CL_Properties_Textures->BasePicWidth = App->CL_Textures->BasePicWidth;
+	App->CL_Properties_Textures->BasePicHeight = App->CL_Textures->BasePicHeight;
 
 	ReleaseDC(PreviewWnd, hDC);
 
@@ -1652,9 +1461,9 @@ bool CALLBACK Face_Editor::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPA
 		FillRect(hDC, &clientRect, (HBRUSH)(RGB(0, 255, 0)));
 
 		// Check if a base bitmap is selected
-		if (App->CL_X_Face_Editor->Sel_BaseBitmap != nullptr)
+		if (App->CL_Properties_Textures->Sel_BaseBitmap != nullptr)
 		{
-			RECT sourceRect = { 0, 0, App->CL_X_Face_Editor->BasePicWidth, App->CL_X_Face_Editor->BasePicHeight };
+			RECT sourceRect = { 0, 0, App->CL_Properties_Textures->BasePicWidth, App->CL_Properties_Textures->BasePicHeight };
 			RECT destRect = clientRect;
 
 			// Get the device context and set the stretch mode
@@ -1662,7 +1471,7 @@ bool CALLBACK Face_Editor::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPA
 			SetStretchBltMode(renderDC, HALFTONE);
 
 			// Render the texture
-			App->CL_X_Face_Editor->RenderTexture_Blit(renderDC, App->CL_X_Face_Editor->Sel_BaseBitmap, &sourceRect, &destRect);
+			App->CL_X_Face_Editor->RenderTexture_Blit(renderDC, App->CL_Properties_Textures->Sel_BaseBitmap, &sourceRect, &destRect);
 			ReleaseDC(hwnd, renderDC);
 		}
 
