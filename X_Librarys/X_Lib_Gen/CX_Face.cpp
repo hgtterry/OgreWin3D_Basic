@@ -1071,7 +1071,7 @@ void CX_Face::Select_Face_From_Index(int mFace_Index)
 	{
 		Face* pFace;
 
-		if (App->CL_Faces_Control->Selected_Face_Index == 0)
+		if (App->CL_Properties_Textures->Selected_Face_Index == 0)
 		{
 			pFace = App->CL_X_Brush->Brush_SelectFirstFace(App->CL_Doc->CurBrush);
 

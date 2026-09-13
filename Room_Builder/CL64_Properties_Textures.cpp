@@ -31,15 +31,20 @@ CL64_Properties_Textures::CL64_Properties_Textures(void)
 {
 	TexturesDlg_Hwnd = nullptr;
 	flag_Textures_Dlg_Created = false;
+
 	flag_No_Faces = false;
 	flag_All_Faces = false;
+	flag_Next_Face = false;
+	flag_Prev_Face = false;
 
 	Sel_BaseBitmap = NULL;
 	BasePicWidth = NULL;
 	BasePicHeight = NULL;
 
+	Selected_Face_Index = 0;
 	Selected_Index = 0;
-	m_CurrentTexture[0] = 0;
+
+	strcpy(m_CurrentTexture, "stfloor1"); // TODO Why
 	mSelected_Face = NULL;
 
 
@@ -79,7 +84,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FACE_PREV2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_FACE_SHOWSELECTEDFACE2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_FACE_FACEEDITOR2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_FE_LIST_TEXTURES2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_PF_CHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -145,7 +150,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Next_Face);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Textures->flag_Next_Face);
 			}
 
 			break;
@@ -160,7 +165,7 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 			}
 			else
 			{
-				App->Custom_Button_Toggle_Tabs(item, p_Faces->flag_Prev_Face);
+				App->Custom_Button_Toggle_Tabs(item, App->CL_Properties_Textures->flag_Prev_Face);
 			}
 
 			break;
@@ -201,7 +206,20 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 
 			break;
 		}
+		case IDC_BT_FACE_FACEEDITOR2:
+		{
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_FACE_FACEEDITOR2));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
 
+			break;
+		}
 		default:
 			return CDRF_DODEFAULT;
 		}
@@ -212,6 +230,21 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_FACE_FACEEDITOR2)
+		{
+			int SF = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
+			if (SF > 0)
+			{
+				App->CL_X_Face_Editor->Start_FaceDialog();
+			}
+			else
+			{
+				App->Say("No Face Selected");
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_FE_LIST_TEXTURES2)
 		{
 			if (App->CL_Interface->flag_Tab_Texture == true)
@@ -236,13 +269,13 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 
 				App->CL_Doc->ResetAllSelectedFaces();
 
-				if (App->CL_Faces_Control->flag_All_Faces == true)
+				if (App->CL_Properties_Textures->flag_All_Faces == true)
 				{
 					App->CL_Doc->SelectAllFacesInBrushes();
 				}
 				else
 				{
-					App->CL_Faces_Control->Select_Face();
+					App->CL_Properties_Textures->Select_Face();
 				}
 
 				App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
@@ -266,13 +299,13 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 
 		if (LOWORD(wParam) == IDC_BT_TT_FACE_NEXT2)
 		{
-			p_Faces->Select_Next_Face();
+			App->CL_Properties_Textures->Select_Next_Face();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_TT_FACE_PREV2)
 		{
-			p_Faces->Select_Prev_Face();
+			App->CL_Properties_Textures->Select_Prev_Face();
 			return TRUE;
 		}
 
@@ -306,8 +339,8 @@ void CL64_Properties_Textures::Reset_Face_Buttons()
 	// Reset all face-related flags to their default state
 	flag_No_Faces = false;
 	flag_All_Faces = false;
-	//flag_Next_Face = false;
-	//flag_Prev_Face = false;
+	flag_Next_Face = false;
+	flag_Prev_Face = false;
 
 	// Redraw the window to reflect the changes in the flags
 	RedrawWindow(TexturesDlg_Hwnd, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -330,8 +363,8 @@ void CL64_Properties_Textures::Unselect_All_Face()
 	Reset_Face_Buttons();
 	flag_No_Faces = true;
 
-	//EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_BT_FACE_FACEEDITOR), false);
-	//EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_BT_FACE_SHOWSELECTEDFACE), false);
+	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_FACEEDITOR2), false);
+	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_SHOWSELECTEDFACE2), false);
 	//EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), false);
 
 	RedrawWindow(TexturesDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -352,10 +385,98 @@ void CL64_Properties_Textures::Select_All_Face()
 
 	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = true;
 
-	//EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_BT_FACE_FACEEDITOR), true);
-	//EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_BT_FACE_SHOWSELECTEDFACE), true);
+	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_FACEEDITOR2), true);
+	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_SHOWSELECTEDFACE2), true);
 
 	RedrawWindow(TexturesDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *			Select_Next_Face:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Textures::Select_Next_Face()
+{
+	Reset_Face_Buttons();
+	flag_Next_Face = true;
+
+	Selected_Face_Index++;
+
+	if (Selected_Face_Index == App->CL_Brush_X->Face_Count)
+	{
+		Selected_Face_Index = 0;
+	}
+
+	Select_Face();
+
+	if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
+	{
+		App->CL_X_Face_Editor->Change_Selection();
+	}
+
+	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = true;
+
+	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_FACEEDITOR2), true);
+	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_SHOWSELECTEDFACE2), true);
+	//EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), true);
+
+	RedrawWindow(TexturesDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *			Select_Prev_Face:- Terry and Hazel Flanigan 2026		   *
+// *************************************************************************
+void CL64_Properties_Textures::Select_Prev_Face()
+{
+	Reset_Face_Buttons();
+	flag_Prev_Face = true;
+
+	Selected_Face_Index--;
+
+	if (Selected_Face_Index < 0)
+	{
+		Selected_Face_Index = App->CL_Brush_X->Face_Count - 1;
+	}
+
+	Select_Face();
+
+	if (App->CL_X_Face_Editor->flag_FaceDlg_Active == true)
+	{
+		App->CL_X_Face_Editor->Change_Selection();
+	}
+
+	App->CL_Ogre->OGL_Listener->flag_Show_Selected_Face = true;
+
+	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_FACEEDITOR2), true);
+	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_SHOWSELECTEDFACE2), true);
+	//EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), true);
+
+	RedrawWindow(TexturesDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *			Select_Face:- Terry and Hazel Flanigan 2026
+// *************************************************************************
+void CL64_Properties_Textures::Select_Face()
+{
+	// Redraw the top tabs dialog
+	App->CL_Top_Tabs->Redraw_TopTabs_Dlg();
+
+	// Check if there are no selected faces
+	if (App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces) == 0)
+	{
+		// Select all faces in brushes if none are selected
+		App->CL_Doc->SelectAllFacesInBrushes();
+	}
+
+	// Select the face from the index regardless of the selection state
+	App->CL_X_Face->Select_Face_From_Index(Selected_Face_Index);
+
+	// Update all views to reflect changes
+	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
+
+	// Set the current selection in the combo box
+	HWND Temp = GetDlgItem(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES);
+	SendMessage(Temp, CB_SETCURSEL, Selected_Face_Index, 0);
 }
 
 static void TextureBrushList(BrushList* pList, int SelId, char const* Name, WadFileEntry* pbmp);
@@ -552,7 +673,7 @@ void CL64_Properties_Textures::Fill_Textures_ListBox()
 			LBIndex = SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
 		}
 
-		SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2 ,LB_SETCURSEL, 0, 0);
+		//SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2 ,LB_SETCURSEL, 0, 0);
 		
 		Get_Selected_Face_Texture();
 	}

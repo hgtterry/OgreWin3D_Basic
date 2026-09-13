@@ -223,7 +223,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 				App->CL_Level->Level_Create_TXL_Class();
 				App->CL_Doc->UpdateAfterWadChange();
 				
-				App->CL_X_Face_Editor->Fill_Textures_ListBox();
+				App->CL_Properties_Textures->Fill_Textures_ListBox();
 				
 				App->CL_TXL_Editor->Selected_Texure_Index--;
 				App->CL_TXL_Editor->UpDateList();
@@ -241,7 +241,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 			{
 				App->CL_Resources->Load_Texture_Resources();
 				App->CL_TXL_Editor->Scan_Textures_Resource_Group();
-				App->CL_X_Face_Editor->Fill_Textures_ListBox();
+				App->CL_Properties_Textures->Fill_Textures_ListBox();
 
 				App->CL_TXL_Editor->UpDateList();
 
@@ -301,7 +301,7 @@ LRESULT CALLBACK CL64_TXL_Editor::Proc_Texl_Dialog(HWND hDlg, UINT message, WPAR
 			}
 
 			App->CL_TXL_Editor->Scan_Textures_Resource_Group();
-			App->CL_X_Face_Editor->Fill_Textures_ListBox();
+			App->CL_Properties_Textures->Fill_Textures_ListBox();
 			App->CL_TXL_Editor->UpDateList();
 			App->CL_TXL_Editor->Texture_Count = newCount;
 

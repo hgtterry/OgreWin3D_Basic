@@ -399,7 +399,7 @@ LRESULT CALLBACK CL64_View_3D::Proc_Ogre_BR(HWND hDlg, UINT message, WPARAM wPar
 
 					if (index > -1)
 					{
-						App->CL_X_Face_Editor->Select_With_TextureName(App->CL_TXL_Editor->Texture_List[index]->Name);
+						App->CL_Properties_Textures->Select_With_TextureName(App->CL_TXL_Editor->Texture_List[index]->Name);
 					}
 				}
 				else

@@ -35,6 +35,7 @@ public:
 	void Select_With_TextureName(const char* TextureName);
 	void List_Selection_Changed();
 
+	void Select_Face();
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
 	void Apply_Texture();
@@ -43,12 +44,18 @@ public:
 	void Reset_Face_Buttons();
 	void Unselect_All_Face();
 	void Select_All_Face();
-	
+	void Select_Next_Face();
+	void Select_Prev_Face();
+
 
 	bool flag_Textures_Dlg_Created;
 
 	bool flag_No_Faces;
 	bool flag_All_Faces;
+	bool flag_Next_Face;
+	bool flag_Prev_Face;
+
+	int Selected_Face_Index;
 
 	int Selected_Index;
 	char m_CurrentTexture[MAX_PATH];

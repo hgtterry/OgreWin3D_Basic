@@ -169,7 +169,7 @@ static signed int Get_Brush_Face_Count(Brush* pBrush, void* lParam)
 int CL64_Brush_X::Get_Brush_All_Faces_Count(void)
 {
 	Face_Count = 0;
-	App->CL_Faces_Control->Selected_Face_Index = 0;
+	App->CL_Properties_Textures->Selected_Face_Index = 0;
 
 	Brush* pBrush;
 

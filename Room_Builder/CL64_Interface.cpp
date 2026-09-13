@@ -177,14 +177,14 @@ void CL64_Interface::Unselect_Brush_And_Set_Dlgs(void)
 
 	App->CL_Properties_Brushes->Update_SelectedBrushesCount_Dlg();
 	
-	App->CL_Faces_Control->Reset_Face_Buttons();
+	App->CL_Properties_Textures->Reset_Face_Buttons();
 
 	App->CL_Faces_Control->Reset_Brush_Buttons();
 	App->CL_Faces_Control->flag_Brush_Select = 1;
 
 	App->CL_Properties_Brushes->Set_Dlg_Brush_Options_Buttons(false);
 
-	App->CL_Faces_Control->Reset_Face_Buttons();
+	App->CL_Properties_Textures->Reset_Face_Buttons();
 
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 
@@ -202,11 +202,11 @@ void CL64_Interface::Enable_Face_Buttons(bool option)
 
 	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACES_NONE2), option);
 	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_TT_FACES_ALL2), option);
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_PREV), option);
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_NEXT), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_TT_FACE_PREV2), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_TT_FACE_NEXT2), option);
 	
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACE_FACEEDITOR), option);
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACE_SHOWSELECTEDFACE), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACE_FACEEDITOR2), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACE_SHOWSELECTEDFACE2), option);
 	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), option);
 
 }
@@ -225,11 +225,11 @@ void CL64_Interface::Enable_All_Face_Buttons(bool option)
 	
 	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACES_NONE2), option);
 	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_TT_FACES_ALL2), option);
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_PREV), option);
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_TT_FACE_NEXT), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_TT_FACE_PREV2), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_TT_FACE_NEXT2), option);
 
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACE_FACEEDITOR), option);
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_BT_FACE_SHOWSELECTEDFACE), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACE_FACEEDITOR2), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACE_SHOWSELECTEDFACE2), option);
 	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), option);
 
 }

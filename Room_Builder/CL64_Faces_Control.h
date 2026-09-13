@@ -33,27 +33,12 @@ public:
 
 	void Update_Faces_Dialog();
 
-	void Unselect_All_Face();
-	void Select_All_Face();
-	void Select_Next_Face();
-	void Select_Prev_Face();
-	void Select_Face();
-
 	void Reset_Brush_Buttons();
-
-	void Reset_Face_Buttons();
-
-	int Selected_Face_Index;
 
 	bool flag_Brush_Select;
 	bool flag_Brush_Move;
 	bool flag_Brush_Rotate;
 	bool flag_Brush_Scale;
-
-	bool flag_No_Faces;
-	bool flag_All_Faces;
-	bool flag_Next_Face;
-	bool flag_Prev_Face;
 
 	HWND Faces_Control_Dlg_hWnd;
 

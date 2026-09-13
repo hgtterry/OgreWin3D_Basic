@@ -35,9 +35,6 @@ public:
 	void List_Face_Data(HWND List);
 	bool Is_Faces_Dialog_Active();
 
-	void Fill_Textures_ListBox();
-	void Select_With_TextureName(const char* TextureName);
-
 	void Select_With_List_Index(int Index);
 
 
@@ -69,13 +66,9 @@ private:
 	void Fill_ComboBox_ScaleValues(HWND hDlg);
 	void Fill_ComboBox_OffSetValues(HWND hDlg);
 
-	// New
-	void Get_Selected_Face_Texture();
-	
 	void List_Selection_Changed();
 	bool SelectBitmap();
 	void Texture_To_HBITMP(char* TextureFileName);
-	void Apply_Texture();
 	int GetIndexFromTextureName(char* TextureName);
 
 

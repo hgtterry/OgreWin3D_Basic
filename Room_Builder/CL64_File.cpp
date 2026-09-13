@@ -597,7 +597,7 @@ void CL64_File::Set_Editor()
 	App->Set_Title(App->CL_Level->MTF_PathAndFile);
 
 	// Reset the selected face index and all selections in the document
-	App->CL_Faces_Control->Selected_Face_Index = 0;
+	App->CL_Properties_Textures->Selected_Face_Index = 0;
 	App->CL_Doc->ResetAllSelections();
 
 	// Disable brush options buttons and select the templates tab

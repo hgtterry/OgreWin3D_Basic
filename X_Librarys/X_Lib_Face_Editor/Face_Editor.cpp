@@ -178,7 +178,7 @@ void Face_Editor::Start_FaceDialog()
 		
 		flag_FaceDlg_Active = true;
 
-		Fill_Textures_ListBox();	
+		App->CL_Properties_Textures->Fill_Textures_ListBox();	
 	}
 }
 
@@ -237,7 +237,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		sprintf(buf, "%i", m_FaceEditor->m_NumberOfFaces);
 		SetDlgItemText(hDlg, IDC_ST_NUM_FACES, (LPCTSTR)buf);
 
-		if (App->CL_Faces_Control->flag_All_Faces == 0)
+		if (App->CL_Properties_Textures->flag_All_Faces == false)
 		{
 			m_FaceEditor->Update_Face_List(hDlg);
 		}
@@ -259,7 +259,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 
 		m_FaceEditor->Fill_ComboBox_AngleValues(hDlg);
 
-		if (App->CL_Faces_Control->flag_All_Faces == 0)
+		if (App->CL_Properties_Textures->flag_All_Faces == false)
 		{
 			m_FaceEditor->Update_Face_Info(hDlg);
 		}
@@ -827,7 +827,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		{
 			float xScale, yScale;
 
-			if (App->CL_Faces_Control->flag_All_Faces == true)
+			if (App->CL_Properties_Textures->flag_All_Faces == true)
 			{
 				App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipHorizontal, NULL);
 			}
@@ -847,7 +847,7 @@ LRESULT CALLBACK Face_Editor::Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wP
 		{
 			float xScale, yScale;
 
-			if (App->CL_Faces_Control->flag_All_Faces == true)
+			if (App->CL_Properties_Textures->flag_All_Faces == true)
 			{
 				App->CL_X_SelFaceList->SelFaceList_Enum(App->CL_Doc->pSelFaces, FlipVertical, NULL);
 			}
@@ -992,7 +992,7 @@ void Face_Editor::List_Face_Data(HWND List) // TODO: proper name
 
 	pBrush = App->CL_X_SelBrushList->SelBrushList_GetBrush(App->CL_Doc->pSelBrushes, 0);
 
-	sprintf(buff, "%s %s     %s %i", "Brush Name: ", App->CL_X_Brush->Brush_GetName(pBrush), "Selected Face: ", App->CL_Faces_Control->Selected_Face_Index + 1);
+	sprintf(buff, "%s %s     %s %i", "Brush Name: ", App->CL_X_Brush->Brush_GetName(pBrush), "Selected Face: ", App->CL_Properties_Textures->Selected_Face_Index + 1);
 	SendMessage(List, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	sprintf(buff, "%s %d", "NumPoints", m_Selected_Face->NumPoints);
@@ -1060,7 +1060,7 @@ void Face_Editor::List_Face_Data(HWND List) // TODO: proper name
 // *************************************************************************
 void Face_Editor::Update_Faces()
 {
-	if (App->CL_Faces_Control->flag_All_Faces == true)
+	if (App->CL_Properties_Textures->flag_All_Faces == true)
 	{
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
 		App->CL_Doc->SelectAllFacesInBrushes();
@@ -1070,12 +1070,12 @@ void Face_Editor::Update_Faces()
 		App->CL_Doc->UpdateAllViews(Enums::UpdateViews_3D);
 		App->CL_X_SelFaceList->SelFaceList_RemoveAll(App->CL_Doc->pSelFaces);
 		App->CL_Doc->SelectAllFacesInBrushes();
-		App->CL_X_Face->Select_Face_From_Index(App->CL_Faces_Control->Selected_Face_Index);
+		App->CL_X_Face->Select_Face_From_Index(App->CL_Properties_Textures->Selected_Face_Index);
 	}
 
 	App->CL_Ogre->RenderFrame(1);
 
-	App->CL_X_Face_Editor->m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_Faces_Control->Selected_Face_Index);
+	App->CL_X_Face_Editor->m_Selected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, App->CL_Properties_Textures->Selected_Face_Index);
 }
 
 // *************************************************************************
@@ -1259,58 +1259,6 @@ bool Face_Editor::Is_Faces_Dialog_Active()
 	return flag_FaceDlg_Active;
 }
 
-
-// *************************************************************************
-// *			Fill_Textures_ListBox:- Terry and Hazel Flanigan 2026
-// *************************************************************************
-void Face_Editor::Fill_Textures_ListBox()
-{
-	int LBIndex;
-
-	if (flag_FaceDlg_Active == true)
-	{
-		SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-
-		for (int index = 0; index < App->CL_TXL_Editor->Texture_Count; index++)
-		{
-			char mName[MAX_PATH];
-
-			strcpy(mName, App->CL_TXL_Editor->Texture_List[index]->Name);
-
-			LBIndex = SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
-		}
-
-		Get_Selected_Face_Texture();
-	}
-}
-
-// *************************************************************************
-// *	  	Get_Selected_Face_Texture:- Terry and Hazel Flanigan 2026
-// *************************************************************************
-void Face_Editor::Get_Selected_Face_Texture()
-{
-	App->CL_Properties_Textures->mSelected_Face = NULL;
-
-	int NumberOfFaces = App->CL_X_SelFaceList->SelFaceList_GetSize(App->CL_Doc->pSelFaces);
-
-	if (NumberOfFaces > 0)
-	{
-		App->CL_Properties_Textures->mSelected_Face = App->CL_X_SelFaceList->SelFaceList_GetFace(App->CL_Doc->pSelFaces, (NumberOfFaces - 1));
-
-		Select_With_TextureName(App->CL_X_Face->Face_GetTextureName(App->CL_Properties_Textures->mSelected_Face));
-	}
-}
-
-// *************************************************************************
-// *	  	Select_With_TextureName:- Terry and Hazel Flanigan 2026
-// *************************************************************************
-void Face_Editor::Select_With_TextureName(const char* TextureName)
-{
-	SendDlgItemMessage(FaceDlg_Hwnd, IDC_FE_LIST_TEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextureName);
-
-	strcpy(App->CL_Properties_Textures->m_CurrentTexture, TextureName);
-	List_Selection_Changed();
-}
 
 // *************************************************************************
 // *	  	List_Selection_Changed:- Terry and Hazel Flanigan 2026
