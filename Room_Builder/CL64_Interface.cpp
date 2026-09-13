@@ -188,7 +188,7 @@ void CL64_Interface::Unselect_Brush_And_Set_Dlgs(void)
 
 	App->CL_Ogre->OGL_Listener->Show_Visuals(false);
 
-	App->CL_Faces_Control->Update_Faces_Dialog();
+	App->CL_Properties_Textures->Update_Faces_Dialog();
 
 	//EnableMenuItem(App->Menu_Map, ID_EDIT_DELETE, MF_DISABLED | MF_GRAYED);
 }
@@ -207,7 +207,7 @@ void CL64_Interface::Enable_Face_Buttons(bool option)
 	
 	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACE_FACEEDITOR2), option);
 	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACE_SHOWSELECTEDFACE2), option);
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_TT_CB_FACES2), option);
 
 }
 
@@ -230,7 +230,7 @@ void CL64_Interface::Enable_All_Face_Buttons(bool option)
 
 	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACE_FACEEDITOR2), option);
 	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_BT_FACE_SHOWSELECTEDFACE2), option);
-	EnableWindow(GetDlgItem(Face_Dlg->Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), option);
+	EnableWindow(GetDlgItem(App->CL_Properties_Textures->TexturesDlg_Hwnd, IDC_TT_CB_FACES2), option);
 
 }
 

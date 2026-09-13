@@ -30,9 +30,6 @@ public:
 	~CL64_Faces_Control(void);
 
 	void Start_Faces_Control_Dlg();
-
-	void Update_Faces_Dialog();
-
 	void Reset_Brush_Buttons();
 
 	bool flag_Brush_Select;

@@ -87,7 +87,8 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 		SendDlgItemMessage(hDlg, IDC_BT_FACE_FACEEDITOR2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_FE_LIST_TEXTURES2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_PF_CHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_TT_CB_FACES2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SetWindowLongPtr(GetDlgItem(hDlg, IDC_FE_BASETEXTURE2), GWLP_WNDPROC, (LONG_PTR)ViewerBasePic);
 
 		return TRUE;
@@ -323,6 +324,36 @@ LRESULT CALLBACK CL64_Properties_Textures::Proc_Tabs_Textures_Dlg(HWND hDlg, UIN
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_TT_CB_FACES2)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				HWND temp = GetDlgItem(hDlg, IDC_TT_CB_FACES2);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+
+				if (Index == -1)
+				{
+				}
+				else
+				{
+					App->CL_Properties_Textures->Selected_Face_Index = Index;
+					App->CL_Properties_Textures->Select_Face();
+
+					if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
+					{
+						App->CL_X_Face_Editor->Change_Selection();
+					}
+				}
+			}
+			}
+
+			return true;
+		}
+
 	}
 
 	break;
@@ -365,7 +396,7 @@ void CL64_Properties_Textures::Unselect_All_Face()
 
 	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_FACEEDITOR2), false);
 	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_SHOWSELECTEDFACE2), false);
-	//EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), false);
+	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_TT_CB_FACES2), false);
 
 	RedrawWindow(TexturesDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -417,7 +448,7 @@ void CL64_Properties_Textures::Select_Next_Face()
 
 	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_FACEEDITOR2), true);
 	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_SHOWSELECTEDFACE2), true);
-	//EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), true);
+	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_TT_CB_FACES2), true);
 
 	RedrawWindow(TexturesDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -448,9 +479,63 @@ void CL64_Properties_Textures::Select_Prev_Face()
 
 	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_FACEEDITOR2), true);
 	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_BT_FACE_SHOWSELECTEDFACE2), true);
-	//EnableWindow(GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES), true);
+	EnableWindow(GetDlgItem(TexturesDlg_Hwnd, IDC_TT_CB_FACES2), true);
 
 	RedrawWindow(TexturesDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// *		Update_Faces_Dialog:- Terry and Hazel Flanigan 2026			   
+// *************************************************************************
+void CL64_Properties_Textures::Update_Faces_Dialog()
+{
+	//Do_Timer
+
+	HWND Temp = GetDlgItem(TexturesDlg_Hwnd, IDC_TT_CB_FACES2);
+	SendMessage(Temp, CB_RESETCONTENT, 0, 0);
+	char buff[MAX_PATH];
+
+	int SB = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
+
+	if (SB > 0)
+	{
+		int Count = 0;
+		int Face_Count = App->CL_Brush_X->Get_Brush_All_Faces_Count();
+
+		while (Count < Face_Count)
+		{
+			sprintf(buff, "%s %i", "Face:-", Count + 1);
+			SendMessage(Temp, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buff);
+			Count++;
+		}
+
+		SendMessage(Temp, CB_SETCURSEL, App->CL_Properties_Textures->Selected_Face_Index, 0);
+
+		/*Brush* pBrush;
+		pBrush = App->CL_Doc->CurBrush;
+
+		char Brush_Name[MAX_PATH];
+		strcpy(Brush_Name, "Brush:-  ");
+		strcat(Brush_Name, pBrush->Name);
+		SetDlgItemText(Faces_Control_Dlg_hWnd, IDC_ST_BRUSHNAME, (LPCTSTR)Brush_Name);
+
+		char sFace_Count[MAX_PATH];
+		sprintf(sFace_Count, "%s %i", "Face Count:-", Face_Count);
+		SetDlgItemText(Faces_Control_Dlg_hWnd, IDC_ST_FACEAMOUNT, (LPCTSTR)sFace_Count);*/
+
+		App->CL_Properties_Textures->Selected_Face_Index = -1;
+		App->CL_Properties_Textures->Select_Next_Face();
+	}
+
+	//Get_Timer
+}
+
+// *************************************************************************
+// *		Select_With_List_Index:- Terry and Hazel Flanigan 2025         *
+// *************************************************************************
+void CL64_Properties_Textures::Select_With_List_Index(int Index)
+{
+	SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
 }
 
 // *************************************************************************
@@ -475,7 +560,7 @@ void CL64_Properties_Textures::Select_Face()
 	App->CL_Doc->UpdateAllViews(Enums::UpdateViews_Grids);
 
 	// Set the current selection in the combo box
-	HWND Temp = GetDlgItem(App->CL_Faces_Control->Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES);
+	HWND Temp = GetDlgItem(TexturesDlg_Hwnd, IDC_TT_CB_FACES2);
 	SendMessage(Temp, CB_SETCURSEL, Selected_Face_Index, 0);
 }
 

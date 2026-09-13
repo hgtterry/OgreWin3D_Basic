@@ -46,6 +46,8 @@ public:
 	void Select_All_Face();
 	void Select_Next_Face();
 	void Select_Prev_Face();
+	void Update_Faces_Dialog();
+	void Select_With_List_Index(int Index);
 
 
 	bool flag_Textures_Dlg_Created;

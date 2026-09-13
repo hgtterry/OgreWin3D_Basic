@@ -52,10 +52,7 @@ public:
 
 private:
 	static LRESULT CALLBACK Proc_FaceDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT* SourceRect, const RECT* DestRect);
-
+	
 	void Update_Faces();
 	void Update_Face_List(HWND hDlg);
 	void Update_Face_Members();
@@ -65,12 +62,6 @@ private:
 	void Fill_ComboBox_AngleValues(HWND hDlg);
 	void Fill_ComboBox_ScaleValues(HWND hDlg);
 	void Fill_ComboBox_OffSetValues(HWND hDlg);
-
-	void List_Selection_Changed();
-	bool SelectBitmap();
-	void Texture_To_HBITMP(char* TextureFileName);
-	int GetIndexFromTextureName(char* TextureName);
-
 
 	static signed int FlipVertical(Face* pFace, void*);
 	static signed int FlipHorizontal(Face* pFace, void*);

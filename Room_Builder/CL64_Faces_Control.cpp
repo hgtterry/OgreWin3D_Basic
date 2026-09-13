@@ -71,8 +71,6 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 		SendDlgItemMessage(hDlg, IDC_ST_FACEAMOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_TT_CB_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
@@ -226,36 +224,6 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_TT_CB_FACES)
-		{
-			switch (HIWORD(wParam)) // Find out what message it was
-			{
-			case CBN_DROPDOWN:
-				break;
-			case CBN_CLOSEUP:
-			{
-				HWND temp = GetDlgItem(hDlg, IDC_TT_CB_FACES);
-				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-
-				if (Index == -1)
-				{
-				}
-				else
-				{
-					App->CL_Properties_Textures->Selected_Face_Index = Index;
-					App->CL_Properties_Textures->Select_Face();
-
-					if (App->CL_X_Face_Editor->flag_FaceDlg_Active == 1)
-					{
-						App->CL_X_Face_Editor->Change_Selection();
-					}
-				}
-			}
-			}
-
-			return true;
-		}
-
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CL_Properties_Textures->Unselect_All_Face();
@@ -277,52 +245,6 @@ LRESULT CALLBACK CL64_Faces_Control::Proc_Top_Tabs_Faces(HWND hDlg, UINT message
 
 	}
 	return FALSE;
-}
-
-// *************************************************************************
-// *		Update_Faces_Dialog:- Terry and Hazel Flanigan 2026			   
-// *************************************************************************
-void CL64_Faces_Control::Update_Faces_Dialog()
-{
-	//Do_Timer
-
-	HWND Temp = GetDlgItem(Faces_Control_Dlg_hWnd, IDC_TT_CB_FACES);
-	SendMessage(Temp, CB_RESETCONTENT, 0, 0);
-	char buff[MAX_PATH];
-
-	int SB = App->CL_X_SelBrushList->SelBrushList_GetSize(App->CL_Doc->pSelBrushes);
-
-	if (SB > 0)
-	{
-		int Count = 0;
-		int Face_Count = App->CL_Brush_X->Get_Brush_All_Faces_Count();
-
-		while (Count < Face_Count)
-		{
-			sprintf(buff, "%s %i", "Face:-", Count + 1);
-			SendMessage(Temp, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buff);
-			Count++;
-		}
-
-		SendMessage(Temp, CB_SETCURSEL, App->CL_Properties_Textures->Selected_Face_Index, 0);
-
-		Brush* pBrush;
-		pBrush = App->CL_Doc->CurBrush;
-
-		char Brush_Name[MAX_PATH];
-		strcpy(Brush_Name, "Brush:-  ");
-		strcat(Brush_Name, pBrush->Name);
-		SetDlgItemText(Faces_Control_Dlg_hWnd, IDC_ST_BRUSHNAME, (LPCTSTR)Brush_Name);
-
-		char sFace_Count[MAX_PATH];
-		sprintf(sFace_Count, "%s %i", "Face Count:-", Face_Count);
-		SetDlgItemText(Faces_Control_Dlg_hWnd, IDC_ST_FACEAMOUNT, (LPCTSTR)sFace_Count);
-
-		App->CL_Properties_Textures->Selected_Face_Index = -1;
-		App->CL_Properties_Textures->Select_Next_Face();
-	}
-
-	//Get_Timer
 }
 
 // *************************************************************************
