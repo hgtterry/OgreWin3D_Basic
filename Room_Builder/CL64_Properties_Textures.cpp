@@ -62,8 +62,6 @@ void CL64_Properties_Textures::Start_Tabs_Textures_Dlg()
 {
 	TexturesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_TEXTURES, App->CL_Properties_Tabs->Tabs_Control_Hwnd, (DLGPROC)Proc_Tabs_Textures_Dlg);
 	flag_Textures_Dlg_Created = true;
-
-	Fill_Textures_ListBox();
 }
 
 // **************************************************************************
@@ -758,9 +756,13 @@ void CL64_Properties_Textures::Fill_Textures_ListBox()
 			LBIndex = SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
 		}
 
-		//SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2 ,LB_SETCURSEL, 0, 0);
+		SendDlgItemMessage(TexturesDlg_Hwnd, IDC_FE_LIST_TEXTURES2 ,LB_SETCURSEL, 0, 0);
 		
 		Get_Selected_Face_Texture();
+	}
+	else
+	{
+		Debug
 	}
 }
 

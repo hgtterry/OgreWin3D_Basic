@@ -80,8 +80,6 @@ void CL64_Properties_Tabs::Start_Tabs_Control_Dlg()
 	flag_Tabs_Dlg_Active = true;
 
 	CheckMenuItem(App->Menu_Map, ID_WINDOW_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
-
-	App->CL_Properties_Textures->Fill_Textures_ListBox();
 }
 
 // *************************************************************************

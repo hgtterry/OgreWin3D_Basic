@@ -101,11 +101,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     App->CL_FileView->Start_FileView();
     App->CL_FileView->Init_FileView();
-
+    
     // Initialize dialogs
     App->Init_Dialogs();
 
-
+    App->CL_Properties_Textures->Fill_Textures_ListBox();
   //  App->CL_Com_Player->Create_Player_Object();
 
     // Set timer for the main window

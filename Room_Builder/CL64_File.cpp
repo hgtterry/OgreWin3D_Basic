@@ -471,6 +471,8 @@ bool CL64_File::Open_3dt_File()
 	
 	
 	App->CL_Doc->Load_Wad_File(pathAndFile);
+	App->CL_Properties_Textures->Fill_Textures_ListBox();
+
 	App->CL_Doc->UpdateAfterWadChange();
 	
 	//Set_Player();

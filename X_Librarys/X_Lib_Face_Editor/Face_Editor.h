@@ -35,9 +35,6 @@ public:
 	void List_Face_Data(HWND List);
 	bool Is_Faces_Dialog_Active();
 
-	void Select_With_List_Index(int Index);
-
-
 	HWND FaceDlg_Hwnd;
 
 	int m_NumberOfFaces;
